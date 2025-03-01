@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import me.alegian.thavma.impl.Thavma;
 import me.alegian.thavma.impl.client.T7GuiGraphics;
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas;
+import me.alegian.thavma.impl.client.util.GuiGraphicsExtensionsKt;
 import me.alegian.thavma.impl.common.aspect.Aspect;
 import me.alegian.thavma.impl.common.aspect.AspectMap;
 import me.alegian.thavma.impl.common.aspect.AspectStack;
@@ -102,8 +103,8 @@ public class AspectRenderer {
     poseStack.translate(pX + AspectRenderer.PIXEL_RESOLUTION, pY + AspectRenderer.PIXEL_RESOLUTION, 0.0001f); // start bottom right, like item count. slightly increase Z to avoid z fighting
     poseStack.scale(0.5F, 0.5F, 0.5F);
     Font font = Minecraft.getInstance().font;
-
-    guiGraphics.drawSeeThroughText(font, text, -font.width(text), -font.lineHeight, 0xFFFFFFFF, true);
+    poseStack.translate(-font.width(text), -font.lineHeight, 0);
+    GuiGraphicsExtensionsKt.drawOutlinedSeethroughString(guiGraphics, font, text, 0xFFFFFF, 0);
     poseStack.popPose();
   }
 

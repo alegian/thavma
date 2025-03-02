@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:goggles_accessory"
+        "recipe": "thavma:goggles_curio"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:goggles_accessory"
+      "thavma:goggles_curio"
     ]
   }
 }

@@ -49,7 +49,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_LE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_ACCESSORY
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
@@ -111,7 +111,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         this.add(THAUMONOMICON.get(), "Thaumonomicon")
 
         this.add(GOGGLES.get(), "Goggles Of Revealing")
-        this.add(GOGGLES_ACCESSORY.get(), "Goggles Of Revealing (Accessory)")
+        this.add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
         this.add(DAWN_CHARM.get(), "Charm of the Dawn")
         this.add(RESEARCHER_BOOTS.get(), "Researcher Boots")
         this.add(RESEARCHER_CHESTPLATE.get(), "Researcher Chestplate")

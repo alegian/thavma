@@ -24,7 +24,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_LE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_ACCESSORY
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
@@ -69,7 +69,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(COMPLETED_RESEARCH.get())
 
     basicItem(GOGGLES.get())
-    basicItem(GOGGLES_ACCESSORY.get())
+    basicItem(GOGGLES_CURIO.get())
     basicItem(DAWN_CHARM.get())
     basicItem(RESEARCHER_CHESTPLATE.get())
     basicItem(RESEARCHER_LEGGINGS.get())

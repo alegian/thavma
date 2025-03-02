@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
-import io.wispforest.accessories.api.data.AccessoriesTags
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
 import me.alegian.thavma.impl.init.registries.T7Tags.TESTA
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_CORE
@@ -26,7 +26,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_ACCESSORY
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
@@ -113,7 +113,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
 
     tag(CATALYST).add(Items.DRAGON_EGG)
 
-    tag(AccessoriesTags.FACE_TAG).add(GOGGLES_ACCESSORY.get())
-    tag(AccessoriesTags.CHARM_TAG).add(DAWN_CHARM.get())
+    tag(T7Tags.Curios.HEAD).add(GOGGLES_CURIO.get())
+    tag(T7Tags.Curios.CHARM).add(DAWN_CHARM.get())
   }
 }

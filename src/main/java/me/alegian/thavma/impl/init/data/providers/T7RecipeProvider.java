@@ -155,7 +155,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern("ogo")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getOCULUS().get()), RecipeProvider.has(T7Items.INSTANCE.getOCULUS().get()))
         .save(pRecipeOutput);
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, T7Items.INSTANCE.getGOGGLES_ACCESSORY())
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, T7Items.INSTANCE.getGOGGLES_CURIO())
         .requires(T7Items.INSTANCE.getGOGGLES())
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getGOGGLES()), RecipeProvider.has(T7Items.INSTANCE.getGOGGLES()))
         .save(pRecipeOutput);

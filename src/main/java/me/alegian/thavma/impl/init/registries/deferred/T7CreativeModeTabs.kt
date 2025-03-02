@@ -109,7 +109,7 @@ object T7CreativeModeTabs {
                     )
 
                     output.accept(T7Items.GOGGLES)
-                    output.accept(T7Items.GOGGLES_ACCESSORY)
+                    output.accept(T7Items.GOGGLES_CURIO)
                     output.accept(T7Items.DAWN_CHARM)
                     output.accept(T7Items.RESEARCHER_CHESTPLATE)
                     output.accept(T7Items.RESEARCHER_LEGGINGS)

@@ -14,7 +14,7 @@ object VisGuiOverlay {
   private val BAR_FRAME = Texture("gui/overlay/bar_frame", 96, 96)
   private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
 
-  val LAYER = LayeredDraw.Layer { graphics: GuiGraphics, partialTick: DeltaTracker ->
+  val LAYER = LayeredDraw.Layer { graphics: GuiGraphics, _: DeltaTracker ->
     val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
     if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return@Layer
 

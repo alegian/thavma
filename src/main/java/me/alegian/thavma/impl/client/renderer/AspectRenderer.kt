@@ -37,7 +37,7 @@ object AspectRenderer {
       translate(-camera.position + blockPos.center + Vec3(0.0, 0.75 + QUAD_SIZE / 2, 0.0))
       val angle = calculatePlayerAngle(blockPos.center)
       mulPose(Axis.YP.rotation(angle))
-      scale(QUAD_SIZE, QUAD_SIZE, 1f) // this puts us in "aspect space" where 1 means 1 aspect width
+      scaleXY(QUAD_SIZE) // this puts us in "aspect space" where 1 means 1 aspect width
 
       // these offsets account for wrapping to new lines, and centering the aspects
       val offsets = calculateOffsets(aspects.size())
@@ -91,10 +91,10 @@ object AspectRenderer {
 
   private fun drawCount(guiGraphics: GuiGraphics, text: String, pX: Int, pY: Int) {
     guiGraphics.usePose {
-      translate((pX + PIXEL_RESOLUTION).toFloat(), (pY + PIXEL_RESOLUTION).toFloat(), 0f) // bottom right, like item count
+      translateXY((pX + PIXEL_RESOLUTION).toDouble(), (pY + PIXEL_RESOLUTION).toDouble()) // bottom right, like item count
       scale(0.5f)
       val font = Minecraft.getInstance().font
-      translate(-font.width(text).toFloat(), -font.lineHeight.toFloat(), 0f)
+      translateXY(-font.width(text).toDouble(), -font.lineHeight.toDouble())
       guiGraphics.drawOutlinedSeethroughString(font, text, 0xFFFFFF, 0)
     }
   }

@@ -77,3 +77,9 @@ fun GuiGraphics.blit(
 )
 
 fun GuiGraphics.resetColor() = setColor(1f, 1f, 1f, 1f)
+
+fun GuiGraphics.enableCrop(pX: Int, pY: Int) =
+  enableScissor(pX, pY, guiWidth() - pX, guiHeight() - pY)
+
+fun GuiGraphics.disableCrop() = disableScissor()
+

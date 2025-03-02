@@ -82,10 +82,12 @@ private fun gatherData(event: GatherDataEvent) {
         event.includeServer(), T7LootTableProvider(
             packOutput, listOf(
                 SubProviderEntry(
-                    {
-                        T7BlockLootSubProvider(it)
-                    },
+                    ::T7BlockLootSubProvider,
                     LootContextParamSets.BLOCK
+                ),
+                SubProviderEntry(
+                    ::T7EntityLootSubProvider,
+                    LootContextParamSets.ENTITY
                 )
             ), lookupProvider
         )

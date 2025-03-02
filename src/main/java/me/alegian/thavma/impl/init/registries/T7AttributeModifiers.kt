@@ -26,8 +26,8 @@ object T7AttributeModifiers {
             AttributeModifier.Operation.ADD_VALUE
         )
 
-        val GOGGLES_ACCESSORY = AttributeModifier(
-            LOCATION.withSuffix("goggles_accessory"),
+        val GOGGLES_CURIO = AttributeModifier(
+            LOCATION.withSuffix("goggles_curio"),
             1.0,
             AttributeModifier.Operation.ADD_VALUE
         )

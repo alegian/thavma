@@ -4,7 +4,7 @@ import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.EntityHelper
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
-import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.GOGGLES_ACCESSORY
+import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.registries.Registries
@@ -85,7 +85,7 @@ private fun breakBlock(event: BreakEvent) {
 
 private fun mobEffectApplicable(event: MobEffectEvent.Applicable) {
   val effectInstance = event.effectInstance ?: return
-  if (effectInstance !== MobEffects.DARKNESS) return
+  if (effectInstance.effect.value() !== MobEffects.DARKNESS.value()) return
   if (!EntityHelper.isWearingCurio(event.entity, T7Items.DAWN_CHARM.get())) return
   event.result = MobEffectEvent.Applicable.Result.DO_NOT_APPLY
 }
@@ -109,8 +109,8 @@ private fun preLivingDamage(event: LivingDamageEvent.Pre) {
 }
 
 private fun curioAttributeModifiers(event: CurioAttributeModifierEvent) {
-  if (event.itemStack.item == T7Items.DAWN_CHARM.get())
-    event.addModifier(REVEALING, GOGGLES_ACCESSORY)
+  if (event.itemStack.item == T7Items.GOGGLES_CURIO.get())
+    event.addModifier(REVEALING, GOGGLES_CURIO)
 }
 
 private fun curioChange(event: CurioChangeEvent) {

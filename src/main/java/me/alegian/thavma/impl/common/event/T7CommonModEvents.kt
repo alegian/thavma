@@ -78,6 +78,7 @@ private fun gatherData(event: GatherDataEvent) {
     )
     generator.addProvider(event.includeServer(), T7FluidTagProvider(packOutput, lookupProvider, existingFileHelper))
     generator.addProvider(event.includeServer(), T7GlobalLootModifierProvider(packOutput, lookupProvider))
+    generator.addProvider(event.includeServer(), T7CuriosDataProvider(packOutput, existingFileHelper, lookupProvider))
     generator.addProvider(
         event.includeServer(), T7LootTableProvider(
             packOutput, listOf(

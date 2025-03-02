@@ -24,6 +24,7 @@ object T7Items {
     val ARCANUM_HANDLE = REGISTRAR.registerSimpleItem("arcanum_handle")
 
     val EYE_OF_WARDEN = REGISTRAR.registerSimpleItem("eye_of_warden", Item.Properties().rarity(Rarity.EPIC))
+    val ROTTEN_BRAIN = REGISTRAR.registerSimpleItem("rotten_brain", Item.Properties())
     val SIGIL = REGISTRAR.registerSimpleItem("sigil")
 
     val GREATWOOD_CORE = REGISTRAR.registerSimpleItem("greatwood_core")

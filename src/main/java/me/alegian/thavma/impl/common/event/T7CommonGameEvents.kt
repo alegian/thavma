@@ -15,7 +15,7 @@ import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent.Applicable
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import kotlin.math.max
@@ -79,11 +79,11 @@ private fun breakBlock(event: BreakEvent) {
     }
 }
 
-private fun mobEffectApplicable(event: Applicable) {
+private fun mobEffectApplicable(event: MobEffectEvent.Applicable) {
     val effectInstance = event.effectInstance ?: return
     if (effectInstance !== MobEffects.DARKNESS) return
     if (!EntityHelper.isEntityWearingAccessory(event.entity, T7Items.DAWN_CHARM.get())) return
-    event.result = Applicable.Result.DO_NOT_APPLY
+    event.result = MobEffectEvent.Applicable.Result.DO_NOT_APPLY
 }
 
 private fun preLivingDamage(event: LivingDamageEvent.Pre) {

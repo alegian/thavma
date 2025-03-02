@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AspectClientTooltipComponent implements ClientTooltipComponent {
   private final ImmutableList<AspectStack> displayedAspects;
-  private static final int WIDTH = AspectRenderer.getPixelResolution();
+  private static final int WIDTH = AspectRenderer.PIXEL_RESOLUTION;
   private static final int PADDING = 3;
 
   public AspectClientTooltipComponent(AspectTooltipComponent tooltip) {
@@ -42,7 +42,7 @@ public class AspectClientTooltipComponent implements ClientTooltipComponent {
 
     int i = 0;
     for (AspectStack aspectStack : displayedAspects) {
-      AspectRenderer.renderAspect(new T7GuiGraphics(pGuiGraphics), aspectStack, pX + i * (WIDTH + PADDING), pY + PADDING);
+      AspectRenderer.INSTANCE.renderAspect(new T7GuiGraphics(pGuiGraphics), aspectStack, pX + i * (WIDTH + PADDING), pY + PADDING);
       i++;
     }
   }

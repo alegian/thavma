@@ -2,15 +2,11 @@ package me.alegian.thavma.impl.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import me.alegian.thavma.impl.client.texture.Texture;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
@@ -25,38 +21,7 @@ public class T7GuiGraphics extends GuiGraphics {
     super(Minecraft.getInstance(), guiGraphics.pose(), guiGraphics.bufferSource());
   }
 
-  public void blit(Texture texture) {
-    this.blit(texture.location(), 0, 0, 0, 0, texture.width(), texture.height(), texture.canvasWidth(), texture.canvasHeight());
-  }
-
-  public void blit(
-      int pX,
-      int pY,
-      int pBlitOffset,
-      int pWidth,
-      int pHeight,
-      TextureAtlasSprite pSprite,
-      int color
-  ) {
-    this.innerBlit(
-        pSprite.atlasLocation(),
-        pX,
-        pX + pWidth,
-        pY,
-        pY + pHeight,
-        pBlitOffset,
-        pSprite.getU0(),
-        pSprite.getU1(),
-        pSprite.getV0(),
-        pSprite.getV1(),
-        FastColor.ARGB32.red(color) / 255f,
-        FastColor.ARGB32.green(color) / 255f,
-        FastColor.ARGB32.blue(color) / 255f,
-        FastColor.ARGB32.alpha(color) / 255f
-    );
-  }
-
-  void innerBlit(
+  public void innerBlit(
       ResourceLocation pAtlasLocation,
       int pX1,
       int pX2,
@@ -91,22 +56,6 @@ public class T7GuiGraphics extends GuiGraphics {
         .setColor(pRed, pGreen, pBlue, pAlpha);
     BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     RenderSystem.disableBlend();
-  }
-
-  public void drawSeeThroughText(Font font, String text, float pX, float pY, int color, boolean shadow) {
-    font.drawInBatch(
-        text,
-        pX,
-        pY,
-        color,
-        shadow,
-        this.pose().last().pose(),
-        this.bufferSource(),
-        Font.DisplayMode.SEE_THROUGH,
-        0,
-        15728880,
-        font.isBidirectional()
-    );
   }
 
   // assumes no z-index, no texture offset and no cropping
@@ -146,10 +95,6 @@ public class T7GuiGraphics extends GuiGraphics {
 
   public void scaleXY(float scale) {
     this.pose().mulPose(new Matrix4f().scale(scale, scale, 1));
-  }
-
-  public void resetColor() {
-    this.setColor(1, 1, 1, 1);
   }
 
   public void push() {

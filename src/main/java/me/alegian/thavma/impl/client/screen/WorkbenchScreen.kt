@@ -74,7 +74,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
       t7graphics.translateXY((BASE_RADIUS * (1 - 0.16 * fac * fac)).toFloat(), 0f)
       t7graphics.rotateZ(-ANGLE * i)
       t7graphics.blit(ASPECT_SOCKET.location, (SLOTS[0].width - ASPECT_SOCKET.width) / 2, (SLOTS[0].height - ASPECT_SOCKET.height) / 2, 0f, 0f, ASPECT_SOCKET.width, ASPECT_SOCKET.height, ASPECT_SOCKET.width, ASPECT_SOCKET.height)
-      if (requiredAmount != 0) AspectRenderer.renderAspect(t7graphics, requiredStack, (SLOTS[0].width - AspectRenderer.getPixelResolution()) / 2, (SLOTS[0].height - AspectRenderer.getPixelResolution()) / 2)
+      if (requiredAmount != 0) AspectRenderer.renderAspect(t7graphics, requiredStack, (SLOTS[0].width - AspectRenderer.PIXEL_RESOLUTION) / 2, (SLOTS[0].height - AspectRenderer.PIXEL_RESOLUTION) / 2)
       t7graphics.pop()
     }
 

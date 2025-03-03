@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.world.BiomeModifiers
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object AngryZombieSpawn {
-    val BIOME_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, rl("angry_zombie"))
+    private val BIOME_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, rl("angry_zombie"))
 
     fun registerBiomeModifier(context: BootstrapContext<BiomeModifier>) {
         val biomeRegistry = context.lookup(Registries.BIOME)

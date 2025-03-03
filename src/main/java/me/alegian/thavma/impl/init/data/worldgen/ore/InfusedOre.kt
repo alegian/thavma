@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 
 object InfusedOre {
-    val CONFIGURED_FEATURES = linkedMapWithPrimalKeys { aspect ->
+    private val CONFIGURED_FEATURES = linkedMapWithPrimalKeys { aspect ->
         ResourceKey.create(Registries.CONFIGURED_FEATURE, rl(aspect.id.path).withPrefix("ore_"))
     }
 
@@ -21,13 +21,13 @@ object InfusedOre {
 
     fun registerConfigured(context: BootstrapContext<ConfiguredFeature<*, *>>) {
         Aspects.PRIMAL_ASPECTS.forEach {
-            OreFeatureHelper.registerConfiguredInfusedStone(context, CONFIGURED_FEATURES[it], T7Blocks.INFUSED_STONES[it]!!.get().defaultBlockState(), T7Blocks.INFUSED_DEEPSLATES[it]!!.get().defaultBlockState())
+            registerConfiguredInfusedStone(context, CONFIGURED_FEATURES[it], T7Blocks.INFUSED_STONES[it]!!.get().defaultBlockState(), T7Blocks.INFUSED_DEEPSLATES[it]!!.get().defaultBlockState())
         }
     }
 
     fun registerPlaced(context: BootstrapContext<PlacedFeature>) {
         Aspects.PRIMAL_ASPECTS.forEach {
-            OreFeatureHelper.registerPlacedInfusedStone(context, CONFIGURED_FEATURES[it], PLACED_FEATURES[it])
+            registerPlacedInfusedStone(context, CONFIGURED_FEATURES[it], PLACED_FEATURES[it])
         }
     }
 }

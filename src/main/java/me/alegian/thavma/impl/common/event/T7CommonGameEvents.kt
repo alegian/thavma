@@ -4,8 +4,6 @@ import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.EntityHelper
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
-import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
@@ -20,8 +18,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
-import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent
-import top.theillusivec4.curios.api.event.CurioChangeEvent
 import kotlin.math.max
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
 
@@ -108,22 +104,10 @@ private fun preLivingDamage(event: LivingDamageEvent.Pre) {
   event.container.newDamage = max(0.0, (event.newDamage - damageBlocked).toDouble()).toFloat()
 }
 
-private fun curioAttributeModifiers(event: CurioAttributeModifierEvent) {
-  if (event.itemStack.item == T7Items.GOGGLES_CURIO.get())
-    event.addModifier(REVEALING, GOGGLES_CURIO)
-}
-
-private fun curioChange(event: CurioChangeEvent) {
-  if (event.to.item == T7Items.DAWN_CHARM.get())
-    event.entity.removeEffect(MobEffects.DARKNESS)
-}
-
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
   KFF_GAME_BUS.addListener(::breakBlock)
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
-  KFF_GAME_BUS.addListener(::curioAttributeModifiers)
-  KFF_GAME_BUS.addListener(::curioChange)
 }

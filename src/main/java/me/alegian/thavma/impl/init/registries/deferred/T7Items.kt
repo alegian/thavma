@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.data.capability.SimpleCurio
 import me.alegian.thavma.impl.common.item.*
 import me.alegian.thavma.impl.common.util.DoubleMap
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
@@ -15,7 +14,6 @@ import net.minecraft.world.item.*
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.DeferredSpawnEggItem
 import net.neoforged.neoforge.registries.DeferredRegister
-import top.theillusivec4.curios.api.CuriosCapability
 
 object T7Items {
   val REGISTRAR = DeferredRegister.createItems(Thavma.MODID)
@@ -186,12 +184,6 @@ object T7Items {
       T7Capabilities.AspectContainer.ITEM,
       { itemStack, _ -> AspectContainer(itemStack, wand.capacity()) },
       wand
-    )
-
-    event.registerItem(
-      CuriosCapability.ITEM,
-      { itemStack, _ -> SimpleCurio(itemStack) },
-      GOGGLES, DAWN_CHARM
     )
   }
 

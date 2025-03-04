@@ -42,7 +42,7 @@ base {
     archivesName = "${mod_id}-neoforge"
 }
 
-// Mojang ships Java 21 to end users in 1.20.6, so your mod should target Java 21.
+// Mojang ships Java 21 to end users since 1.20.6, so we should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 compileKotlin.compilerOptions.jvmTarget = JvmTarget.JVM_21
 
@@ -117,22 +117,22 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
     implementation "thedarkcolour:kotlinforforge-neoforge:${kff_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-
-    implementation "mcjty.theoneprobe:theoneprobe:${top_version}"
-
-    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:additions"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:generators"
-    runtimeOnly "mekanism:Mekanism:${mekanism_version}:tools"
-
+    compileOnly "mcjty.theoneprobe:theoneprobe:${top_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+
+    if (project.use_runtime_optional_deps == "true") {
+        localRuntime "mcjty.theoneprobe:theoneprobe:${top_version}"
+        localRuntime "mekanism:Mekanism:${mekanism_version}"
+        localRuntime "mekanism:Mekanism:${mekanism_version}:additions"
+        localRuntime "mekanism:Mekanism:${mekanism_version}:generators"
+        localRuntime "mekanism:Mekanism:${mekanism_version}:tools"
+        localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+        localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

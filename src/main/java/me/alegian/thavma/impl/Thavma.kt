@@ -1,16 +1,14 @@
 package me.alegian.thavma.impl
 
-import com.mojang.logging.LogUtils
 import me.alegian.thavma.impl.client.event.registerClientGameEvents
 import me.alegian.thavma.impl.client.event.registerClientModEvents
 import me.alegian.thavma.impl.common.event.registerCommonGameEvents
 import me.alegian.thavma.impl.common.event.registerCommonModEvents
-import me.alegian.thavma.impl.common.event.registerCuriosEvents
 import me.alegian.thavma.impl.init.registries.deferred.*
+import me.alegian.thavma.impl.integration.registerCuriosEvents
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
-import org.slf4j.Logger
 import top.theillusivec4.curios.api.CuriosApi
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
@@ -18,9 +16,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 @Mod(Thavma.MODID)
 object Thavma {
   const val MODID: String = "thavma"
-  val LOGGER: Logger = LogUtils.getLogger()
 
-  // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
   init {
     T7ArmorMaterials.REGISTRAR.register(KFF_MOD_BUS)
     T7Blocks.REGISTRAR.register(KFF_MOD_BUS)

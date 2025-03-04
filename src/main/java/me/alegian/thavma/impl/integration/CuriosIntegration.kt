@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.common.event
+package me.alegian.thavma.impl.integration
 
 import me.alegian.thavma.impl.common.data.capability.SimpleCurio
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.GOGGLES_CURIO

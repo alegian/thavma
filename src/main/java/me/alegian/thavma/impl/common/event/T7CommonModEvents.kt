@@ -10,6 +10,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandCoreCombinations
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandHandleCombinations
+import me.alegian.thavma.impl.integration.CuriosIntegration
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableProvider.SubProviderEntry
@@ -48,6 +49,8 @@ private fun modifyRegistries(event: ModifyRegistriesEvent) {
 private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
   T7Items.registerCapabilities(event)
   T7BlockEntities.registerCapabilities(event)
+
+  CuriosIntegration.get().registerCapabilities(event)
 }
 
 private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
@@ -97,6 +100,8 @@ private fun gatherData(event: GatherDataEvent) {
   generator.addProvider(event.includeClient(), T7ItemModelProvider(packOutput, existingFileHelper))
   generator.addProvider(event.includeClient(), T7ParticleDescriptionProvider(packOutput, existingFileHelper))
   generator.addProvider(event.includeClient(), T7LanguageProvider(packOutput, "en_us"))
+
+  CuriosIntegration.get().gatherData(event)
 }
 
 private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {

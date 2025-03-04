@@ -7,11 +7,8 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.phys.BlockHitResult
-import top.theillusivec4.curios.api.CuriosApi
-import kotlin.jvm.optionals.getOrNull
 
 
 object EntityHelper {
@@ -42,9 +39,5 @@ object EntityHelper {
         player
       )
     )
-  }
-
-  fun isWearingCurio(entity: LivingEntity, item: Item): Boolean {
-    return CuriosApi.getCuriosInventory(entity).getOrNull()?.isEquipped(item) ?: false
   }
 }

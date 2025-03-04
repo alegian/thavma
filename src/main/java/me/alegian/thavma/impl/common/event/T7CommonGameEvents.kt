@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.entity.EntityHelper
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
+import me.alegian.thavma.impl.integration.CuriosIntegration
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -82,7 +83,7 @@ private fun breakBlock(event: BreakEvent) {
 private fun mobEffectApplicable(event: MobEffectEvent.Applicable) {
   val effectInstance = event.effectInstance ?: return
   if (effectInstance.effect.value() !== MobEffects.DARKNESS.value()) return
-  if (!EntityHelper.isWearingCurio(event.entity, T7Items.DAWN_CHARM.get())) return
+  if (!CuriosIntegration.get().isWearingCurio(event.entity, T7Items.DAWN_CHARM.get())) return
   event.result = MobEffectEvent.Applicable.Result.DO_NOT_APPLY
 }
 

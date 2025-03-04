@@ -36,10 +36,13 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
+import me.alegian.thavma.impl.integration.CuriosIntegration
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
@@ -47,7 +50,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<HolderLookup.Provider?>, pBlockTags: CompletableFuture<TagLookup<Block?>?>, pExistingFileHelper: ExistingFileHelper?) : ItemTagsProvider(pOutput, pLookupProvider, pBlockTags, Thavma.MODID, pExistingFileHelper) {
-  override fun addTags(pProvider: HolderLookup.Provider) {
+  override fun addTags(lookupProvider: HolderLookup.Provider) {
     tag(WAND_HANDLE).add(
       IRON_HANDLE.get(),
       GOLD_HANDLE.get(),
@@ -109,5 +112,12 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     )
 
     tag(CATALYST).add(Items.DRAGON_EGG)
+
+    CuriosIntegration.get().addTags(this, lookupProvider)
+  }
+
+  // override visibility
+  public override fun tag(tag: TagKey<Item>): IntrinsicTagAppender<Item> {
+    return super.tag(tag)
   }
 }

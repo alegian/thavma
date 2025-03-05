@@ -77,6 +77,11 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
   }
 
+  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    super.render(guiGraphics, mouseX, mouseY, partialTick)
+    renderTooltip(guiGraphics, mouseX, mouseY)
+  }
+
   override fun renderBg(guiGraphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {}
 
   override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {}

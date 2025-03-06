@@ -34,7 +34,7 @@ import java.util.function.Consumer
 
 class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
     DataMapProvider(packOutput, lookupProvider) {
-    override fun gather() {
+    override fun gather(lookupProvider: HolderLookup.Provider) {
         val i = this.builder(T7DataMaps.AspectContent.ITEM)
         val b = this.builder(T7DataMaps.AspectContent.BLOCK)
 

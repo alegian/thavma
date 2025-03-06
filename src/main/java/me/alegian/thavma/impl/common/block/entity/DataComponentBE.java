@@ -26,10 +26,8 @@ public abstract class DataComponentBE extends BlockEntity implements MutableData
   }
 
   @Override
-  public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-    CompoundTag tag = new CompoundTag();
-    this.saveAdditional(tag, pRegistries);
-    return tag;
+  public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider lookupProvider) {
+    return saveWithoutMetadata(lookupProvider);
   }
 
   @Nullable
@@ -68,7 +66,7 @@ public abstract class DataComponentBE extends BlockEntity implements MutableData
   public abstract DataComponentType<?>[] getComponentTypes();
 
   @Override
-  protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+  protected void loadAdditional(@NotNull CompoundTag pTag, HolderLookup.@NotNull Provider pRegistries) {
     super.loadAdditional(pTag, pRegistries);
     for (var componentType : getComponentTypes()) {
       String tagName = BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(componentType).toString();
@@ -84,7 +82,7 @@ public abstract class DataComponentBE extends BlockEntity implements MutableData
   }
 
   @Override
-  protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+  protected void saveAdditional(@NotNull CompoundTag pTag, HolderLookup.@NotNull Provider pRegistries) {
     super.saveAdditional(pTag, pRegistries);
     var componentTypes = getComponentTypes();
     for (var componentType : componentTypes) {

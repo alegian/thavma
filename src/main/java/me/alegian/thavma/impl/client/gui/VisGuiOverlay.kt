@@ -4,9 +4,7 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
-import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 
 object VisGuiOverlay {
@@ -14,7 +12,7 @@ object VisGuiOverlay {
   private val BAR_FRAME = Texture("gui/overlay/bar_frame", 96, 96)
   private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
 
-  val LAYER = LayeredDraw.Layer { graphics: GuiGraphics, _: DeltaTracker ->
+  val LAYER = LayeredDraw.Layer { graphics, _ ->
     val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
     if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return@Layer
 

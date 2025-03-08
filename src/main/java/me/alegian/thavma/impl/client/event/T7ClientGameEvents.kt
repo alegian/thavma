@@ -12,7 +12,6 @@ import me.alegian.thavma.impl.client.renderer.level.trajectory
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.data.capability.IAspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
@@ -58,25 +57,23 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
 
   // general purpose useful stuff
   val minecraft = Minecraft.getInstance()
-  if (minecraft.level == null) return
+  val level = minecraft.level ?: return
   val hitResult = minecraft.hitResult
   if (hitResult == null || hitResult.type != HitResult.Type.BLOCK) return
   val blockPos = (hitResult as BlockHitResult).blockPos
 
   // aspect renderer
-  if (!AspectContainer.isAspectContainer(minecraft.level, blockPos)) return
+  if (!AspectContainer.isAspectContainer(level, blockPos)) return
   if (!localPlayerHasRevealing()) return
 
-  AspectContainer.at(minecraft.level, blockPos)
-    .map(IAspectContainer::getAspects)
-    .ifPresent { aspects ->
-      AspectRenderer.renderAfterWeather(
-        aspects,
-        event.poseStack,
-        event.camera,
-        blockPos
-      )
-    }
+  AspectContainer.at(level, blockPos)?.aspects?.let {
+    AspectRenderer.renderAfterWeather(
+      it,
+      event.poseStack,
+      event.camera,
+      blockPos
+    )
+  }
 }
 
 private fun renderLevelAfterBEs(event: RenderLevelStageEvent) {
@@ -87,22 +84,21 @@ private fun renderLevelAfterBEs(event: RenderLevelStageEvent) {
     translate(-event.camera.position)
     val traj1 = trajectory(BlockPos.ZERO.offset(0, -59, 0).center, BlockPos.ZERO.offset(0, -59, 4).center)
     val traj2 = trajectory(BlockPos.ZERO.offset(0, -59, 0).center, BlockPos.ZERO.offset(0, -57, -4).center)
-    renderEssentia(traj1.subList((progress*traj1.size).toInt(), traj1.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
-    renderEssentia(traj2.subList((progress*traj2.size).toInt(), traj2.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
+    renderEssentia(traj1.subList((progress * traj1.size).toInt(), traj1.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
+    renderEssentia(traj2.subList((progress * traj2.size).toInt(), traj2.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
   }
 }
 
 private fun gatherTooltipComponents(event: GatherComponents) {
   if (!localPlayerHasRevealing()) return
 
-  AspectContainer.from(event.itemStack).map(IAspectContainer::getAspects)
-    .ifPresent { aspectMap ->
-      event.tooltipElements.add(
-        Either.left(
-          containedPrimalsComponent(aspectMap)
-        )
+  AspectContainer.from(event.itemStack)?.aspects?.let {
+    event.tooltipElements.add(
+      Either.left(
+        containedPrimalsComponent(it)
       )
-    }
+    )
+  }
 
   if (!Screen.hasShiftDown()) return
 

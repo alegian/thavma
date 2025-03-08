@@ -82,7 +82,7 @@ public class AuraNodeBER implements BlockEntityRenderer<AuraNodeBE> {
         .map(AspectMap::toSortedList)
         .ifPresentOrElse(aspectList -> {
           for (var stack : aspectList)
-            BERHelperKt.renderAuraNodeLayer(poseStack, bufferSource, stack.aspect().getColor(), 0.4f, stack.amount() / 32f);
+            BERHelperKt.renderAuraNodeLayer(poseStack, bufferSource, stack.getAspect().getColor(), 0.4f, stack.getAmount() / 32f);
         }, () -> {
           // empty nodes look like small black circles
           BERHelperKt.renderAuraNodeLayer(poseStack, bufferSource, 0, 1, 0.5f / 32f);

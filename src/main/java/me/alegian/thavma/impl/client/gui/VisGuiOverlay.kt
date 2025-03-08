@@ -34,10 +34,9 @@ object VisGuiOverlay {
 
       for (deferredAspect in PRIMAL_ASPECTS) {
         val a = deferredAspect.get()
-        val color = a.colorRGB
         graphics.usePose {
           translateXY(0.0, STAR.height / 2.0)
-          graphics.setColor(color[0].toFloat() / 255, color[1].toFloat() / 255, color[2].toFloat() / 255, 1f)
+          graphics.setColor(a.color)
           graphics.blit(BAR_CONTENT.location, -BAR_CONTENT.width / 2, (BAR_FRAME.height - BAR_CONTENT.height) / 2, 0f, 0f, BAR_CONTENT.width, BAR_CONTENT.height * vis[a] / maxAmount, BAR_CONTENT.width, BAR_CONTENT.height)
           graphics.resetColor()
           graphics.blit(BAR_FRAME.location, -BAR_FRAME.width / 2, 0, 0f, 0f, BAR_FRAME.width, BAR_FRAME.height, BAR_FRAME.width, BAR_FRAME.height)

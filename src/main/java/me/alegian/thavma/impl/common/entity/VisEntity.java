@@ -60,7 +60,7 @@ public class VisEntity extends RendererEntity {
       return;
     }
     var transferred = pair.transferPrimal((this.tickCount / VisEntity.PERIOD_TICKS) % Aspects.INSTANCE.getPRIMAL_ASPECTS().size(), 5);
-    if (transferred.amount() > 0 && this.level() instanceof ServerLevel serverLevel)
+    if (transferred != null && transferred.getAmount() > 0 && this.level() instanceof ServerLevel serverLevel)
       LevelExtensionsKt.updateBlockEntityS2C(serverLevel, this.blockPosition());
   }
 

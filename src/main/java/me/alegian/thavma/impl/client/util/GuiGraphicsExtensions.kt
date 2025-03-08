@@ -76,6 +76,13 @@ fun GuiGraphics.blit(
   FastColor.ARGB32.alpha(color) / 255f
 )
 
+fun GuiGraphics.setColor(color: Int) = setColor(
+  FastColor.ARGB32.red(color) / 255f,
+  FastColor.ARGB32.green(color) / 255f,
+  FastColor.ARGB32.blue(color) / 255f,
+  FastColor.ARGB32.alpha(color) / 255f
+)
+
 fun GuiGraphics.resetColor() = setColor(1f, 1f, 1f, 1f)
 
 fun GuiGraphics.enableCrop(pX: Int, pY: Int) =

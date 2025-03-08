@@ -37,10 +37,10 @@ public interface IAspectContainer {
     var insertedBuilder = AspectMap.builder();
 
     for (var stack : toInsert) {
-      if (stack.amount() == 0) continue;
-      var simulatedAmount = this.insert(stack.aspect(), stack.amount(), true);
+      if (stack.getAmount() == 0) continue;
+      var simulatedAmount = this.insert(stack.getAspect(), stack.getAmount(), true);
       if (simulatedAmount == 0) continue;
-      insertedBuilder.add(stack.aspect(), simulatedAmount);
+      insertedBuilder.add(stack.getAspect(), simulatedAmount);
     }
 
     var insertedAspects = insertedBuilder.build();
@@ -63,10 +63,10 @@ public interface IAspectContainer {
     var extractedBuilder = AspectMap.builder();
 
     for (var stack : toExtract) {
-      if (stack.amount() == 0) continue;
-      var simulatedAmount = this.extract(stack.aspect(), stack.amount(), true);
+      if (stack.getAmount() == 0) continue;
+      var simulatedAmount = this.extract(stack.getAspect(), stack.getAmount(), true);
       if (simulatedAmount == 0) continue;
-      extractedBuilder.add(stack.aspect(), simulatedAmount);
+      extractedBuilder.add(stack.getAspect(), simulatedAmount);
     }
 
     var extractedAspects = extractedBuilder.build();

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class AspectMap implements Iterable<AspectStack> {
   public static final AspectMap EMPTY = new AspectMap(new LinkedHashMap<>());
   public static final Codec<Pair<Aspect, Integer>> PAIR_CODEC = Codec.pair(
-      Aspect.CODEC.fieldOf("aspect").codec(),
+      Aspect.Companion.getCODEC().fieldOf("aspect").codec(),
       Codec.INT.fieldOf("amount").codec()
   );
   public static final Codec<List<Pair<Aspect, Integer>>> PAIR_LIST_CODEC = AspectMap.PAIR_CODEC.listOf();
@@ -55,7 +55,7 @@ public class AspectMap implements Iterable<AspectStack> {
   public static final StreamCodec<ByteBuf, LinkedHashMap<Aspect, Integer>> MAP_STREAM_CODEC =
       ByteBufCodecs.map(
           LinkedHashMap::new,
-          Aspect.STREAM_CODEC,
+          Aspect.Companion.getSTREAM_CODEC(),
           ByteBufCodecs.INT
       );
   public static final StreamCodec<ByteBuf, AspectMap> STREAM_CODEC =
@@ -131,9 +131,9 @@ public class AspectMap implements Iterable<AspectStack> {
    */
   public List<AspectStack> toSortedList() {
     return this.map.entrySet().stream()
-        .map(e -> AspectStack.of(e.getKey(), e.getValue()))
-        .filter(a -> a.amount() > 0)
-        .sorted(Comparator.comparingInt(AspectStack::amount))
+        .map(e -> AspectStack.Companion.of(e.getKey(), e.getValue()))
+        .filter(a -> a.getAmount() > 0)
+        .sorted(Comparator.comparingInt(AspectStack::getAmount))
         .toList();
   }
 
@@ -143,7 +143,7 @@ public class AspectMap implements Iterable<AspectStack> {
 
   public ImmutableList<AspectStack> displayedAspects() {
     if (this == AspectMap.EMPTY) return ImmutableList.of();
-    return Aspects.INSTANCE.getREGISTRAR().getEntries().stream().map(Supplier::get).filter(a -> this.get(a) > 0).map(a -> AspectStack.of(a, this.get(a))).collect(ImmutableList.toImmutableList());
+    return Aspects.INSTANCE.getREGISTRAR().getEntries().stream().map(Supplier::get).filter(a -> this.get(a) > 0).map(a -> AspectStack.Companion.of(a, this.get(a))).collect(ImmutableList.toImmutableList());
   }
 
   public int size() {
@@ -179,7 +179,7 @@ public class AspectMap implements Iterable<AspectStack> {
 
   @Override
   public @NotNull Iterator<AspectStack> iterator() {
-    return this.map.entrySet().stream().filter(e -> e.getValue() > 0).map(e -> AspectStack.of(e.getKey(), e.getValue())).iterator();
+    return this.map.entrySet().stream().filter(e -> e.getValue() > 0).map(e -> AspectStack.Companion.of(e.getKey(), e.getValue())).iterator();
   }
 
   public static class Builder {
@@ -197,7 +197,7 @@ public class AspectMap implements Iterable<AspectStack> {
     }
 
     public Builder add(AspectStack aspectStack) {
-      return this.add(aspectStack.aspect(), aspectStack.amount());
+      return this.add(aspectStack.getAspect(), aspectStack.getAmount());
     }
 
     public Builder subtract(Aspect aspect, int amount) {
@@ -207,7 +207,7 @@ public class AspectMap implements Iterable<AspectStack> {
     }
 
     public Builder subtract(AspectStack aspectStack) {
-      return this.subtract(aspectStack.aspect(), aspectStack.amount());
+      return this.subtract(aspectStack.getAspect(), aspectStack.getAmount());
     }
 
     public Builder scale(int multiplier) {

@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.common.MutableDataComponentHolder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -150,7 +151,7 @@ public class AspectContainer implements IAspectContainer {
           .anyMatch(e -> e > 0);
     }
 
-    public AspectStack transferPrimal(int indexOffset, int idealAmount) {
+    public @Nullable AspectStack transferPrimal(int indexOffset, int idealAmount) {
       var primals = Aspects.INSTANCE.getPRIMAL_ASPECTS().size();
       for (int i = 0; i < primals; i++) {
         var a = Aspects.INSTANCE.getPRIMAL_ASPECTS().get((i + indexOffset) % primals).get();
@@ -158,9 +159,9 @@ public class AspectContainer implements IAspectContainer {
         if (amount == 0) continue;
         this.sink.insert(a, amount, false);
         this.source.extract(a, amount, false);
-        return AspectStack.of(a, amount);
+        return AspectStack.Companion.of(a, amount);
       }
-      return AspectStack.EMPTY;
+      return null;
     }
   }
 }

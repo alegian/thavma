@@ -198,7 +198,7 @@ public class T7RecipeProvider extends RecipeProvider {
 
     T7RecipeProvider.inCrucible(pRecipeOutput,
         new ItemStack(Items.DIAMOND),
-        AspectMap.builder()
+        AspectMap.Companion.builder()
             .add(Aspects.INSTANCE.getTERRA().get(), 6)
             .add(Aspects.INSTANCE.getPERDITIO().get(), 2)
             .build(),
@@ -206,7 +206,7 @@ public class T7RecipeProvider extends RecipeProvider {
     );
 
     WorkbenchRecipeBuilder.Companion.shaped(Items.DIAMOND, 2)
-        .requireAspects(AspectMap.builder()
+        .requireAspects(AspectMap.Companion.builder()
             .add(Aspects.INSTANCE.getIGNIS().get(), 6)
             .add(Aspects.INSTANCE.getORDO().get(), 2)
             .build())

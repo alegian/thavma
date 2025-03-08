@@ -19,7 +19,7 @@ import kotlin.math.min
 
 class AspectContainer(private val holder: MutableDataComponentHolder, private val capacity: Int = Int.MAX_VALUE, private val visSource: Boolean = false, private val essentiaSource: Boolean = false) : IAspectContainer {
   override fun getAspects(): AspectMap {
-    val aspectMap = holder.get(ASPECTS) ?: return AspectMap.EMPTY
+    val aspectMap = holder.get(ASPECTS) ?: return AspectMap()
     return aspectMap
   }
 

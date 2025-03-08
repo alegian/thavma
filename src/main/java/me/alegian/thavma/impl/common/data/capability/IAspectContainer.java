@@ -32,9 +32,9 @@ public interface IAspectContainer {
    * Returns: an AspectMap representing the aspects inserted (or those that would have been inserted, if simulated)
    */
   default @Nonnull AspectMap insert(@Nullable AspectMap toInsert) {
-    if (toInsert == null) return AspectMap.EMPTY;
+    if (toInsert == null) return new AspectMap();
 
-    var insertedBuilder = AspectMap.builder();
+    var insertedBuilder = AspectMap.Companion.builder();
 
     for (var stack : toInsert) {
       if (stack.getAmount() == 0) continue;
@@ -58,9 +58,9 @@ public interface IAspectContainer {
    * Returns: an AspectMap representing the aspects extracted (or those that would have been extracted, if simulated)
    */
   default @Nonnull AspectMap extract(@Nullable AspectMap toExtract) {
-    if (toExtract == null) return AspectMap.EMPTY;
+    if (toExtract == null) return new AspectMap();
 
-    var extractedBuilder = AspectMap.builder();
+    var extractedBuilder = AspectMap.Companion.builder();
 
     for (var stack : toExtract) {
       if (stack.getAmount() == 0) continue;

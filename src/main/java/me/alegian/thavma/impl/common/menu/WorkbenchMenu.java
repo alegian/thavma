@@ -24,7 +24,7 @@ public class WorkbenchMenu extends Menu {
   private final CraftingContainer3x3 craftingContainer = new CraftingContainer3x3(this);
   private final WandContainer<WorkbenchMenu> wandContainer = new WandContainer<>(this);
   private final WorkbenchResultContainer resultContainer = new WorkbenchResultContainer(this);
-  private AspectMap requiredAspects = AspectMap.EMPTY;
+  private AspectMap requiredAspects = new AspectMap();
 
   public WorkbenchMenu(int pContainerId, Inventory pPlayerInventory) {
     this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL);
@@ -52,7 +52,7 @@ public class WorkbenchMenu extends Menu {
 
     this.requiredAspects = optionalRecipeHolder.map(r ->
         r.value().assembleAspects()
-    ).orElse(AspectMap.EMPTY);
+    ).orElse(new AspectMap());
 
     if (!level.isClientSide()) {
       var resultItem = optionalRecipeHolder.map(r ->

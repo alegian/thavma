@@ -16,7 +16,7 @@ object VisGuiOverlay {
     val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
     if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return@Layer
 
-    val vis = aspectContainer.aspects
+    val aspectMap = aspectContainer.aspects
     val maxAmount = aspectContainer.capacity
 
     graphics.usePose {
@@ -35,7 +35,7 @@ object VisGuiOverlay {
         graphics.usePose {
           translateXY(0.0, STAR.height / 2.0)
           graphics.setColor(a.color)
-          graphics.blit(BAR_CONTENT.location, -BAR_CONTENT.width / 2, (BAR_FRAME.height - BAR_CONTENT.height) / 2, 0f, 0f, BAR_CONTENT.width, BAR_CONTENT.height * vis[a] / maxAmount, BAR_CONTENT.width, BAR_CONTENT.height)
+          graphics.blit(BAR_CONTENT.location, -BAR_CONTENT.width / 2, (BAR_FRAME.height - BAR_CONTENT.height) / 2, 0f, 0f, BAR_CONTENT.width, BAR_CONTENT.height * aspectMap[a] / maxAmount, BAR_CONTENT.width, BAR_CONTENT.height)
           graphics.resetColor()
           graphics.blit(BAR_FRAME.location, -BAR_FRAME.width / 2, 0, 0f, 0f, BAR_FRAME.width, BAR_FRAME.height, BAR_FRAME.width, BAR_FRAME.height)
         }

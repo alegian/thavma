@@ -111,6 +111,15 @@ class AspectMap(map: LinkedHashMap<Aspect, Int> = LinkedHashMap()) : Iterable<As
     return map.entries.stream().filter { e -> e.value > 0 }.map { e -> AspectStack.of(e.key, e.value) }.iterator()
   }
 
+  override fun hashCode(): Int {
+    return map.hashCode()
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (other is AspectMap) return this.map == other.map
+    return super.equals(other)
+  }
+
   class Builder {
     private var map = LinkedHashMap<Aspect, Int>()
 

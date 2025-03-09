@@ -17,15 +17,16 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 import kotlin.math.min
 
-class AspectContainer(private val holder: MutableDataComponentHolder, private val capacity: Int = Int.MAX_VALUE, private val visSource: Boolean = false, private val essentiaSource: Boolean = false) : IAspectContainer {
-  override fun getAspects(): AspectMap {
-    val aspectMap = holder.get(ASPECTS) ?: return AspectMap()
-    return aspectMap
-  }
-
-  override fun setAspects(aspects: AspectMap) {
-    holder.set(ASPECTS, aspects)
-  }
+open class AspectContainer(
+  private val holder: MutableDataComponentHolder,
+  override val capacity: Int = Int.MAX_VALUE,
+  override val isVisSource: Boolean = false,
+  override val isEssentiaSource: Boolean = false
+) : IAspectContainer {
+  override var aspects = holder.get(ASPECTS) ?: AspectMap()
+    set(a){
+      holder.set(ASPECTS, a)
+    }
 
   override fun areAspectsNull(): Boolean {
     return holder.get(ASPECTS) == null
@@ -35,7 +36,7 @@ class AspectContainer(private val holder: MutableDataComponentHolder, private va
     if (amount == 0) return 0
 
     val current = this.aspects
-    val maxInsert = this.getCapacity() - current[aspect]
+    val maxInsert = this.capacity - current[aspect]
     val cappedInsert = min(amount.toDouble(), maxInsert.toDouble()).toInt()
 
     if (!simulate) this.aspects = current.add(aspect, cappedInsert)
@@ -53,34 +54,22 @@ class AspectContainer(private val holder: MutableDataComponentHolder, private va
     return cappedSubtract
   }
 
-  override fun getCapacity(): Int {
-    return this.capacity
-  }
-
-  override fun isVisSource(): Boolean {
-    return this.visSource
-  }
-
-  override fun isEssentiaSource(): Boolean {
-    return this.essentiaSource
-  }
-
-  class Pair(private val source: IAspectContainer, private val sink: IAspectContainer) {
-    protected fun simulateTransfer(a: Aspect, idealAmount: Int): Int {
+  open class Pair(private val source: IAspectContainer, private val sink: IAspectContainer) {
+    private fun simulateTransfer(a: Aspect, idealAmount: Int): Int {
       val maxInsert = sink.insert(a, idealAmount, true)
       return source.extract(a, maxInsert, true)
     }
 
-    fun canTransferPrimals(): Boolean {
+    open fun canTransferPrimals(): Boolean {
       return PRIMAL_ASPECTS.stream()
         .anyMatch { a -> simulateTransfer(a.get(), 1) > 0 }
     }
 
-    fun transferPrimal(indexOffset: Int, idealAmount: Int): AspectStack? {
+    open fun transferPrimal(indexOffset: Int, idealAmount: Int): AspectStack? {
       val primals = PRIMAL_ASPECTS.size
       for (i in 0..<primals) {
         val a = PRIMAL_ASPECTS[(i + indexOffset) % primals].get()
-        val amount = this.simulateTransfer(a, idealAmount)
+        val amount = simulateTransfer(a, idealAmount)
         if (amount == 0) continue
         sink.insert(a, amount, false)
         source.extract(a, amount, false)

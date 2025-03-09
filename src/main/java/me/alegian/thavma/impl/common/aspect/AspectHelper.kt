@@ -8,10 +8,6 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
-fun hasAspects(itemStack: ItemStack): Boolean {
-    return getAspects(itemStack) != null
-}
-
 fun getAspects(itemEntity: ItemEntity): AspectMap? {
     return getAspects(itemEntity.item)
 }

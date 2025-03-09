@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.aspect.getAspects
-import me.alegian.thavma.impl.common.aspect.hasAspects
 import me.alegian.thavma.impl.common.block.entity.CrucibleBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.recipe.CrucibleRecipeInput
@@ -166,31 +165,31 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
       if (thrownStack.`is`(CATALYST)) {
         val crucibleAspects = AspectContainer.at(level, pPos)?.aspects
 
-        val recipes = level.recipeManager
         val input = crucibleAspects?.let { CrucibleRecipeInput(it, thrownStack) }
+        val recipe = input?.let { level.recipeManager.getRecipeFor(T7RecipeTypes.CRUCIBLE.get(), input, level).orElse(null)?.value() }
 
-        val success = recipes.getRecipeFor(T7RecipeTypes.CRUCIBLE.get(), input, level).map { recipe ->
-          if (!tryLowerFillLevel(level, pPos)) return@map false
+        val success = recipe?.let {
+          if (!tryLowerFillLevel(level, pPos)) return@let false
           waterSplash(level, pPos)
 
-          AspectContainer.at(level, pPos)?.extract(recipe.value().requiredAspects)
+          AspectContainer.at(level, pPos)?.extract(it.requiredAspects)
 
           val player = itemEntity.owner
           if (player is ServerPlayer) {
-            player.drop(recipe.value().assemble(input, level.registryAccess()), true, true)?.run {
+            player.drop(it.assemble(input, level.registryAccess()), true, true)?.run {
               setNoPickUpDelay()
               target = player.getUUID()
-              shrink()
+              itemEntity.shrink()
             }
           }
           true
-        }.orElse(false)
+        } ?: false
 
         if (success) return  // if catalyst failed, try to melt item instead
       }
 
-      if (!hasAspects(thrownStack) || !hasWater(level, pPos)) return
       val itemAspects = getAspects(itemEntity)
+      if (itemAspects == null || !hasWater(level, pPos)) return
       AspectContainer.at(level, pPos)?.insert(itemAspects)
       waterSplash(level, pPos)
       itemEntity.discard()

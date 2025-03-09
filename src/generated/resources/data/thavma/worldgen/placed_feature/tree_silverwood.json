@@ -3,7 +3,7 @@
   "placement": [
     {
       "type": "minecraft:rarity_filter",
-      "chance": 9
+      "chance": 128
     },
     {
       "type": "minecraft:in_square"
@@ -24,7 +24,7 @@
       "predicate": {
         "type": "minecraft:would_survive",
         "state": {
-          "Name": "minecraft:oak_sapling",
+          "Name": "thavma:silverwood_sapling",
           "Properties": {
             "stage": "0"
           }

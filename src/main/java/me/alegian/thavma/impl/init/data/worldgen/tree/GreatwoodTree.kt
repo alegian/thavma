@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.worldgen.tree
 
 import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.data.worldgen.tree.trunk.GreatwoodTrunkPlacer
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import net.minecraft.core.HolderSet
@@ -11,7 +12,6 @@ import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BiomeTags
 import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -58,12 +58,12 @@ object GreatwoodTree {
       PLACED_FEATURE, PlacedFeature(
         otherRegistry.getOrThrow(CONFIGURED_FEATURE),
         listOf(
-          RarityFilter.onAverageOnceEvery(9),
+          RarityFilter.onAverageOnceEvery(64),
           InSquarePlacement.spread(),
           SurfaceWaterDepthFilter.forMaxDepth(0),
           PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
           BiomeFilter.biome(),
-          PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING)
+          PlacementUtils.filteredByBlockSurvival(T7Blocks.GREATWOOD_SAPLING.get())
         )
       )
     )

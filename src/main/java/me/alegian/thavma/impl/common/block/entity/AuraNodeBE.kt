@@ -3,13 +3,17 @@ package me.alegian.thavma.impl.common.block.entity
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
+import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.Containers
+import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -17,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.SlabType
 import net.neoforged.neoforge.common.Tags
+import kotlin.math.min
 
 class AuraNodeBE(pos: BlockPos?, blockState: BlockState?) :
   DataComponentBE(T7BlockEntities.AURA_NODE.get(), pos, blockState) {
@@ -118,6 +123,19 @@ class AuraNodeBE(pos: BlockPos?, blockState: BlockState?) :
 
   override fun getComponentTypes(): Array<DataComponentType<*>> {
     return arrayOf(ASPECTS.get())
+  }
+
+  fun dropItems() {
+    AspectContainer.from(this)?.let {
+      val container = SimpleContainer(it.aspects.size())
+      for (stack in it.aspects) {
+        // TODO: somehow clean this up
+        val deferredAspect = T7Registries.ASPECT.wrapAsHolder(stack.aspect)
+        T7Items.TESTAS[deferredAspect]?.toStack(min(stack.amount, 64))?.let(container::addItem)
+      }
+
+      level?.let { Containers.dropContents(it, blockPos, container) }
+    }
   }
 
   companion object {

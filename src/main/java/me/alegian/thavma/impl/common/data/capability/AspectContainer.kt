@@ -102,7 +102,7 @@ open class AspectContainer(
     }
 
     fun from(be: BlockEntity): IAspectContainer? {
-      return be.level?.getCapability(BLOCK, be.blockPos)
+      return be.level?.getCapability(BLOCK, be.blockPos, null, be)
     }
 
     fun isAspectContainer(level: Level, blockPos: BlockPos): Boolean {

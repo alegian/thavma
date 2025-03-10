@@ -1,10 +1,10 @@
 package me.alegian.thavma.impl.client.event
 
 import com.mojang.datafixers.util.Either
-import me.alegian.thavma.impl.client.getLocalPlayerEquipmentItem
+import me.alegian.thavma.impl.client.clientPlayerHasRevealing
+import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
-import me.alegian.thavma.impl.client.localPlayerHasRevealing
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.client.renderer.level.renderEssentia
@@ -64,7 +64,7 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
 
   // aspect renderer
   if (!AspectContainer.isAspectContainer(level, blockPos)) return
-  if (!localPlayerHasRevealing()) return
+  if (!clientPlayerHasRevealing()) return
 
   AspectContainer.at(level, blockPos)?.aspects?.let {
     AspectRenderer.renderAfterWeather(
@@ -90,7 +90,7 @@ private fun renderLevelAfterBEs(event: RenderLevelStageEvent) {
 }
 
 private fun gatherTooltipComponents(event: GatherComponents) {
-  if (!localPlayerHasRevealing()) return
+  if (!clientPlayerHasRevealing()) return
 
   AspectContainer.from(event.itemStack)?.aspects?.let {
     event.tooltipElements.add(
@@ -109,13 +109,13 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   val model = event.renderer.model
 
   // if chestplate exists, disable sleeves & jacket to prevent clipping with thin armors
-  getLocalPlayerEquipmentItem(EquipmentSlot.CHEST)?.let {
+  getClientPlayerEquipmentItem(EquipmentSlot.CHEST)?.let {
     model.leftSleeve.visible = false
     model.rightSleeve.visible = false
     model.jacket.visible = false
   }
   // if leggings exist, disable pants to prevent clipping with thin armors
-  getLocalPlayerEquipmentItem(EquipmentSlot.LEGS)?.let {
+  getClientPlayerEquipmentItem(EquipmentSlot.LEGS)?.let {
     model.leftPants.visible = false
     model.rightPants.visible = false
   }

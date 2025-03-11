@@ -1,10 +1,9 @@
-# Thaumcraft 7 (Thavma)
+# Thavma
 
 ## Preface
 
 A complete rewrite & re-imagination of azanor's Thaumcraft for modern versions of Minecraft.
-I am in no way associated with azanor and will not use any of their assets,
-except perhaps temporarily the mod name (which I will also change upon release).
+I am in no way associated with azanor and I have not used any of their assets.
 
 What version of Thaumcraft am I rewriting? None specifically. I am going to implement what
 I enjoyed most from each version (my favorite being Thaumcraft 4.2). I plan to add

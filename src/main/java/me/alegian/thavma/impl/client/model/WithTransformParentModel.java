@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.alegian.thavma.impl.Thavma;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -28,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+import static me.alegian.thavma.impl.ThavmaKt.rl;
+
 /**
  * A custom model loader that adds "transform parent" to a block model.
  * The model renders normally, but inherits the ItemTransforms of the "transform parent".
@@ -36,7 +37,7 @@ import java.util.function.Function;
  */
 @OnlyIn(Dist.CLIENT)
 public class WithTransformParentModel implements IUnbakedGeometry<WithTransformParentModel> {
-  public static final ResourceLocation ID = Thavma.INSTANCE.rl("with_transform_parent");
+  public static final ResourceLocation ID = rl("with_transform_parent");
   public static final String TRANSFORM_PARENT_KEY = "transform_parent";
   private final BlockModel base;
   private final ResourceLocation transformParentLocation;

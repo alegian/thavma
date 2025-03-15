@@ -16,6 +16,6 @@ public class EmissiveGeoLayer<T extends GeoAnimatable> extends AutoGlowingGeoLay
 
   @Override
   protected RenderType getRenderType(T animatable, @Nullable MultiBufferSource bufferSource) {
-    return T7RenderTypes.EYES_WITH_DEPTH.apply(AutoGlowingTexture.getEmissiveResource(this.getTextureResource(animatable)));
+    return T7RenderTypes.INSTANCE.getEYES_WITH_DEPTH().apply(AutoGlowingTexture.getEmissiveResource(this.getTextureResource(animatable)));
   }
 }

@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.common.item;
 
-import me.alegian.thavma.impl.Thavma;
 import me.alegian.thavma.impl.common.aspect.AspectHelperKt;
 import me.alegian.thavma.impl.common.block.AuraNodeBlock;
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers;
@@ -30,6 +29,8 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
+
+import static me.alegian.thavma.impl.ThavmaKt.rl;
 
 public class OculusItem extends Item implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -96,7 +97,7 @@ public class OculusItem extends Item implements GeoItem {
       @Override
       public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
         if (this.renderer == null)
-          this.renderer = new GeoItemRenderer<>(new DefaultedItemGeoModel<OculusItem>(Thavma.INSTANCE.rl("oculus")) {
+          this.renderer = new GeoItemRenderer<>(new DefaultedItemGeoModel<OculusItem>(rl("oculus")) {
             @Override
             public RenderType getRenderType(OculusItem animatable, ResourceLocation texture) {
               return RenderType.entityTranslucent(texture);

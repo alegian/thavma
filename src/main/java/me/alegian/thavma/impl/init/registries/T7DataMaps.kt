@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.init.registries
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.Registries
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 

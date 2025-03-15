@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.client.renderer.geo.WandRenderer
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyThaumonomiconEntity
@@ -10,6 +9,7 @@ import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

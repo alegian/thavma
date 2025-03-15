@@ -1,9 +1,9 @@
 package me.alegian.thavma.impl.init.data.worldgen.ore
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.linkedMapWithPrimalKeys
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey

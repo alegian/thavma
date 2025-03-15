@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.client.event
 
-import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.T7RenderStateShards
 import me.alegian.thavma.impl.client.T7VertexFormats
@@ -23,6 +22,7 @@ import me.alegian.thavma.impl.common.block.entity.PedestalBE
 import me.alegian.thavma.impl.common.block.entity.PillarBE
 import me.alegian.thavma.impl.common.block.entity.WorkbenchBE
 import me.alegian.thavma.impl.init.registries.deferred.*
+import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.ShaderInstance
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.neoforge.client.event.*
@@ -33,7 +33,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
-  event.registerAboveAll(Thavma.rl("vis"), VisGuiOverlay.LAYER)
+  event.registerAboveAll(rl("vis"), VisGuiOverlay.LAYER)
 }
 
 private fun registerEntityRenderers(event: RegisterRenderers) {
@@ -142,7 +142,7 @@ private fun registerBlockColorHandlers(event: RegisterColorHandlersEvent.Block) 
 
 private fun registerShaders(event: RegisterShadersEvent) {
   event.registerShader(
-    ShaderInstance(event.resourceProvider, Thavma.rl("aura_node"), T7VertexFormats.AURA_NODE)
+    ShaderInstance(event.resourceProvider, rl("aura_node"), T7VertexFormats.AURA_NODE)
   ) { T7RenderStateShards.auraNodeShader = it }
 }
 

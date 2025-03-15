@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.client.renderer.geo;
 
-import me.alegian.thavma.impl.Thavma;
 import me.alegian.thavma.impl.common.item.WandItem;
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial;
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial;
@@ -11,12 +10,14 @@ import software.bernie.geckolib.renderer.specialty.DynamicGeoItemRenderer;
 
 import javax.annotation.Nullable;
 
+import static me.alegian.thavma.impl.ThavmaKt.rl;
+
 public class WandRenderer extends DynamicGeoItemRenderer<WandItem> {
   private final ResourceLocation handleLocation;
   private final ResourceLocation coreLocation;
 
   public WandRenderer(WandHandleMaterial handleMaterial, WandCoreMaterial coreMaterial) {
-    super(new DefaultedItemGeoModel<>(Thavma.INSTANCE.rl("wand")));
+    super(new DefaultedItemGeoModel<>(rl("wand")));
     this.handleLocation = WandRenderer.handleTexture(handleMaterial.getRegisteredLocation());
     this.coreLocation = WandRenderer.coreTexture(coreMaterial.getRegisteredLocation());
   }

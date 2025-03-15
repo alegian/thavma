@@ -1,9 +1,9 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
 import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
+import me.alegian.thavma.impl.rl
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.EquipmentSlotGroup

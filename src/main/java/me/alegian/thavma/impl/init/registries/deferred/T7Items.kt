@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.T7Capabilities
 import me.alegian.thavma.impl.init.registries.T7Tiers
 import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.ARCANUM
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.Registry
 import net.minecraft.world.item.*
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -196,7 +197,7 @@ object T7Items {
     val wandName = WandItem.name(handleMaterial, coreMaterial)
 
     val newWand = WandItem(Item.Properties(), handleMaterial, coreMaterial)
-    Registry.register(registry, Thavma.rl(wandName), newWand)
+    Registry.register(registry, rl(wandName), newWand)
     WANDS.put(handleName, coreName, newWand)
   }
 

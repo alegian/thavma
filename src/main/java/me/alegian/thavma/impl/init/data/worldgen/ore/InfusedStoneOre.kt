@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.init.data.worldgen.ore
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre.PLACED_FEATURES
 import me.alegian.thavma.impl.init.registries.deferred.listFromPrimals
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext

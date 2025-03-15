@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.common.item;
 
-import me.alegian.thavma.impl.Thavma;
 import me.alegian.thavma.impl.init.registries.T7Tiers;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
@@ -14,6 +13,8 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
+
+import static me.alegian.thavma.impl.ThavmaKt.rl;
 
 public class KatanaItem extends SwordItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -46,7 +47,7 @@ public class KatanaItem extends SwordItem implements GeoItem {
       @Override
       public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
         if (this.renderer == null)
-          this.renderer = new GeoItemRenderer<>(new DefaultedItemGeoModel<KatanaItem>(Thavma.INSTANCE.rl("arcanum_katana")));
+          this.renderer = new GeoItemRenderer<>(new DefaultedItemGeoModel<KatanaItem>(rl("arcanum_katana")));
 
         return this.renderer;
       }

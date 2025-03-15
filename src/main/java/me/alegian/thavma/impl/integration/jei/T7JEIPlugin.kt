@@ -2,17 +2,17 @@ package me.alegian.thavma.impl.integration.jei
 
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.rl
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
-import net.minecraft.resources.ResourceLocation
 
 @JeiPlugin
 internal class T7JEIPlugin : IModPlugin {
-  override fun getPluginUid() = ResourceLocation.fromNamespaceAndPath("thavma", "jei")
+  override fun getPluginUid() = rl("jei")
 
   override fun registerCategories(registration: IRecipeCategoryRegistration) {
     registration.addRecipeCategories(WorkbenchRecipeCategory(registration.jeiHelpers.guiHelper))

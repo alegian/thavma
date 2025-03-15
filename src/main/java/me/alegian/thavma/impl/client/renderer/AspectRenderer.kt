@@ -3,12 +3,12 @@ package me.alegian.thavma.impl.client.renderer
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.AspectStack
+import me.alegian.thavma.impl.rl
 import net.minecraft.client.Camera
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

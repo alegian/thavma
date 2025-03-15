@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.init.registries
 
-import me.alegian.thavma.impl.Thavma.rl
+import me.alegian.thavma.impl.rl
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 
 object T7AttributeModifiers {

@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl
 
+import me.alegian.thavma.impl.Thavma.MODID
 import me.alegian.thavma.impl.client.event.registerClientGameEvents
 import me.alegian.thavma.impl.client.event.registerClientModEvents
 import me.alegian.thavma.impl.common.event.registerCommonGameEvents
@@ -11,7 +12,7 @@ import net.neoforged.fml.common.Mod
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 // must match value in META-INF/mods.toml
-@Mod(Thavma.MODID)
+@Mod(MODID)
 object Thavma {
   const val MODID: String = "thavma"
 
@@ -43,8 +44,6 @@ object Thavma {
     
     CuriosIntegration.init()
   }
-
-  fun rl(path: String): ResourceLocation {
-    return ResourceLocation.fromNamespaceAndPath(MODID, path)
-  }
 }
+
+fun rl(path: String) = ResourceLocation.fromNamespaceAndPath(MODID, path)

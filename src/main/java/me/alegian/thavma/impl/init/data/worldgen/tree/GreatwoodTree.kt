@@ -1,10 +1,10 @@
 package me.alegian.thavma.impl.init.data.worldgen.tree
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.data.worldgen.tree.trunk.GreatwoodTrunkPlacer
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext

@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.init.data.worldgen.spawn
 
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey

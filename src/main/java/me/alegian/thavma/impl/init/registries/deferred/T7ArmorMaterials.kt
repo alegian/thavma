@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.rl
 import net.minecraft.Util
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.sounds.SoundEvents
@@ -67,7 +68,7 @@ object T7ArmorMaterials {
             SoundEvents.ARMOR_EQUIP_IRON,
             { Ingredient.of(T7Items.ARCANUM_INGOT) },
             listOf(
-                ArmorMaterial.Layer(Thavma.rl("arcanum"))
+                ArmorMaterial.Layer(rl("arcanum"))
             ),
             1.0f,
             0f
@@ -90,7 +91,7 @@ object T7ArmorMaterials {
             SoundEvents.ARMOR_EQUIP_NETHERITE,
             { Ingredient.of(T7Items.ARCANUM_INGOT) },
             listOf(
-                ArmorMaterial.Layer(Thavma.rl("arcanum"))
+                ArmorMaterial.Layer(rl("arcanum"))
             ),
             3.0f,
             0.1f

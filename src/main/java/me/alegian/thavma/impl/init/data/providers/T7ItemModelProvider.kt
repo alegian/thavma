@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.Thavma.rl
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
@@ -41,6 +40,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
+import me.alegian.thavma.impl.rl
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper

@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.enchantment
 
-import me.alegian.thavma.impl.Thavma.rl
+import me.alegian.thavma.impl.rl
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.damagesource.DamageSource

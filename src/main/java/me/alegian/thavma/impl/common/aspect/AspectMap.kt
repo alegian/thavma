@@ -1,17 +1,13 @@
 package me.alegian.thavma.impl.common.aspect
 
 import com.google.common.collect.ImmutableList
-import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
-import com.mojang.serialization.DynamicOps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.REGISTRAR
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
 import java.util.function.Consumer
-import java.util.stream.Collectors
 
 /**
  * Immutable.
@@ -20,9 +16,9 @@ import java.util.stream.Collectors
  *
  *
  * Internally uses a LinkedHashMap (i.e. a SequencedMap) for deterministic iteration order.
- * Using a non-sequenced map might cause undefined behavior.
+ * Using a non-sequenced map will cause undefined behavior.
  */
-class AspectMap(map: LinkedHashMap<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack> {
+class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack> {
   /**
    * AspectMap.map is also immutable.
    * This is read-only access to copy the map into a new one.
@@ -160,36 +156,12 @@ class AspectMap(map: LinkedHashMap<Aspect, Int> = LinkedHashMap()) : Iterable<As
   }
 
   companion object {
-    private val PAIR_CODEC: Codec<Pair<Aspect, Int>> = Codec.pair(
-      Aspect.CODEC.fieldOf("aspect").codec(),
-      Codec.INT.fieldOf("amount").codec()
-    )
-    val PAIR_LIST_CODEC = PAIR_CODEC.listOf()
+    // only used as in-between step
+    val MAP_CODEC = Codec.unboundedMap(Aspect.CODEC, Codec.INT)
 
-    val CODEC = object : Codec<AspectMap> {
-      override fun <T> decode(dynamicOps: DynamicOps<T>, t: T): DataResult<Pair<AspectMap?, T>>? {
-        val optionalListOfPairs = PAIR_LIST_CODEC.parse(dynamicOps, t)
-          .resultOrPartial { errored -> println(errored) }
+    val CODEC = MAP_CODEC.xmap(::AspectMap, AspectMap::map)
 
-        return optionalListOfPairs.map { o ->
-          o.stream().collect(
-            Collectors.toMap(
-              { obj -> obj.first },
-              { obj -> obj.second })
-          )
-        }
-          .map { m -> LinkedHashMap(m) }
-          .map { map -> AspectMap(map) }
-          .map { m -> Pair(m, t) }
-          .map { result -> DataResult.success(result) }
-          .orElse(DataResult.success(Pair(AspectMap(), t)))
-      }
-
-      override fun <T> encode(aspectMap: AspectMap, dynamicOps: DynamicOps<T>, t: T): DataResult<T> {
-        val listOfPairs = aspectMap.map.entries.stream().filter { e: Map.Entry<Aspect, Int> -> e.value > 0 }.map { e: Map.Entry<Aspect, Int> -> Pair.of(e.key, e.value) }.toList()
-        return PAIR_LIST_CODEC.encode(listOfPairs, dynamicOps, t)
-      }
-    }
+    // only used as in-between step
     val MAP_STREAM_CODEC = ByteBufCodecs.map(
       ::LinkedHashMap,
       Aspect.STREAM_CODEC,

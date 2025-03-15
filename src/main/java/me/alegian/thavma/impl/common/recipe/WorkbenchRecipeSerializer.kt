@@ -21,15 +21,15 @@ class WorkbenchRecipeSerializer : RecipeSerializer<WorkbenchRecipe> {
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
-        ShapedRecipePattern.MAP_CODEC.forGetter(WorkbenchRecipe::getPattern),
-        ItemStack.CODEC.fieldOf("resultItem").forGetter(WorkbenchRecipe::getResultItem),
-        AspectMap.CODEC.fieldOf("resultAspects").forGetter(WorkbenchRecipe::getResultAspects)
+        ShapedRecipePattern.MAP_CODEC.forGetter(WorkbenchRecipe::pattern),
+        ItemStack.CODEC.fieldOf("result").forGetter(WorkbenchRecipe::result),
+        AspectMap.CODEC.fieldOf("aspects").forGetter(WorkbenchRecipe::aspects)
       ).apply(builder, ::WorkbenchRecipe)
     }
     val STREAM_CODEC = StreamCodec.composite(
-      ShapedRecipePattern.STREAM_CODEC, WorkbenchRecipe::getPattern,
-      ItemStack.STREAM_CODEC, WorkbenchRecipe::getResultItem,
-      AspectMap.STREAM_CODEC, WorkbenchRecipe::getResultAspects,
+      ShapedRecipePattern.STREAM_CODEC, WorkbenchRecipe::pattern,
+      ItemStack.STREAM_CODEC, WorkbenchRecipe::result,
+      AspectMap.STREAM_CODEC, WorkbenchRecipe::aspects,
       ::WorkbenchRecipe
     )
   }

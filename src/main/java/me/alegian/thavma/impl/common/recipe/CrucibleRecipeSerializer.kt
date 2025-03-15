@@ -21,15 +21,15 @@ class CrucibleRecipeSerializer : RecipeSerializer<CrucibleRecipe> {
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { inst: RecordCodecBuilder.Instance<CrucibleRecipe> ->
       inst.group(
-        AspectMap.CODEC.fieldOf("aspects").forGetter(CrucibleRecipe::getRequiredAspects),
-        Ingredient.CODEC.fieldOf("catalyst").forGetter(CrucibleRecipe::getRequiredCatalyst),
-        ItemStack.CODEC.fieldOf("result").forGetter(CrucibleRecipe::getResult)
+        AspectMap.CODEC.fieldOf("aspects").forGetter(CrucibleRecipe::aspects),
+        Ingredient.CODEC.fieldOf("catalyst").forGetter(CrucibleRecipe::catalyst),
+        ItemStack.CODEC.fieldOf("result").forGetter(CrucibleRecipe::result)
       ).apply(inst, ::CrucibleRecipe)
     }
     val STREAM_CODEC = StreamCodec.composite(
-      AspectMap.STREAM_CODEC, CrucibleRecipe::getRequiredAspects,
-      Ingredient.CONTENTS_STREAM_CODEC, CrucibleRecipe::getRequiredCatalyst,
-      ItemStack.STREAM_CODEC, CrucibleRecipe::getResult,
+      AspectMap.STREAM_CODEC, CrucibleRecipe::aspects,
+      Ingredient.CONTENTS_STREAM_CODEC, CrucibleRecipe::catalyst,
+      ItemStack.STREAM_CODEC, CrucibleRecipe::result,
       ::CrucibleRecipe
     )
   }

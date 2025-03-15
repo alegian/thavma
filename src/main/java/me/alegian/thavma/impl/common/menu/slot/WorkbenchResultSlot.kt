@@ -28,6 +28,6 @@ class WorkbenchResultSlot(menu: WorkbenchMenu, id: Int) : T7ResultSlot<Workbench
 
     val container = AspectContainer.from(menu.wandContainer.getItem(0))
     if (container == null || recipe == null) return
-    container.extract(recipe.value().resultAspects)
+    container.extract(recipe.value().aspects)
   }
 }

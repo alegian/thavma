@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,16 +46,15 @@ public class WorkbenchMenu extends Menu {
 
   private void refreshRecipeResult() {
     Level level = this.getPlayer().level();
-    CraftingInput craftinginput = this.craftingContainer.asCraftInput();
     var optionalRecipeHolder = level.getRecipeManager().getRecipeFor(T7RecipeTypes.INSTANCE.getWORKBENCH().get(), this.craftingContainer.asCraftInput(), level);
 
     this.requiredAspects = optionalRecipeHolder.map(r ->
-        r.value().assembleAspects()
+        r.value().getAspects()
     ).orElse(new AspectMap());
 
     if (!level.isClientSide()) {
       var resultItem = optionalRecipeHolder.map(r ->
-          r.value().assemble(craftinginput, level.registryAccess())
+          r.value().getResult()
       ).orElse(ItemStack.EMPTY);
 
       this.resultContainer.setItem(0, resultItem);

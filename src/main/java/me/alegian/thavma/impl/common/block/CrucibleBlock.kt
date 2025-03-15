@@ -3,7 +3,6 @@ package me.alegian.thavma.impl.common.block
 import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.block.entity.CrucibleBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.recipe.CrucibleRecipeInput
 import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
 import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.BLOCK
 import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.FLUID
@@ -24,6 +23,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
@@ -163,27 +163,29 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
 
       // try to use as catalyst
       if (thrownStack.`is`(CATALYST)) {
-        val crucibleAspects = AspectContainer.at(level, pPos)?.aspects
+        val crucibleAspects = AspectContainer.at(level, pPos)?.aspects ?: return
 
-        val input = crucibleAspects?.let { CrucibleRecipeInput(it, thrownStack) }
-        val recipe = input?.let { level.recipeManager.getRecipeFor(T7RecipeTypes.CRUCIBLE.get(), input, level).orElse(null)?.value() }
+        val input = SingleRecipeInput(thrownStack)
+        val recipe = level.recipeManager.getRecipeFor(T7RecipeTypes.CRUCIBLE.get(), input, level).orElse(null)?.value()
 
-        val success = recipe?.let {
+        val success = recipe.let {
+          if (it == null) return@let false
           if (!tryLowerFillLevel(level, pPos)) return@let false
+          if (!crucibleAspects.contains(it.aspects)) return@let false
           waterSplash(level, pPos)
 
-          AspectContainer.at(level, pPos)?.extract(it.requiredAspects)
+          AspectContainer.at(level, pPos)?.extract(it.aspects)
 
           val player = itemEntity.owner
           if (player is ServerPlayer) {
-            player.drop(it.assemble(input, level.registryAccess()), true, true)?.run {
+            player.drop(it.result, true, true)?.run {
               setNoPickUpDelay()
               target = player.getUUID()
               itemEntity.shrink()
             }
           }
           true
-        } ?: false
+        }
 
         if (success) return  // if catalyst failed, try to melt item instead
       }

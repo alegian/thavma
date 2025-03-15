@@ -20,15 +20,15 @@ Good pick azanor ;-)
 - Team CoFH, for allowing anyone to learn from their code. Also, modified versions of their license and their package
   structure are used here
 - McJTy, for their minecraft modding tutorials
-- The JEI team, for being open source. Their codebase taught me how to use custom Texture Atlases
+- The JEI team, their codebase taught me how to use custom Texture Atlases
 - The https://game-icons.net/ team, for their free icons, under
   the [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) license. All icons were taken as-is
 - Reaves, for their awesome original models & textures
-- Gigaherz, for
-  their [custom core shader tutorial gist](https://gist.github.com/gigaherz/b8756ff463541f07a644ef8f14cb10f5), pretty
+- Gigaherz, for their [custom core shader tutorial gist](https://gist.github.com/gigaherz/b8756ff463541f07a644ef8f14cb10f5), pretty
   much the only resource online that describes this process
-- The Artifacts team, for being open source. Their codebase taught me how to use Attribute Modifiers and how to render
+- The Artifacts team, their codebase taught me how to use Attribute Modifiers and how to render
   custom cuboids on HumanoidModels
+- The Modern Industrialization team. I learnt from their recipe system
 
 ## License
 

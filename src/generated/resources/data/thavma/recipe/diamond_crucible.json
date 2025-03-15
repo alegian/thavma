@@ -1,15 +1,9 @@
 {
   "type": "thavma:crucible",
-  "aspects": [
-    {
-      "amount": 6,
-      "aspect": "thavma:terra"
-    },
-    {
-      "amount": 2,
-      "aspect": "thavma:perditio"
-    }
-  ],
+  "aspects": {
+    "thavma:perditio": 2,
+    "thavma:terra": 6
+  },
   "catalyst": {
     "item": "minecraft:dragon_egg"
   },

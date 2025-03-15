@@ -1,14 +1,8 @@
 {
   "values": {
-    "minecraft:diamond": [
-      {
-        "amount": 15,
-        "aspect": "thavma:vitreus"
-      },
-      {
-        "amount": 15,
-        "aspect": "thavma:desiderium"
-      }
-    ]
+    "minecraft:diamond": {
+      "thavma:desiderium": 15,
+      "thavma:vitreus": 15
+    }
   }
 }

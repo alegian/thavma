@@ -1,15 +1,9 @@
 {
   "type": "thavma:arcane_workbench",
-  "aspects": [
-    {
-      "amount": 6,
-      "aspect": "thavma:ignis"
-    },
-    {
-      "amount": 2,
-      "aspect": "thavma:ordo"
-    }
-  ],
+  "aspects": {
+    "thavma:ignis": 6,
+    "thavma:ordo": 2
+  },
   "key": {
     "d": {
       "item": "minecraft:cobbled_deepslate"

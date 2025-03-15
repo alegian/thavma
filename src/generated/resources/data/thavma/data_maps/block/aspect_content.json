@@ -1,214 +1,91 @@
 {
   "values": {
-    "#c:cobblestones": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:perditio"
-      }
-    ],
-    "#c:concretes": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 2,
-        "aspect": "thavma:perditio"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:aqua"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:ordo"
-      }
-    ],
-    "#c:glass_blocks/cheap": [
-      {
-        "amount": 5,
-        "aspect": "thavma:vitreus"
-      }
-    ],
-    "#c:glass_panes": [
-      {
-        "amount": 1,
-        "aspect": "thavma:vitreus"
-      }
-    ],
-    "#c:sands": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 5,
-        "aspect": "thavma:perditio"
-      }
-    ],
-    "#c:stones": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "#minecraft:concrete_powder": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 2,
-        "aspect": "thavma:perditio"
-      }
-    ],
-    "#minecraft:logs": [
-      {
-        "amount": 20,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "#minecraft:planks": [
-      {
-        "amount": 3,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "#minecraft:terracotta": [
-      {
-        "amount": 15,
-        "aspect": "thavma:aqua"
-      },
-      {
-        "amount": 15,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:ignis"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:sensus"
-      }
-    ],
-    "#minecraft:wooden_slabs": [
-      {
-        "amount": 1,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "#minecraft:wooden_stairs": [
-      {
-        "amount": 3,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "#minecraft:wool": [
-      {
-        "amount": 11,
-        "aspect": "thavma:bestia"
-      },
-      {
-        "amount": 3,
-        "aspect": "thavma:sensus"
-      },
-      {
-        "amount": 3,
-        "aspect": "thavma:fabrico"
-      }
-    ],
-    "minecraft:bedrock": [
-      {
-        "amount": 25,
-        "aspect": "thavma:vacuos"
-      },
-      {
-        "amount": 25,
-        "aspect": "thavma:perditio"
-      },
-      {
-        "amount": 25,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 25,
-        "aspect": "thavma:tenebrae"
-      }
-    ],
-    "minecraft:coarse_dirt": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "minecraft:dirt": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "minecraft:grass_block": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 2,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "minecraft:podzol": [
-      {
-        "amount": 5,
-        "aspect": "thavma:terra"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:herba"
-      }
-    ],
-    "minecraft:polished_andesite": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "minecraft:polished_diorite": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "minecraft:polished_granite": [
-      {
-        "amount": 3,
-        "aspect": "thavma:terra"
-      }
-    ],
-    "minecraft:short_grass": [
-      {
-        "amount": 5,
-        "aspect": "thavma:herba"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:aer"
-      }
-    ],
-    "minecraft:tall_grass": [
-      {
-        "amount": 5,
-        "aspect": "thavma:herba"
-      },
-      {
-        "amount": 1,
-        "aspect": "thavma:aer"
-      }
-    ]
+    "#c:cobblestones": {
+      "thavma:perditio": 1,
+      "thavma:terra": 5
+    },
+    "#c:concretes": {
+      "thavma:aqua": 1,
+      "thavma:ordo": 1,
+      "thavma:perditio": 2,
+      "thavma:terra": 3
+    },
+    "#c:glass_blocks/cheap": {
+      "thavma:vitreus": 5
+    },
+    "#c:glass_panes": {
+      "thavma:vitreus": 1
+    },
+    "#c:sands": {
+      "thavma:perditio": 5,
+      "thavma:terra": 5
+    },
+    "#c:stones": {
+      "thavma:terra": 5
+    },
+    "#minecraft:concrete_powder": {
+      "thavma:perditio": 2,
+      "thavma:terra": 3
+    },
+    "#minecraft:logs": {
+      "thavma:herba": 20
+    },
+    "#minecraft:planks": {
+      "thavma:herba": 3
+    },
+    "#minecraft:terracotta": {
+      "thavma:aqua": 15,
+      "thavma:ignis": 1,
+      "thavma:sensus": 1,
+      "thavma:terra": 15
+    },
+    "#minecraft:wooden_slabs": {
+      "thavma:herba": 1
+    },
+    "#minecraft:wooden_stairs": {
+      "thavma:herba": 3
+    },
+    "#minecraft:wool": {
+      "thavma:bestia": 11,
+      "thavma:fabrico": 3,
+      "thavma:sensus": 3
+    },
+    "minecraft:bedrock": {
+      "thavma:perditio": 25,
+      "thavma:tenebrae": 25,
+      "thavma:terra": 25,
+      "thavma:vacuos": 25
+    },
+    "minecraft:coarse_dirt": {
+      "thavma:terra": 3
+    },
+    "minecraft:dirt": {
+      "thavma:terra": 5
+    },
+    "minecraft:grass_block": {
+      "thavma:herba": 2,
+      "thavma:terra": 5
+    },
+    "minecraft:podzol": {
+      "thavma:herba": 1,
+      "thavma:terra": 5
+    },
+    "minecraft:polished_andesite": {
+      "thavma:terra": 3
+    },
+    "minecraft:polished_diorite": {
+      "thavma:terra": 3
+    },
+    "minecraft:polished_granite": {
+      "thavma:terra": 3
+    },
+    "minecraft:short_grass": {
+      "thavma:aer": 1,
+      "thavma:herba": 5
+    },
+    "minecraft:tall_grass": {
+      "thavma:aer": 1,
+      "thavma:herba": 5
+    }
   }
 }

@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration
+package me.alegian.thavma.impl.integration.curios
 
 import me.alegian.thavma.impl.init.data.providers.T7ItemTagProvider
 import net.minecraft.core.HolderLookup
@@ -8,15 +8,19 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.data.event.GatherDataEvent
 
+/**
+ * This class is loaded always, so it should not contain
+ * Curios imports, they might throw NoClassDefFound
+ */
 open class CuriosIntegration {
   companion object {
     private var INSTANCE = CuriosIntegration()
 
     fun init() {
-      if (INSTANCE is UnsafeCuriosHooks) return
+      if (INSTANCE is CuriosHooks) return
       if (!ModList.get().isLoaded("curios")) return
 
-      INSTANCE = UnsafeCuriosHooks()
+      INSTANCE = CuriosHooks()
     }
 
     fun get(): CuriosIntegration {

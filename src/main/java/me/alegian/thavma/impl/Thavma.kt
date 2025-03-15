@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.client.event.registerClientModEvents
 import me.alegian.thavma.impl.common.event.registerCommonGameEvents
 import me.alegian.thavma.impl.common.event.registerCommonModEvents
 import me.alegian.thavma.impl.init.registries.deferred.*
-import me.alegian.thavma.impl.integration.CuriosIntegration
+import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.fml.common.Mod
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS

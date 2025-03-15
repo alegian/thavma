@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration
+package me.alegian.thavma.impl.integration.curios
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.data.providers.T7ItemTagProvider
@@ -28,7 +28,10 @@ import top.theillusivec4.curios.api.type.capability.ICurio
 import java.util.concurrent.CompletableFuture
 import kotlin.jvm.optionals.getOrNull
 
-internal class UnsafeCuriosHooks : CuriosIntegration() {
+/**
+ * All direct references to Curios classes should be here
+ */
+internal class CuriosHooks : CuriosIntegration() {
   init {
     FORGE_BUS.addListener(::curioAttributeModifiers)
     FORGE_BUS.addListener(::curioChange)

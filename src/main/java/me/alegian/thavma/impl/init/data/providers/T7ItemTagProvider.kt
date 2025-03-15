@@ -36,7 +36,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
-import me.alegian.thavma.impl.integration.CuriosIntegration
+import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider

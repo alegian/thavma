@@ -19,4 +19,6 @@ class Aspect(var id: String, var color: Int, var components: List<Supplier<Aspec
     )
     val CODEC: Codec<Aspect> = ASPECT.byNameCodec()
   }
+
+  fun defaultStack() = AspectStack.of(this, 1)
 }

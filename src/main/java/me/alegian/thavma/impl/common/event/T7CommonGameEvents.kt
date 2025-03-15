@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.common.entity.EntityHelper
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
-import me.alegian.thavma.impl.integration.CuriosIntegration
+import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer

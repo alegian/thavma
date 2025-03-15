@@ -10,7 +10,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandCoreCombinations
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandHandleCombinations
-import me.alegian.thavma.impl.integration.CuriosIntegration
+import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableProvider.SubProviderEntry

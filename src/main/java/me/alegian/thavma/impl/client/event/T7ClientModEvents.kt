@@ -59,7 +59,7 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
     event.registerItem(WandItemExtensions(), wand)
 
   event.registerItem(OculusItemExtensions(), T7Items.OCULUS.get())
-  event.registerItem(BEWLRItemExtensionFactory.create(WorkbenchBE()), T7Blocks.ARCANE_WORKBENCH.get().asItem())
+  event.registerItem(BEWLRItemExtensionFactory.create(WorkbenchBE().withDefaultAnimations()), T7Blocks.ARCANE_WORKBENCH.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(MatrixBE()), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(PillarBE()), T7Blocks.PILLAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(PedestalBE()), T7Blocks.PEDESTAL.get().asItem())

@@ -22,7 +22,8 @@ class WorkbenchBE(
     pos: BlockPos = BlockPos(0, 0, 0),
     blockState: BlockState = ARCANE_WORKBENCH.get().defaultBlockState()
 ) : BlockEntity(WORKBENCH.get(), pos, blockState), GeoBlockEntity {
-    var playerInRange: Player? = null
+    private var inBEWLR = false
+    private var playerInRange: Player? = null
     private val cache = GeckoLibUtil.createInstanceCache(this)
     val CLOSED_ANIM = RawAnimation.begin().thenLoop("closed")
     val OPEN_ANIM = RawAnimation.begin().thenLoop("rotating")
@@ -31,7 +32,7 @@ class WorkbenchBE(
     ) { state ->
         var animation: RawAnimation? = state.controller.currentRawAnimation
         if (animation == null) {
-            animation = if(isPlayerNearby()) OPEN_ANIM else CLOSED_ANIM
+            animation = if(inBEWLR || isPlayerNearby()) OPEN_ANIM else CLOSED_ANIM
         }
         state.setAndContinue(animation)
     }
@@ -48,6 +49,11 @@ class WorkbenchBE(
 
     override fun getAnimatableInstanceCache(): AnimatableInstanceCache {
         return this.cache
+    }
+
+    fun withDefaultAnimations(): WorkbenchBE {
+        inBEWLR = true
+        return this
     }
 
     private fun isPlayerNearby(): Boolean {

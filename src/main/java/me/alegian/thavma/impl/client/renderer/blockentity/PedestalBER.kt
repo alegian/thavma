@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.world.item.ItemDisplayContext
-import net.minecraft.world.item.Items
 import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.model.DefaultedBlockGeoModel
 import software.bernie.geckolib.renderer.GeoBlockRenderer
@@ -31,6 +30,7 @@ class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel<Pedestal
     packedOverlay: Int, colour: Int
   ) {
     super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
+    if(be.getItem().isEmpty) return
 
     val itemRenderer = Minecraft.getInstance().itemRenderer
     val level = be.level ?: return
@@ -41,7 +41,7 @@ class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel<Pedestal
       translate(0.0, 1.0, 0.0)
       scale(0.8f)
       mulPose(Axis.YP.rotationDegrees(((level.gameTime + partialTick) * DEGREES_PER_TICK) % 360))
-      itemRenderer.renderStatic(Items.DIAMOND.defaultInstance, ItemDisplayContext.GROUND, packedLight, packedOverlay, poseStack, bufferSource, level, randSeed)
+      itemRenderer.renderStatic(be.getItem(), ItemDisplayContext.GROUND, packedLight, packedOverlay, poseStack, bufferSource, level, randSeed)
     }
   }
 }

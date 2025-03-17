@@ -4,7 +4,6 @@ import me.alegian.thavma.impl.common.recipe.WorkbenchRecipe
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeType
@@ -27,59 +26,20 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
     val resultItem = recipe.result
     val ingredients = recipe.ingredients
 
-    val width = recipe.pattern.width()
-    val height = recipe.pattern.height()
     builder.addOutputSlot(95, 19).addItemStack(resultItem).setOutputSlotBackground()
 
-
-    val inputSlots: MutableList<IRecipeSlotBuilder> = ArrayList()
+    var i = 0 // index of ingredient
     for (y in 0..2) {
       for (x in 0..2) {
-        val slot = builder.addInputSlot(x * 18 + 1, y * 18 + 1)
-          .setStandardSlotBackground()
-        inputSlots.add(slot)
+        val slot = builder.addInputSlot(x * 18 + 1, y * 18 + 1).setStandardSlotBackground()
+
+        if (y < recipe.pattern.height() && x < recipe.pattern.width())
+          slot.addIngredients(ingredients[i++])
       }
-    }
-
-    for (i in ingredients.indices) {
-      val index = getCraftingIndex(i, width, height)
-      val slot = inputSlots[index]
-
-      val ingredient = ingredients[i]
-      slot.addIngredients(ingredient)
     }
   }
 
-
   companion object {
-    val WORKBENCH: RecipeType<RecipeHolder<WorkbenchRecipe>> = RecipeType.createRecipeHolderType(T7RecipeTypes.WORKBENCH.id)
-
-    private fun getCraftingIndex(i: Int, width: Int, height: Int): Int {
-      var index: Int
-      if (width == 1) {
-        index = if (height == 3) {
-          (i * 3) + 1
-        } else if (height == 2) {
-          (i * 3) + 1
-        } else {
-          4
-        }
-      } else if (height == 1) {
-        index = i + 3
-      } else if (width == 2) {
-        index = i
-        if (i > 1) {
-          index++
-          if (i > 3) {
-            index++
-          }
-        }
-      } else if (height == 2) {
-        index = i + 3
-      } else {
-        index = i
-      }
-      return index
-    }
+    val WORKBENCH = RecipeType.createRecipeHolderType<WorkbenchRecipe>(T7RecipeTypes.WORKBENCH.id)
   }
 }

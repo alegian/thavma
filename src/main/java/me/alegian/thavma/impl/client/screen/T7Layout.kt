@@ -1,5 +1,7 @@
 package me.alegian.thavma.impl.client.screen
 
+import me.alegian.thavma.impl.common.util.minusAssign
+import me.alegian.thavma.impl.common.util.plusAssign
 import net.minecraft.client.gui.components.Renderable
 import org.joml.Vector2i
 import kotlin.math.max
@@ -18,8 +20,8 @@ enum class Direction(val axis: Axis? = null) {
 }
 
 private fun T7Layout(
-  position: Position,
-  size: Size,
+  position: Vector2i,
+  size: Vector2i,
   padding: Padding,
   direction: Direction,
   gap: Int,
@@ -43,19 +45,6 @@ private fun T7Layout(
   return element
 }
 
-class Position(var x: Int = 0, var y: Int = 0)
-class Size(x: Int = 0, y: Int = 0) : Vector2i(x, y) {
-  constructor(size: Vector2i) : this(size.x, size.y)
-
-  operator fun plusAssign(other: Vector2i) {
-    add(other)
-  }
-
-  operator fun minusAssign(other: Vector2i) {
-    sub(other)
-  }
-}
-
 class Padding(val left: Int = 0, val right: Int = 0, val top: Int = 0, val bottom: Int = 0) {
   constructor(all: Int) : this(all, all, all, all)
   constructor(x: Int, y: Int) : this(x, x, y, y)
@@ -74,8 +63,8 @@ class Padding(val left: Int = 0, val right: Int = 0, val top: Int = 0, val botto
 }
 
 class T7LayoutElement(
-  var position: Position,
-  var size: Size,
+  var position: Vector2i,
+  var size: Vector2i,
   val padding: Padding,
   val direction: Direction,
   val gap: Int,
@@ -101,7 +90,7 @@ class T7LayoutElement(
 
   // second pass
   fun calculateDynamicSizesRecursively() {
-    val remainingSize = Size(size)
+    val remainingSize = Vector2i(size)
     remainingSize -= padding.all
 
     for (child in children) {
@@ -137,13 +126,13 @@ class T7LayoutElement(
   }
 
   // helper
-  fun getSizeAlong(axis: Axis?): Size {
+  fun getSizeAlong(axis: Axis?): Vector2i {
     if (axis == Axis.HORIZONTAL) {
-      return Size(size.x, 0)
+      return Vector2i(size.x, 0)
     } else if (axis == Axis.VERTICAL) {
-      return Size(0, size.y)
+      return Vector2i(0, size.y)
     }
-    return Size(0, 0)
+    return Vector2i(0, 0)
   }
 
   // helper
@@ -153,27 +142,27 @@ class T7LayoutElement(
 }
 
 fun Column(
-  position: Position = Position(),
-  size: Size = Size(),
+  position: Vector2i = Vector2i(),
+  size: Vector2i = Vector2i(),
   padding: Padding = Padding(),
   gap: Int = 0,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.TOP_BOTTOM, gap, children)
 
 fun Row(
-  position: Position = Position(),
-  size: Size = Size(),
+  position: Vector2i = Vector2i(),
+  size: Vector2i = Vector2i(),
   padding: Padding = Padding(),
   gap: Int = 0,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.LEFT_RIGHT, gap, children)
 
 fun Box(
-  position: Position = Position(),
-  size: Size = Size(),
+  position: Vector2i = Vector2i(),
+  size: Vector2i = Vector2i(),
   padding: Padding = Padding(),
   gap: Int = 0,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.NONE, gap, children)
 
-fun max(a: Size, b: Size) = Size(max(a.x, b.x), max(a.y, b.y))
+fun max(a: Vector2i, b: Vector2i) = Vector2i(max(a.x, b.x), max(a.y, b.y))

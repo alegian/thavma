@@ -12,7 +12,6 @@ private var currParent: T7LayoutElement? = null
 
 enum class Axis(val basis: Vec2) {
   NONE(Vec2.ZERO),
-  BOTH(Vec2(1f, 1f)),
   VERTICAL(Vec2(0f, 1f)),
   HORIZONTAL(Vec2(1f, 0f));
 
@@ -33,16 +32,31 @@ enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
   val basis = axis.basis
 }
 
+enum class SizingMode {
+  AUTO,
+  FIXED,
+  GROW
+}
+
+class Size(val mode: SizingMode, var value: Float)
+
+class Sizing(var x: Size, var y: Size) {
+  constructor(both: Size) : this(both, both)
+
+  companion object {
+    val ZERO = Sizing(Size(SizingMode.AUTO, 0f), Size(SizingMode.AUTO, 0f))
+  }
+}
+
 private fun T7Layout(
   position: Vec2,
-  size: Vec2,
+  sizing: Sizing,
   padding: Padding,
   direction: Direction,
   gap: Float,
-  grow: Axis,
   children: T7LayoutElement.() -> Unit
 ): T7LayoutElement {
-  val element = T7LayoutElement(position, size, padding, direction, gap, grow)
+  val element = T7LayoutElement(position, sizing, padding, direction, gap)
 
   currParent = element
   element.children()
@@ -81,14 +95,21 @@ class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, 
 
 class T7LayoutElement(
   var position: Vec2,
-  var size: Vec2,
+  val sizing: Sizing,
   val padding: Padding,
   val direction: Direction,
-  val gap: Float,
-  val grow: Axis
+  val gap: Float
 ) {
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
+  var size = Vec2(sizing.x.value, sizing.y.value)
+  val growBasis: Vec2
+    get() {
+      if (sizing.x.mode == SizingMode.GROW && sizing.y.mode == SizingMode.GROW) return Vec2(1f, 1f)
+      if (sizing.x.mode == SizingMode.GROW) return Vec2(1f, 0f)
+      if (sizing.y.mode == SizingMode.GROW) return Vec2(0f, 1f)
+      return Vec2.ZERO
+    }
 
   init {
     parent?.children?.add(this)
@@ -120,7 +141,7 @@ class T7LayoutElement(
     for (child in children) {
       // cross axis remaining size depends on current child
       val actualRemainingSize = remainingSize - (child.size * crossBasis)
-      child.size = child.size + child.grow.basis * actualRemainingSize
+      child.size = child.size + child.growBasis * actualRemainingSize
     }
   }
 
@@ -146,30 +167,31 @@ class T7LayoutElement(
 
 fun Column(
   position: Vec2 = Vec2.ZERO,
-  size: Vec2 = Vec2.ZERO,
+  sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
-  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.TOP_BOTTOM, gap, grow, children)
+) = T7Layout(position, sizing, padding, Direction.TOP_BOTTOM, gap, children)
 
 fun Row(
   position: Vec2 = Vec2.ZERO,
-  size: Vec2 = Vec2.ZERO,
+  sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
-  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.LEFT_RIGHT, gap, grow, children)
+) = T7Layout(position, sizing, padding, Direction.LEFT_RIGHT, gap, children)
 
 fun Box(
   position: Vec2 = Vec2.ZERO,
-  size: Vec2 = Vec2.ZERO,
+  sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
-  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.NONE, gap, grow, children)
+) = T7Layout(position, sizing, padding, Direction.NONE, gap, children)
 
 // TODO: this feels clunky
-fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
+private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
+
+fun auto(s: Float = 0f) = Size(SizingMode.AUTO, s)
+fun fixed(s: Float = 0f) = Size(SizingMode.FIXED, s)
+fun grow(s: Float = 0f) = Size(SizingMode.GROW, s)

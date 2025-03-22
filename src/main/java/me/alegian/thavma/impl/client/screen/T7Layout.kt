@@ -1,30 +1,38 @@
 package me.alegian.thavma.impl.client.screen
 
-import me.alegian.thavma.impl.common.util.minusAssign
-import me.alegian.thavma.impl.common.util.plusAssign
+import me.alegian.thavma.impl.common.util.dot
 import net.minecraft.client.gui.components.Renderable
-import org.joml.Vector2i
+import net.minecraft.world.phys.Vec2
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.deepCopy
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.max
 
 private var currParent: T7LayoutElement? = null
 
-enum class Axis {
-  VERTICAL,
-  HORIZONTAL;
+enum class Axis(val basis: Vec2) {
+  NONE(Vec2.ZERO),
+  VERTICAL(Vec2(0f, 1f)),
+  HORIZONTAL(Vec2(1f, 0f));
 
-  fun cross() = if (this == VERTICAL) HORIZONTAL else VERTICAL
+  fun cross(): Axis {
+    return if (this == VERTICAL) HORIZONTAL
+    else if (this == HORIZONTAL) VERTICAL
+    else throw UnsupportedOperationException()
+  }
 }
 
-enum class Direction(val axis: Axis? = null) {
-  NONE, LEFT_RIGHT(Axis.HORIZONTAL), TOP_BOTTOM(Axis.VERTICAL)
+enum class Direction(val axis: Axis) {
+  NONE(Axis.NONE), LEFT_RIGHT(Axis.HORIZONTAL), TOP_BOTTOM(Axis.VERTICAL)
 }
 
 private fun T7Layout(
-  position: Vector2i,
-  size: Vector2i,
+  position: Vec2,
+  size: Vec2,
   padding: Padding,
   direction: Direction,
-  gap: Int,
+  gap: Float,
   children: T7LayoutElement.() -> Unit
 ): T7LayoutElement {
   val element = T7LayoutElement(position, size, padding, direction, gap)
@@ -45,29 +53,29 @@ private fun T7Layout(
   return element
 }
 
-class Padding(val left: Int = 0, val right: Int = 0, val top: Int = 0, val bottom: Int = 0) {
-  constructor(all: Int) : this(all, all, all, all)
-  constructor(x: Int, y: Int) : this(x, x, y, y)
+class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, val bottom: Float = 0f) {
+  constructor(all: Float) : this(all, all, all, all)
+  constructor(x: Float, y: Float) : this(x, x, y, y)
 
-  fun start(direction: Direction): Vector2i {
-    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vector2i(left, top)
-    return Vector2i(0, 0)
+  fun start(direction: Direction): Vec2 {
+    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vec2(left, top)
+    return Vec2(0f, 0f)
   }
 
-  fun end(direction: Direction): Vector2i {
-    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vector2i(right, bottom)
-    return Vector2i(0, 0)
+  fun end(direction: Direction): Vec2 {
+    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vec2(right, bottom)
+    return Vec2(0f, 0f)
   }
 
-  val all = Vector2i(left + right, top + bottom)
+  val all = Vec2(left + right, top + bottom)
 }
 
 class T7LayoutElement(
-  var position: Vector2i,
-  var size: Vector2i,
+  var position: Vec2,
+  var size: Vec2,
   val padding: Padding,
   val direction: Direction,
-  val gap: Int,
+  val gap: Float,
 ) {
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
@@ -78,91 +86,69 @@ class T7LayoutElement(
 
   // first pass
   fun calculateInitialSizes() {
-    size += padding.all
+    size = size + padding.all
     val childGaps = gap * (children.size - 1)
-    addSizeAlong(direction.axis, childGaps)
+    size = size + direction.axis.basis * childGaps
 
     if (parent == null) return
     val parentAxis = parent.direction.axis
-    parent.size += getSizeAlong(parentAxis)
-    parent.size = max(parent.size, getSizeAlong(parentAxis?.cross()))
+    parent.size += parentAxis.basis * (parentAxis.basis dot size)
+    val crossBasis = parentAxis.cross().basis
+    parent.size = max(parent.size, crossBasis * (size dot crossBasis))
   }
 
   // second pass
   fun calculateDynamicSizesRecursively() {
-    val remainingSize = Vector2i(size)
-    remainingSize -= padding.all
+    var remainingSize = size - padding.all
 
     for (child in children) {
-      remainingSize -= child.getSizeAlong(direction.axis)
+      val directionBasis = direction.axis.basis
+      remainingSize = remainingSize - directionBasis * (child.size dot directionBasis)
     }
   }
 
   // third pass
-  // TODO: support reverse directions
   fun calculatePositionsRecursively() {
-    var xOffset = position.x + padding.left
-    var yOffset = position.y + padding.top
+    var offset = position + padding.start(direction)
 
     for (child in children) {
-      child.position.x = xOffset
-      child.position.y = yOffset
-      if (direction == Direction.LEFT_RIGHT)
-        xOffset += child.size.x + gap
-      else if (direction == Direction.TOP_BOTTOM)
-        yOffset += child.size.y + gap
+      child.position = offset.deepCopy()
+
+      val directionBasis = direction.axis.basis
+      offset += directionBasis * (gap + (child.size dot directionBasis))
 
       child.calculatePositionsRecursively()
     }
   }
 
   // helper
-  fun addSizeAlong(axis: Axis?, dx: Int) {
-    if (axis == Axis.HORIZONTAL) {
-      size.x += dx
-    } else if (axis == Axis.VERTICAL) {
-      size.y += dx
-    }
-  }
-
-  // helper
-  fun getSizeAlong(axis: Axis?): Vector2i {
-    if (axis == Axis.HORIZONTAL) {
-      return Vector2i(size.x, 0)
-    } else if (axis == Axis.VERTICAL) {
-      return Vector2i(0, size.y)
-    }
-    return Vector2i(0, 0)
-  }
-
-  // helper
   fun debugRect(color: Int) = Renderable { guiGraphics, _, _, _ ->
-    guiGraphics.fill(position.x, position.y, position.x + size.x, position.y + size.y, color)
+    guiGraphics.fill(position.x.toInt(), position.y.toInt(), position.x.toInt() + size.x.toInt(), position.y.toInt() + size.y.toInt(), color)
   }
 }
 
 fun Column(
-  position: Vector2i = Vector2i(),
-  size: Vector2i = Vector2i(),
+  position: Vec2 = Vec2.ZERO,
+  size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
-  gap: Int = 0,
+  gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.TOP_BOTTOM, gap, children)
 
 fun Row(
-  position: Vector2i = Vector2i(),
-  size: Vector2i = Vector2i(),
+  position: Vec2 = Vec2.ZERO,
+  size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
-  gap: Int = 0,
+  gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.LEFT_RIGHT, gap, children)
 
 fun Box(
-  position: Vector2i = Vector2i(),
-  size: Vector2i = Vector2i(),
+  position: Vec2 = Vec2.ZERO,
+  size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
-  gap: Int = 0,
+  gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.NONE, gap, children)
 
-fun max(a: Vector2i, b: Vector2i) = Vector2i(max(a.x, b.x), max(a.y, b.y))
+fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))

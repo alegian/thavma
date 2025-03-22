@@ -9,8 +9,9 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.max
 
 private var currParent: T7LayoutElement? = null
+private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
 
-enum class Axis(val basis: Vec2) {
+internal enum class Axis(val basis: Vec2) {
   NONE(Vec2.ZERO),
   VERTICAL(Vec2(0f, 1f)),
   HORIZONTAL(Vec2(1f, 0f));
@@ -22,7 +23,7 @@ enum class Axis(val basis: Vec2) {
   }
 }
 
-enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
+internal enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
   NONE(Axis.NONE),
   LEFT_RIGHT(Axis.HORIZONTAL, false),
   TOP_BOTTOM(Axis.VERTICAL, false),
@@ -32,23 +33,23 @@ enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
   val basis = axis.basis
 }
 
-enum class SizingMode {
+internal enum class SizingMode {
   AUTO,
   FIXED,
   GROW
 }
 
-class Size(val mode: SizingMode, var value: Float)
+class Size internal constructor(internal val mode: SizingMode, internal var value: Float)
 
 class Sizing(var x: Size, var y: Size) {
   constructor(both: Size) : this(both, both)
 
   companion object {
-    val ZERO = Sizing(Size(SizingMode.AUTO, 0f), Size(SizingMode.AUTO, 0f))
+    internal val ZERO = Sizing(Size(SizingMode.AUTO, 0f), Size(SizingMode.AUTO, 0f))
   }
 }
 
-private fun T7Layout(
+private fun createElement(
   position: Vec2,
   sizing: Sizing,
   padding: Padding,
@@ -78,13 +79,13 @@ class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, 
   constructor(all: Float) : this(all, all, all, all)
   constructor(x: Float, y: Float) : this(x, x, y, y)
 
-  fun start(direction: Direction): Vec2 {
+  internal fun start(direction: Direction): Vec2 {
     if (direction.reverse == false) return Vec2(left, top)
     if (direction.reverse == true) return Vec2(right, bottom)
     return Vec2(0f, 0f)
   }
 
-  fun end(direction: Direction): Vec2 {
+  internal fun end(direction: Direction): Vec2 {
     if (direction.reverse == false) return Vec2(right, bottom)
     if (direction.reverse == true) return Vec2(left, top)
     return Vec2(0f, 0f)
@@ -93,17 +94,17 @@ class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, 
   val all = Vec2(left + right, top + bottom)
 }
 
-class T7LayoutElement(
-  var position: Vec2,
-  val sizing: Sizing,
-  val padding: Padding,
-  val direction: Direction,
-  val gap: Float
+class T7LayoutElement internal constructor(
+  internal var position: Vec2,
+  internal val sizing: Sizing,
+  internal val padding: Padding,
+  internal val direction: Direction,
+  internal val gap: Float
 ) {
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
   var size = Vec2(sizing.x.value, sizing.y.value)
-  val growBasis: Vec2
+  internal val growBasis: Vec2
     get() {
       var growX = 0f
       var growY = 0f
@@ -111,7 +112,7 @@ class T7LayoutElement(
       if (sizing.y.mode == SizingMode.GROW) growY = 1f
       return Vec2(growX, growY)
     }
-  val fixedMask: Vec2
+  internal val fixedMask: Vec2
     get() {
       var maskX = 1f
       var maskY = 1f
@@ -124,8 +125,11 @@ class T7LayoutElement(
     parent?.children?.add(this)
   }
 
-  // first pass
-  fun calculateInitialSizes() {
+  /**
+   * first pass: calculates sizes for each element, in reverse BFS order,
+   * based on paddings, gaps and sizes of children (as determined in first pass)
+   */
+  internal fun calculateInitialSizes() {
     size += padding.all
     val childGaps = gap * (children.size - 1)
     size += direction.basis * childGaps
@@ -137,8 +141,11 @@ class T7LayoutElement(
     parent.size = max(parent.size, size * crossBasis * parent.fixedMask)
   }
 
-  // second pass
-  fun calculateDynamicSizesRecursively() {
+  /**
+   * second pass: calculates the amount by which elements with "grow"
+   * should be expanded, ran recursively from the root (DFS)
+   */
+  internal fun calculateDynamicSizesRecursively() {
     val mainBasis = direction.basis
     val crossBasis = direction.axis.cross().basis
     var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
@@ -154,8 +161,12 @@ class T7LayoutElement(
     }
   }
 
-  // third pass
-  fun calculatePositionsRecursively() {
+  /**
+   * third pass: calculates the final position of each element,
+   * using paddings, gaps and sizes of children (as determined in first and
+   * second passes). Ran recursively from the root (DFS)
+   */
+  internal fun calculatePositionsRecursively() {
     var offset = position + padding.start(direction)
 
     for (child in children) {
@@ -180,7 +191,15 @@ fun Column(
   padding: Padding = Padding(),
   gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, sizing, padding, Direction.TOP_BOTTOM, gap, children)
+) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, children)
+
+fun ColumnReverse(
+  position: Vec2 = Vec2.ZERO,
+  sizing: Sizing = Sizing.ZERO,
+  padding: Padding = Padding(),
+  gap: Float = 0f,
+  children: T7LayoutElement.() -> Unit
+) = createElement(position, sizing, padding, Direction.BOTTOM_TOP, gap, children)
 
 fun Row(
   position: Vec2 = Vec2.ZERO,
@@ -188,7 +207,15 @@ fun Row(
   padding: Padding = Padding(),
   gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, sizing, padding, Direction.LEFT_RIGHT, gap, children)
+) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, children)
+
+fun RowReverse(
+  position: Vec2 = Vec2.ZERO,
+  sizing: Sizing = Sizing.ZERO,
+  padding: Padding = Padding(),
+  gap: Float = 0f,
+  children: T7LayoutElement.() -> Unit
+) = createElement(position, sizing, padding, Direction.RIGHT_LEFT, gap, children)
 
 fun Box(
   position: Vec2 = Vec2.ZERO,
@@ -196,10 +223,7 @@ fun Box(
   padding: Padding = Padding(),
   gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, sizing, padding, Direction.NONE, gap, children)
-
-// TODO: this feels clunky
-private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
+) = createElement(position, sizing, padding, Direction.NONE, gap, children)
 
 fun auto(s: Float = 0f) = Size(SizingMode.AUTO, s)
 fun fixed(s: Float = 0f) = Size(SizingMode.FIXED, s)

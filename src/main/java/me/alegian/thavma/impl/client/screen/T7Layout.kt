@@ -105,10 +105,19 @@ class T7LayoutElement(
   var size = Vec2(sizing.x.value, sizing.y.value)
   val growBasis: Vec2
     get() {
-      if (sizing.x.mode == SizingMode.GROW && sizing.y.mode == SizingMode.GROW) return Vec2(1f, 1f)
-      if (sizing.x.mode == SizingMode.GROW) return Vec2(1f, 0f)
-      if (sizing.y.mode == SizingMode.GROW) return Vec2(0f, 1f)
-      return Vec2.ZERO
+      var growX = 0f
+      var growY = 0f
+      if (sizing.x.mode == SizingMode.GROW) growX = 1f
+      if (sizing.y.mode == SizingMode.GROW) growY = 1f
+      return Vec2(growX, growY)
+    }
+  val fixedMask: Vec2
+    get() {
+      var maskX = 1f
+      var maskY = 1f
+      if (sizing.x.mode == SizingMode.FIXED) maskX = 0f
+      if (sizing.y.mode == SizingMode.FIXED) maskY = 0f
+      return Vec2(maskX, maskY)
     }
 
   init {
@@ -123,9 +132,9 @@ class T7LayoutElement(
 
     if (parent == null) return
     val mainBasis = parent.direction.basis
-    parent.size += size * mainBasis
+    parent.size += size * mainBasis * parent.fixedMask
     val crossBasis = parent.direction.axis.cross().basis
-    parent.size = max(parent.size, (size * crossBasis))
+    parent.size = max(parent.size, size * crossBasis * parent.fixedMask)
   }
 
   // second pass

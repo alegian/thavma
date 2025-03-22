@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.client.screen
 
-import me.alegian.thavma.impl.common.util.dot
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.world.phys.Vec2
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.deepCopy
@@ -13,6 +12,7 @@ private var currParent: T7LayoutElement? = null
 
 enum class Axis(val basis: Vec2) {
   NONE(Vec2.ZERO),
+  BOTH(Vec2(1f, 1f)),
   VERTICAL(Vec2(0f, 1f)),
   HORIZONTAL(Vec2(1f, 0f));
 
@@ -39,9 +39,10 @@ private fun T7Layout(
   padding: Padding,
   direction: Direction,
   gap: Float,
+  grow: Axis,
   children: T7LayoutElement.() -> Unit
 ): T7LayoutElement {
-  val element = T7LayoutElement(position, size, padding, direction, gap)
+  val element = T7LayoutElement(position, size, padding, direction, gap, grow)
 
   currParent = element
   element.children()
@@ -84,6 +85,7 @@ class T7LayoutElement(
   val padding: Padding,
   val direction: Direction,
   val gap: Float,
+  val grow: Axis
 ) {
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
@@ -94,24 +96,31 @@ class T7LayoutElement(
 
   // first pass
   fun calculateInitialSizes() {
-    size = size + padding.all
+    size += padding.all
     val childGaps = gap * (children.size - 1)
-    size = size + direction.basis * childGaps
+    size += direction.basis * childGaps
 
     if (parent == null) return
     val mainBasis = parent.direction.basis
-    parent.size += mainBasis * (mainBasis dot size)
+    parent.size += size * mainBasis
     val crossBasis = parent.direction.axis.cross().basis
-    parent.size = max(parent.size, crossBasis * (size dot crossBasis))
+    parent.size = max(parent.size, (size * crossBasis))
   }
 
   // second pass
   fun calculateDynamicSizesRecursively() {
-    var remainingSize = size - padding.all
+    val mainBasis = direction.basis
+    val crossBasis = direction.axis.cross().basis
+    var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
 
     for (child in children) {
-      val directionBasis = direction.basis
-      remainingSize = remainingSize - directionBasis * (child.size dot directionBasis)
+      remainingSize = remainingSize - (child.size * mainBasis)
+    }
+
+    for (child in children) {
+      // cross axis remaining size depends on current child
+      val actualRemainingSize = remainingSize - (child.size * crossBasis)
+      child.size = child.size + child.grow.basis * actualRemainingSize
     }
   }
 
@@ -123,7 +132,7 @@ class T7LayoutElement(
       child.position = offset.deepCopy()
 
       val directionBasis = direction.basis
-      offset += directionBasis * (gap + (child.size dot directionBasis))
+      offset += directionBasis * gap + (child.size * directionBasis)
 
       child.calculatePositionsRecursively()
     }
@@ -140,24 +149,27 @@ fun Column(
   size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
+  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.TOP_BOTTOM, gap, children)
+) = T7Layout(position, size, padding, Direction.TOP_BOTTOM, gap, grow, children)
 
 fun Row(
   position: Vec2 = Vec2.ZERO,
   size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
+  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.LEFT_RIGHT, gap, children)
+) = T7Layout(position, size, padding, Direction.LEFT_RIGHT, gap, grow, children)
 
 fun Box(
   position: Vec2 = Vec2.ZERO,
   size: Vec2 = Vec2.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
+  grow: Axis = Axis.NONE,
   children: T7LayoutElement.() -> Unit
-) = T7Layout(position, size, padding, Direction.NONE, gap, children)
+) = T7Layout(position, size, padding, Direction.NONE, gap, grow, children)
 
 // TODO: this feels clunky
 fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))

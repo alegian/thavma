@@ -23,8 +23,14 @@ enum class Axis(val basis: Vec2) {
   }
 }
 
-enum class Direction(val axis: Axis) {
-  NONE(Axis.NONE), LEFT_RIGHT(Axis.HORIZONTAL), TOP_BOTTOM(Axis.VERTICAL)
+enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
+  NONE(Axis.NONE),
+  LEFT_RIGHT(Axis.HORIZONTAL, false),
+  TOP_BOTTOM(Axis.VERTICAL, false),
+  RIGHT_LEFT(Axis.HORIZONTAL, true),
+  BOTTOM_TOP(Axis.VERTICAL, true);
+
+  val basis = axis.basis
 }
 
 private fun T7Layout(
@@ -58,12 +64,14 @@ class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, 
   constructor(x: Float, y: Float) : this(x, x, y, y)
 
   fun start(direction: Direction): Vec2 {
-    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vec2(left, top)
+    if (direction.reverse == false) return Vec2(left, top)
+    if (direction.reverse == true) return Vec2(right, bottom)
     return Vec2(0f, 0f)
   }
 
   fun end(direction: Direction): Vec2 {
-    if (direction == Direction.LEFT_RIGHT || direction == Direction.TOP_BOTTOM) return Vec2(right, bottom)
+    if (direction.reverse == false) return Vec2(right, bottom)
+    if (direction.reverse == true) return Vec2(left, top)
     return Vec2(0f, 0f)
   }
 
@@ -88,12 +96,12 @@ class T7LayoutElement(
   fun calculateInitialSizes() {
     size = size + padding.all
     val childGaps = gap * (children.size - 1)
-    size = size + direction.axis.basis * childGaps
+    size = size + direction.basis * childGaps
 
     if (parent == null) return
-    val parentAxis = parent.direction.axis
-    parent.size += parentAxis.basis * (parentAxis.basis dot size)
-    val crossBasis = parentAxis.cross().basis
+    val mainBasis = parent.direction.basis
+    parent.size += mainBasis * (mainBasis dot size)
+    val crossBasis = parent.direction.axis.cross().basis
     parent.size = max(parent.size, crossBasis * (size dot crossBasis))
   }
 
@@ -102,7 +110,7 @@ class T7LayoutElement(
     var remainingSize = size - padding.all
 
     for (child in children) {
-      val directionBasis = direction.axis.basis
+      val directionBasis = direction.basis
       remainingSize = remainingSize - directionBasis * (child.size dot directionBasis)
     }
   }
@@ -114,7 +122,7 @@ class T7LayoutElement(
     for (child in children) {
       child.position = offset.deepCopy()
 
-      val directionBasis = direction.axis.basis
+      val directionBasis = direction.basis
       offset += directionBasis * (gap + (child.size dot directionBasis))
 
       child.calculatePositionsRecursively()
@@ -151,4 +159,5 @@ fun Box(
   children: T7LayoutElement.() -> Unit
 ) = T7Layout(position, size, padding, Direction.NONE, gap, children)
 
+// TODO: this feels clunky
 fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))

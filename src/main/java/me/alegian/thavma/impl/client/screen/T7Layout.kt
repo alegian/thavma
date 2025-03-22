@@ -1,9 +1,9 @@
 package me.alegian.thavma.impl.client.screen
 
+import net.minecraft.client.gui.components.Renderable
 import kotlin.math.max
 
-private val ROOT = Box {}
-private var currParent = ROOT
+private var currParent: T7LayoutElement? = null
 
 enum class Axis {
   VERTICAL,
@@ -31,13 +31,19 @@ private fun T7Layout(
   currParent = element.parent
 
   element.calculateSizes()
-  if (element.parent == ROOT) element.calculatePositionsRecursively()
+  if (element.parent == null) {
+    element.calculatePositionsRecursively()
+    currParent = null
+  }
   return element
 }
 
 class Position(var x: Int = 0, var y: Int = 0)
 class Size(var width: Int = 0, var height: Int = 0)
-class Padding(val left: Int = 0, val right: Int = 0, val top: Int = 0, val bottom: Int = 0)
+class Padding(val left: Int = 0, val right: Int = 0, val top: Int = 0, val bottom: Int = 0) {
+  constructor(all: Int) : this(all, all, all, all)
+  constructor(x: Int, y: Int) : this(x, x, y, y)
+}
 
 class T7LayoutElement(
   var position: Position,
@@ -50,7 +56,7 @@ class T7LayoutElement(
   val parent = currParent
 
   init {
-    parent.children.add(this)
+    parent?.children?.add(this)
   }
 
   // first pass: sizing
@@ -60,6 +66,7 @@ class T7LayoutElement(
     val childGaps = gap * (children.size - 1)
     addSizeAlong(direction.axis, childGaps)
 
+    if (parent == null) return
     val parentAxis = parent.direction.axis
     parent.addSizeAlong(parentAxis, getSizeAlong(parentAxis))
     parent.maxSizeAlong(parentAxis?.cross(), getSizeAlong(parentAxis?.cross()))
@@ -68,8 +75,9 @@ class T7LayoutElement(
   // second pass: positioning
   // TODO: support reverse directions
   fun calculatePositionsRecursively() {
-    var xOffset = padding.left
-    var yOffset = padding.top
+    var xOffset = position.x + padding.left
+    var yOffset = position.y + padding.top
+
     for (child in children) {
       child.position.x = xOffset
       child.position.y = yOffset
@@ -108,6 +116,11 @@ class T7LayoutElement(
       return size.height
     }
     return 0
+  }
+
+  // helper
+  fun debugRect(color: Int) = Renderable { guiGraphics, _, _, _ ->
+    guiGraphics.fill(position.x, position.y, position.x + size.width, position.y + size.height, color)
   }
 }
 

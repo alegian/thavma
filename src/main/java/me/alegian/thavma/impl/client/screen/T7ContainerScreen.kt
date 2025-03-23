@@ -25,14 +25,56 @@ private const val HOTBAR_GAP = 4
  * The background texture's size is used to determine the size of the container
  */
 abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory, pTitle: Component, private val bgTexture: Texture) : AbstractContainerScreen<T>(menu, pPlayerInventory, pTitle) {
-  abstract fun layout()
+  abstract fun ComposeContext.layout()
 
   override fun init() {
     super.init()
+    val lineHeight = font.lineHeight
     topPos = 0
     leftPos = 0
 
-    layout()
+    Root(width, height) {
+      Box(
+        Modifier().center()
+      ) {
+        Column(
+          Modifier().size(bgTexture).extendVertically(INVENTORY_BG).extendVertically(GAP).extendVertically(lineHeight).centerX()
+        ) {
+          Box(Modifier().height(lineHeight)) {
+            addRenderableOnly(text(this@T7ContainerScreen.title, 0x83FF9B))
+          }
+          Box(Modifier().size(bgTexture)) {
+            addRenderableOnly(texture(bgTexture))
+            layout()
+          }
+          Box(Modifier().height(GAP))
+          Box(Modifier().size(INVENTORY_BG)) {
+            addRenderableOnly(texture(INVENTORY_BG))
+            PaddingX(INVENTORY_PADDING) {
+              Column {
+                Box(
+                  Modifier().height(INVENTORY_PADDING).extendVertically(lineHeight).centerY()
+                ) {
+                  Box(Modifier().height(lineHeight)) {
+                    addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
+                  }
+                }
+                Column(Modifier().color(0xFF00FFFF.toInt())) {
+                  val inventorySlots = menu.playerInventory.range.slots
+                  Box(Modifier().height(SLOT_TEXTURE.height * 3)) {
+                    addRenderableOnly(slotGrid(3, 9, inventorySlots) { _, _ -> SLOT_TEXTURE })
+                  }
+                  Box(Modifier().height(HOTBAR_GAP))
+                  Box {
+                    addRenderableOnly(slotGrid(1, 9, inventorySlots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

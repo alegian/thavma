@@ -12,7 +12,10 @@ import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.*
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.div
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -31,20 +34,25 @@ internal enum class Axis(val basis: Vec2) {
   }
 }
 
-internal enum class Direction(val axis: Axis, val reverse: Boolean? = null) {
+internal enum class Direction(axis: Axis) {
   NONE(Axis.NONE),
-  LEFT_RIGHT(Axis.HORIZONTAL, false),
-  TOP_BOTTOM(Axis.VERTICAL, false),
-  RIGHT_LEFT(Axis.HORIZONTAL, true),
-  BOTTOM_TOP(Axis.VERTICAL, true);
+  LEFT_RIGHT(Axis.HORIZONTAL),
+  TOP_BOTTOM(Axis.VERTICAL);
 
   val basis = axis.basis
+  val crossBasis = axis.cross().basis
 }
 
 internal enum class SizingMode {
   AUTO,
   FIXED,
   GROW
+}
+
+enum class Alignment(val factor: Float) {
+  START(1f),
+  CENTER(1f),
+  END(-1f)
 }
 
 class Size internal constructor(internal val mode: SizingMode, internal var value: Float)
@@ -63,9 +71,10 @@ private fun createElement(
   padding: Padding,
   direction: Direction,
   gap: Float,
+  alignment: Alignment,
   children: T7LayoutElement.() -> Unit
 ): T7LayoutElement {
-  val element = T7LayoutElement(position, sizing, padding, direction, gap)
+  val element = T7LayoutElement(position, sizing, padding, direction, gap, alignment)
 
   currParent = element
   element.children()
@@ -87,15 +96,15 @@ class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, 
   constructor(all: Float) : this(all, all, all, all)
   constructor(x: Float, y: Float) : this(x, x, y, y)
 
-  internal fun start(direction: Direction): Vec2 {
-    if (direction.reverse == false) return Vec2(left, top)
-    if (direction.reverse == true) return Vec2(right, bottom)
+  internal fun start(alignment: Alignment): Vec2 {
+    if (alignment == Alignment.START) return Vec2(left, top)
+    if (alignment == Alignment.END) return Vec2(right, bottom)
     return Vec2(0f, 0f)
   }
 
-  internal fun end(direction: Direction): Vec2 {
-    if (direction.reverse == false) return Vec2(right, bottom)
-    if (direction.reverse == true) return Vec2(left, top)
+  internal fun end(alignment: Alignment): Vec2 {
+    if (alignment == Alignment.START) return Vec2(right, bottom)
+    if (alignment == Alignment.END) return Vec2(left, top)
     return Vec2(0f, 0f)
   }
 
@@ -107,7 +116,8 @@ class T7LayoutElement internal constructor(
   internal val sizing: Sizing,
   internal val padding: Padding,
   internal val direction: Direction,
-  internal val gap: Float
+  internal val gap: Float,
+  internal val alignment: Alignment
 ) {
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
@@ -145,7 +155,7 @@ class T7LayoutElement internal constructor(
     if (parent == null) return
     val mainBasis = parent.direction.basis
     parent.size += size * mainBasis * parent.fixedMask
-    val crossBasis = parent.direction.axis.cross().basis
+    val crossBasis = parent.direction.crossBasis
     parent.size = max(parent.size, size * crossBasis * parent.fixedMask)
   }
 
@@ -155,7 +165,7 @@ class T7LayoutElement internal constructor(
    */
   internal fun calculateDynamicSizesRecursively() {
     val mainBasis = direction.basis
-    val crossBasis = direction.axis.cross().basis
+    val crossBasis = direction.crossBasis
     var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
 
     // children that can grow along main axis
@@ -186,13 +196,24 @@ class T7LayoutElement internal constructor(
    * second passes). Ran recursively from the root (DFS)
    */
   internal fun calculatePositionsRecursively() {
-    var offset = position + padding.start(direction)
+    var initialOffset = position + padding.start(alignment)
+
+    val childrenLength = children.map { c -> c.size.dot(direction.basis) }.sum()
+    val remainingMain = size.dot(direction.basis) - childrenLength
+
+    var mainOffset = initialOffset.dot(direction.basis)
+    if (alignment == Alignment.CENTER) mainOffset += remainingMain / 2f
+    else if (alignment == Alignment.END) mainOffset += remainingMain
 
     for (child in children) {
-      child.position = offset.deepCopy()
+      var crossOffset = initialOffset.dot(direction.crossBasis)
+      val remainingCross = (size - child.size).dot(direction.crossBasis)
+      if (alignment == Alignment.CENTER) crossOffset += remainingCross / 2f
+      else if (alignment == Alignment.END) crossOffset += remainingCross
 
-      val directionBasis = direction.basis
-      offset += directionBasis * gap + (child.size * directionBasis)
+      child.position = direction.basis * mainOffset + direction.crossBasis * crossOffset
+
+      mainOffset += (gap + (child.size.dot(direction.basis))) * alignment.factor
 
       child.calculatePositionsRecursively()
     }
@@ -258,40 +279,25 @@ fun Column(
   sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
+  alignment: Alignment = Alignment.START,
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, children)
-
-fun ColumnReverse(
-  position: Vec2 = Vec2.ZERO,
-  sizing: Sizing = Sizing.ZERO,
-  padding: Padding = Padding(),
-  gap: Float = 0f,
-  children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.BOTTOM_TOP, gap, children)
+) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, alignment, children)
 
 fun Row(
   position: Vec2 = Vec2.ZERO,
   sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
   gap: Float = 0f,
+  alignment: Alignment = Alignment.START,
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, children)
-
-fun RowReverse(
-  position: Vec2 = Vec2.ZERO,
-  sizing: Sizing = Sizing.ZERO,
-  padding: Padding = Padding(),
-  gap: Float = 0f,
-  children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.RIGHT_LEFT, gap, children)
+) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, alignment, children)
 
 fun Box(
   position: Vec2 = Vec2.ZERO,
   sizing: Sizing = Sizing.ZERO,
   padding: Padding = Padding(),
-  gap: Float = 0f,
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.NONE, gap, children)
+) = createElement(position, sizing, padding, Direction.NONE, 0f, Alignment.START, children)
 
 fun auto(s: Float = 0f) = Size(SizingMode.AUTO, s)
 fun fixed(s: Float = 0f) = Size(SizingMode.FIXED, s)

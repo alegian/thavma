@@ -1,12 +1,20 @@
 package me.alegian.thavma.impl.client.screen
 
+import me.alegian.thavma.impl.client.texture.Texture
+import me.alegian.thavma.impl.client.util.blit
+import me.alegian.thavma.impl.client.util.drawString
+import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.network.chat.Component
+import net.minecraft.world.inventory.Slot
 import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.deepCopy
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.*
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 private var currParent: T7LayoutElement? = null
 private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
@@ -150,14 +158,25 @@ class T7LayoutElement internal constructor(
     val crossBasis = direction.axis.cross().basis
     var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
 
-    for (child in children) {
-      remainingSize = remainingSize - (child.size * mainBasis)
-    }
+    // children that can grow along main axis
+    val mainGrowable = mutableListOf<T7LayoutElement>()
 
     for (child in children) {
-      // cross axis remaining size depends on current child
-      val actualRemainingSize = remainingSize - (child.size * crossBasis)
-      child.size = child.size + child.growBasis * actualRemainingSize
+      remainingSize = remainingSize - (child.size * mainBasis)
+      val canGrow = child.growBasis.dot(mainBasis) != 0f
+      if (canGrow) mainGrowable.add(child)
+    }
+
+    // main axis growth
+    for (child in mainGrowable) {
+      child.size += ((remainingSize / mainGrowable.size.toFloat()) - child.size) * mainBasis
+    }
+
+    // cross axis growth
+    for (child in children) {
+      val canGrow = child.growBasis.dot(crossBasis) != 0f
+      if (!canGrow) continue
+      child.size += (remainingSize - child.size) * crossBasis
     }
   }
 
@@ -182,6 +201,55 @@ class T7LayoutElement internal constructor(
   // helper
   fun debugRect(color: Int) = Renderable { guiGraphics, _, _, _ ->
     guiGraphics.fill(position.x.toInt(), position.y.toInt(), position.x.toInt() + size.x.toInt(), position.y.toInt() + size.y.toInt(), color)
+  }
+
+  fun text(content: Component, color: Int = 0) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+    guiGraphics.usePose {
+      translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+      guiGraphics.drawString(Minecraft.getInstance().font, content, color)
+    }
+  }
+
+  fun texture(texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+    guiGraphics.usePose {
+      translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+      guiGraphics.blit(texture)
+    }
+  }
+
+  fun slotGrid(rows: Int, columns: Int, slots: List<Slot>, getTexture: (Int, Int) -> Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+    guiGraphics.usePose {
+      translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+      for (i in 0 until rows) {
+        pushPose()
+        for (j in 0 until columns) {
+          guiGraphics.blit(getTexture(i, j))
+          val slot = slots[i * columns + j]
+          if (slot is DynamicSlot<*>) {
+            val pos = transformOrigin()
+            slot.actualX = pos.x.roundToInt()
+            slot.actualY = pos.y.roundToInt()
+            slot.size = getTexture(i, j).width
+          }
+          translate(getTexture(0, 0).width.toDouble(), 0.0, 0.0)
+        }
+        popPose()
+        translate(0.0, getTexture(0, 0).height.toDouble(), 0.0)
+      }
+    }
+  }
+
+  fun slot(slot: Slot, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+    guiGraphics.usePose {
+      translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+      guiGraphics.blit(texture)
+      if (slot is DynamicSlot<*>) {
+        val pos = transformOrigin()
+        slot.actualX = pos.x.roundToInt()
+        slot.actualY = pos.y.roundToInt()
+        slot.size = texture.width
+      }
+    }
   }
 }
 

@@ -27,7 +27,7 @@ internal enum class Axis(val basis: Vec2) {
   fun cross(): Axis {
     return if (this == VERTICAL) HORIZONTAL
     else if (this == HORIZONTAL) VERTICAL
-    else throw UnsupportedOperationException()
+    else NONE
   }
 }
 

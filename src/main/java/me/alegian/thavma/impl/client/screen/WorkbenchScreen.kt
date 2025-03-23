@@ -25,29 +25,29 @@ private const val BORDER = 5
 private const val WOOD_SIZE = 122
 
 open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<WorkbenchMenu>(menu, pPlayerInventory, pTitle, WORKBENCH_BG) {
-  override fun ComposeContext.layout() {
-    Padding(BORDER) {
-      Row {
-        Box(Modifier().width(WOOD_SIZE).center()) {
-          Box(Modifier().width(SLOTS[0].width * 3).height(SLOTS[0].height * 3).center().color(0xFF0000FF.toInt())) {
-            addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots) { i, j -> SLOTS[i * 3 + j] })
-          }
-        }
-        Box(Modifier().width(BORDER))
-        Box {
-          Box(Modifier().center()) {
-            Box(Modifier().size(RESULT_SLOT)) {
-              addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
-            }
-          }
-          Box(Modifier().maxHeight(0.5f).center()) {
-            Box(Modifier().size(WAND_SLOT)) {
-              addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
-            }
-          }
-        }
-      }
-    }
+  override fun layout() {
+//    Padding(BORDER) {
+//      Row {
+//        Box(Modifier().width(WOOD_SIZE).center()) {
+//          Box(Modifier().width(SLOTS[0].width * 3).height(SLOTS[0].height * 3).center().color(0xFF0000FF.toInt())) {
+//            addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots) { i, j -> SLOTS[i * 3 + j] })
+//          }
+//        }
+//        Box(Modifier().width(BORDER))
+//        Box {
+//          Box(Modifier().center()) {
+//            Box(Modifier().size(RESULT_SLOT)) {
+//              addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
+//            }
+//          }
+//          Box(Modifier().maxHeight(0.5f).center()) {
+//            Box(Modifier().size(WAND_SLOT)) {
+//              addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
+//            }
+//          }
+//        }
+//      }
+//    }
   }
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

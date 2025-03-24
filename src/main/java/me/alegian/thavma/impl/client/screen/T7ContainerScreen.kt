@@ -35,10 +35,11 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     leftPos = 0
 
     Row(
+      padding = Padding(20f),
       sizing = Sizing(fixed(width.toFloat()), fixed(height.toFloat())),
-      alignment = Alignment.END
+      align = Align(main = Alignment.END)
     ) {
-      Box(sizing = Sizing(fixed(40f))) {
+      Box(sizing = Sizing(fixed(80f))) {
         addRenderableOnly(debugRect(0xFFFF0000.toInt()))
       }
     }

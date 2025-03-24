@@ -24,6 +24,10 @@ class Sizing(var x: Size = Size(SizingMode.AUTO, 0f), var y: Size = Size(SizingM
   constructor(both: Size = Size(SizingMode.AUTO, 0f)) : this(both, both)
 }
 
+class Align(val main: Alignment = Alignment.START, val cross: Alignment = Alignment.START){
+  constructor(both: Alignment = Alignment.START) : this(both, both)
+}
+
 fun auto(s: Float = 0f) = Size(SizingMode.AUTO, s)
 fun fixed(s: Float = 0f) = Size(SizingMode.FIXED, s)
 fun grow(s: Float = 0f) = Size(SizingMode.GROW, s)
@@ -33,22 +37,22 @@ fun Column(
   sizing: Sizing = Sizing(),
   padding: Padding = Padding(),
   gap: Float = 0f,
-  alignment: Alignment = Alignment.START,
+  align: Align = Align(),
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, alignment, children)
+) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, align, children)
 
 fun Row(
   position: Vec2 = Vec2.ZERO,
   sizing: Sizing = Sizing(),
   padding: Padding = Padding(),
   gap: Float = 0f,
-  alignment: Alignment = Alignment.START,
+  align: Align = Align(),
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, alignment, children)
+) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, align, children)
 
 fun Box(
   position: Vec2 = Vec2.ZERO,
   sizing: Sizing = Sizing(),
   padding: Padding = Padding(),
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.NONE, 0f, Alignment.START, children)
+) = createElement(position, sizing, padding, Direction.NONE, 0f, Align(), children)

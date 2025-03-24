@@ -16,7 +16,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 private val INVENTORY_BG = Texture("gui/container/inventory", 174, 97, 256, 256)
 private val SLOT_TEXTURE = Texture("gui/container/slot", 18, 18)
@@ -104,7 +103,6 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
   override fun renderSlot(guiGraphics: GuiGraphics, slot: Slot) {
     if (slot !is DynamicSlot<*>) return super.renderSlot(guiGraphics, slot)
 
-    val padding = (slot.size - 16) / 2
     var itemStack = slot.item
     var quickReplace = false
     var drawItem = slot === this.clickedSlot && !draggingItem.isEmpty && !this.isSplittingStack
@@ -135,7 +133,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
 
     guiGraphics.usePose {
-      translate(slot.actualX + padding, slot.actualY + padding, 100.0f)
+      translate(slot.actualX + slot.padding, slot.actualY + slot.padding, 100.0f)
       if (itemStack.isEmpty && slot.isActive) {
         val pair = slot.noItemIcon
         if (pair != null) {
@@ -160,13 +158,12 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
 
     if (slot.isHighlightable) {
       val color = getSlotColor(slot.index)
-      val padding = (slot.size - 16) / 2
       guiGraphics.usePose {
-        translate(slot.actualX, slot.actualY, 0f)
+        translate(slot.actualX + slot.padding, slot.actualY + slot.padding, 0f)
         guiGraphics.fillGradient(
           RenderType.guiOverlay(),
-          padding, padding,
-          padding + 16, padding + 16,
+          0, 0,
+          16, 16,
           color, color,
           0
         )
@@ -188,8 +185,13 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
 
   override fun isHovering(slot: Slot, mouseX: Double, mouseY: Double): Boolean {
     if (slot !is DynamicSlot<*>) return super.isHovering(slot, mouseX, mouseY)
-    val padding = (slot.size - 16) / 2
-    return this.isHovering((slot.actualX + padding).roundToInt(), (slot.actualY + padding).roundToInt(), 16, 16, mouseX, mouseY)
+
+    return slot.run {
+      mouseX >= (actualX - padding)
+          && mouseX < (actualX + size)
+          && mouseY >= (actualY - padding)
+          && mouseY < (actualY + size)
+    }
   }
 
   // layout helper

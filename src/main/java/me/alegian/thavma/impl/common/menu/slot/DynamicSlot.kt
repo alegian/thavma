@@ -13,4 +13,7 @@ interface DynamicSlot<T : Menu> {
   var size: Int
 
   val menu: T
+
+  val padding: Float
+    get() = (size - 16f) / 2
 }

@@ -12,6 +12,7 @@ import me.alegian.thavma.impl.common.menu.WorkbenchMenu
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import kotlin.math.abs
@@ -67,20 +68,19 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
     }
   }
 
-  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    super.render(guiGraphics, mouseX, mouseY, partialTick)
-    renderAspects(guiGraphics)
+  override fun init() {
+    super.init()
+    addRenderableOnly(renderAspects)
   }
 
   // TODO: cleanup
-  protected open fun renderAspects(guiGraphics: GuiGraphics) {
+  protected open val renderAspects = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
     val BASE_RADIUS = 56
     val ANGLE = 360f / PRIMAL_ASPECTS.size
     val middleSlot = menu.craftingContainer.range.slots[4]
-    if (middleSlot !is DynamicSlot<*>) return
+    if (middleSlot !is DynamicSlot<*>) return@Renderable
 
     guiGraphics.usePose {
-      translateXY(leftPos.toDouble(), topPos.toDouble())
       translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble())
 
       // draw aspects at hexagon points (or N-gon if more primals are added by addons)

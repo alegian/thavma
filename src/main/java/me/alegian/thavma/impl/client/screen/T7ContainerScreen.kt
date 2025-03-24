@@ -88,12 +88,31 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           }
         }
       }
+    }.let{
+      val childNode = it.children.first()
+      imageWidth = childNode.size.x.toInt()
+      imageHeight = childNode.size.y.toInt()
+      leftPos = (width - imageWidth) / 2
+      topPos = (height - imageHeight) / 2
     }
   }
 
+  /**
+   * leftPos and topPos are set to 0 during render
+   * this is because we use absolute renderers, but JEI and another tools
+   * depend on them
+   */
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    val oldLeftPos = leftPos
+    val oldTopPos = topPos
+    leftPos = 0
+    topPos = 0
+
     super.render(guiGraphics, mouseX, mouseY, partialTick)
     renderTooltip(guiGraphics, mouseX, mouseY)
+
+    leftPos = oldLeftPos
+    topPos = oldTopPos
   }
 
   override fun renderBg(guiGraphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {}
@@ -187,9 +206,9 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     if (slot !is DynamicSlot<*>) return super.isHovering(slot, mouseX, mouseY)
 
     return slot.run {
-      mouseX >= (actualX - padding)
+      mouseX >= (actualX)
           && mouseX < (actualX + size)
-          && mouseY >= (actualY - padding)
+          && mouseY >= (actualY)
           && mouseY < (actualY + size)
     }
   }

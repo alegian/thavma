@@ -7,6 +7,14 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.max
 
+/**
+ * A Layout System for creating Component-based GUIs.
+ * Inspired by Android Jetpack Compose, and Nic Barker's excellent
+ * video on UI algorithms (see README)
+ *
+ * See LayoutAPI.kt for usable components.
+ */
+
 private var currParent: T7LayoutElement? = null
 private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
 
@@ -26,23 +34,34 @@ internal enum class SizingMode {
 
 class Size internal constructor(internal val mode: SizingMode, internal var value: Float)
 
-internal val Alignment.factor: Float
+// when adding children, negative sign means "move left"
+private val Alignment.sign: Float
   get() = when (this) {
     Alignment.START -> 1f
     Alignment.CENTER -> 1f
     Alignment.END -> -1f
   }
 
-internal val Padding.all: Vec2
+// where to start placing children (relative to parent available space)
+private val Alignment.factor: Float
+  get() = when (this) {
+    Alignment.START -> 0f
+    Alignment.CENTER -> 0.5f
+    Alignment.END -> 1f
+  }
+
+private val Padding.all: Vec2
   get() = Vec2(left + right, top + bottom)
 
-internal fun Padding.start(alignment: Alignment): Vec2 {
+// padding at the start of an aligned container
+private fun Padding.start(alignment: Alignment): Vec2 {
   if (alignment == Alignment.START) return Vec2(left, top)
   if (alignment == Alignment.END) return Vec2(right, bottom)
   return Vec2(0f, 0f)
 }
 
-internal fun Padding.end(alignment: Alignment): Vec2 {
+// padding at the end of an aligned container
+private fun Padding.end(alignment: Alignment): Vec2 {
   if (alignment == Alignment.START) return Vec2(right, bottom)
   if (alignment == Alignment.END) return Vec2(left, top)
   return Vec2(0f, 0f)
@@ -165,19 +184,15 @@ class T7LayoutElement internal constructor(
     val childrenLength = children.map { c -> c.size.dot(direction.basis) }.sum()
     val remainingMain = size.dot(direction.basis) - childrenLength
 
-    var mainOffset = initialOffset.dot(direction.basis)
-    if (alignment == Alignment.CENTER) mainOffset += remainingMain / 2f
-    else if (alignment == Alignment.END) mainOffset += remainingMain
+    var mainOffset = initialOffset.dot(direction.basis) + remainingMain * alignment.factor
 
     for (child in children) {
-      var crossOffset = initialOffset.dot(direction.crossBasis)
       val remainingCross = (size - child.size).dot(direction.crossBasis)
-      if (alignment == Alignment.CENTER) crossOffset += remainingCross / 2f
-      else if (alignment == Alignment.END) crossOffset += remainingCross
+      var crossOffset = initialOffset.dot(direction.crossBasis) + remainingCross * alignment.factor
 
       child.position = direction.basis * mainOffset + direction.crossBasis * crossOffset
 
-      mainOffset += (gap + (child.size.dot(direction.basis))) * alignment.factor
+      mainOffset += (gap + (child.size.dot(direction.basis))) * alignment.sign
 
       child.calculatePositionsRecursively()
     }

@@ -29,6 +29,7 @@ Good pick azanor ;-)
 - The Artifacts team, their codebase taught me how to use Attribute Modifiers and how to render
   custom cuboids on HumanoidModels
 - The Modern Industrialization team. I learnt from their recipe system
+- Nic Barker for his amazing [UI video](https://youtu.be/by9lQvpvMIc), that helped me make a flexible GUI system
 
 ## License
 

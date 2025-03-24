@@ -13,6 +13,11 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.Slot
 import kotlin.math.roundToInt
 
+/**
+ * Useful functions that can be called inside Layout Elements,
+ * from the Layout API. See LayoutAPI.kt for more.
+ */
+
 fun T7LayoutElement.debugRect(color: Int) = Renderable { guiGraphics, _, _, _ ->
   guiGraphics.fill(position.x.toInt(), position.y.toInt(), position.x.toInt() + size.x.toInt(), position.y.toInt() + size.y.toInt(), color)
 }

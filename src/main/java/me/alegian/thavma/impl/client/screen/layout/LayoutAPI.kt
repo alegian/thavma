@@ -2,6 +2,13 @@ package me.alegian.thavma.impl.client.screen.layout
 
 import net.minecraft.world.phys.Vec2
 
+/**
+ * A Layout System for creating Component-based GUIs.
+ *
+ * LayoutInternals.kt contains the implementation details,
+ * not needed for usage.
+ */
+
 enum class Alignment() {
   START,
   CENTER,

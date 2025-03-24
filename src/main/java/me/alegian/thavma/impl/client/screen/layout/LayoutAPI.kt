@@ -1,7 +1,5 @@
 package me.alegian.thavma.impl.client.screen.layout
 
-import net.minecraft.world.phys.Vec2
-
 /**
  * A Layout System for creating Component-based GUIs.
  *
@@ -15,44 +13,98 @@ enum class Alignment() {
   END
 }
 
-class Padding(val left: Float = 0f, val right: Float = 0f, val top: Float = 0f, val bottom: Float = 0f) {
-  constructor(all: Float) : this(all, all, all, all)
-  constructor(x: Float, y: Float) : this(x, x, y, y)
+class Padding(var left: Float = 0f, var right: Float = 0f, var top: Float = 0f, var bottom: Float = 0f)
+
+class Sizing(var x: Size = Size(), var y: Size = Size()) {
+  constructor(both: Size = Size()) : this(both, both)
 }
 
-class Sizing(var x: Size = Size(SizingMode.AUTO, 0f), var y: Size = Size(SizingMode.AUTO, 0f)) {
-  constructor(both: Size = Size(SizingMode.AUTO, 0f)) : this(both, both)
+class Align(val main: Alignment = Alignment.START, val cross: Alignment = Alignment.START)
+
+fun auto(s: Number = 0f) = Size(SizingMode.AUTO, s.toFloat())
+fun fixed(s: Number = 0f) = Size(SizingMode.FIXED, s.toFloat())
+fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
+
+class Props() {
+  var width = Size()
+  var height = Size()
+  var paddingLeft = 0f
+  var paddingRight = 0f
+  var paddingTop = 0f
+  var paddingBottom = 0f
+  var gap = 0f
+  var alignMain = Alignment.START
+  var alignCross = Alignment.START
+
+  var size: Size
+    get() = throw UnsupportedOperationException()
+    set(value) {
+      width = value
+      height = value
+    }
+
+  var paddingX: Float
+    get() = throw UnsupportedOperationException()
+    set(value) {
+      paddingLeft = value
+      paddingRight = value
+    }
+
+  var paddingY: Float
+    get() = throw UnsupportedOperationException()
+    set(value) {
+      paddingTop = value
+      paddingBottom = value
+    }
+
+  var padding: Float
+    get() = throw UnsupportedOperationException()
+    set(value) {
+      paddingX = value
+      paddingY = value
+    }
+
+  var align: Alignment
+    get() = throw UnsupportedOperationException()
+    set(value) {
+      alignMain = value
+      alignCross = value
+    }
+
+  internal fun buildElement(direction: Direction, children: T7LayoutElement.() -> Unit) =
+    createElement(
+      Sizing(width, height),
+      Padding(paddingLeft, paddingRight, paddingTop, paddingBottom),
+      direction,
+      gap,
+      Align(alignMain, alignCross),
+      children
+    )
 }
-
-class Align(val main: Alignment = Alignment.START, val cross: Alignment = Alignment.START){
-  constructor(both: Alignment = Alignment.START) : this(both, both)
-}
-
-fun auto(s: Float = 0f) = Size(SizingMode.AUTO, s)
-fun fixed(s: Float = 0f) = Size(SizingMode.FIXED, s)
-fun grow(s: Float = 0f) = Size(SizingMode.GROW, s)
-
-fun Column(
-  position: Vec2 = Vec2.ZERO,
-  sizing: Sizing = Sizing(),
-  padding: Padding = Padding(),
-  gap: Float = 0f,
-  align: Align = Align(),
-  children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.TOP_BOTTOM, gap, align, children)
 
 fun Row(
-  position: Vec2 = Vec2.ZERO,
-  sizing: Sizing = Sizing(),
-  padding: Padding = Padding(),
-  gap: Float = 0f,
-  align: Align = Align(),
+  propSetter: Props.() -> Unit = {},
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.LEFT_RIGHT, gap, align, children)
+): T7LayoutElement {
+  val props = Props()
+  props.propSetter()
+  return props.buildElement(Direction.LEFT_RIGHT, children)
+}
+
+fun Column(
+  propSetter: Props.() -> Unit = {},
+  children: T7LayoutElement.() -> Unit
+): T7LayoutElement {
+  val props = Props()
+  props.propSetter()
+  return props.buildElement(Direction.TOP_BOTTOM, children)
+}
 
 fun Box(
-  position: Vec2 = Vec2.ZERO,
-  sizing: Sizing = Sizing(),
-  padding: Padding = Padding(),
+  propSetter: Props.() -> Unit = {},
   children: T7LayoutElement.() -> Unit
-) = createElement(position, sizing, padding, Direction.NONE, 0f, Align(), children)
+): T7LayoutElement {
+  val props = Props()
+  props.propSetter()
+  return props.buildElement(Direction.NONE, children)
+}

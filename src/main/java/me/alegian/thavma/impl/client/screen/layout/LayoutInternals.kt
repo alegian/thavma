@@ -32,7 +32,7 @@ internal enum class SizingMode {
   GROW
 }
 
-class Size internal constructor(internal val mode: SizingMode, internal var value: Float)
+class Size internal constructor(internal val mode: SizingMode = SizingMode.AUTO, internal var value: Float = 0f)
 
 // when adding children, negative sign means "move left"
 private val Alignment.sign: Float
@@ -57,14 +57,7 @@ private fun Align.factors(direction: Direction): Vec2 {
 private val Padding.all: Vec2
   get() = Vec2(left + right, top + bottom)
 
-private val Padding.topLeft: Vec2
-  get() = Vec2(left, top)
-
-private val Padding.bottomRight: Vec2
-  get() = Vec2(right, bottom)
-
 internal fun createElement(
-  position: Vec2,
   sizing: Sizing,
   padding: Padding,
   direction: Direction,
@@ -72,7 +65,7 @@ internal fun createElement(
   align: Align,
   children: T7LayoutElement.() -> Unit
 ): T7LayoutElement {
-  val element = T7LayoutElement(position, sizing, padding, direction, gap, align)
+  val element = T7LayoutElement(sizing, padding, direction, gap, align)
 
   currParent = element
   element.children()
@@ -91,13 +84,13 @@ internal fun createElement(
 }
 
 class T7LayoutElement internal constructor(
-  internal var position: Vec2,
   internal val sizing: Sizing,
   internal val padding: Padding,
   internal val direction: Direction,
   internal val gap: Float,
   internal val align: Align,
 ) {
+  var position = Vec2.ZERO
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
   var size = Vec2(sizing.x.value, sizing.y.value)

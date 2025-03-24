@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.screen
 
+import me.alegian.thavma.impl.client.screen.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.menu.Menu
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot

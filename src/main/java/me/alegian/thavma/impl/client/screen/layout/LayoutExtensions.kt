@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.Slot
-import kotlin.math.roundToInt
 
 /**
  * Useful functions that can be called inside Layout Elements,
@@ -46,8 +45,8 @@ fun T7LayoutElement.slotGrid(rows: Int, columns: Int, slots: List<Slot>, getText
         val slot = slots[i * columns + j]
         if (slot is DynamicSlot<*>) {
           val pos = transformOrigin()
-          slot.actualX = pos.x.roundToInt()
-          slot.actualY = pos.y.roundToInt()
+          slot.actualX = pos.x
+          slot.actualY = pos.y
           slot.size = getTexture(i, j).width
         }
         translate(getTexture(0, 0).width.toDouble(), 0.0, 0.0)
@@ -64,8 +63,8 @@ fun T7LayoutElement.slot(slot: Slot, texture: Texture) = Renderable { guiGraphic
     guiGraphics.blit(texture)
     if (slot is DynamicSlot<*>) {
       val pos = transformOrigin()
-      slot.actualX = pos.x.roundToInt()
-      slot.actualY = pos.y.roundToInt()
+      slot.actualX = pos.x
+      slot.actualY = pos.y
       slot.size = texture.width
     }
   }

@@ -24,6 +24,12 @@ internal enum class Direction(val basis: Vec2) {
   TOP_BOTTOM(Vec2(0f, 1f));
 
   val crossBasis = Vec2(basis.y, basis.x)
+
+  val opposite: Direction
+    get() =
+      if (this == LEFT_RIGHT) TOP_BOTTOM
+      else if (this == TOP_BOTTOM) LEFT_RIGHT
+      else NONE
 }
 
 internal enum class SizingMode {
@@ -50,7 +56,7 @@ private val Alignment.factor: Float
     Alignment.END -> 1f
   }
 
-private fun Align.factors(direction: Direction): Vec2 {
+private fun Align.signs(direction: Direction): Vec2 {
   return direction.basis * main.sign + direction.crossBasis * cross.sign
 }
 
@@ -141,17 +147,17 @@ class T7LayoutElement internal constructor(
     var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
 
     // children that can grow along main axis
-    val mainGrowable = mutableListOf<T7LayoutElement>()
+    val mainGrowables = mutableListOf<T7LayoutElement>()
 
     for (child in children) {
-      remainingSize = remainingSize - (child.size * mainBasis)
+      remainingSize -= (child.size * mainBasis)
       val canGrow = child.growBasis.dot(mainBasis) != 0f
-      if (canGrow) mainGrowable.add(child)
+      if (canGrow) mainGrowables.add(child)
     }
 
     // main axis growth
-    for (child in mainGrowable) {
-      child.size += ((remainingSize / mainGrowable.size.toFloat()) - child.size) * mainBasis
+    for (child in mainGrowables) {
+      child.size += (remainingSize / mainGrowables.size.toFloat()) * mainBasis
     }
 
     // cross axis growth
@@ -160,6 +166,9 @@ class T7LayoutElement internal constructor(
       if (!canGrow) continue
       child.size += (remainingSize - child.size) * crossBasis
     }
+
+    for (child in children)
+      child.calculateDynamicSizesRecursively()
   }
 
   /**
@@ -168,18 +177,18 @@ class T7LayoutElement internal constructor(
    * second passes). Ran recursively from the root (DFS)
    */
   internal fun calculatePositionsRecursively() {
-    var initialOffset = position + (paddingStart() * align.factors(direction))
+    var childPosition = position + (paddingStart() * align.signs(direction))
 
     val childrenLength = children.map { c -> c.size.dot(direction.basis) }.sum()
     val remainingMain = (size - padding.all).dot(direction.basis) - childrenLength
 
-    var mainOffset = initialOffset.dot(direction.basis) + remainingMain * align.main.factor
+    var mainOffset = remainingMain * align.main.factor
 
     for (child in children) {
       val remainingCross = (size - padding.all - child.size).dot(direction.crossBasis)
-      var crossOffset = initialOffset.dot(direction.crossBasis) + remainingCross * align.cross.factor
+      var crossOffset = remainingCross * align.cross.factor
 
-      child.position = direction.basis * mainOffset + direction.crossBasis * crossOffset
+      child.position = childPosition + (direction.basis * mainOffset + direction.crossBasis * crossOffset)
 
       mainOffset += (gap + (child.size.dot(direction.basis))) * align.main.sign
 
@@ -190,12 +199,11 @@ class T7LayoutElement internal constructor(
   // TODO: clean up. padding at the start of an aligned container
   private fun T7LayoutElement.paddingStart(): Vec2 {
     val mainPadding = padding.select(direction, align.main == Alignment.START)
-    val crossPadding = padding.select(direction, align.cross == Alignment.START)
+    val crossPadding = padding.select(direction.opposite, align.cross == Alignment.START)
     return direction.basis * mainPadding + direction.crossBasis * crossPadding
   }
 
   private fun Padding.select(direction: Direction, isStart: Boolean): Float =
-    if (direction == Direction.LEFT_RIGHT) if (isStart) left else right
-    else if (direction == Direction.TOP_BOTTOM) if (isStart) top else bottom
-    else 0f
+    if (direction == Direction.TOP_BOTTOM) if (isStart) top else bottom
+    else if (isStart) left else right
 }

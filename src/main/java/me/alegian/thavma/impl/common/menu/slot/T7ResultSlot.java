@@ -15,7 +15,7 @@ public class T7ResultSlot<T extends Menu> extends ResultSlot implements DynamicS
   private int size = 0;
   private boolean mayPickup = true;
   private final T menu;
-  private int x,y;
+  private float x,y;
 
   public T7ResultSlot(T menu, CraftingContainer craftingContainer, ResultContainer container, int id) {
     super(menu.getPlayer(), craftingContainer, container, id, 0, 0);
@@ -27,22 +27,22 @@ public class T7ResultSlot<T extends Menu> extends ResultSlot implements DynamicS
   }
 
   @Override
-  public int getActualX() {
+  public float getActualX() {
     return x;
   }
 
   @Override
-  public int getActualY() {
+  public float getActualY() {
     return y;
   }
 
   @Override
-  public void setActualX(int x) {
+  public void setActualX(float x) {
     this.x = x;
   }
 
   @Override
-  public void setActualY(int y) {
+  public void setActualY(float y) {
     this.y = y;
   }
 

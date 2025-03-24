@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.client.screen
 
 import me.alegian.thavma.impl.client.screen.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
+import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.menu.Menu
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
 import net.minecraft.ChatFormatting
@@ -15,10 +16,11 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 private val INVENTORY_BG = Texture("gui/container/inventory", 174, 97, 256, 256)
 private val SLOT_TEXTURE = Texture("gui/container/slot", 18, 18)
-private const val GAP = 4
+const val GAP = 4
 private const val INVENTORY_PADDING = 6
 private const val HOTBAR_GAP = 4
 
@@ -46,7 +48,6 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           height = fixed(font.lineHeight)
           width = grow()
         }) {
-          addRenderableOnly(debugRect(0xFFFF0000.toInt()))
           addRenderableOnly(text(this@T7ContainerScreen.title, 0x83FF9B))
         }
 
@@ -55,11 +56,15 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
         }
 
         TextureBox(INVENTORY_BG) {
-          Column {
-            Column({
-              padding = INVENTORY_PADDING
-              height = fixed(font.lineHeight + INVENTORY_PADDING)
-              alignMain = Alignment.CENTER
+          Column({
+            size = grow()
+            paddingX = INVENTORY_PADDING
+            paddingTop = INVENTORY_PADDING / 2
+            gap = INVENTORY_PADDING / 2
+          }) {
+            Box({
+              width = grow()
+              height = fixed(font.lineHeight)
             }) {
               addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
             }
@@ -100,8 +105,6 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     if (slot !is DynamicSlot<*>) return super.renderSlot(guiGraphics, slot)
 
     val padding = (slot.size - 16) / 2
-    val i = slot.actualX + padding
-    val j = slot.actualY + padding
     var itemStack = slot.item
     var quickReplace = false
     var drawItem = slot === this.clickedSlot && !draggingItem.isEmpty && !this.isSplittingStack
@@ -131,26 +134,25 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
       }
     }
 
-    guiGraphics.pose().pushPose()
-    guiGraphics.pose().translate(0.0f, 0.0f, 100.0f)
-    if (itemStack.isEmpty && slot.isActive) {
-      val pair = slot.noItemIcon
-      if (pair != null) {
-        val sprite = Minecraft.getInstance().getTextureAtlas(pair.first).apply(pair.second)
-        guiGraphics.blit(i, j, 0, 16, 16, sprite)
-        drawItem = true
-      }
-    }
-
-    if (!drawItem) {
-      if (quickReplace) {
-        guiGraphics.fill(i, j, i + 16, j + 16, -2130706433)
+    guiGraphics.usePose {
+      translate(slot.actualX + padding, slot.actualY + padding, 100.0f)
+      if (itemStack.isEmpty && slot.isActive) {
+        val pair = slot.noItemIcon
+        if (pair != null) {
+          val sprite = Minecraft.getInstance().getTextureAtlas(pair.first).apply(pair.second)
+          guiGraphics.blit(0, 0, 0, 16, 16, sprite)
+          drawItem = true
+        }
       }
 
-      renderSlotContents(guiGraphics, itemStack, slot, count)
-    }
+      if (!drawItem) {
+        if (quickReplace) {
+          guiGraphics.fill(0, 0, 16, 16, -2130706433)
+        }
 
-    guiGraphics.pose().popPose()
+        renderSlotContents(guiGraphics, itemStack, slot, count)
+      }
+    }
   }
 
   override fun renderSlotHighlight(guiGraphics: GuiGraphics, slot: Slot, mouseX: Int, mouseY: Int, partialTick: Float) {
@@ -159,44 +161,43 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     if (slot.isHighlightable) {
       val color = getSlotColor(slot.index)
       val padding = (slot.size - 16) / 2
-      guiGraphics.fillGradient(
-        RenderType.guiOverlay(),
-        slot.actualX + padding, slot.actualY + padding,
-        slot.actualX + padding + 16, slot.actualY + padding + 16,
-        color, color,
-        0
-      )
+      guiGraphics.usePose {
+        translate(slot.actualX, slot.actualY, 0f)
+        guiGraphics.fillGradient(
+          RenderType.guiOverlay(),
+          padding, padding,
+          padding + 16, padding + 16,
+          color, color,
+          0
+        )
+      }
     }
   }
 
   override fun renderSlotContents(guiGraphics: GuiGraphics, itemstack: ItemStack, slot: Slot, countString: String?) {
     if (slot !is DynamicSlot<*>) return super.renderSlotContents(guiGraphics, itemstack, slot, countString)
 
-    val padding = (slot.size - 16) / 2
-    val i = slot.actualX + padding
-    val j = slot.actualY + padding
-    val j1 = i + j * this.imageWidth
     if (slot.isFake) {
-      guiGraphics.renderFakeItem(itemstack, i, j, j1)
+      guiGraphics.renderFakeItem(itemstack, 0, 0, 0)
     } else {
-      guiGraphics.renderItem(itemstack, i, j, j1)
+      guiGraphics.renderItem(itemstack, 0, 0, 0)
     }
 
-    guiGraphics.renderItemDecorations(this.font, itemstack, i, j, countString)
+    guiGraphics.renderItemDecorations(this.font, itemstack, 0, 0, countString)
   }
 
   override fun isHovering(slot: Slot, mouseX: Double, mouseY: Double): Boolean {
     if (slot !is DynamicSlot<*>) return super.isHovering(slot, mouseX, mouseY)
     val padding = (slot.size - 16) / 2
-    return this.isHovering(slot.actualX + padding, slot.actualY + padding, 16, 16, mouseX, mouseY)
+    return this.isHovering((slot.actualX + padding).roundToInt(), (slot.actualY + padding).roundToInt(), 16, 16, mouseX, mouseY)
   }
 
   // layout helper
   fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
-    Box({
+    Row({
       width = fixed(texture.width)
       height = fixed(texture.height)
-    }){
+    }) {
       addRenderableOnly(texture(texture))
       children()
     }

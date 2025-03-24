@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class T7Slot<T extends Menu> extends Slot implements DynamicSlot<T> {
   private int size = 0;
   private final T menu;
-  private int x,y;
+  private float x,y;
 
   public T7Slot(Container container, int id, T menu) {
     super(container, id, 0, 0);
@@ -24,22 +24,22 @@ public class T7Slot<T extends Menu> extends Slot implements DynamicSlot<T> {
   }
 
   @Override
-  public int getActualX() {
+  public float getActualX() {
     return x;
   }
 
   @Override
-  public int getActualY() {
+  public float getActualY() {
     return y;
   }
 
   @Override
-  public void setActualX(int x) {
+  public void setActualX(float x) {
     this.x = x;
   }
 
   @Override
-  public void setActualY(int y) {
+  public void setActualY(float y) {
     this.y = y;
   }
 

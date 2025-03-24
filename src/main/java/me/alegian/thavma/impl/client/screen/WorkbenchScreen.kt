@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.screen
 
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.screen.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.rotateZ
@@ -11,6 +12,7 @@ import me.alegian.thavma.impl.common.menu.WorkbenchMenu
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import kotlin.math.abs
@@ -25,45 +27,60 @@ private const val BORDER = 5
 private const val WOOD_SIZE = 122
 
 open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<WorkbenchMenu>(menu, pPlayerInventory, pTitle, WORKBENCH_BG) {
-  override fun ComposeContext.layout() {
-    Padding(BORDER) {
-      Row {
-        Box(Modifier().width(WOOD_SIZE).center()) {
-          Box(Modifier().width(SLOTS[0].width * 3).height(SLOTS[0].height * 3).center().color(0xFF0000FF.toInt())) {
-            addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots) { i, j -> SLOTS[i * 3 + j] })
-          }
+  override fun layout() {
+    Row({
+      size = grow()
+      padding = BORDER
+      gap = BORDER
+    }) {
+      Column({
+        width = fixed(WOOD_SIZE)
+        height = grow()
+        align = Alignment.CENTER
+      }) {
+        Box({
+          width = fixed(SLOTS[0].width * 3)
+          height = fixed(SLOTS[0].height * 3)
+        }) {
+          addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots) { i, j -> SLOTS[i * 3 + j] })
         }
-        Box(Modifier().width(BORDER))
-        Box {
-          Box(Modifier().center()) {
-            Box(Modifier().size(RESULT_SLOT)) {
-              addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
-            }
-          }
-          Box(Modifier().maxHeight(0.5f).center()) {
-            Box(Modifier().size(WAND_SLOT)) {
-              addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
-            }
-          }
+      }
+
+      Column({
+        size = grow()
+        align = Alignment.CENTER
+        gap = GAP
+      }) {
+        Box({
+          width = fixed(WAND_SLOT.width)
+          height = fixed(WAND_SLOT.height)
+        }) {
+          addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
+        }
+
+        Box({
+          width = fixed(RESULT_SLOT.width)
+          height = fixed(RESULT_SLOT.height)
+        }) {
+          addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
         }
       }
     }
   }
 
-  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    super.render(guiGraphics, mouseX, mouseY, partialTick)
-    renderAspects(guiGraphics)
+  override fun init() {
+    super.init()
+    addRenderableOnly(renderAspects)
   }
 
   // TODO: cleanup
-  protected open fun renderAspects(guiGraphics: GuiGraphics) {
+  protected open val renderAspects = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
     val BASE_RADIUS = 56
     val ANGLE = 360f / PRIMAL_ASPECTS.size
     val middleSlot = menu.craftingContainer.range.slots[4]
-    if (middleSlot !is DynamicSlot<*>) return
+    if (middleSlot !is DynamicSlot<*>) return@Renderable
 
     guiGraphics.usePose {
-      translateXY(leftPos.toDouble(), topPos.toDouble())
       translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble())
 
       // draw aspects at hexagon points (or N-gon if more primals are added by addons)

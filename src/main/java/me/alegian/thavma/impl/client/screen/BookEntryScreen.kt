@@ -17,30 +17,6 @@ class BookEntryScreen : Screen(Component.literal("Book Entry")) {
     super.init()
     left = (width - BG.width) / 2.0
     top = (height - BG.height) / 2.0
-
-    Root(width, height) {
-      Box(
-        Modifier().center()
-      ) {
-        Row(
-          Modifier().size(BG)
-        ) {
-          Box(
-            Modifier().maxWidth(0.5f).color(0xFFFF00FF.toInt())
-          ) {
-            addRenderableOnly(debugRect())
-            PaddingY(30) {
-              Box(Modifier().color(0xFFFF0000.toInt())) {
-                addRenderableOnly(debugRect())
-                PaddingX(30) {
-                  addRenderableOnly(text("Reaves likes cockroaches"))
-                }
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

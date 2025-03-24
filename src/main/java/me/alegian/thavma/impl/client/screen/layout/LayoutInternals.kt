@@ -32,7 +32,7 @@ internal enum class SizingMode {
   GROW
 }
 
-class Size internal constructor(internal val mode: SizingMode = SizingMode.AUTO, internal var value: Float = 0f)
+class Size internal constructor(internal val mode: SizingMode = SizingMode.AUTO, internal var value: Number = 0f)
 
 // when adding children, negative sign means "move left"
 private val Alignment.sign: Float
@@ -93,7 +93,7 @@ class T7LayoutElement internal constructor(
   var position = Vec2.ZERO
   val children = mutableListOf<T7LayoutElement>()
   val parent = currParent
-  var size = Vec2(sizing.x.value, sizing.y.value)
+  var size = Vec2(sizing.x.value.toFloat(), sizing.y.value.toFloat())
   internal val growBasis: Vec2
     get() {
       var growX = 0f

@@ -1,6 +1,9 @@
 package me.alegian.thavma.impl.client.screen
 
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.screen.layout.Box
+import me.alegian.thavma.impl.client.screen.layout.debugRect
+import me.alegian.thavma.impl.client.screen.layout.fixed
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.rotateZ
@@ -26,6 +29,11 @@ private const val WOOD_SIZE = 122
 
 open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<WorkbenchMenu>(menu, pPlayerInventory, pTitle, WORKBENCH_BG) {
   override fun layout() {
+    Box({
+      size = fixed(80f)
+    }){
+      addRenderableOnly(debugRect(0xFFFF0000.toInt()))
+    }
 //    Padding(BORDER) {
 //      Row {
 //        Box(Modifier().width(WOOD_SIZE).center()) {

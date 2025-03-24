@@ -28,11 +28,11 @@ fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
 class Props() {
   var width = Size()
   var height = Size()
-  var paddingLeft = 0f
-  var paddingRight = 0f
-  var paddingTop = 0f
-  var paddingBottom = 0f
-  var gap = 0f
+  var paddingLeft: Number = 0f
+  var paddingRight: Number = 0f
+  var paddingTop: Number = 0f
+  var paddingBottom: Number = 0f
+  var gap: Number = 0f
   var alignMain = Alignment.START
   var alignCross = Alignment.START
 
@@ -43,21 +43,21 @@ class Props() {
       height = value
     }
 
-  var paddingX: Float
+  var paddingX: Number
     get() = throw UnsupportedOperationException()
     set(value) {
       paddingLeft = value
       paddingRight = value
     }
 
-  var paddingY: Float
+  var paddingY: Number
     get() = throw UnsupportedOperationException()
     set(value) {
       paddingTop = value
       paddingBottom = value
     }
 
-  var padding: Float
+  var padding: Number
     get() = throw UnsupportedOperationException()
     set(value) {
       paddingX = value
@@ -74,9 +74,9 @@ class Props() {
   internal fun buildElement(direction: Direction, children: T7LayoutElement.() -> Unit) =
     createElement(
       Sizing(width, height),
-      Padding(paddingLeft, paddingRight, paddingTop, paddingBottom),
+      Padding(paddingLeft.toFloat(), paddingRight.toFloat(), paddingTop.toFloat(), paddingBottom.toFloat()),
       direction,
-      gap,
+      gap.toFloat(),
       Align(alignMain, alignCross),
       children
     )

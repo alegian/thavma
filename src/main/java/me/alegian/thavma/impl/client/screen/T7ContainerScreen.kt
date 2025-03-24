@@ -30,65 +30,61 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
 
   override fun init() {
     super.init()
-    val lineHeight = font.lineHeight
     topPos = 0
     leftPos = 0
 
     Row({
-      padding = 20f
       width = fixed(this@T7ContainerScreen.width)
       height = fixed(this@T7ContainerScreen.height)
-      alignMain = Alignment.END
-    }){
-      Box({
-        size = fixed(80f)
-      }){
-        addRenderableOnly(debugRect(0xFFFF0000.toInt()))
+      align = Alignment.CENTER
+    }) {
+      Column({
+        gap = GAP
+        alignCross = Alignment.CENTER
+      }) {
+        Box({
+          height = fixed(font.lineHeight)
+          width = grow()
+        }) {
+          addRenderableOnly(debugRect(0xFFFF0000.toInt()))
+          addRenderableOnly(text(this@T7ContainerScreen.title, 0x83FF9B))
+        }
+
+        TextureBox(bgTexture) {
+          layout()
+        }
+
+        TextureBox(INVENTORY_BG) {
+          Column {
+            Column({
+              padding = INVENTORY_PADDING
+              height = fixed(font.lineHeight + INVENTORY_PADDING)
+              alignMain = Alignment.CENTER
+            }) {
+              addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
+            }
+
+            Column({
+              gap = HOTBAR_GAP
+            }) {
+              Box({
+                height = fixed(SLOT_TEXTURE.height * 3)
+                width = grow()
+              }) {
+                addRenderableOnly(slotGrid(3, 9, menu.playerInventory.range.slots) { _, _ -> SLOT_TEXTURE })
+              }
+
+              Box({
+                height = fixed(SLOT_TEXTURE.height)
+                width = grow()
+              }) {
+                addRenderableOnly(slotGrid(1, 9, menu.playerInventory.range.slots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
+              }
+            }
+          }
+        }
       }
     }
-
-//    Root(width, height) {
-//      Box(
-//        Modifier().center()
-//      ) {
-//        Column(
-//          Modifier().size(bgTexture).extendVertically(INVENTORY_BG).extendVertically(GAP).extendVertically(lineHeight).centerX()
-//        ) {
-//          Box(Modifier().height(lineHeight)) {
-//            addRenderableOnly(text(this@T7ContainerScreen.title, 0x83FF9B))
-//          }
-//          Box(Modifier().size(bgTexture)) {
-//            addRenderableOnly(texture(bgTexture))
-//            layout()
-//          }
-//          Box(Modifier().height(GAP))
-//          Box(Modifier().size(INVENTORY_BG)) {
-//            addRenderableOnly(texture(INVENTORY_BG))
-//            PaddingX(INVENTORY_PADDING) {
-//              Column {
-//                Box(
-//                  Modifier().height(INVENTORY_PADDING).extendVertically(lineHeight).centerY()
-//                ) {
-//                  Box(Modifier().height(lineHeight)) {
-//                    addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
-//                  }
-//                }
-//                Column(Modifier().color(0xFF00FFFF.toInt())) {
-//                  val inventorySlots = menu.playerInventory.range.slots
-//                  Box(Modifier().height(SLOT_TEXTURE.height * 3)) {
-//                    addRenderableOnly(slotGrid(3, 9, inventorySlots) { _, _ -> SLOT_TEXTURE })
-//                  }
-//                  Box(Modifier().height(HOTBAR_GAP))
-//                  Box {
-//                    addRenderableOnly(slotGrid(1, 9, inventorySlots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
-//                  }
-//                }
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
   }
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
@@ -194,4 +190,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     val padding = (slot.size - 16) / 2
     return this.isHovering(slot.actualX + padding, slot.actualY + padding, 16, 16, mouseX, mouseY)
   }
+
+  // layout helper
+  fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
+    Box({
+      width = fixed(texture.width)
+      height = fixed(texture.height)
+    }){
+      addRenderableOnly(texture(texture))
+      children()
+    }
 }

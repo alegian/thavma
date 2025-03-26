@@ -14,6 +14,6 @@ public class T7Textures {
     public static final Texture ARROW_HEAD = new Texture(CONTEXT + "arrow_head", 32, 32);
     public static final Texture LINE = new Texture(CONTEXT + "line", 32, 32);
     public static final Texture CORNER_1X1 = new Texture(CONTEXT + "corner_1x1", 32, 32);
-    public static final Texture CORNER_3X3 = new Texture(CONTEXT + "corner_3x3", 96, 96);
+    public static final Texture CORNER_2X2 = new Texture(CONTEXT + "corner_2x2", 96, 96);
   }
 }

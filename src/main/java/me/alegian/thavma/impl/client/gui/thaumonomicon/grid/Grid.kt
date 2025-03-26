@@ -22,7 +22,7 @@ class Grid(private val cellSize: Int) {
     }
   }
 
-  fun addCell(r: GridRenderable) {
+  fun add(r: GridRenderable) {
     contents.add(r)
   }
 }
@@ -30,7 +30,6 @@ class Grid(private val cellSize: Int) {
 private fun renderDebug(guiGraphics: GuiGraphics, cellSize: Int) {
   guiGraphics.usePose {
     guiGraphics.fill(-5, -5, 5, 5, 0xFFFF0000.toInt())
-    translateXY(-cellSize / 2.0, -cellSize / 2.0)
 
     for (i in -31..31) guiGraphics.hLine(-10000, 10000, i * cellSize, -0x1)
 

@@ -1,5 +1,8 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.grid
 
+import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.connectionCorner1x1
+import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.connectionCorner2x2
+import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.connectionLine
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
@@ -15,15 +18,40 @@ class Grid(private val cellSize: Int) {
   fun render(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int, pPartialTick: Float, scrollX: Double, scrollY: Double) {
     pGuiGraphics.usePose {
       translateXY(-scrollX, -scrollY)
-      for (r in contents) {
-        r.render(pGuiGraphics, cellSize, false, pPartialTick)
+      for (node in contents) {
+        node.render(pGuiGraphics, cellSize, false, pPartialTick)
+        for (child in node.children) {
+          Connection(this@Grid, child, node).render()
+        }
       }
       renderDebug(pGuiGraphics, cellSize)
     }
   }
 
-  fun add(r: GridRenderable) {
+  fun add(r: GridRenderable): GridRenderable {
     contents.add(r)
+    return r
+  }
+}
+
+class Connection(val grid: Grid, val to: GridRenderable, val from: GridRenderable) {
+  fun render() {
+    val diffX = to.x - from.x
+    val diffY = to.y - from.y
+    if (diffX > 2 && diffY > 2) throw IllegalStateException()
+    if (diffX > 2) {
+      grid.add(connectionLine(from.x + 1, from.y, 0))
+    } else if (diffY > 2) {
+      grid.add(connectionLine(from.x, from.y + 1, 90))
+    } else if (diffY == 2f && diffX == 2f) {
+      grid.add(connectionCorner2x2(to, from, false, 0))
+    } else if (diffY == 2f) {
+      grid.add(connectionLine(from.x, from.y + 1, 90))
+    } else if (diffX == 2f) {
+      grid.add(connectionLine(from.x + 1, from.y, 0))
+    } else {
+      grid.add(connectionCorner1x1(to, from, false, 0))
+    }
   }
 }
 

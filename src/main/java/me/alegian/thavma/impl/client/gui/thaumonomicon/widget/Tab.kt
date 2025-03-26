@@ -19,17 +19,12 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
   private val grid = Grid(48)
 
   init {
-    // test research nodes
-    val node1 = Node(0f, 0f)
-    val node2 = Node(2f, -2f)
-    val node3 = Node(3f, -3f)
-    grid.add(node1)
-    grid.add(node2)
-    grid.add(connectionCorner2x2(node2, node1, true, 0))
-    grid.add(ArrowHead(node2, node1, false))
-    grid.add(connectionCorner1x1(node3, node2, true, 0))
-    grid.add(ArrowHead(node3, node2, true))
-    grid.add(Node(3f, -3f))
+    val n0 = grid.add(Node(0f, 0f))
+    grid.add(Node(1f, -1f))
+    val n2 = grid.add(Node(2f, -2f, listOf(n0)))
+    grid.add(Node(3f, -3f, listOf(n2)))
+    grid.add(Node(3f, 3f))
+    grid.add(Node(1f, 3f, listOf(n2)))
   }
 
   fun handleScroll(x: Double, y: Double) {
@@ -75,30 +70,26 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
     }
   }
 
-  private class Node(x: Float, y: Float) : GridRenderable(T7Textures.Thaumonomicon.NODE.location, x, y)
 
-  private fun ArrowHead(to: Node, from: Node, flip: Boolean): GridRenderable {
-    val flipFactor = if (flip) -1f else 1f
-    val rotationDegrees =
-      if (to.x > from.x && to.y < from.y) 0
-      else if (to.x < from.x && to.y < from.y) 90
-      else if (to.x < from.x && to.y > from.y) 180
-      else 270
-    val rotationFactor = if(rotationDegrees % 180 == 0) 0 else 1
-    val x = to.x + flipFactor * rotationFactor
-    val y = to.y + flipFactor* rotationFactor
-    return GridRenderable(T7Textures.Thaumonomicon.ARROW_HEAD.location,x, y, flipFactor, flipFactor, rotationDegrees)
-  }
-
-  private class Line(x: Float, y: Float, rotationDegrees: Int) : GridRenderable(T7Textures.Thaumonomicon.LINE.location, x, y, rotationDegrees = rotationDegrees)
-
-  private fun connectionCorner1x1(to: Node, from: Node, flip: Boolean, rotationDegrees: Int): GridRenderable {
-    val flipFactor = if (flip) -1f else 1f
-    return GridRenderable(T7Textures.Thaumonomicon.CORNER_1X1.location, (to.x + from.x + flipFactor) / 2f, (to.y + from.y + flipFactor) / 2f, flipFactor, flipFactor, rotationDegrees)
-  }
-
-  private fun connectionCorner2x2(to: Node, from: Node, flip: Boolean, rotationDegrees: Int): GridRenderable {
-    val flipFactor = if (flip) -1f else 1f
-    return GridRenderable(T7Textures.Thaumonomicon.CORNER_2X2.location, (to.x + from.x + flipFactor) / 2f, (to.y + from.y + flipFactor) / 2f, 2f * flipFactor, 2f * flipFactor, rotationDegrees)
-  }
 }
+
+fun arrowHead(to: GridRenderable, from: GridRenderable, flip: Boolean): GridRenderable {
+  val flipFactor = if (flip) -1f else 1f
+  return GridRenderable(T7Textures.Thaumonomicon.ARROW_HEAD.location, (to.x + from.x) / 2f+flipFactor, (to.y + from.y) / 2f, flipFactor, flipFactor,90 )
+}
+
+fun connectionLine(x: Float, y: Float, rotationDegrees: Int): GridRenderable {
+  return GridRenderable(T7Textures.Thaumonomicon.LINE.location, x, y, rotationDegrees = rotationDegrees)
+}
+
+fun connectionCorner1x1(to: GridRenderable, from: GridRenderable, flip: Boolean, rotationDegrees: Int): GridRenderable {
+  val flipFactor = if (flip) -1f else 1f
+  return GridRenderable(T7Textures.Thaumonomicon.CORNER_1X1.location, (to.x + from.x + flipFactor) / 2f, (to.y + from.y + flipFactor) / 2f, flipFactor, flipFactor, rotationDegrees)
+}
+
+fun connectionCorner2x2(to: GridRenderable, from: GridRenderable, flip: Boolean, rotationDegrees: Int): GridRenderable {
+  val flipFactor = if (flip) -1f else 1f
+  return GridRenderable(T7Textures.Thaumonomicon.CORNER_2X2.location, (to.x + from.x + flipFactor) / 2f, (to.y + from.y + flipFactor) / 2f, 2f * flipFactor, 2f * flipFactor, rotationDegrees)
+}
+
+class Node(x: Float, y: Float, children: List<GridRenderable> = listOf()) : GridRenderable(T7Textures.Thaumonomicon.NODE.location, x, y, children = children)

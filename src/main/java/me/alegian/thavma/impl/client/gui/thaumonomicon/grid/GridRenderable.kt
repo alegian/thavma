@@ -14,7 +14,8 @@ open class GridRenderable(
   val y: Float,
   val sizeX: Float = 1f,
   val sizeY: Float = 1f,
-  private val rotationDegrees: Int = 0
+  private val rotationDegrees: Int = 0,
+  val children : List<GridRenderable> = emptyList()
 ) {
   fun render(graphics: GuiGraphics, cellSize: Int, hovered: Boolean, tickDelta: Float) {
     val xPos = (cellSize * (x - sizeX / 2f)).toDouble()

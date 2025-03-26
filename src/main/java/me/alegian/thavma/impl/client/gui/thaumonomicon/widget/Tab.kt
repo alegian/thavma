@@ -9,10 +9,12 @@ import net.minecraft.client.gui.components.Renderable
 import net.minecraft.util.Mth
 import kotlin.math.pow
 
+private const val ZOOM_MULTIPLIER = 1.25f
+
 // represents the renderable content of a tab in the book
 class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Renderable {
-  var scrollX: Double = 0.0
-  var scrollY: Double = 0.0
+  var scrollX = 0.0
+  var scrollY = 0.0
   private var zoom = 2f
   private val grid = Grid(48)
 
@@ -22,7 +24,7 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
     grid.addCell(Line(2, 2, 0))
     grid.addCell(Line(3, 2, 0))
     grid.addCell(Line(4, 2, 0))
-    grid.addCell(ArrowCorner3x3(1, -1, false, 90))
+    grid.addCell(ArrowCorner3x3(1, -1, true, 0))
     grid.addCell(ArrowHead(2, -1, 0))
     grid.addCell(Node(2, -2))
     grid.addCell(ArrowCorner1x1(3, -2, false, 0))
@@ -82,7 +84,4 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
   private class ArrowCorner1x1(x: Int, y: Int, flip: Boolean, rotationDegrees: Int) : GridRenderable(T7Textures.Thaumonomicon.CORNER_1X1.location, x, y, flip, rotationDegrees)
 
   private class ArrowCorner3x3(x: Int, y: Int, flip: Boolean, rotationDegrees: Int) : GridRenderable(T7Textures.Thaumonomicon.CORNER_3X3.location, x, y, 3, 3, flip, rotationDegrees)
-  companion object {
-    private const val ZOOM_MULTIPLIER = 1.25f
-  }
 }

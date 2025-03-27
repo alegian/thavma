@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.grid
 
+import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.Node
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.rotateZ
@@ -8,6 +9,7 @@ import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
 import kotlin.math.abs
+import kotlin.math.sign
 
 private const val CELL_SIZE = 48
 
@@ -30,13 +32,13 @@ fun renderConnection(to: Node, from: Node, guiGraphics: GuiGraphics) {
   } else if (diffY > 2) {
     connectionLine(guiGraphics, from.x.toFloat(), from.y + 1f, 90)
   } else if (diffY == 2 && diffX == 2) {
-    connectionCorner2x2(guiGraphics, to, from, false, 0)
+    connectionCorner2x2(guiGraphics, to, from, 0)
   } else if (diffY == 2) {
     connectionLine(guiGraphics, from.x.toFloat(), from.y + 1f, 90)
   } else if (diffX == 2) {
     connectionLine(guiGraphics, from.x + 1f, from.y.toFloat(), 0)
   } else {
-    connectionCorner1x1(guiGraphics, to, from, false, 0)
+    connectionCorner1x1(guiGraphics, to, from, 0)
   }
 }
 
@@ -79,6 +81,7 @@ fun arrowHead(guiGraphics: GuiGraphics, to: Node, from: Node, flip: Boolean) {
     (to.y + from.y) / 2f,
     90,
     flipFactor,
+    flipFactor,
     T7Textures.Thaumonomicon.ARROW_HEAD.location
   )
 }
@@ -90,43 +93,47 @@ fun connectionLine(guiGraphics: GuiGraphics, x: Float, y: Float, rotationDegrees
     y,
     rotationDegrees,
     1f,
+    1f,
     T7Textures.Thaumonomicon.LINE.location
   )
 }
 
-fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node, flip: Boolean, rotationDegrees: Int) {
-  val flipFactor = if (flip) -1f else 1f
-
+fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node, rotationDegrees: Int) {
   render(
     guiGraphics,
-    (to.x + from.x + flipFactor) / 2f,
-    (to.y + from.y + flipFactor) / 2f,
+    from.x.toFloat(),
+    to.y.toFloat(),
     rotationDegrees,
-    flipFactor,
+    (to.x - from.x).toFloat(),
+    (from.y - to.y).toFloat(),
     T7Textures.Thaumonomicon.CORNER_1X1.location
   )
 }
 
-fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node, flip: Boolean, rotationDegrees: Int) {
-  val flipFactor = if (flip) -1f else 1f
-
+/**
+ * For prefer-X: source X, target Y, width: taget-source, height: source-target
+ */
+fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node, rotationDegrees: Int) {
   render(
     guiGraphics,
-    (to.x + from.x + flipFactor) / 2f,
-    (to.y + from.y + flipFactor) / 2f,
+    from.x.toFloat(),
+    to.y.toFloat(),
     rotationDegrees,
-    2* flipFactor,
+    (to.x - from.x).toFloat(),
+    (from.y - to.y).toFloat(),
     T7Textures.Thaumonomicon.CORNER_2X2.location
   )
 }
 
-private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: Int, size: Float, textureLoc: ResourceLocation) {
-  val xPos = (CELL_SIZE * (x - size / 2f)).toDouble()
-  val yPos = (CELL_SIZE * (y - size / 2f)).toDouble()
+private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: Int, width: Float, height: Float, textureLoc: ResourceLocation) {
+  val xPos = (CELL_SIZE * (x + 0.5 * sign(width))).toDouble()
+  val yPos = (CELL_SIZE * (y + 0.5 * sign(height))).toDouble()
 
   graphics.usePose {
     rotateZ(rotationDegrees.toFloat())
     translateXY(xPos, yPos)
+    // allows negative size drawing, which greatly simplifies math
+    RenderSystem.disableCull()
     graphics.blit(
       textureLoc,
       0,
@@ -134,10 +141,11 @@ private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: I
       0,
       0f,
       0f,
-      (CELL_SIZE * size).toInt(),
-      (CELL_SIZE * size).toInt(),
-      (CELL_SIZE * size).toInt(),
-      (CELL_SIZE * size).toInt()
+      (CELL_SIZE * width).toInt(),
+      (CELL_SIZE * height).toInt(),
+      (CELL_SIZE * width).toInt(),
+      (CELL_SIZE * height).toInt()
     )
+    RenderSystem.enableCull()
   }
 }

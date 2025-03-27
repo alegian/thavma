@@ -11,13 +11,13 @@ import kotlin.math.pow
 private const val ZOOM_MULTIPLIER = 1.25f
 private val n0 = Node(0, 0)
 private val n2 = Node(2, -2, listOf(n0))
-private val n5 = Node(1, 3)
+private val n5 = Node(3, 1)
 private val nodes = listOf(
   n0,
   Node(1, -1),
   n2,
   Node(3, -3, listOf(n2)),
-  Node(3, 1, listOf(n5), true),
+  Node(1, 3, listOf(n5), false),
   n5
 )
 
@@ -72,4 +72,8 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
   }
 }
 
-class Node(val x: Int, val y: Int, val children: List<Node> = listOf(), flip: Boolean = false)
+/**
+ * By default, connections prefer to explore X axis first.
+ * @param preferY makes connections explore Y first
+ */
+class Node(val x: Int, val y: Int, val children: List<Node> = listOf(), preferY: Boolean = false)

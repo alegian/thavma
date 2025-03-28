@@ -32,13 +32,13 @@ fun renderConnection(to: Node, from: Node, guiGraphics: GuiGraphics) {
   } else if (diffY > 2) {
     connectionLine(guiGraphics, from.x.toFloat(), from.y + 1f, 90)
   } else if (diffY == 2 && diffX == 2) {
-    connectionCorner2x2(guiGraphics, to, from, 0)
+    connectionCorner2x2(guiGraphics, to, from)
   } else if (diffY == 2) {
     connectionLine(guiGraphics, from.x.toFloat(), from.y + 1f, 90)
   } else if (diffX == 2) {
     connectionLine(guiGraphics, from.x + 1f, from.y.toFloat(), 0)
   } else {
-    connectionCorner1x1(guiGraphics, to, from, 0)
+    connectionCorner1x1(guiGraphics, to, from)
   }
 }
 
@@ -98,31 +98,37 @@ fun connectionLine(guiGraphics: GuiGraphics, x: Float, y: Float, rotationDegrees
   )
 }
 
-fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node, rotationDegrees: Int) {
-  render(
-    guiGraphics,
-    from.x.toFloat(),
-    to.y.toFloat(),
-    rotationDegrees,
-    (to.x - from.x).toFloat(),
-    (from.y - to.y).toFloat(),
-    T7Textures.Thaumonomicon.CORNER_1X1.location
-  )
-}
+fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node)=
+  connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_1X1.location)
+
+fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node)=
+  connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_2X2.location)
 
 /**
- * For prefer-X: source X, target Y, width: taget-source, height: source-target
+ * connectX(default): source X, target Y, width: taget-source, height: source-target
+ * connectY: target X, source Y, width: source-taget, height: target-source
  */
-fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node, rotationDegrees: Int) {
-  render(
-    guiGraphics,
-    from.x.toFloat(),
-    to.y.toFloat(),
-    rotationDegrees,
-    (to.x - from.x).toFloat(),
-    (from.y - to.y).toFloat(),
-    T7Textures.Thaumonomicon.CORNER_2X2.location
-  )
+fun connectionCorner(guiGraphics: GuiGraphics, to: Node, from: Node, textureLoc: ResourceLocation) {
+  if (to.connectX)
+    render(
+      guiGraphics,
+      to.x.toFloat(),
+      from.y.toFloat(),
+      0,
+      (from.x - to.x).toFloat(),
+      (to.y - from.y).toFloat(),
+      textureLoc
+    )
+  else
+    render(
+      guiGraphics,
+      from.x.toFloat(),
+      to.y.toFloat(),
+      0,
+      (to.x - from.x).toFloat(),
+      (from.y - to.y).toFloat(),
+      textureLoc
+    )
 }
 
 private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: Int, width: Float, height: Float, textureLoc: ResourceLocation) {

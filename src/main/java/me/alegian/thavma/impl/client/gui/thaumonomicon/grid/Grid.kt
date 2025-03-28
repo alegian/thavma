@@ -109,7 +109,7 @@ fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node)=
  * connectY: target X, source Y, width: source-taget, height: target-source
  */
 fun connectionCorner(guiGraphics: GuiGraphics, to: Node, from: Node, textureLoc: ResourceLocation) {
-  if (to.connectX)
+  if (to.preferX)
     render(
       guiGraphics,
       to.x.toFloat(),

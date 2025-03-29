@@ -10,7 +10,7 @@ import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25f
 private val n0 = Node(0, 0)
-private val n2 = Node(2, -2, listOf(n0), true)
+private val n2 = Node(2, -2, listOf(n0), false)
 private val n5 = Node(3, 1, preferX = false)
 private val nodes = listOf(
   n0,

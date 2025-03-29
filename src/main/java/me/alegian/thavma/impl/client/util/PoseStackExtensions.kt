@@ -6,14 +6,14 @@ import org.joml.Matrix4f
 import org.joml.Vector3f
 
 fun PoseStack.translate(offset: Vec3?) {
-    if(offset != null) translate(offset.x, offset.y, offset.z)
+  if (offset != null) translate(offset.x, offset.y, offset.z)
 }
 
 fun PoseStack.transformOrigin() = last().pose().transformPosition(Vector3f())
 
 fun PoseStack.scale(scale: Float) = scale(scale, scale, scale)
 
-fun PoseStack.translateXY(x: Double, y: Double) = translate(x, y, 0.0)
+fun PoseStack.translateXY(x: Number, y: Number) = translate(x.toDouble(), y.toDouble(), 0.0)
 
 fun PoseStack.scaleXY(scale: Float) = scale(scale, scale, 1f)
 

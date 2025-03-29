@@ -1,9 +1,11 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.grid
 
 import com.mojang.blaze3d.systems.RenderSystem
+import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.Node
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.rotateZ
+import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
@@ -11,13 +13,19 @@ import net.minecraft.resources.ResourceLocation
 import kotlin.math.abs
 import kotlin.math.sign
 
-private const val CELL_SIZE = 48
+private const val CELL_SIZE = 48f
 
 fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
-  for (node in nodes) {
-    renderNode(guiGraphics, node)
-    for (child in node.children) {
-      renderConnection(child, node, guiGraphics)
+  guiGraphics.usePose {
+    scaleXY(CELL_SIZE)
+    for (node in nodes) {
+      guiGraphics.usePose {
+        translateToNode(node)
+        renderNode(guiGraphics)
+        for (child in node.children) {
+          renderConnection(child, node, guiGraphics)
+        }
+      }
     }
   }
   renderDebug(guiGraphics)
@@ -43,21 +51,18 @@ fun renderConnection(to: Node, from: Node, guiGraphics: GuiGraphics) {
 }
 
 private fun renderDebug(guiGraphics: GuiGraphics) {
-  guiGraphics.usePose {
-    guiGraphics.fill(-5, -5, 5, 5, 0xFFFF0000.toInt())
+  guiGraphics.fill(-5, -5, 5, 5, 0xFFFF0000.toInt())
 
-    for (i in -31..31) guiGraphics.hLine(-10000, 10000, i * CELL_SIZE, -0x1)
+  for (i in -31..31) guiGraphics.hLine(-10000, 10000, i * CELL_SIZE.toInt(), -0x1)
 
-    for (i in -31..31) guiGraphics.vLine(i * CELL_SIZE, -10000, 10000, -0x1)
-  }
+  for (i in -31..31) guiGraphics.vLine(i * CELL_SIZE.toInt(), -10000, 10000, -0x1)
 }
 
-private fun renderNode(guiGraphics: GuiGraphics, node: Node) {
-  val xPos = (CELL_SIZE * (node.x - 0.5f)).toDouble()
-  val yPos = (CELL_SIZE * (node.y - 0.5f)).toDouble()
+private fun PoseStack.translateToNode(node: Node) = this.translateXY(node.x, node.y)
 
+private fun renderNode(guiGraphics: GuiGraphics) {
   guiGraphics.usePose {
-    translateXY(xPos, yPos)
+    translateXY(-0.5, -0.5)
     guiGraphics.blit(
       T7Textures.Thaumonomicon.NODE.location,
       0,
@@ -65,10 +70,10 @@ private fun renderNode(guiGraphics: GuiGraphics, node: Node) {
       0,
       0f,
       0f,
-      CELL_SIZE,
-      CELL_SIZE,
-      CELL_SIZE,
-      CELL_SIZE
+      1,
+      1,
+      1,
+      1
     )
   }
 }
@@ -98,10 +103,10 @@ fun connectionLine(guiGraphics: GuiGraphics, x: Float, y: Float, rotationDegrees
   )
 }
 
-fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node)=
+fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Node, from: Node) =
   connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_1X1.location)
 
-fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node)=
+fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Node, from: Node) =
   connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_2X2.location)
 
 /**
@@ -112,8 +117,8 @@ fun connectionCorner(guiGraphics: GuiGraphics, to: Node, from: Node, textureLoc:
   if (to.preferX)
     render(
       guiGraphics,
-      to.x.toFloat(),
-      from.y.toFloat(),
+      (to.x - from.x).toFloat(),
+      0f,
       0,
       (from.x - to.x).toFloat(),
       (to.y - from.y).toFloat(),
@@ -122,8 +127,8 @@ fun connectionCorner(guiGraphics: GuiGraphics, to: Node, from: Node, textureLoc:
   else
     render(
       guiGraphics,
-      from.x.toFloat(),
-      to.y.toFloat(),
+      0f,
+      (to.y - from.y).toFloat(),
       0,
       (to.x - from.x).toFloat(),
       (from.y - to.y).toFloat(),
@@ -132,8 +137,8 @@ fun connectionCorner(guiGraphics: GuiGraphics, to: Node, from: Node, textureLoc:
 }
 
 private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: Int, width: Float, height: Float, textureLoc: ResourceLocation) {
-  val xPos = (CELL_SIZE * (x + 0.5 * sign(width))).toDouble()
-  val yPos = (CELL_SIZE * (y + 0.5 * sign(height))).toDouble()
+  val xPos = x + 0.5 * sign(width)
+  val yPos = y + 0.5 * sign(height)
 
   graphics.usePose {
     rotateZ(rotationDegrees.toFloat())
@@ -147,10 +152,10 @@ private fun render(graphics: GuiGraphics, x: Float, y: Float, rotationDegrees: I
       0,
       0f,
       0f,
-      (CELL_SIZE * width).toInt(),
-      (CELL_SIZE * height).toInt(),
-      (CELL_SIZE * width).toInt(),
-      (CELL_SIZE * height).toInt()
+      width.toInt(),
+      height.toInt(),
+      width.toInt(),
+      height.toInt()
     )
     RenderSystem.enableCull()
   }

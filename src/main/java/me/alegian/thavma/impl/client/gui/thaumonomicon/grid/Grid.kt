@@ -26,7 +26,9 @@ fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
         renderNode(guiGraphics)
         for (child in node.children) {
           val dv = child.pos - node.pos
-          renderConnection(dv.x, dv.y, guiGraphics, child.preferX, false)
+          guiGraphics.usePose {
+            renderConnection(dv.x, dv.y, guiGraphics, child.preferX, false)
+          }
         }
       }
     }

@@ -24,8 +24,8 @@ private val nodes = listOf(
 
 // represents the renderable content of a tab in the book
 class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Renderable {
-  var scrollX = 0.0
-  var scrollY = 0.0
+  private var scrollX = 0.0
+  private var scrollY = 0.0
   private var zoom = 2f
 
   fun handleScroll(x: Double, y: Double) {

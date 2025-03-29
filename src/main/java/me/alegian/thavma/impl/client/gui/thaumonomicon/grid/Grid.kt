@@ -10,9 +10,8 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.phys.Vec2
 import org.joml.Vector3f
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -26,41 +25,47 @@ fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
         translateToNode(node)
         renderNode(guiGraphics)
         for (child in node.children) {
-          renderConnection(child.pos, node.pos, guiGraphics, child.preferX)
+          val dv = child.pos - node.pos
+          renderConnection(dv.x, dv.y, guiGraphics, child.preferX)
         }
       }
     }
   }
-  renderDebug(guiGraphics)
+  //renderDebug(guiGraphics)
 }
 
-fun renderConnection(to: Vec2, from: Vec2, guiGraphics: GuiGraphics, preferX: Boolean) {
-  val diffX = abs(to.x - from.x)
-  val diffY = abs(to.y - from.y)
-  val signX = sign(to.x - from.x)
-  val signY = sign(to.y - from.y)
+fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Boolean) {
+  val absDx = abs(dx)
+  val absDy = abs(dy)
+  val signX = sign(dx)
+  val signY = sign(dy)
 
-  if (diffX > 2 && diffY > 2) throw IllegalStateException()
-  if (diffX > 2) {
-    connectionLine(guiGraphics, signX, signY, preferX)
+  if (absDx <= 0f && absDy <= 0f) return
+  else if (absDx > 2 && absDy > 2) throw IllegalStateException()
+  else if (absDx > 2) {
+    connectionLine(guiGraphics, signX, signY, false)
     guiGraphics.pose().translateXY(signX, 0)
-    renderConnection(to, from.plus(Vec2(signX, 0f)), guiGraphics, preferX)
-  } else if (diffY > 2) {
-    connectionLine(guiGraphics, signX, signY, preferX)
+    renderConnection(dx - signX, dy, guiGraphics, preferX)
+  } else if (absDy > 2) {
+    connectionLine(guiGraphics, signX, signY, true)
     guiGraphics.pose().translateXY(0, signY)
-    renderConnection(to, from.plus(Vec2(0f, signY)), guiGraphics, preferX)
-  } else if (diffY == 2f && diffX == 2f) {
-    connectionCorner2x2(guiGraphics, to, from, preferX)
-  } else if (diffX == 1f && diffY == 1f) {
-    connectionCorner1x1(guiGraphics, to, from, preferX)
-  } else if (diffY > diffX) {
-    connectionLine(guiGraphics, signX, signY, preferX)
+    renderConnection(dx, dy - signY, guiGraphics, preferX)
+  } else if (absDy == 2f && absDx == 2f) {
+    connectionCorner2x2(guiGraphics, dx, -dy, preferX)
+    guiGraphics.pose().translateXY(2 * signX, 2 * signY)
+    renderConnection(dx - 2 * signX, dy - 2 * signY, guiGraphics, preferX)
+  } else if (absDx == 1f && absDy == 1f) {
+    connectionCorner1x1(guiGraphics, dx, -dy, preferX)
+    guiGraphics.pose().translateXY(signX, signY)
+    renderConnection(dx - signX, dy - signY, guiGraphics, preferX)
+  } else if (absDy > absDx) {
+    connectionLine(guiGraphics, signX, signY, true)
     guiGraphics.pose().translateXY(0, signY)
-    renderConnection(to, from.plus(Vec2(0f, signY)), guiGraphics, preferX)
+    renderConnection(dx, dy - signY, guiGraphics, preferX)
   } else {
-    connectionLine(guiGraphics, signX, signY, preferX)
+    connectionLine(guiGraphics, signX, signY, false)
     guiGraphics.pose().translateXY(signX, 0)
-    renderConnection(to, from.plus(Vec2(signX, 0f)), guiGraphics, preferX)
+    renderConnection(dx - signX, dy, guiGraphics, preferX)
   }
 }
 
@@ -92,9 +97,9 @@ private fun renderNode(guiGraphics: GuiGraphics) {
   }
 }
 
-fun connectionLine(guiGraphics: GuiGraphics, width: Float, height: Float, preferX: Boolean) {
+fun connectionLine(guiGraphics: GuiGraphics, width: Float, height: Float, vertical: Boolean) {
   guiGraphics.usePose {
-    if (preferX) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
+    if (vertical) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,
@@ -106,20 +111,17 @@ fun connectionLine(guiGraphics: GuiGraphics, width: Float, height: Float, prefer
   }
 }
 
-fun connectionCorner1x1(guiGraphics: GuiGraphics, to: Vec2, from: Vec2, preferX: Boolean) =
-  connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_1X1.location, preferX)
+fun connectionCorner1x1(guiGraphics: GuiGraphics, width: Float, height: Float, preferX: Boolean) =
+  connectionCorner(guiGraphics, width, height, T7Textures.Thaumonomicon.CORNER_1X1.location, preferX)
 
-fun connectionCorner2x2(guiGraphics: GuiGraphics, to: Vec2, from: Vec2, preferX: Boolean) =
-  connectionCorner(guiGraphics, to, from, T7Textures.Thaumonomicon.CORNER_2X2.location, preferX)
+fun connectionCorner2x2(guiGraphics: GuiGraphics, width: Float, height: Float, preferX: Boolean) =
+  connectionCorner(guiGraphics, width, height, T7Textures.Thaumonomicon.CORNER_2X2.location, preferX)
 
 /**
  * connectX(default): source X, target Y, width: taget-source, height: source-target
  * connectY: target X, source Y, width: source-taget, height: target-source
  */
-fun connectionCorner(guiGraphics: GuiGraphics, to: Vec2, from: Vec2, textureLoc: ResourceLocation, preferX: Boolean) {
-  val width = to.x - from.x
-  val height = from.y - to.y
-
+fun connectionCorner(guiGraphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation, preferX: Boolean) {
   guiGraphics.usePose {
     if (preferX) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
     render(

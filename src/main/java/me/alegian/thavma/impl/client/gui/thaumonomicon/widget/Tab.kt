@@ -6,18 +6,19 @@ import me.alegian.thavma.impl.client.util.*
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.util.Mth
+import net.minecraft.world.phys.Vec2
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25f
-private val n0 = Node(0, 0)
-private val n2 = Node(2, -2, listOf(n0), false)
-private val n5 = Node(3, 1, preferX = false)
+private val n0 = Node(Vec2(0f, 0f))
+private val n2 = Node(Vec2(2f, -2f), listOf(n0), false)
+private val n5 = Node(Vec2(12f, 1f), preferX = false)
 private val nodes = listOf(
   n0,
-  Node(1, -1),
+  Node(Vec2(1f, -1f)),
   n2,
-  Node(3, -3, listOf(n2)),
-  Node(1, 3, listOf(n5)),
+  Node(Vec2(3f, -3f), listOf(n2)),
+  Node(Vec2(1f, 3f), listOf(n5)),
   n5
 )
 
@@ -77,4 +78,4 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class Node(val x: Int, val y: Int, val children: List<Node> = listOf(), val preferX: Boolean = false)
+class Node(val pos: Vec2, val children: List<Node> = listOf(), val preferX: Boolean = false)

@@ -39,6 +39,7 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
   val absDy = abs(dy)
   val signX = sign(dx)
   val signY = sign(dy)
+  val inversion = if(invert) -1f else 1f
 
   if (absDx <= 0f && absDy <= 0f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
@@ -46,15 +47,14 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
     guiGraphics.pose().translateXY(dx, dy)
     renderConnection(-dx, -dy, guiGraphics, preferX, true)
   } else if (absDx == absDy) {
-    val inversion = if(invert) -1 else 1
     if(invert) guiGraphics.pose().translateXY(dx, dy)
     connectionCorner(guiGraphics, dx*inversion, dy*inversion, preferX)
-  } else if (absDx > 2) {
-    connectionLine(guiGraphics, signX, signY, false)
+  } else if (absDx > absDy) {
+    connectionLine(guiGraphics, inversion, 1f, false)
     guiGraphics.pose().translateXY(signX, 0)
     renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
   } else {
-    connectionLine(guiGraphics, signX, signY, true)
+    connectionLine(guiGraphics, 1f, inversion, true)
     guiGraphics.pose().translateXY(0, signY)
     renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   }
@@ -94,9 +94,9 @@ fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertica
     render(
       guiGraphics,
       0f,
-      -signY,
-      signX,
       signY,
+      signX,
+      -signY,
       T7Textures.Thaumonomicon.LINE.location
     )
   }

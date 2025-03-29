@@ -14,6 +14,8 @@ private val n0 = Node(Vec2(0f, 0f))
 private val n2 = Node(Vec2(2f, -2f), listOf(n0), false)
 private val n5 = Node(Vec2(1f, 12f), preferX = false)
 private val n12 = Node(Vec2(12f, 2f), preferX = true)
+private val n6 = Node(Vec2(4f, 7f), preferX = false)
+private val n7 = Node(Vec2(7f, 4f), preferX = false)
 private val nodes = listOf(
   n0,
   Node(Vec2(1f, -1f)),
@@ -22,7 +24,10 @@ private val nodes = listOf(
   Node(Vec2(3f, 1f), listOf(n5)),
   Node(Vec2(-1f, 4f), listOf(n12)),
   n5,
-  n12
+  n12,
+  n6,
+  n7,
+  Node(Vec2(3f, 3f), listOf(n6, n7))
 )
 
 // represents the renderable content of a tab in the book

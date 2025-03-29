@@ -12,14 +12,17 @@ import kotlin.math.pow
 private const val ZOOM_MULTIPLIER = 1.25f
 private val n0 = Node(Vec2(0f, 0f))
 private val n2 = Node(Vec2(2f, -2f), listOf(n0), false)
-private val n5 = Node(Vec2(12f, 1f), preferX = false)
+private val n5 = Node(Vec2(1f, 12f), preferX = false)
+private val n12 = Node(Vec2(12f, 2f), preferX = true)
 private val nodes = listOf(
   n0,
   Node(Vec2(1f, -1f)),
   n2,
   Node(Vec2(3f, -3f), listOf(n2)),
-  Node(Vec2(1f, 3f), listOf(n5)),
-  n5
+  Node(Vec2(3f, 1f), listOf(n5)),
+  Node(Vec2(-1f, 4f), listOf(n12)),
+  n5,
+  n12
 )
 
 // represents the renderable content of a tab in the book

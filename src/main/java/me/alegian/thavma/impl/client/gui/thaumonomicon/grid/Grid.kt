@@ -42,27 +42,21 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
 
   if (absDx <= 0f && absDy <= 0f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
-  else if (!invert && preferX && absDx > absDy) {
+  else if (!invert && (preferX && absDx > absDy || !preferX && absDy > absDx)) {
     guiGraphics.pose().translateXY(dx, dy)
     renderConnection(-dx, -dy, guiGraphics, preferX, true)
+  } else if (absDx == absDy) {
+    val inversion = if(invert) -1 else 1
+    if(invert) guiGraphics.pose().translateXY(dx, dy)
+    connectionCorner(guiGraphics, dx*inversion, dy*inversion, preferX)
   } else if (absDx > 2) {
     connectionLine(guiGraphics, signX, signY, false)
     guiGraphics.pose().translateXY(signX, 0)
     renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
-  } else if (absDy > 2) {
-    connectionLine(guiGraphics, signX, signY, true)
-    guiGraphics.pose().translateXY(0, signY)
-    renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
-  } else if (absDx == absDy) {
-    connectionCorner(guiGraphics, dx, dy, preferX xor invert)
-  } else if (absDy > absDx) {
-    connectionLine(guiGraphics, signX, signY, true)
-    guiGraphics.pose().translateXY(0, signY)
-    renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   } else {
-    connectionLine(guiGraphics, signX, signY, false)
-    guiGraphics.pose().translateXY(signX, 0)
-    renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
+    connectionLine(guiGraphics, signX, signY, true)
+    guiGraphics.pose().translateXY(0, signY)
+    renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   }
 }
 

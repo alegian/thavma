@@ -26,7 +26,7 @@ fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
         renderNode(guiGraphics)
         for (child in node.children) {
           val dv = child.pos - node.pos
-          renderConnection(dv.x, dv.y, guiGraphics, child.preferX)
+          renderConnection(dv.x, dv.y, guiGraphics, child.preferX, false)
         }
       }
     }
@@ -34,7 +34,7 @@ fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
   //renderDebug(guiGraphics)
 }
 
-fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Boolean) {
+fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Boolean, invert: Boolean) {
   val absDx = abs(dx)
   val absDy = abs(dy)
   val signX = sign(dx)
@@ -42,30 +42,27 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
 
   if (absDx <= 0f && absDy <= 0f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
-  else if (absDx > 2) {
+  else if (!invert && preferX && absDx > absDy) {
+    guiGraphics.pose().translateXY(dx, dy)
+    renderConnection(-dx, -dy, guiGraphics, preferX, true)
+  } else if (absDx > 2) {
     connectionLine(guiGraphics, signX, signY, false)
     guiGraphics.pose().translateXY(signX, 0)
-    renderConnection(dx - signX, dy, guiGraphics, preferX)
+    renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
   } else if (absDy > 2) {
     connectionLine(guiGraphics, signX, signY, true)
     guiGraphics.pose().translateXY(0, signY)
-    renderConnection(dx, dy - signY, guiGraphics, preferX)
-  } else if (absDy == 2f && absDx == 2f) {
-    connectionCorner2x2(guiGraphics, dx, -dy, preferX)
-    guiGraphics.pose().translateXY(2 * signX, 2 * signY)
-    renderConnection(dx - 2 * signX, dy - 2 * signY, guiGraphics, preferX)
-  } else if (absDx == 1f && absDy == 1f) {
-    connectionCorner1x1(guiGraphics, dx, -dy, preferX)
-    guiGraphics.pose().translateXY(signX, signY)
-    renderConnection(dx - signX, dy - signY, guiGraphics, preferX)
+    renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
+  } else if (absDx == absDy) {
+    connectionCorner(guiGraphics, dx, dy, preferX xor invert)
   } else if (absDy > absDx) {
     connectionLine(guiGraphics, signX, signY, true)
     guiGraphics.pose().translateXY(0, signY)
-    renderConnection(dx, dy - signY, guiGraphics, preferX)
+    renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   } else {
     connectionLine(guiGraphics, signX, signY, false)
     guiGraphics.pose().translateXY(signX, 0)
-    renderConnection(dx - signX, dy, guiGraphics, preferX)
+    renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
   }
 }
 
@@ -97,39 +94,33 @@ private fun renderNode(guiGraphics: GuiGraphics) {
   }
 }
 
-fun connectionLine(guiGraphics: GuiGraphics, width: Float, height: Float, vertical: Boolean) {
+fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) {
   guiGraphics.usePose {
     if (vertical) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,
-      -height,
-      width,
-      height,
+      -signY,
+      signX,
+      signY,
       T7Textures.Thaumonomicon.LINE.location
     )
   }
 }
 
-fun connectionCorner1x1(guiGraphics: GuiGraphics, width: Float, height: Float, preferX: Boolean) =
-  connectionCorner(guiGraphics, width, height, T7Textures.Thaumonomicon.CORNER_1X1.location, preferX)
+fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Boolean) {
+  val textureLoc =
+    if (abs(dx) == 1f) T7Textures.Thaumonomicon.CORNER_1X1.location
+    else T7Textures.Thaumonomicon.CORNER_2X2.location
 
-fun connectionCorner2x2(guiGraphics: GuiGraphics, width: Float, height: Float, preferX: Boolean) =
-  connectionCorner(guiGraphics, width, height, T7Textures.Thaumonomicon.CORNER_2X2.location, preferX)
-
-/**
- * connectX(default): source X, target Y, width: taget-source, height: source-target
- * connectY: target X, source Y, width: source-taget, height: target-source
- */
-fun connectionCorner(guiGraphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation, preferX: Boolean) {
   guiGraphics.usePose {
     if (preferX) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,
-      -height,
-      width,
-      height,
+      dy,
+      dx,
+      -dy,
       textureLoc
     )
   }

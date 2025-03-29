@@ -52,11 +52,17 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
     if(invert) guiGraphics.pose().translateXY(dx, dy)
     connectionCorner(guiGraphics, dx*inversion, dy*inversion, preferX)
   } else if (absDx > absDy) {
-    connectionLine(guiGraphics, inversion, 1f, false)
+    guiGraphics.usePose {
+      if(invert)translateXY(2*signX, 0)
+      connectionLine(guiGraphics, signX*inversion, 1f, false)
+    }
     guiGraphics.pose().translateXY(signX, 0)
     renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
   } else {
-    connectionLine(guiGraphics, 1f, inversion, true)
+    guiGraphics.usePose {
+      if(invert)translateXY(0, 2*signY)
+      connectionLine(guiGraphics, 1f, signY*inversion, true)
+    }
     guiGraphics.pose().translateXY(0, signY)
     renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   }
@@ -92,7 +98,7 @@ private fun renderNode(guiGraphics: GuiGraphics) {
 
 fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) {
   guiGraphics.usePose {
-    if (vertical) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
+    if (vertical) mulPose(Axis.of(Vector3f(1f, 1f, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,

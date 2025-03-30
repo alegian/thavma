@@ -52,18 +52,12 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
     if(invert) guiGraphics.pose().translateXY(dx, dy)
     connectionCorner(guiGraphics, dx*inversion, dy*inversion, preferX)
   } else if (absDx > absDy) {
-    guiGraphics.usePose {
-      if(invert)translateXY(2*signX, 0)
-      connectionLine(guiGraphics, signX*inversion, 1f, false)
-    }
     guiGraphics.pose().translateXY(signX, 0)
+    connectionLine(guiGraphics, signX*inversion, 1f, false)
     renderConnection(dx - signX, dy, guiGraphics, preferX, invert)
   } else {
-    guiGraphics.usePose {
-      if(invert)translateXY(0, 2*signY)
-      connectionLine(guiGraphics, 1f, signY*inversion, true)
-    }
     guiGraphics.pose().translateXY(0, signY)
+    connectionLine(guiGraphics, 1f, signY*inversion, true)
     renderConnection(dx, dy - signY, guiGraphics, preferX, invert)
   }
 }
@@ -98,13 +92,16 @@ private fun renderNode(guiGraphics: GuiGraphics) {
 
 fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) {
   guiGraphics.usePose {
-    if (vertical) mulPose(Axis.of(Vector3f(1f, 1f, 0f)).rotationDegrees(180f))
+    scaleXY(1/16f)
+    guiGraphics.fill(-1, -1, 1, 1, 0xFF00FF00.toInt())
+    scaleXY(16f)
+    if (vertical) mulPose(Axis.of(Vector3f(signX, signY, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,
-      signY,
+      0f,
       signX,
-      -signY,
+      signY,
       T7Textures.Thaumonomicon.LINE.location
     )
   }
@@ -129,11 +126,9 @@ fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Bo
 }
 
 private fun render(graphics: GuiGraphics, x: Float, y: Float, width: Float, height: Float, textureLoc: ResourceLocation) {
-  val xPos = x + 0.5 * sign(width)
-  val yPos = y + 0.5 * sign(height)
-
   graphics.usePose {
-    translateXY(xPos, yPos)
+    translateXY(x, y)
+    translateXY(-0.5, -0.5)
     // allows negative size drawing, which greatly simplifies math
     RenderSystem.disableCull()
     graphics.blit(
@@ -148,6 +143,9 @@ private fun render(graphics: GuiGraphics, x: Float, y: Float, width: Float, heig
       width.toInt(),
       height.toInt()
     )
+    scaleXY(1/16f)
+    graphics.fill(-1, -1, 1, 1, 0xFFFF0000.toInt())
+    scaleXY(16f)
     RenderSystem.enableCull()
   }
 }

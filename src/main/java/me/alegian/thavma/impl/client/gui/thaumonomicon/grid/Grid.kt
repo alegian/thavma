@@ -116,7 +116,7 @@ fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Bo
     else T7Textures.Thaumonomicon.CORNER_2X2.location
 
   guiGraphics.usePose {
-    if (preferX) mulPose(Axis.of(Vector3f(1f, -1f, 0f)).rotationDegrees(180f))
+    if (preferX) mulPose(Axis.of(Vector3f(sign(dx), sign(dy), 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
       0f,

@@ -23,15 +23,15 @@ private val nodes = listOf(
   n0,
   Node(Vec2(1f, -1f)),
   n2,
-  Node(Vec2(3f, -3f), listOf(nn1, n2)),
-  Node(Vec2(3f, 1f), listOf(n5)),
-  Node(Vec2(-1f, 4f), listOf(n12)),
   n5,
   n12,
   n6,
   n7,
+  nn1,
   Node(Vec2(3f, 3f), listOf(n6, n7)),
-  nn1
+  Node(Vec2(3f, -3f), listOf(nn1)),
+  Node(Vec2(3f, 1f), listOf(n5)),
+  Node(Vec2(-1f, 4f), listOf(n12)),
 )
 
 // represents the renderable content of a tab in the book

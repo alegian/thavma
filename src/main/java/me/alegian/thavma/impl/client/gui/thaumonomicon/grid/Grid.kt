@@ -41,7 +41,7 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
   val absDy = abs(dy)
   val signX = sign(dx)
   val signY = sign(dy)
-  val inversion = if(invert) -1f else 1f
+  val inversion = if (invert) -1f else 1f
 
   if (absDx <= 0f && absDy <= 0f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
@@ -49,8 +49,8 @@ fun renderConnection(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Bo
     guiGraphics.pose().translateXY(dx, dy)
     renderConnection(-dx, -dy, guiGraphics, preferX, true)
   } else if (absDx == absDy) {
-    if(invert) guiGraphics.pose().translateXY(dx, dy)
-    connectionCorner(guiGraphics, dx*inversion, dy*inversion, preferX)
+    if (invert) guiGraphics.pose().translateXY(dx, dy)
+    connectionCorner(guiGraphics, dx * inversion, dy * inversion, preferX)
   } else if (absDx > absDy) {
     guiGraphics.pose().translateXY(signX, 0)
     connectionLine(guiGraphics, signX*inversion, 1f, false)
@@ -70,36 +70,24 @@ private fun renderDebug(guiGraphics: GuiGraphics) {
   for (i in -31..31) guiGraphics.vLine(i * CELL_SIZE.toInt(), -10000, 10000, -0x1)
 }
 
-private fun PoseStack.translateToNode(node: Node) = this.translateXY(node.pos.x, node.pos.y)
+private fun PoseStack.translateToNode(node: Node) = this.translateXY(node.pos.x-0.5, node.pos.y-0.5)
 
 private fun renderNode(guiGraphics: GuiGraphics) {
   guiGraphics.usePose {
-    translateXY(-0.5, -0.5)
-    guiGraphics.blit(
-      T7Textures.Thaumonomicon.NODE.location,
-      0,
-      0,
-      0,
-      0f,
-      0f,
-      1,
-      1,
-      1,
-      1
+    render(
+      guiGraphics,
+      1f,
+      1f,
+      T7Textures.Thaumonomicon.NODE.location
     )
   }
 }
 
 fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) {
   guiGraphics.usePose {
-    scaleXY(1/16f)
-    guiGraphics.fill(-1, -1, 1, 1, 0xFF00FF00.toInt())
-    scaleXY(16f)
     if (vertical) mulPose(Axis.of(Vector3f(signX, signY, 0f)).rotationDegrees(180f))
     render(
       guiGraphics,
-      0f,
-      0f,
       signX,
       signY,
       T7Textures.Thaumonomicon.LINE.location
@@ -113,11 +101,12 @@ fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Bo
     else T7Textures.Thaumonomicon.CORNER_2X2.location
 
   guiGraphics.usePose {
+    if (dx > 0) translateXY(dx, 0)
+    if (dy > 0) translateXY(0, dy)
     if (preferX) mulPose(Axis.of(Vector3f(sign(dx), sign(dy), 0f)).rotationDegrees(180f))
+
     render(
       guiGraphics,
-      0f,
-      dy,
       dx,
       -dy,
       textureLoc
@@ -125,27 +114,19 @@ fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Bo
   }
 }
 
-private fun render(graphics: GuiGraphics, x: Float, y: Float, width: Float, height: Float, textureLoc: ResourceLocation) {
-  graphics.usePose {
-    translateXY(x, y)
-    translateXY(-0.5, -0.5)
-    // allows negative size drawing, which greatly simplifies math
-    RenderSystem.disableCull()
-    graphics.blit(
-      textureLoc,
-      0,
-      0,
-      0,
-      0f,
-      0f,
-      width.toInt(),
-      height.toInt(),
-      width.toInt(),
-      height.toInt()
-    )
-    scaleXY(1/16f)
-    graphics.fill(-1, -1, 1, 1, 0xFFFF0000.toInt())
-    scaleXY(16f)
-    RenderSystem.enableCull()
-  }
+private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation) {
+  // allows negative size drawing, which greatly simplifies math
+  RenderSystem.disableCull()
+  graphics.blit(
+    textureLoc,
+    0,
+    0,
+    0,
+    0f,
+    0f,
+    width.toInt(),
+    height.toInt(),
+    width.toInt(),
+    height.toInt()
+  )
 }

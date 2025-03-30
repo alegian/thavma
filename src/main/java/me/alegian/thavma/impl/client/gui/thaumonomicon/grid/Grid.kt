@@ -129,4 +129,5 @@ private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLo
     width.toInt(),
     height.toInt()
   )
+  RenderSystem.enableCull()
 }

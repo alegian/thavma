@@ -74,49 +74,43 @@ private fun renderDebug(guiGraphics: GuiGraphics) {
 
 private fun PoseStack.translateToNode(node: Node) = this.translateXY(node.pos.x, node.pos.y)
 
-private fun renderNode(guiGraphics: GuiGraphics) {
-  guiGraphics.usePose {
-    render(
-      guiGraphics,
-      1f,
-      1f,
-      T7Textures.Thaumonomicon.NODE.location
-    )
-  }
-}
+private fun renderNode(guiGraphics: GuiGraphics) =
+  render(
+    guiGraphics,
+    1f,
+    1f,
+    T7Textures.Thaumonomicon.NODE.location,
+    false
+  )
 
-fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) {
-  guiGraphics.usePose {
-    if (vertical) mulPose(Axis.of(Vector3f(signX, signY, 0f)).rotationDegrees(180f))
-    render(
-      guiGraphics,
-      signX,
-      signY,
-      T7Textures.Thaumonomicon.LINE.location
-    )
-  }
-}
+fun connectionLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) =
+  render(
+    guiGraphics,
+    signX,
+    signY,
+    T7Textures.Thaumonomicon.LINE.location,
+    vertical
+  )
 
 fun connectionCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, preferX: Boolean) {
   val textureLoc =
     if (abs(dx) == 1f) T7Textures.Thaumonomicon.CORNER_1X1.location
     else T7Textures.Thaumonomicon.CORNER_2X2.location
 
-  guiGraphics.usePose {
-    if (preferX) mulPose(Axis.of(Vector3f(sign(dx), sign(dy), 0f)).rotationDegrees(180f))
-    render(
-      guiGraphics,
-      dx,
-      -dy,
-      textureLoc
-    )
-  }
+  render(
+    guiGraphics,
+    dx,
+    dy,
+    textureLoc,
+    preferX
+  )
 }
 
-private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation) {
+private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation, flip: Boolean) {
   // allows negative size drawing, which greatly simplifies math
   RenderSystem.disableCull()
   graphics.usePose {
+    if (flip) mulPose(Axis.of(Vector3f(sign(width), sign(height), 0f)).rotationDegrees(180f))
     scale(width, height, 1f)
     translateXY(-0.5f, -0.5f)
     graphics.blit(textureLoc, 0, 0, 0, 0f, 0f, 1, 1, 1, 1)

@@ -142,10 +142,9 @@ private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLo
 
 private fun renderItem(guiGraphics: GuiGraphics) =
   guiGraphics.usePose {
-    scaleXY(1 / CELL_SIZE) //back to pixel space
+    scaleXY(1 / CELL_SIZE) // back to pixel space
     scaleXY(2f) // items are 16x, nodes are 32x
-    translateXY(-8, -8) // centered
-    guiGraphics.renderItem(Items.DIAMOND.defaultInstance, 0, 0)
+    guiGraphics.renderItem(Items.DIAMOND.defaultInstance, -8, -8)
   }
 
 private fun PoseStack.translateToNode(node: Node) = translateXY(node.pos.x, node.pos.y)

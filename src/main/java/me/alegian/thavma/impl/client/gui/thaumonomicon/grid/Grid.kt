@@ -10,6 +10,7 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Items
 import org.joml.Vector3f
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
 import kotlin.math.abs
@@ -111,7 +112,7 @@ private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect
  * Constant size, does not need negative dimensions,
  * nor reflections.
  */
-private fun renderNode(guiGraphics: GuiGraphics) =
+private fun renderNode(guiGraphics: GuiGraphics) {
   render(
     guiGraphics,
     1f,
@@ -119,6 +120,9 @@ private fun renderNode(guiGraphics: GuiGraphics) =
     T7Textures.Thaumonomicon.NODE.location,
     false
   )
+
+  renderItem(guiGraphics)
+}
 
 /**
  * Base renderer, used by all others in this file.
@@ -135,5 +139,13 @@ private fun render(graphics: GuiGraphics, width: Float, height: Float, textureLo
     graphics.blit(textureLoc, 0, 0, 0, 0f, 0f, 1, 1, 1, 1)
   }
 }
+
+private fun renderItem(guiGraphics: GuiGraphics) =
+  guiGraphics.usePose {
+    scaleXY(1 / CELL_SIZE) //back to pixel space
+    scaleXY(2f) // items are 16x, nodes are 32x
+    translateXY(-8, -8) // centered
+    guiGraphics.renderItem(Items.DIAMOND.defaultInstance, 0, 0)
+  }
 
 private fun PoseStack.translateToNode(node: Node) = translateXY(node.pos.x, node.pos.y)

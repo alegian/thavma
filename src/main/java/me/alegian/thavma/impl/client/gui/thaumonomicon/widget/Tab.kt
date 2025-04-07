@@ -58,7 +58,9 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
       val screenHeight = graphics.guiHeight()
       val screenWidth = graphics.guiWidth()
 
-      graphics.enableCrop(screenWidth / 128, screenHeight / 64)
+      val corner = T7Textures.Thaumonomicon.FRAME_CORNER
+      val edge = T7Textures.Thaumonomicon.FRAME_EDGE
+      graphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)
 
       // background stars
       translateXY(screenWidth * 0.5, screenHeight * 0.5)

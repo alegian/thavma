@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.grid
 
-import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.Node
@@ -19,8 +18,6 @@ import kotlin.math.sign
 private const val CELL_SIZE = 48f
 
 fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
-  // allows negative size drawing, which greatly simplifies math
-  RenderSystem.disableCull()
   guiGraphics.usePose {
     scaleXY(CELL_SIZE)
     for (node in nodes) {
@@ -36,7 +33,6 @@ fun renderGrid(nodes: List<Node>, guiGraphics: GuiGraphics) {
       }
     }
   }
-  RenderSystem.enableCull()
 }
 
 /**

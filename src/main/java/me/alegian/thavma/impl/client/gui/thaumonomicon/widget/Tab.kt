@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.widget
 
-import me.alegian.thavma.impl.client.gui.thaumonomicon.grid.renderGrid
+import me.alegian.thavma.impl.client.gui.thaumonomicon.CELL_SIZE
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.*
 import net.minecraft.client.gui.GuiGraphics
@@ -10,35 +10,38 @@ import net.minecraft.world.phys.Vec2
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25f
-private val n0 = Node(Vec2(0f, 0f))
-private val n1 = Node(Vec2(4f, -4f), preferX = true)
-private val nn = Node(Vec2(2f, -4f), preferX = true)
-private val nn1 = Node(Vec2(4f, -2f), preferX = true)
-private val n2 = Node(Vec2(2f, -2f), listOf(n0), true)
-private val n5 = Node(Vec2(1f, 12f), preferX = false)
-private val n12 = Node(Vec2(12f, 2f), preferX = true)
-private val n6 = Node(Vec2(4f, 7f), preferX = true)
-private val n7 = Node(Vec2(7f, 4f), preferX = true)
-private val nodes = listOf(
-  n0,
-  Node(Vec2(1f, -1f)),
-  n2,
-  n5,
-  n12,
-  n6,
-  n7,
-  nn1,
-  Node(Vec2(3f, 3f), listOf(n6, n7)),
-  Node(Vec2(3f, -3f), listOf(nn1)),
-  Node(Vec2(3f, 1f), listOf(n5)),
-  Node(Vec2(-1f, 4f), listOf(n12)),
-)
 
 // represents the renderable content of a tab in the book
 class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Renderable {
-  private var scrollX = 0.0
-  private var scrollY = 0.0
+  var scrollX = 0.0
+    private set
+  var scrollY = 0.0
+    private set
   private var zoom = 2f
+
+  private val n0 = EntryWidget(this, Vec2(0f, 0f))
+  private val n1 = EntryWidget(this, Vec2(4f, -4f), preferX = true)
+  private val nn = EntryWidget(this, Vec2(2f, -4f), preferX = true)
+  private val nn1 = EntryWidget(this, Vec2(4f, -2f), preferX = true)
+  private val n2 = EntryWidget(this, Vec2(2f, -2f), listOf(n0), true)
+  private val n5 = EntryWidget(this, Vec2(1f, 12f), preferX = false)
+  private val n12 = EntryWidget(this, Vec2(12f, 2f), preferX = true)
+  private val n6 = EntryWidget(this, Vec2(4f, 7f), preferX = true)
+  private val n7 = EntryWidget(this, Vec2(7f, 4f), preferX = true)
+  private val entryWidgets = listOf(
+    n0,
+    EntryWidget(this, Vec2(1f, -1f)),
+    n2,
+    n5,
+    n12,
+    n6,
+    n7,
+    nn1,
+    EntryWidget(this, Vec2(3f, 3f), listOf(n6, n7)),
+    EntryWidget(this, Vec2(3f, -3f), listOf(nn1)),
+    EntryWidget(this, Vec2(3f, 1f), listOf(n5)),
+    EntryWidget(this, Vec2(-1f, 4f), listOf(n12)),
+  )
 
   fun handleScroll(x: Double, y: Double) {
     scrollTo(scrollX - ZOOM_MULTIPLIER.toDouble().pow(zoom.toDouble()) * x, scrollY - ZOOM_MULTIPLIER.toDouble().pow(zoom.toDouble()) * y)
@@ -80,16 +83,10 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
 
       // contains research nodes and their connections
       translateXY(-scrollX, -scrollY)
-      renderGrid(nodes, graphics)
+      scaleXY(CELL_SIZE)
+      for (entry in entryWidgets) entry.render(graphics, mouseX, mouseY, tickDelta)
 
       graphics.disableCrop()
     }
   }
 }
-
-/**
- * By default, connections prefer to connect to children along the Y axis.
- * @param preferX makes connections prefer the X axis.
- * Straight lines will ignore this preference
- */
-class Node(val pos: Vec2, val children: List<Node> = listOf(), val preferX: Boolean = false)

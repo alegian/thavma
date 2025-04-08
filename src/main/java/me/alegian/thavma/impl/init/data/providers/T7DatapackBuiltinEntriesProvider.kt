@@ -2,12 +2,15 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
+import me.alegian.thavma.impl.common.research.Research
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
 import me.alegian.thavma.impl.init.data.worldgen.spawn.AngryZombieSpawn
 import me.alegian.thavma.impl.init.data.worldgen.tree.GreatwoodTree
 import me.alegian.thavma.impl.init.data.worldgen.tree.SilverwoodTree
+import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
+import me.alegian.thavma.impl.init.registries.deferred.Researches
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
 import net.minecraft.core.HolderLookup
@@ -90,6 +93,9 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
               ).build()
           )
         )
+      }
+      .add(T7DatapackRegistries.RESEARCH) { ctx->
+        ctx.register(Researches.TEST, Research("test"))
       }
   }
 }

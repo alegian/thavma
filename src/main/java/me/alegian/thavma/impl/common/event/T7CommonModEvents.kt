@@ -40,7 +40,7 @@ private fun registerRegistries(event: NewRegistryEvent) {
 }
 
 private fun registerDatapackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-  event.dataPackRegistry(T7DatapackRegistries.RESEARCH, Research.CODEC)
+  event.dataPackRegistry(T7DatapackRegistries.RESEARCH, Research.CODEC, Research.CODEC)
 }
 
 private fun modifyRegistries(event: ModifyRegistriesEvent) {

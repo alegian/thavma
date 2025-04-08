@@ -18,30 +18,23 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
   var scrollY = 0.0
     private set
   private var zoom = 2f
+  private val entryWidgets = mutableListOf<EntryWidget>()
 
-  private val n0 = EntryWidget(this, Vec2(0f, 0f))
-  private val n1 = EntryWidget(this, Vec2(4f, -4f), preferX = true)
-  private val nn = EntryWidget(this, Vec2(2f, -4f), preferX = true)
-  private val nn1 = EntryWidget(this, Vec2(4f, -2f), preferX = true)
-  private val n2 = EntryWidget(this, Vec2(2f, -2f), listOf(n0), true)
-  private val n5 = EntryWidget(this, Vec2(1f, 12f), preferX = false)
-  private val n12 = EntryWidget(this, Vec2(12f, 2f), preferX = true)
-  private val n6 = EntryWidget(this, Vec2(4f, 7f), preferX = true)
-  private val n7 = EntryWidget(this, Vec2(7f, 4f), preferX = true)
-  private val entryWidgets = listOf(
-    n0,
-    EntryWidget(this, Vec2(1f, -1f)),
-    n2,
-    n5,
-    n12,
-    n6,
-    n7,
-    nn1,
-    EntryWidget(this, Vec2(3f, 3f), listOf(n6, n7)),
-    EntryWidget(this, Vec2(3f, -3f), listOf(nn1)),
-    EntryWidget(this, Vec2(3f, 1f), listOf(n5)),
-    EntryWidget(this, Vec2(-1f, 4f), listOf(n12)),
-  )
+  init {
+    val n0 = makeWidget(0, 0, false)
+    val nn1 = makeWidget(4, -2, true)
+    val n5 = makeWidget(1, 12, false)
+    val n12 = makeWidget(12, 2, true)
+    val n6 = makeWidget(4, 7, true)
+    val n7 = makeWidget(7, 4, true)
+    makeWidget(2, -2, true, n0)
+    makeWidget(4, -4, true)
+    makeWidget(2, -4, true)
+    makeWidget(3, 3, false, n6, n7)
+    makeWidget(3, -3, false, nn1)
+    makeWidget(3, 1, false, n5)
+    makeWidget(-1, 4, false, n12)
+  }
 
   fun handleScroll(x: Double, y: Double) {
     scrollTo(scrollX - ZOOM_MULTIPLIER.toDouble().pow(zoom.toDouble()) * x, scrollY - ZOOM_MULTIPLIER.toDouble().pow(zoom.toDouble()) * y)
@@ -54,6 +47,12 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
 
   fun zoom(y: Float) {
     zoom = Mth.clamp(zoom - y, 0f, 5f)
+  }
+
+  private fun makeWidget(x: Int, y: Int, preferX: Boolean, vararg children: EntryWidget): EntryWidget {
+    return EntryWidget(this, Vec2(x.toFloat(), y.toFloat()), children.asList(), preferX).also {
+      entryWidgets.add(it)
+    }
   }
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {

@@ -20,7 +20,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryRenderable(tab: Tab, val pos: Vec2, val children: List<EntryRenderable> = listOf(), val preferX: Boolean = false) : Renderable {
+class EntryRenderable(val tab: Tab, val pos: Vec2, val children: List<EntryRenderable> = listOf(), val preferX: Boolean = false) : Renderable {
   val tooltipComponent = Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
@@ -50,6 +50,9 @@ class EntryRenderable(tab: Tab, val pos: Vec2, val children: List<EntryRenderabl
   }
 
   fun renderTooltip(guiGraphics: GuiGraphics) {
-    guiGraphics.renderTooltip(Minecraft.getInstance().font, tooltipComponent, 0, 0)
+    guiGraphics.usePose {
+      scaleXY(2f / tab.zoomFactor()) // items are 16x, nodes are 32x
+      guiGraphics.renderTooltip(Minecraft.getInstance().font, tooltipComponent, 0, 0)
+    }
   }
 }

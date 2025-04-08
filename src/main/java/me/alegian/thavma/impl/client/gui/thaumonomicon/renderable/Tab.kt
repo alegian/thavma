@@ -48,7 +48,7 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
     zoom = Mth.clamp(zoom - y, 0f, 5f)
   }
 
-  private fun zoomFactor(): Double {
+  fun zoomFactor(): Double {
     return ZOOM_MULTIPLIER.pow(zoom.toDouble())
   }
 

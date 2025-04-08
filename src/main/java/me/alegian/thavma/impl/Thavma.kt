@@ -33,7 +33,6 @@ object Thavma {
     WandCoreMaterials.REGISTRAR.register(KFF_MOD_BUS)
     WandHandleMaterials.REGISTRAR.register(KFF_MOD_BUS)
     Aspects.REGISTRAR.register(KFF_MOD_BUS)
-    Researches.REGISTRAR.register(KFF_MOD_BUS)
     T7Attributes.REGISTRAR.register(KFF_MOD_BUS)
     T7GlobalLootModifierSerializers.REGISTRAR.register(KFF_MOD_BUS)
 

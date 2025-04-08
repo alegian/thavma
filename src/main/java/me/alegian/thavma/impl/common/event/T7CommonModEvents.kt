@@ -1,8 +1,10 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
+import me.alegian.thavma.impl.common.research.Research
 import me.alegian.thavma.impl.init.data.providers.*
 import me.alegian.thavma.impl.init.registries.T7DataMaps
+import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
@@ -25,6 +27,7 @@ import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.ModifyRegistriesEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -34,7 +37,10 @@ private fun registerRegistries(event: NewRegistryEvent) {
   event.register(T7Registries.WAND_HANDLE)
   event.register(T7Registries.WAND_CORE)
   event.register(T7Registries.ASPECT)
-  event.register(T7Registries.RESEARCH)
+}
+
+private fun registerDatapackRegistries(event: DataPackRegistryEvent.NewRegistry) {
+  event.dataPackRegistry(T7DatapackRegistries.RESEARCH, Research.CODEC)
 }
 
 private fun modifyRegistries(event: ModifyRegistriesEvent) {
@@ -136,6 +142,7 @@ private fun registerSpawnPlacements(event: RegisterSpawnPlacementsEvent) {
 
 fun registerCommonModEvents() {
   KFF_MOD_BUS.addListener(::registerRegistries)
+  KFF_MOD_BUS.addListener(::registerDatapackRegistries)
   KFF_MOD_BUS.addListener(::modifyRegistries)
   KFF_MOD_BUS.addListener(::registerCapabilities)
   KFF_MOD_BUS.addListener(::registerDataMapTypes)

@@ -1,19 +1,17 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon.widget
+package me.alegian.thavma.impl.client.gui.thaumonomicon.renderable
 
-import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.client.gui.thaumonomicon.CELL_SIZE
 import me.alegian.thavma.impl.client.gui.thaumonomicon.renderConnectionRecursive
 import me.alegian.thavma.impl.client.gui.thaumonomicon.renderGridElement
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.client.gui.components.Tooltip
-import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.phys.Vec2
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
 
@@ -22,20 +20,15 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(tab: Tab, val pos: Vec2, val children: List<EntryWidget> = listOf(), val preferX: Boolean = false) : AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), Component.literal("entry")) {
-  init {
-    tooltip = Tooltip.create(Component.literal("This is research"))
-  }
+class EntryRenderable(tab: Tab, val pos: Vec2, val children: List<EntryRenderable> = listOf(), val preferX: Boolean = false) : Renderable {
+  val tooltipComponent = Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)
 
-  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    guiGraphics.usePose {
-      translateToNode(this@EntryWidget)
-      renderEntry(guiGraphics)
-      for (child in children) {
-        val dv = child.pos - pos
-        guiGraphics.usePose {
-          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.preferX, false)
-        }
+  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    renderEntry(guiGraphics)
+    for (child in children) {
+      val dv = child.pos - pos
+      guiGraphics.usePose {
+        renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.preferX, false)
       }
     }
   }
@@ -56,8 +49,7 @@ class EntryWidget(tab: Tab, val pos: Vec2, val children: List<EntryWidget> = lis
     }
   }
 
-  override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+  fun renderTooltip(guiGraphics: GuiGraphics) {
+    guiGraphics.renderTooltip(Minecraft.getInstance().font, tooltipComponent, 0, 0)
   }
 }
-
-private fun PoseStack.translateToNode(node: EntryWidget) = translateXY(node.pos.x, node.pos.y)

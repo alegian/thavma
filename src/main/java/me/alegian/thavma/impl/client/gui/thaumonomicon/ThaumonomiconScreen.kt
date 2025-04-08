@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.Tab
-import me.alegian.thavma.impl.client.gui.thaumonomicon.widget.frame
+import me.alegian.thavma.impl.client.gui.thaumonomicon.renderable.Tab
+import me.alegian.thavma.impl.client.gui.thaumonomicon.renderable.frame
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
@@ -25,7 +25,7 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
       if (!this.isScrolling) {
         this.isScrolling = true
       } else {
-        tab.handleScroll(dragX.toFloat().toDouble(), dragY.toFloat().toDouble())
+        tab.drag(dragX.toDouble(), dragY.toDouble())
       }
 
       return true

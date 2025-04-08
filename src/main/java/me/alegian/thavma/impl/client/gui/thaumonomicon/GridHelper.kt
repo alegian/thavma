@@ -82,7 +82,7 @@ private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect
 }
 
 /**
- * Base renderer, used by all others in this file.
+ * Base renderer, used by many grid elements.
  * The pose is assumed to be at the center of the object.
  * RenderSystem culling is assumed to be disabled.
  * The reflect param reflects the object across the y=x axis.

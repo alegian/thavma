@@ -70,7 +70,7 @@ private fun registerReloadListenerEvent(event: RegisterClientReloadListenersEven
 }
 
 private fun registerGeometryLoaders(event: RegisterGeometryLoaders) {
-  event.register(WithTransformParentModel.ID, WithTransformParentModel.Loader.INSTANCE)
+  event.register(WithTransformParentModel.ID, WithTransformParentModel.Loader)
 }
 
 private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {

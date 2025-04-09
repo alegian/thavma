@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.gui.thaumonomicon.renderGridElement
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -53,6 +54,13 @@ class EntryRenderable(val tab: TabRenderable, val pos: Vector2i, val children: L
     guiGraphics.usePose {
       scaleXY(2f / tab.zoomFactor()) // items are 16x, nodes are 32x
       guiGraphics.renderTooltip(Minecraft.getInstance().font, tooltipComponent, 0, 0)
+    }
+  }
+
+  companion object {
+    // TODO: first argument should not be required
+    fun of(tab: TabRenderable, entry: ResearchEntry): EntryRenderable {
+      return EntryRenderable(tab, entry.position, entry.resolveChildren().map { of(tab, it) }, entry.preferX)
     }
   }
 }

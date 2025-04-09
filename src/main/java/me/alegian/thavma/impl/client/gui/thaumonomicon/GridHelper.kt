@@ -35,8 +35,8 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
     translateXY(dx, dy)
     renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true)
   } else if (absDx == absDy) {
-    translateXY(dx / 2, dy / 2)
-    translateXY(preference * signX * inversion / 2, -preference * signY * inversion / 2)
+    translateXY(dx / 2f, dy / 2f)
+    translateXY(preference * signX * inversion / 2f, -preference * signY * inversion / 2f)
     renderCorner(guiGraphics, dx * inversion, dy * inversion, preferX)
   } else if (absDx > absDy) {
     translateXY(signX, 0)

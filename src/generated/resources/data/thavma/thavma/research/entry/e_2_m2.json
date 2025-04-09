@@ -1,0 +1,11 @@
+{
+  "category": "thavma:test_category",
+  "children": [
+    "thavma:e_0_0"
+  ],
+  "position": [
+    2,
+    -2
+  ],
+  "preferX": true
+}

@@ -22,28 +22,9 @@ class TabRenderable() : Renderable {
   private var zoom = 2f // TODO: this is actually inverse zoom
   private val entries = mutableListOf<EntryRenderable>()
 
-  init {
-//    val n0 = makeEntry(0, 0, false)
-//    val nn1 = makeEntry(4, -2, true)
-//    val n5 = makeEntry(1, 12, false)
-//    val n12 = makeEntry(12, 2, true)
-//    val n6 = makeEntry(4, 7, true)
-//    val n7 = makeEntry(7, 4, true)
-//    makeEntry(2, -2, true, n0)
-//    makeEntry(4, -4, true)
-//    makeEntry(2, -4, true)
-//    makeEntry(3, 3, false, n6, n7)
-//    makeEntry(3, -3, false, nn1)
-//    makeEntry(3, 1, false, n5)
-//    makeEntry(-1, 4, false, n12)
-  }
-
   fun setEntries(rawEntries: List<ResearchEntry>){
     for (rawEntry in rawEntries){
-      // TODO: resolve children
-      EntryRenderable(this, rawEntry.position, listOf(), rawEntry.preferX).also {
-        entries.add(it)
-      }
+      entries.add(EntryRenderable.of(this, rawEntry))
     }
   }
 

@@ -6,12 +6,13 @@ import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
-import net.minecraft.util.Mth
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25
-private const val maxScrollX = 300f
-private const val maxScrollY = 300f
+private const val maxScrollX = 300.0
+private const val maxScrollY = 300.0
+private const val minZoom = 0.0
+private const val maxZoom = 5.0
 
 // represents the renderable content of a tab in the book
 class TabRenderable() : Renderable {
@@ -19,7 +20,7 @@ class TabRenderable() : Renderable {
     private set
   var scrollY = 0.0
     private set
-  private var zoom = 2f // TODO: this is actually inverse zoom
+  private var zoom = 2.0 // TODO: this is actually inverse zoom
   private val entries = mutableListOf<EntryRenderable>()
 
   fun setEntries(rawEntries: List<ResearchEntry>){
@@ -32,16 +33,16 @@ class TabRenderable() : Renderable {
     val rawScrollX = scrollX - zoomFactor() * x
     val rawScrollY = scrollY - zoomFactor() * y
 
-    scrollX = Mth.clamp(rawScrollX, (-1 * maxScrollX).toDouble(), maxScrollX.toDouble())
-    scrollY = Mth.clamp(rawScrollY, (-1 * maxScrollY).toDouble(), maxScrollY.toDouble())
+    scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
+    scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)
   }
 
-  fun zoom(y: Float) {
-    zoom = Mth.clamp(zoom - y, 0f, 5f)
+  fun zoom(change: Double) {
+    zoom = (zoom - change).coerceIn(minZoom, maxZoom)
   }
 
   fun zoomFactor(): Double {
-    return ZOOM_MULTIPLIER.pow(zoom.toDouble())
+    return ZOOM_MULTIPLIER.pow(zoom)
   }
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {

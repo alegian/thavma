@@ -53,7 +53,7 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
   }
 
   override fun mouseScrolled(mouseX: Double, mouseY: Double, scrollX: Double, scrollY: Double): Boolean {
-    tab.zoom(scrollY.toFloat())
+    tab.zoom(scrollY)
     return true
   }
 }

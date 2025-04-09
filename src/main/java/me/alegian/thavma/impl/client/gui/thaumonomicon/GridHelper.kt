@@ -21,11 +21,11 @@ const val CELL_SIZE = 48f
  * along x or y axis)
  * Uses recursion to draw long connections.
  */
-fun PoseStack.renderConnectionRecursive(dx: Float, dy: Float, guiGraphics: GuiGraphics, preferX: Boolean, invert: Boolean) {
+fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphics, preferX: Boolean, invert: Boolean) {
   val absDx = abs(dx)
   val absDy = abs(dy)
-  val signX = sign(dx)
-  val signY = sign(dy)
+  val signX = dx.sign
+  val signY = dy.sign
   val inversion = if (invert) -1f else 1f
   val preference = if (preferX) -1f else 1f
 

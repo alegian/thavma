@@ -35,6 +35,7 @@ import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.NeoForgeRegistries
+import org.joml.Vector2i
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -96,11 +97,11 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           )
         )
       }
-      .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx->
+      .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.register(ResearchCategories.TEST_CATEGORY, ResearchCategory("Test Category"))
       }
-      .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx->
-        ctx.register(ResearchEntries.TEST_ENTRY, ResearchEntry("Test Entry"))
+      .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
+        ctx.register(ResearchEntries.TEST_ENTRY, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf()))
       }
   }
 }

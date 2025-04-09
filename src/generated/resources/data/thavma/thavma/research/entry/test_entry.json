@@ -1,3 +1,9 @@
 {
-  "title": "Test Entry"
+  "category": "thavma:test_category",
+  "children": [],
+  "position": [
+    0,
+    0
+  ],
+  "preferX": false
 }

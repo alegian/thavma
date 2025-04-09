@@ -6,21 +6,21 @@ import me.alegian.thavma.impl.client.gui.thaumonomicon.renderGridElement
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
+import org.joml.Vector2i
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryRenderable(val tab: Tab, val pos: Vec2, val children: List<EntryRenderable> = listOf(), val preferX: Boolean = false) : Renderable {
+class EntryRenderable(val tab: TabRenderable, val pos: Vector2i, val children: List<EntryRenderable> = listOf(), val preferX: Boolean = false) : Renderable {
   val tooltipComponent = Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

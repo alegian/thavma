@@ -3,16 +3,18 @@ package me.alegian.thavma.impl.client.gui.thaumonomicon.renderable
 import me.alegian.thavma.impl.client.gui.thaumonomicon.CELL_SIZE
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.util.Mth
-import net.minecraft.world.phys.Vec2
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25
+private const val maxScrollX = 300f
+private const val maxScrollY = 300f
 
 // represents the renderable content of a tab in the book
-class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Renderable {
+class TabRenderable() : Renderable {
   var scrollX = 0.0
     private set
   var scrollY = 0.0
@@ -21,19 +23,28 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
   private val entries = mutableListOf<EntryRenderable>()
 
   init {
-    val n0 = makeEntry(0, 0, false)
-    val nn1 = makeEntry(4, -2, true)
-    val n5 = makeEntry(1, 12, false)
-    val n12 = makeEntry(12, 2, true)
-    val n6 = makeEntry(4, 7, true)
-    val n7 = makeEntry(7, 4, true)
-    makeEntry(2, -2, true, n0)
-    makeEntry(4, -4, true)
-    makeEntry(2, -4, true)
-    makeEntry(3, 3, false, n6, n7)
-    makeEntry(3, -3, false, nn1)
-    makeEntry(3, 1, false, n5)
-    makeEntry(-1, 4, false, n12)
+//    val n0 = makeEntry(0, 0, false)
+//    val nn1 = makeEntry(4, -2, true)
+//    val n5 = makeEntry(1, 12, false)
+//    val n12 = makeEntry(12, 2, true)
+//    val n6 = makeEntry(4, 7, true)
+//    val n7 = makeEntry(7, 4, true)
+//    makeEntry(2, -2, true, n0)
+//    makeEntry(4, -4, true)
+//    makeEntry(2, -4, true)
+//    makeEntry(3, 3, false, n6, n7)
+//    makeEntry(3, -3, false, nn1)
+//    makeEntry(3, 1, false, n5)
+//    makeEntry(-1, 4, false, n12)
+  }
+
+  fun setEntries(rawEntries: List<ResearchEntry>){
+    for (rawEntry in rawEntries){
+      // TODO: resolve children
+      EntryRenderable(this, rawEntry.position, listOf(), rawEntry.preferX).also {
+        entries.add(it)
+      }
+    }
   }
 
   fun drag(x: Double, y: Double) {
@@ -50,12 +61,6 @@ class Tab(private val maxScrollX: Float, private val maxScrollY: Float) : Render
 
   fun zoomFactor(): Double {
     return ZOOM_MULTIPLIER.pow(zoom.toDouble())
-  }
-
-  private fun makeEntry(x: Int, y: Int, preferX: Boolean, vararg children: EntryRenderable): EntryRenderable {
-    return EntryRenderable(this, Vec2(x.toFloat(), y.toFloat()), children.asList(), preferX).also {
-      entries.add(it)
-    }
   }
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {

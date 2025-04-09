@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
@@ -11,24 +12,37 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import kotlin.jvm.optionals.getOrNull
 
+private val cornerHeight = T7Textures.Thaumonomicon.FRAME_CORNER.height
+private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
+
 class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
   private var isScrolling = false
   var currentCategory = ResearchCategories.TEST_CATEGORY
   private val tabs = mutableMapOf<ResourceKey<ResearchCategory>, TabRenderable>()
   private val currentTab get() = tabs[currentCategory]
+  private var selectorOffset = cornerHeight + selectorGap
 
   override fun init() {
     super.init()
-    this.addRenderableOnly(frame)
 
+    val categories = mutableListOf<ResearchCategory>()
     val registryAccess = Minecraft.getInstance().connection?.registryAccess()
-    registryAccess?.registry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getOrNull()?.entrySet()?.map { it.key }?.forEach {
-      tabs[it] = addRenderableOnly(TabRenderable(this, it))
+    registryAccess?.registry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getOrNull()?.entrySet()?.forEach { (key, category) ->
+      tabs[key] = addRenderableOnly(TabRenderable(this, key))
+      categories.add(category)
     }
     registryAccess?.registry(T7DatapackRegistries.RESEARCH_ENTRY)?.getOrNull()?.entrySet()?.map { it.value }?.also {
       for ((tabCategory, tab) in tabs.entries)
         tab.setEntries(it.filter { e -> e.category.compareTo(tabCategory) == 0 })
     }
+
+    addRenderableOnly(frame)
+    for (c in categories) addSelectorWidget(c)
+  }
+
+  private fun addSelectorWidget(category: ResearchCategory) {
+    addRenderableWidget(TabSelectorWidget(0, selectorOffset, category))
+    selectorOffset += TabSelectorWidget.TEXTURE.height + selectorGap
   }
 
   override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, dragX: Double, dragY: Double): Boolean {

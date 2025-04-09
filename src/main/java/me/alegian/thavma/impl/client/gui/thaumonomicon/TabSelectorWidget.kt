@@ -1,0 +1,27 @@
+package me.alegian.thavma.impl.client.gui.thaumonomicon
+
+import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.util.blit
+import me.alegian.thavma.impl.client.util.translateXY
+import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.research.ResearchCategory
+import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.components.AbstractWidget
+import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.network.chat.Component
+
+class TabSelectorWidget(x: Int, y: Int, private val category: ResearchCategory) : AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, Component.literal("selector")) {
+  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    guiGraphics.usePose {
+      translateXY(x, y)
+      guiGraphics.blit(TEXTURE)
+    }
+  }
+
+  override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+  }
+
+  companion object {
+    val TEXTURE = T7Textures.Thaumonomicon.FRAME_CORNER
+  }
+}

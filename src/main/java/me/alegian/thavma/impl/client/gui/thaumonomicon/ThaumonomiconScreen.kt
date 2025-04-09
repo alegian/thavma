@@ -41,7 +41,12 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
   }
 
   private fun addSelectorWidget(category: ResearchCategory) {
-    addRenderableWidget(TabSelectorWidget(0, selectorOffset, category))
+    val registryAccess = Minecraft.getInstance().connection?.registryAccess()
+    addRenderableWidget(TabSelectorWidget(0, selectorOffset, category) {
+      registryAccess?.registry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getOrNull()?.getResourceKey(category)?.getOrNull()?.let {
+        currentCategory = it
+      }
+    })
     selectorOffset += TabSelectorWidget.TEXTURE.height + selectorGap
   }
 

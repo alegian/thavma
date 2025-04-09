@@ -7,15 +7,24 @@ import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
+import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 
-class TabSelectorWidget(x: Int, y: Int, private val category: ResearchCategory) : AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, Component.literal("selector")) {
+class TabSelectorWidget(x: Int, y: Int, category: ResearchCategory, private val handleClick: () -> Unit) : AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, Component.literal("selector")) {
+  init {
+    tooltip = Tooltip.create(Component.literal(category.title))
+  }
+
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     guiGraphics.usePose {
       translateXY(x, y)
       guiGraphics.blit(TEXTURE)
     }
+  }
+
+  override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+    handleClick()
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

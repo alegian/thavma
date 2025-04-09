@@ -1,7 +1,8 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
-import me.alegian.thavma.impl.common.research.Research
+import me.alegian.thavma.impl.common.research.ResearchCategory
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.data.providers.*
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -40,7 +41,8 @@ private fun registerRegistries(event: NewRegistryEvent) {
 }
 
 private fun registerDatapackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-  event.dataPackRegistry(T7DatapackRegistries.RESEARCH, Research.CODEC, Research.CODEC)
+  event.dataPackRegistry(T7DatapackRegistries.RESEARCH_CATEGORY, ResearchCategory.CODEC, ResearchCategory.CODEC)
+  event.dataPackRegistry(T7DatapackRegistries.RESEARCH_ENTRY, ResearchEntry.CODEC, ResearchEntry.CODEC)
 }
 
 private fun modifyRegistries(event: ModifyRegistriesEvent) {

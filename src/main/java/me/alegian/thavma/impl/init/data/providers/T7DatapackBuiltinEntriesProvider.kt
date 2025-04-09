@@ -97,10 +97,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
       }
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx->
-        ctx.register(ResearchCategories.TEST_CATEGORY, ResearchCategory("test_category"))
+        ctx.register(ResearchCategories.TEST_CATEGORY, ResearchCategory("Test Category"))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx->
-        ctx.register(ResearchEntries.TEST_ENTRY, ResearchEntry("test_entry"))
+        ctx.register(ResearchEntries.TEST_ENTRY, ResearchEntry("Test Entry"))
       }
   }
 }

@@ -18,4 +18,6 @@ object ResearchEntries {
   val E3_m3 = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("e_3_m3"))
   val E3_1 = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("e_3_1"))
   val Em1_4 = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("e_m1_4"))
+
+  val SECOND_TAB_ENTRY = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("second_tab_entry"))
 }

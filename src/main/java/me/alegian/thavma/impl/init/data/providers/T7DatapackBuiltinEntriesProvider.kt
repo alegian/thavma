@@ -99,6 +99,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       }
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.register(ResearchCategories.TEST_CATEGORY, ResearchCategory("Test Category"))
+        ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category"))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ctx.register(ResearchEntries.E0_0, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf()))
@@ -114,6 +115,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.register(ResearchEntries.E3_m3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, -3), false, listOf(ResearchEntries.E4_m2)))
         ctx.register(ResearchEntries.E3_1, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 1), false, listOf(ResearchEntries.E1_12)))
         ctx.register(ResearchEntries.Em1_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(-1, 4), false, listOf(ResearchEntries.E12_2)))
+
+        ctx.register(ResearchEntries.SECOND_TAB_ENTRY, ResearchEntry(ResearchCategories.SECOND, Vector2i(0, 1), false, listOf()))
       }
   }
 }

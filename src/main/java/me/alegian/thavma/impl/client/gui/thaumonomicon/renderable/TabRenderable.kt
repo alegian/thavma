@@ -1,11 +1,14 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon.renderable
 
 import me.alegian.thavma.impl.client.gui.thaumonomicon.CELL_SIZE
+import me.alegian.thavma.impl.client.gui.thaumonomicon.ThaumonomiconScreen
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.resources.ResourceKey
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25
@@ -15,7 +18,7 @@ private const val minZoom = 0.0
 private const val maxZoom = 5.0
 
 // represents the renderable content of a tab in the book
-class TabRenderable() : Renderable {
+class TabRenderable(val screen: ThaumonomiconScreen, val category: ResourceKey<ResearchCategory>) : Renderable {
   var scrollX = 0.0
     private set
   var scrollY = 0.0
@@ -23,9 +26,9 @@ class TabRenderable() : Renderable {
   private var zoom = 2.0 // TODO: this is actually inverse zoom
   private val entries = mutableListOf<EntryRenderable>()
 
-  fun setEntries(rawEntries: List<ResearchEntry>){
-    for (rawEntry in rawEntries){
-      entries.add(EntryRenderable.of(this, rawEntry))
+  fun setEntries(researchEntries: List<ResearchEntry>) {
+    for (researchEntry in researchEntries) {
+      entries.add(EntryRenderable.of(this, researchEntry))
     }
   }
 
@@ -46,6 +49,8 @@ class TabRenderable() : Renderable {
   }
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {
+    if (screen.currentCategory.compareTo(category) != 0) return
+
     val corner = T7Textures.Thaumonomicon.FRAME_CORNER
     val edge = T7Textures.Thaumonomicon.FRAME_EDGE
     graphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)

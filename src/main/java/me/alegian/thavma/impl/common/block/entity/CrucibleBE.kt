@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.common.block.entity
 
 import me.alegian.thavma.impl.client.particle.CrucibleBubbleParticle
-import me.alegian.thavma.impl.common.block.T7BlockStateProperties
 import me.alegian.thavma.impl.common.data.capability.CrucibleFluidHandler
+import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes.CRUCIBLE_BUBBLE

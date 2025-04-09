@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.block
 import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.block.entity.CrucibleBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
 import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.BLOCK
 import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.FLUID

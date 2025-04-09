@@ -1,7 +1,5 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon.renderable
+package me.alegian.thavma.impl.client.gui.thaumonomicon
 
-import me.alegian.thavma.impl.client.gui.thaumonomicon.CELL_SIZE
-import me.alegian.thavma.impl.client.gui.thaumonomicon.ThaumonomiconScreen
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.research.ResearchCategory

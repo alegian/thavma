@@ -1,8 +1,6 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.gui.thaumonomicon.renderable.TabRenderable
-import me.alegian.thavma.impl.client.gui.thaumonomicon.renderable.frame
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories

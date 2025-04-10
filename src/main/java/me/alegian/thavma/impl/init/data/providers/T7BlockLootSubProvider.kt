@@ -29,7 +29,9 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.level.block.BedBlock
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.properties.BedPart
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
@@ -51,7 +53,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     this.dropSelf(MATRIX.get())
     this.dropSelf(PILLAR.get())
     this.dropSelf(PEDESTAL.get())
-    this.dropSelf(RESEARCH_TABLE.get())
+    this.add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
     this.dropSelf(ELEMENTAL_STONE.get())
 
     this.dropSelf(ARCANUM_BLOCK.get())

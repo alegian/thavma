@@ -17,6 +17,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -49,6 +50,7 @@ object T7CreativeModeTabs {
 
                     output.accept(CRUCIBLE.get())
                     output.accept(ARCANE_WORKBENCH.get())
+                    output.accept(RESEARCH_TABLE.get())
                     output.accept(MATRIX.get())
                     output.accept(PILLAR.get())
                     output.accept(PEDESTAL.get())

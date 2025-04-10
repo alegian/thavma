@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.LeavesBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SaplingBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
@@ -77,7 +78,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.blockEntity1x2x1(PILLAR.get())
 
     this.simpleBlockWithItem(ESSENTIA_CONTAINER.get(), this.models().getExistingFile(rl("essentia_container")))
-    this.simpleBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(rl("research_table")))
+    this.horizontalBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(rl("research_table")))
 
     this.itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
   }
@@ -120,6 +121,11 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
   fun blockEntity1x2x1(block: Block) {
     this.simpleBlockWithItem(block, this.models().getBuilder(this.name(block)).texture("particle", this.blockTexture(block)))
     this.itemModels().withExistingParent(this.name(block), "item/template_bed").texture("particle", this.blockTexture(block))
+  }
+
+  fun horizontalBlockWithItem(block: Block, model: ModelFile) {
+    horizontalBlock(block, model)
+    simpleBlockItem(block, model)
   }
 
   private fun key(block: Block): ResourceLocation {

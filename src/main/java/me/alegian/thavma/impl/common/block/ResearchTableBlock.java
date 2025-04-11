@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.block;
 
+import me.alegian.thavma.impl.common.block.entity.ResearchTableBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +11,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -22,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 2-block system like bed. Loot table drops nothing for FOOT and drops self for HEAD
  */
-public class ResearchTableBlock extends Block {
+public class ResearchTableBlock extends Block implements EntityBlock {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final EnumProperty<BedPart> PART = BlockStateProperties.BED_PART;
 
@@ -96,4 +99,14 @@ public class ResearchTableBlock extends Block {
   private static Direction getNeighbourDirection(BedPart part, Direction direction) {
     return part == BedPart.FOOT ? direction : direction.getOpposite();
   }
+
+  @Override
+  public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    return new ResearchTableBE(pos, state);
+  }
+
+//  @Override
+//  protected RenderShape getRenderShape(BlockState state) {
+//    return RenderShape.ENTITYBLOCK_ANIMATED;
+//  }
 }

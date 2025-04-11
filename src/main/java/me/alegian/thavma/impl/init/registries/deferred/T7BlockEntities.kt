@@ -48,4 +48,8 @@ object T7BlockEntities {
     val PILLAR = REGISTRAR.register("infusion_pillar") { ->
         BlockEntityType.Builder.of(::PillarBE, T7Blocks.PILLAR.get()).build(null)
     }
+
+    val RESEARCH_TABLE = REGISTRAR.register("research_table") { ->
+        BlockEntityType.Builder.of(::ResearchTableBE, T7Blocks.RESEARCH_TABLE.get()).build(null)
+    }
 }

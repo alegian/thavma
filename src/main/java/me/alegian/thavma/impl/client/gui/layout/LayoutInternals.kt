@@ -116,9 +116,17 @@ class T7LayoutElement internal constructor(
       if (sizing.y.mode == SizingMode.FIXED) maskY = 0f
       return Vec2(maskX, maskY)
     }
+  internal var afterLayoutCallback: T7LayoutElement.() -> Unit = {}
 
   init {
     parent?.children?.add(this)
+  }
+
+  /**
+   * runs an action after the layout has been calculated
+   */
+  fun afterLayout(callback: T7LayoutElement.() -> Unit) {
+    afterLayoutCallback = callback
   }
 
   /**
@@ -194,6 +202,9 @@ class T7LayoutElement internal constructor(
 
       child.calculatePositionsRecursively()
     }
+
+    // side effects the user specifies
+    afterLayoutCallback(this)
   }
 
   // TODO: clean up. padding at the start of an aligned container

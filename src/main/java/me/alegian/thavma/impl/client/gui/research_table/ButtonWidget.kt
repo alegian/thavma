@@ -1,17 +1,16 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.research_table
 
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
-import me.alegian.thavma.impl.common.research.ResearchCategory
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 
-class TabSelectorWidget(x: Int, y: Int, category: ResearchCategory, private val handleClick: () -> Unit) : AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, Component.literal(category.title)) {
+class ButtonWidget(x: Int, y: Int, private val handleClick: () -> Unit): AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, Component.literal("button")) {
   init {
     tooltip = Tooltip.create(message)
   }
@@ -31,6 +30,6 @@ class TabSelectorWidget(x: Int, y: Int, category: ResearchCategory, private val 
   }
 
   companion object {
-    val TEXTURE = T7Textures.Thaumonomicon.FRAME_CORNER
+    val TEXTURE = Texture("gui/research_table/button", 36, 8, 36, 8)
   }
 }

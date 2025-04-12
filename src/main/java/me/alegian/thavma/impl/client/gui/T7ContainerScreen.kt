@@ -87,13 +87,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
             }
           }
         }
+
+        afterLayout {
+          imageWidth = size.x.toInt()
+          imageHeight = size.y.toInt()
+          leftPos = (width - imageWidth) / 2
+          topPos = (height - imageHeight) / 2
+        }
       }
-    }.let{
-      val childNode = it.children.first()
-      imageWidth = childNode.size.x.toInt()
-      imageHeight = childNode.size.y.toInt()
-      leftPos = (width - imageWidth) / 2
-      topPos = (height - imageHeight) / 2
     }
   }
 

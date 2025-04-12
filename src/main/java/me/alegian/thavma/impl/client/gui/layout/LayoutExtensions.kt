@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.screen.layout
+package me.alegian.thavma.impl.client.gui.layout
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit

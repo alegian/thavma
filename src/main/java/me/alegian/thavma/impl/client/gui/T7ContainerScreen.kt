@@ -1,6 +1,6 @@
-package me.alegian.thavma.impl.client.screen
+package me.alegian.thavma.impl.client.gui
 
-import me.alegian.thavma.impl.client.screen.layout.*
+import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.menu.Menu

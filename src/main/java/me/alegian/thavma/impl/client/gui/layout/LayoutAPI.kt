@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.screen.layout
+package me.alegian.thavma.impl.client.gui.layout
 
 /**
  * A Layout System for creating Component-based GUIs.

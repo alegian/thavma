@@ -7,6 +7,8 @@ import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.OculusItemExtensions
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.VisGuiOverlay
+import me.alegian.thavma.impl.client.gui.WorkbenchScreen
+import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
@@ -15,8 +17,6 @@ import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
 import me.alegian.thavma.impl.client.renderer.entity.VisER
-import me.alegian.thavma.impl.client.screen.ResearchScreen
-import me.alegian.thavma.impl.client.screen.WorkbenchScreen
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.block.entity.PedestalBE

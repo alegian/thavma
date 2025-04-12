@@ -1,7 +1,7 @@
-package me.alegian.thavma.impl.client.screen
+package me.alegian.thavma.impl.client.gui
 
+import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
-import me.alegian.thavma.impl.client.screen.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.rotateZ
@@ -10,7 +10,7 @@ import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.menu.WorkbenchMenu
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
@@ -76,7 +76,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
   // TODO: cleanup
   protected open val renderAspects = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
     val BASE_RADIUS = 56
-    val ANGLE = 360f / PRIMAL_ASPECTS.size
+    val ANGLE = 360f / Aspects.PRIMAL_ASPECTS.size
     val middleSlot = menu.craftingContainer.range.slots[4]
     if (middleSlot !is DynamicSlot<*>) return@Renderable
 
@@ -84,12 +84,12 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
       translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble())
 
       // draw aspects at hexagon points (or N-gon if more primals are added by addons)
-      for ((i, a) in PRIMAL_ASPECTS.withIndex()) {
+      for ((i, a) in Aspects.PRIMAL_ASPECTS.withIndex()) {
         val requiredAmount = menu.requiredAspects[a.get()]
         val requiredStack = AspectStack(a.get(), requiredAmount)
         guiGraphics.usePose {
           rotateZ(ANGLE * i)
-          val fac = abs(cos(2 * Math.PI / PRIMAL_ASPECTS.size * i))
+          val fac = abs(cos(2 * Math.PI / Aspects.PRIMAL_ASPECTS.size * i))
           translateXY((BASE_RADIUS * (1 - 0.16 * fac * fac)), 0.0)
           rotateZ(-ANGLE * i)
           guiGraphics.usePose {

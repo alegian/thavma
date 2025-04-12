@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.client.screen.BookEntryScreen
+import me.alegian.thavma.impl.client.gui.thaumonomicon.BookEntryScreen
 import net.minecraft.client.Minecraft
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder

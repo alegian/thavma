@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.screen.layout
+package me.alegian.thavma.impl.client.gui.layout
 
 import net.minecraft.world.phys.Vec2
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.div

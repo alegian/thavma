@@ -1,6 +1,7 @@
-package me.alegian.thavma.impl.client.screen
+package me.alegian.thavma.impl.client.gui.research_table
 
-import me.alegian.thavma.impl.client.screen.layout.*
+import me.alegian.thavma.impl.client.gui.T7ContainerScreen
+import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
@@ -28,19 +29,19 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       }) {
         Row({ width = grow() }) {
           Box({
-            width = fixed(RuneSlot.TEXTURE.width)
-            height = fixed(RuneSlot.TEXTURE.height)
+            width = fixed(RuneSlot.Companion.TEXTURE.width)
+            height = fixed(RuneSlot.Companion.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
+            addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.Companion.TEXTURE))
           }
 
           Box({ width = grow() }) {}
 
           Box({
-            width = fixed(ScrollSlot.TEXTURE.width)
-            height = fixed(ScrollSlot.TEXTURE.height)
+            width = fixed(ScrollSlot.Companion.TEXTURE.width)
+            height = fixed(ScrollSlot.Companion.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
+            addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.Companion.TEXTURE))
           }
         }
         Column({ height = grow() }) {

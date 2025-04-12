@@ -87,8 +87,10 @@ public class WorkbenchMenu extends Menu {
   @Override
   public void removed(@NotNull Player pPlayer) {
     super.removed(pPlayer);
-    this.levelAccess.execute((level, blockPos) -> this.clearContainer(pPlayer, this.craftingContainer));
-    this.levelAccess.execute((level, blockPos) -> this.clearContainer(pPlayer, this.wandContainer));
+    this.levelAccess.execute((level, blockPos) -> {
+      this.clearContainer(pPlayer, this.craftingContainer);
+      this.clearContainer(pPlayer, this.wandContainer);
+    });
   }
 
   @Override

@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.menu.slot.SlotRange;
 import me.alegian.thavma.impl.common.menu.slot.T7ResultSlot;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class T7ResultContainer<T extends Menu> extends ResultContainer implements T7Container {
   protected final T menu;
@@ -19,7 +20,7 @@ public abstract class T7ResultContainer<T extends Menu> extends ResultContainer 
   }
 
   @Override
-  public SlotRange.Single getRange() {
+  public SlotRange.@NotNull Single getRange() {
     return this.range;
   }
 

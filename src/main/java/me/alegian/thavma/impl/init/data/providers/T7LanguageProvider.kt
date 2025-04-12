@@ -1,6 +1,8 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.common.block.ResearchTableBlock
+import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
@@ -183,7 +185,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
         this.add(ESSENTIA_CONTAINER.get(), "Essentia Container")
 
-        this.add("container." + Thavma.MODID + ".arcane_workbench", "Arcane Workbench")
+        this.add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
+        this.add(ResearchTableBlock.CONTAINER_TITLE, "Research Table")
 
         this.add(REVEALING, "Revealing")
         this.add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")

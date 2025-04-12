@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import static net.minecraft.world.level.block.BaseEntityBlock.createTickerHelper;
 
 public class WorkbenchBlock extends Block implements EntityBlock {
-  public static final Component CONTAINER_TITLE = Component.translatable("container." + Thavma.MODID + ".arcane_workbench");
+  public static final String CONTAINER_TITLE = "container." + Thavma.MODID + ".arcane_workbench";
 
   public WorkbenchBlock() {
     super(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion());
@@ -54,7 +54,7 @@ public class WorkbenchBlock extends Block implements EntityBlock {
   protected MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
     return new SimpleMenuProvider(
         (pContainerId, pPlayerInventory, player) -> new WorkbenchMenu(pContainerId, pPlayerInventory, ContainerLevelAccess.create(pLevel, pPos)),
-        WorkbenchBlock.CONTAINER_TITLE
+        Component.translatable(WorkbenchBlock.CONTAINER_TITLE)
     );
   }
 

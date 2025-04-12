@@ -1,10 +1,17 @@
 package me.alegian.thavma.impl.common.block
 
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.block.entity.ResearchTableBE
+import me.alegian.thavma.impl.common.menu.ResearchMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.network.chat.Component
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerLevelAccess
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
@@ -19,6 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.phys.BlockHitResult
 
 private val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
 private val PART: EnumProperty<BedPart> = BlockStateProperties.BED_PART
@@ -29,6 +37,27 @@ private val PART: EnumProperty<BedPart> = BlockStateProperties.BED_PART
 class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion().pushReaction(PushReaction.BLOCK)), EntityBlock {
   init {
     this.registerDefaultState(stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(FACING, Direction.NORTH))
+  }
+
+  companion object{
+    val CONTAINER_TITLE = "container." + Thavma.MODID + ".research_table"
+  }
+
+  override fun getMenuProvider(pState: BlockState, pLevel: Level, pPos: BlockPos): MenuProvider {
+    return SimpleMenuProvider(
+      { pContainerId, pPlayerInventory, player ->
+        ResearchMenu(pContainerId, pPlayerInventory, ContainerLevelAccess.create(pLevel, pPos))
+      },
+      Component.translatable(CONTAINER_TITLE)
+    )
+  }
+
+  override fun useWithoutItem(pState: BlockState, pLevel: Level, pPos: BlockPos, pPlayer: Player, pHitResult: BlockHitResult): InteractionResult {
+    if (pLevel.isClientSide) return InteractionResult.SUCCESS
+    else {
+      pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos))
+      return InteractionResult.CONSUME
+    }
   }
 
   override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {

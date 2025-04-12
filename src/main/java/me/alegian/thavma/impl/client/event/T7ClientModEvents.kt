@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
 import me.alegian.thavma.impl.client.renderer.entity.VisER
+import me.alegian.thavma.impl.client.screen.ResearchScreen
 import me.alegian.thavma.impl.client.screen.WorkbenchScreen
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
@@ -154,9 +155,8 @@ private fun registerClientTooltipComponentFactories(event: RegisterClientTooltip
 }
 
 private fun registerScreens(event: RegisterMenuScreensEvent) {
-  event.register(
-    T7MenuTypes.WORKBENCH.get(), ::WorkbenchScreen
-  )
+  event.register(T7MenuTypes.WORKBENCH.get(), ::WorkbenchScreen)
+  event.register(T7MenuTypes.RESEARCH.get(), ::ResearchScreen)
 }
 
 fun registerClientModEvents() {

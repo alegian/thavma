@@ -24,14 +24,17 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     }) {
       Column({
         gap = BORDER
+        height = grow()
       }) {
-        Row {
+        Row({ width = grow() }) {
           Box({
             width = fixed(RuneSlot.TEXTURE.width)
             height = fixed(RuneSlot.TEXTURE.height)
           }) {
             addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
           }
+
+          Box({ width = grow() }) {}
 
           Box({
             width = fixed(ScrollSlot.TEXTURE.width)
@@ -40,11 +43,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
           }
         }
-        Column {
+        Column({ height = grow() }) {
           TextureBox(ASPECTS_BG) { }
-          Row {
-            TextureBox(BUTTON) { }
-            TextureBox(BUTTON) { }
+          Row({ size = grow() }) {
+            // button widgets
           }
         }
       }

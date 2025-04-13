@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.client.gui.research_table
 
 import me.alegian.thavma.impl.client.gui.T7ContainerScreen
 import me.alegian.thavma.impl.client.gui.layout.*
+import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
@@ -13,9 +14,11 @@ import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.plus
 import me.alegian.thavma.impl.common.util.trunc
 import me.alegian.thavma.impl.common.util.vec2
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.phys.Vec2
@@ -23,6 +26,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.div
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
+import kotlin.math.ceil
 
 private const val BORDER = 5
 private val BG = Texture("gui/research_table/bg", 243, 166, 256, 256)
@@ -30,6 +34,16 @@ private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 121, 72, 1
 private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 156, 156, 156, 156)
 
 open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<ResearchMenu>(menu, pPlayerInventory, pTitle, BG) {
+  private var page = 0
+  private var maxPages = 1
+  private var aspectsPerPage = 0
+  private val aspectWidgets = mutableListOf<AspectWidget>()
+
+  override fun init() {
+    aspectWidgets.clear()
+    super.init()
+  }
+
   override fun layout() {
     Row({
       size = grow()
@@ -57,33 +71,77 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.Companion.TEXTURE))
           }
         }
-        Column({ height = grow() }) {
-          TextureBox(ASPECTS_BG) { }
-          Row({ size = grow() }) {
-            Box({ size = grow() }) {
-              afterLayout {
-                addRenderableWidget(ButtonWidget(position, false) { })
-              }
-            }
-            Box({ size = grow() }) {
-              afterLayout {
-                addRenderableWidget(ButtonWidget(position, true) { })
-              }
-            }
+
+        AspectsSection()
+      }
+
+      PuzzleSection()
+    }
+  }
+
+  fun AspectsSection() {
+    Column({ height = grow() }) {
+      TextureBox(ASPECTS_BG) {
+        afterLayout {
+          makeAspectWidgets(position, size)
+        }
+      }
+      Row({ size = grow() }) {
+        Box({ size = grow() }) {
+          afterLayout {
+            addRenderableWidget(ButtonWidget(position, false) {
+              // add an extra maxPages to avoid negative modulos
+              page = (page - 1 + maxPages) % maxPages
+              updateAspectWidgets()
+            })
+          }
+        }
+        Box({ size = grow() }) {
+          afterLayout {
+            addRenderableWidget(ButtonWidget(position, true) {
+              page = (page + 1) % maxPages
+              updateAspectWidgets()
+            })
           }
         }
       }
+    }
+  }
 
-      TextureBox(PUZZLE_BG) {
-        Row({
-          size = grow()
-        }) {
-          Box({ size = grow() }) {
-            afterLayout {
-              makePuzzleWidgets(position, size)
-            }
-          }
-        }
+  /**
+   * places the aspect widgets, calculates pages required
+   */
+  private fun makeAspectWidgets(position: Vec2, size: Vec2) {
+    val ALL_ASPECTS = 35
+    val maxRows = (size.y / 16).toInt()
+    aspectsPerPage = maxRows * 4
+    maxPages = ceil(ALL_ASPECTS.toFloat() / aspectsPerPage).toInt()
+
+    for (a in 0 until ALL_ASPECTS) {
+      val i = a / 4
+      val j = a % 4
+      val newWidget = addRenderableWidget(AspectWidget(position + vec2(j * 16, 0) + vec2(0, (i % maxRows) * 16)))
+      aspectWidgets.add(newWidget)
+    }
+
+    updateAspectWidgets()
+  }
+
+  /**
+   * hides/unhides aspects as pages change
+   */
+  private fun updateAspectWidgets() {
+    for (i in aspectWidgets.indices) {
+      val enabled = i >= page * aspectsPerPage && i < (page + 1) * aspectsPerPage
+      aspectWidgets[i].active = enabled
+      aspectWidgets[i].visible = enabled
+    }
+  }
+
+  fun PuzzleSection() {
+    TextureBox(PUZZLE_BG) {
+      afterLayout {
+        makePuzzleWidgets(position, size)
       }
     }
   }
@@ -118,7 +176,22 @@ class CircleWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), posi
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
   }
 
+  override fun playDownSound(handler: SoundManager) {
+  }
+
   companion object {
     val TEXTURE = Texture("gui/research_table/circle", 18, 18, 18, 18)
+  }
+}
+
+class AspectWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), position.y.toInt(), 16, 16, Component.empty()) {
+  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    AspectRenderer.drawAspectIcon(guiGraphics, Aspects.IGNIS.get(), x, y)
+  }
+
+  override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+  }
+
+  override fun playDownSound(handler: SoundManager) {
   }
 }

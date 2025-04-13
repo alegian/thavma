@@ -58,7 +58,7 @@ object AspectRenderer {
     drawCount(guiGraphics, aspectStack.amount.toString(), pX, pY)
   }
 
-  private fun drawAspectIcon(guiGraphics: GuiGraphics, aspect: Aspect, pX: Int, pY: Int) {
+  fun drawAspectIcon(guiGraphics: GuiGraphics, aspect: Aspect, pX: Int, pY: Int) {
     val sprite = AspectAtlas.sprite(rl(aspect.id))
 
     RenderSystem.disableDepthTest()

@@ -51,6 +51,13 @@ fun GuiGraphics.blit(texture: Texture) {
   blit(texture.location, 0, 0, 0f, 0f, texture.width, texture.height, texture.canvasWidth, texture.canvasHeight)
 }
 
+fun GuiGraphics.blitCentered(texture: Texture) {
+  usePose {
+    translateXY(-texture.width / 2f, -texture.height / 2f)
+    blit(texture.location, 0, 0, 0f, 0f, texture.width, texture.height, texture.canvasWidth, texture.canvasHeight)
+  }
+}
+
 fun GuiGraphics.blit(
   pX: Int,
   pY: Int,

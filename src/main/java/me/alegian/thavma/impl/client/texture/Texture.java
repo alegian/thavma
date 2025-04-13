@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.texture;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -18,5 +19,9 @@ public record Texture(ResourceLocation location, int width, int height, int canv
 
   public Texture(String path, int width, int height, int canvasWidth, int canvasHeight) {
     this(rl("textures/" + path + ".png"), width, height, canvasWidth, canvasHeight);
+  }
+
+  public Vec2 getSize() {
+    return new Vec2(this.width, this.height);
   }
 }

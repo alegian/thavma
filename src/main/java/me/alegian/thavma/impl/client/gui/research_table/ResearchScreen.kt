@@ -41,9 +41,11 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
   val reseachState = mutableMapOf<Pair<Int, Int>, Aspect>()
+  val circleWidgets = mutableMapOf<Pair<Int, Int>, CircleWidget>()
 
   override fun init() {
     aspectWidgets.clear()
+    circleWidgets.clear()
     super.init()
   }
 
@@ -157,21 +159,21 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
 
   private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
     val textureSize = CircleWidget.TEXTURE.size
-    val gaps = vec2(2, -2)
+    val gaps = vec2(16, -8)
     var reps = ((containerSize + gaps) / (textureSize + gaps)).trunc()
     val actualSize = textureSize * reps + (reps - 1) * gaps
     val offsets = position + (containerSize - actualSize) / 2f
 
-    for (j in 0 until reps.y.toInt()) {
+    for (row in 0 until reps.y.toInt()) {
       var rowSize = reps.x.toInt()
-      if (j % 2 == 1) rowSize--
-      for (i in 0 until rowSize) {
-        var totalOffset = offsets + (textureSize + gaps) * vec2(i, j)
-        if (j % 2 == 1) totalOffset += vec2(textureSize.x / 2 + gaps.x / 2, 0)
+      if (row % 2 == 1) rowSize--
+      for (col in 0 until rowSize) {
+        var totalOffset = offsets + (textureSize + gaps) * vec2(col, row)
+        if (row % 2 == 1) totalOffset += vec2(textureSize.x / 2 + gaps.x / 2, 0)
         addRenderableWidget(
           CircleWidget(
             totalOffset,
-            vec2(i, j),
+            vec2(row, col),
             this
           )
         )
@@ -211,6 +213,13 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
       guiGraphics.blit(TEXTURE)
       aspect?.let {
         translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
+
+//        guiGraphics.usePose {
+//          rotateZ(angleDegrees)
+//          translateXY(0, -0.5)
+//          guiGraphics.hLine(0, 16, 0, 0xFF0000FF.toInt())
+//        }
+
         scaleXY(0.8f)
         AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
       }

@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
@@ -38,6 +39,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var maxPages = 1
   private var aspectsPerPage = 0
   private val aspectWidgets = mutableListOf<AspectWidget>()
+  var selectedAspect: Aspect? = null
 
   override fun init() {
     aspectWidgets.clear()
@@ -120,7 +122,13 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     for (a in 0 until ALL_ASPECTS) {
       val i = a / 4
       val j = a % 4
-      val newWidget = addRenderableWidget(AspectWidget(position + vec2(j * 16, 0) + vec2(0, (i % maxRows) * 16)))
+      val newWidget = addRenderableWidget(
+        AspectWidget(
+          position + vec2(j * 16, 0) + vec2(0, (i % maxRows) * 16),
+          this,
+          Aspects.IGNIS.get()
+        )
+      )
       aspectWidgets.add(newWidget)
     }
 
@@ -163,6 +171,24 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       }
     }
   }
+
+  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    super.render(guiGraphics, mouseX, mouseY, partialTick)
+    renderSelectedAspect(guiGraphics, mouseX, mouseY)
+  }
+
+  private fun renderSelectedAspect(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+    selectedAspect?.let {
+      AspectRenderer.drawAspectIcon(guiGraphics, it, mouseX - 8, mouseY - 8)
+    }
+  }
+
+  override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
+    if (selectedAspect != null) {
+      selectedAspect = null
+      return true
+    } else return false
+  }
 }
 
 class CircleWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
@@ -184,12 +210,16 @@ class CircleWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), posi
   }
 }
 
-class AspectWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), position.y.toInt(), 16, 16, Component.empty()) {
+class AspectWidget(position: Vec2, private val researchScreen: ResearchScreen, private val aspect: Aspect) : AbstractWidget(position.x.toInt(), position.y.toInt(), 16, 16, Component.empty()) {
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    AspectRenderer.drawAspectIcon(guiGraphics, Aspects.IGNIS.get(), x, y)
+    AspectRenderer.drawAspectIcon(guiGraphics, aspect, x, y)
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+  }
+
+  override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+    researchScreen.selectedAspect = aspect
   }
 
   override fun playDownSound(handler: SoundManager) {

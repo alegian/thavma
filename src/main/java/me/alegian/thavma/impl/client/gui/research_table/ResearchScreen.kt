@@ -13,7 +13,6 @@ import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
 import me.alegian.thavma.impl.common.util.minus
-import me.alegian.thavma.impl.common.util.plus
 import me.alegian.thavma.impl.common.util.trunc
 import me.alegian.thavma.impl.common.util.vec2
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
@@ -158,16 +157,20 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
 
   private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
     val textureSize = CircleWidget.TEXTURE.size
-    val gaps = 4f
+    val gaps = vec2(2, -2)
     var reps = ((containerSize + gaps) / (textureSize + gaps)).trunc()
     val actualSize = textureSize * reps + (reps - 1) * gaps
     val offsets = position + (containerSize - actualSize) / 2f
 
-    for (i in 0 until reps.x.toInt()) {
-      for (j in 0 until reps.y.toInt()) {
+    for (j in 0 until reps.y.toInt()) {
+      var rowSize = reps.x.toInt()
+      if (j % 2 == 1) rowSize--
+      for (i in 0 until rowSize) {
+        var totalOffset = offsets + (textureSize + gaps) * vec2(i, j)
+        if (j % 2 == 1) totalOffset += vec2(textureSize.x / 2 + gaps.x / 2, 0)
         addRenderableWidget(
           CircleWidget(
-            offsets + (textureSize + gaps) * vec2(i, j),
+            totalOffset,
             vec2(i, j),
             this
           )

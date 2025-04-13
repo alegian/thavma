@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
+import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.Aspect
@@ -40,6 +41,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var aspectsPerPage = 0
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
+  val reseachState = mutableMapOf<Pair<Int, Int>, Aspect>()
 
   override fun init() {
     aspectWidgets.clear()
@@ -165,7 +167,9 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       for (j in 0 until reps.y.toInt()) {
         addRenderableWidget(
           CircleWidget(
-            offsets + (textureSize + gaps) * vec2(i, j)
+            offsets + (textureSize + gaps) * vec2(i, j),
+            vec2(i, j),
+            this
           )
         )
       }
@@ -184,19 +188,34 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
-    if (selectedAspect != null) {
-      selectedAspect = null
-      return true
-    } else return false
+    if (selectedAspect != null) focused = null
+    val result = super.mouseReleased(mouseX, mouseY, button)
+    if (selectedAspect != null) selectedAspect = null
+    return result
   }
 }
 
-class CircleWidget(val position: Vec2) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
+class CircleWidget(val position: Vec2, private val indices: Vec2, private val researchScreen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
+  var aspect
+    get() = researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())]
+    set(value) {
+      if (value != null) researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
+    }
+
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     guiGraphics.usePose {
       translateXY(x, y)
       guiGraphics.blit(TEXTURE)
+      aspect?.let {
+        translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
+        scaleXY(0.8f)
+        AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
+      }
     }
+  }
+
+  override fun onRelease(mouseX: Double, mouseY: Double) {
+    aspect = researchScreen.selectedAspect
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

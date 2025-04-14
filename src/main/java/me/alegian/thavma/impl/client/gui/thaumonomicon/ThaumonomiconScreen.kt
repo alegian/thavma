@@ -25,18 +25,16 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
   override fun init() {
     super.init()
 
-    val categories = mutableListOf<ResearchCategory>()
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key, category) ->
       tabs[key] = addRenderableOnly(TabRenderable(this, key))
-      categories.add(category)
     }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.map { it.value }?.also {
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.also {
       for ((tabCategory, tab) in tabs.entries)
         tab.setEntries(it.filter { e -> e.category.compareTo(tabCategory) == 0 })
     }
 
     addRenderableOnly(frame)
-    for (c in categories) addSelectorWidget(c)
+    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.forEach { addSelectorWidget(it) }
   }
 
   private fun addSelectorWidget(category: ResearchCategory) {

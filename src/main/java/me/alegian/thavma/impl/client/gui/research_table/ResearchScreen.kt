@@ -10,7 +10,7 @@ import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.vec2
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.T7Registries
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
@@ -109,19 +109,19 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
    * places the aspect widgets, calculates pages required
    */
   private fun makeAspectWidgets(position: Vec2, size: Vec2) {
-    val ALL_ASPECTS = 35
+    val allAspects = T7Registries.ASPECT.toList()
     val maxRows = (size.y / 16).toInt()
     aspectsPerPage = maxRows * 4
-    maxPages = ceil(ALL_ASPECTS.toFloat() / aspectsPerPage).toInt()
+    maxPages = ceil(allAspects.size.toFloat() / aspectsPerPage).toInt()
 
-    for (a in 0 until ALL_ASPECTS) {
+    for (a in allAspects.indices) {
       val i = a / 4
       val j = a % 4
       val newWidget = addRenderableWidget(
         AspectWidget(
           position + vec2(j * 16, 0) + vec2(0, (i % maxRows) * 16),
           this,
-          Aspects.IGNIS.get()
+          allAspects[a]
         )
       )
       aspectWidgets.add(newWidget)

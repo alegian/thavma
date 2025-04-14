@@ -27,7 +27,7 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
       aspect?.let {
         translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
 
-        renderConnections(aspect, guiGraphics)
+        renderConnections(it, guiGraphics)
 
         scaleXY(0.8f)
         AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
@@ -35,12 +35,12 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
     }
   }
 
-  private fun renderConnections(aspect: Aspect?, guiGraphics: GuiGraphics) {
+  private fun renderConnections(aspect: Aspect, guiGraphics: GuiGraphics) {
     for (neighborOffset in axialNeighbors) {
       val neighborIdx = axial(indices) + neighborOffset
       val neighbor = researchScreen.circleWidgets[neighborIdx.toIntPair()]
       if (neighbor == null) continue
-      if (neighbor.aspect != aspect) continue
+      if (neighbor.aspect?.components?.map { it.get() }?.contains(aspect) != true) continue
       val dx = neighbor.position.x - position.x
       val dy = neighbor.position.y - position.y
       val angleDegrees = atan2(dy, dx) * 180 / Math.PI

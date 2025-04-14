@@ -34,7 +34,9 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
     }
 
     addRenderableOnly(frame)
-    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.forEach { addSelectorWidget(it) }
+    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
+      ?.sortedBy { it.index }
+      ?.forEach { addSelectorWidget(it) }
   }
 
   private fun addSelectorWidget(category: ResearchCategory) {

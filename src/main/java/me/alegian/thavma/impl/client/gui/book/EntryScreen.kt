@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component
 
 private val BG = Texture("gui/book/background", 510, 282, 512, 512)
 
-class BookEntryScreen : Screen(Component.literal("Book Entry")) {
+class EntryScreen : Screen(Component.literal("Book Entry")) {
   private var left = 0.0
   private var top = 0.0
 

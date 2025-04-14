@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis

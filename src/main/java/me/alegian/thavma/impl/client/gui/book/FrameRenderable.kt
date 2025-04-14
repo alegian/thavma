@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.texture.T7Textures

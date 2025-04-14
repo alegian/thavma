@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.clientRegistry
@@ -15,7 +15,7 @@ import kotlin.jvm.optionals.getOrNull
 private val cornerHeight = T7Textures.Thaumonomicon.FRAME_CORNER.height
 private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
 
-class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
+class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   private var isScrolling = false
   var currentCategory = ResearchCategories.TEST_CATEGORY
   private val tabs = mutableMapOf<ResourceKey<ResearchCategory>, TabRenderable>()

@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.gui.thaumonomicon
+package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.*
@@ -16,7 +16,7 @@ private const val minZoom = 0.0
 private const val maxZoom = 5.0
 
 // represents the renderable content of a tab in the book
-class TabRenderable(val screen: ThaumonomiconScreen, val category: ResourceKey<ResearchCategory>) : Renderable {
+class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCategory>) : Renderable {
   var scrollX = 0.0
     private set
   var scrollY = 0.0

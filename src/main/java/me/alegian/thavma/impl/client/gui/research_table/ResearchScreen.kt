@@ -32,7 +32,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var aspectsPerPage = 0
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
-  val reseachState = mutableMapOf<Pair<Int, Int>, Aspect>()
+  val reseachState = mutableMapOf<Pair<Int, Int>, Aspect?>()
   val circleWidgets = mutableMapOf<Pair<Int, Int>, CircleWidget>()
 
   override fun init() {
@@ -79,8 +79,17 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   fun AspectsSection() {
     Column({ height = grow() }) {
       TextureBox(ASPECTS_BG) {
-        afterLayout {
-          makeAspectWidgets(position, size)
+        Row({
+          size = grow()
+          padding = (ASPECTS_BG.width - 16 * 4) / 2 // fits 4 aspects
+        }) {
+          Row({
+            size = grow()
+          }) {
+            afterLayout {
+              makeAspectWidgets(position, size)
+            }
+          }
         }
       }
       Row({ size = grow() }) {

@@ -17,7 +17,7 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   var aspect
     get() = researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())]
     set(value) {
-      if (value != null) researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
+      researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
     }
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
@@ -53,7 +53,11 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   }
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
-    aspect = researchScreen.selectedAspect
+    if(aspect == null) aspect = researchScreen.selectedAspect
+  }
+
+  override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+    if(aspect != null) aspect = null
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

@@ -4,10 +4,6 @@ import me.alegian.thavma.impl.client.gui.T7ContainerScreen
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.blit
-import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
@@ -16,9 +12,6 @@ import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.vec2
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.client.gui.narration.NarrationElementOutput
-import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.phys.Vec2
@@ -159,21 +152,23 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
     val textureSize = CircleWidget.TEXTURE.size
     val reps = vec2(7, 5)
-    val gaps = vec2(0, 2)
+    val gaps = vec2(0, HEX_GRID_GAP)
     val actualSize = textureSize * (reps + vec2(0, 0.5)) + gaps * (reps - 1)
     val offsets = position + (containerSize - actualSize) / 2f
 
     for (row in 0 until reps.y.toInt()) {
       for (col in 0 until reps.x.toInt()) {
-        var totalOffset = offsets + (textureSize + gaps) * vec2(col, row)
+        val indices = vec2(col, row)
+        var totalOffset = offsets + (textureSize + gaps) * indices
         if (col % 2 == 1) totalOffset += vec2(0, textureSize.y / 2)
-        addRenderableWidget(
+        val newWidget = addRenderableWidget(
           CircleWidget(
             totalOffset,
-            vec2(row, col),
+            indices,
             this
           )
         )
+        circleWidgets[axial(indices).toIntPair()] = newWidget
       }
     }
   }
@@ -183,12 +178,18 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     renderSelectedAspect(guiGraphics, mouseX, mouseY)
   }
 
+  /**
+   * renders the aspect that is being dragged, on top of the mouse
+   */
   private fun renderSelectedAspect(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
     selectedAspect?.let {
       AspectRenderer.drawAspectIcon(guiGraphics, it, mouseX - 8, mouseY - 8)
     }
   }
 
+  /**
+   * makes sure that the event is properly propagated to the circle widget
+   */
   override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
     if (selectedAspect != null) focused = null
     val result = super.mouseReleased(mouseX, mouseY, button)
@@ -197,59 +198,3 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 }
 
-class CircleWidget(val position: Vec2, private val indices: Vec2, private val researchScreen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
-  var aspect
-    get() = researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())]
-    set(value) {
-      if (value != null) researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
-    }
-
-  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    guiGraphics.usePose {
-      translateXY(x, y)
-      guiGraphics.blit(TEXTURE)
-      aspect?.let {
-        translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
-
-//        guiGraphics.usePose {
-//          rotateZ(angleDegrees)
-//          translateXY(0, -0.5)
-//          guiGraphics.hLine(0, 16, 0, 0xFF0000FF.toInt())
-//        }
-
-        scaleXY(0.8f)
-        AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
-      }
-    }
-  }
-
-  override fun onRelease(mouseX: Double, mouseY: Double) {
-    aspect = researchScreen.selectedAspect
-  }
-
-  override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
-  }
-
-  override fun playDownSound(handler: SoundManager) {
-  }
-
-  companion object {
-    val TEXTURE = Texture("gui/research_table/circle", 18, 18, 18, 18)
-  }
-}
-
-class AspectWidget(position: Vec2, private val researchScreen: ResearchScreen, private val aspect: Aspect) : AbstractWidget(position.x.toInt(), position.y.toInt(), 16, 16, Component.empty()) {
-  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    AspectRenderer.drawAspectIcon(guiGraphics, aspect, x, y)
-  }
-
-  override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
-  }
-
-  override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    researchScreen.selectedAspect = aspect
-  }
-
-  override fun playDownSound(handler: SoundManager) {
-  }
-}

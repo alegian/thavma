@@ -2,12 +2,11 @@ package me.alegian.thavma.impl.common.research
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
-import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceKey
 import org.joml.Vector2i
-import kotlin.jvm.optionals.getOrNull
 
 class ResearchEntry(val category: ResourceKey<ResearchCategory>, val position: Vector2i, val preferX: Boolean, val children: List<ResourceKey<ResearchEntry>>) {
   private var resolvedChildren: List<ResearchEntry>? = null
@@ -26,8 +25,7 @@ class ResearchEntry(val category: ResourceKey<ResearchCategory>, val position: V
   fun resolveChildren(): List<ResearchEntry> {
     resolvedChildren?.let { return it }
 
-    val registryAccess = Minecraft.getInstance().connection?.registryAccess()
-    val registry = registryAccess?.registry(T7DatapackRegistries.RESEARCH_ENTRY)?.getOrNull()
+    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
     if (registry == null) return listOf()
 
     resolvedChildren = children.map { registry.getOrThrow(it) }.also { return it }

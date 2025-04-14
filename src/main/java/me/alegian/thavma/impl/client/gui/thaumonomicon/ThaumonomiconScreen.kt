@@ -1,11 +1,11 @@
 package me.alegian.thavma.impl.client.gui.thaumonomicon
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
@@ -26,12 +26,11 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
     super.init()
 
     val categories = mutableListOf<ResearchCategory>()
-    val registryAccess = Minecraft.getInstance().connection?.registryAccess()
-    registryAccess?.registry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getOrNull()?.entrySet()?.forEach { (key, category) ->
+    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key, category) ->
       tabs[key] = addRenderableOnly(TabRenderable(this, key))
       categories.add(category)
     }
-    registryAccess?.registry(T7DatapackRegistries.RESEARCH_ENTRY)?.getOrNull()?.entrySet()?.map { it.value }?.also {
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.map { it.value }?.also {
       for ((tabCategory, tab) in tabs.entries)
         tab.setEntries(it.filter { e -> e.category.compareTo(tabCategory) == 0 })
     }
@@ -41,9 +40,8 @@ class ThaumonomiconScreen : Screen(Component.literal("Thaumonomicon")) {
   }
 
   private fun addSelectorWidget(category: ResearchCategory) {
-    val registryAccess = Minecraft.getInstance().connection?.registryAccess()
     addRenderableWidget(TabSelectorWidget(0, selectorOffset, category) {
-      registryAccess?.registry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getOrNull()?.getResourceKey(category)?.getOrNull()?.let {
+      clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getResourceKey(category)?.getOrNull()?.let {
         currentCategory = it
       }
     })

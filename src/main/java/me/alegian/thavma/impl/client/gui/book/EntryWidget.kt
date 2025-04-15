@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.setClientScreen
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
@@ -20,7 +21,7 @@ import org.joml.Vector2i
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, private val tab: TabRenderable, val pos: Vector2i, val children: List<EntryWidget> = listOf(), val preferX: Boolean = false) :
+class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val pos: Vector2i, val children: List<EntryWidget> = listOf(), val preferX: Boolean = false) :
   AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)) {
   init {
     tooltip = Tooltip.create(message)
@@ -64,6 +65,10 @@ class EntryWidget(private val screen: BookScreen, private val tab: TabRenderable
         }
       }
     }
+  }
+
+  override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+    setClientScreen(EntryScreen())
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

@@ -21,6 +21,7 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   private val tabs = mutableMapOf<ResourceKey<ResearchCategory>, TabRenderable>()
   private val currentTab get() = tabs[currentCategory]
   private var selectorOffset = cornerHeight + selectorGap
+  private val entryWidgets = mutableListOf<EntryWidget>()
 
   override fun init() {
     super.init()
@@ -30,8 +31,9 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
     }
     clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.forEach {
       val tab = tabs[it.category]
-      if(tab != null) addRenderableWidget(EntryWidget.of(this, tab, it))
+      if (tab != null) entryWidgets.add(addRenderableWidget(EntryWidget.of(this, tab, it)))
     }
+    updateEntryWidgets()
 
     addRenderableOnly(frame)
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
@@ -43,9 +45,18 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
     addRenderableWidget(TabSelectorWidget(0, selectorOffset, category) {
       clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.getResourceKey(category)?.getOrNull()?.let {
         currentCategory = it
+        updateEntryWidgets()
       }
     })
     selectorOffset += TabSelectorWidget.TEXTURE.height + selectorGap
+  }
+
+  private fun updateEntryWidgets() {
+    entryWidgets.forEach {
+      val enabled = it.tab.category == currentCategory
+      it.visible = enabled
+      it.active = enabled
+    }
   }
 
   override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, dragX: Double, dragY: Double): Boolean {

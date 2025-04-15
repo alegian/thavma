@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
-import me.alegian.thavma.impl.client.setClientScreen
+import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
@@ -68,7 +68,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val po
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    setClientScreen(EntryScreen())
+    pushScreen(EntryScreen())
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

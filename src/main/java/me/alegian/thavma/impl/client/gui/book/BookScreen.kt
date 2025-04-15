@@ -20,11 +20,14 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   var currentCategory = ResearchCategories.TEST_CATEGORY
   private val tabs = mutableMapOf<ResourceKey<ResearchCategory>, TabRenderable>()
   private val currentTab get() = tabs[currentCategory]
-  private var selectorOffset = cornerHeight + selectorGap
+  private var selectorOffset = 0
   private val entryWidgets = mutableListOf<EntryWidget>()
 
   override fun init() {
     super.init()
+
+    entryWidgets.clear()
+    selectorOffset = cornerHeight + selectorGap
 
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key) ->
       tabs[key] = addRenderableOnly(TabRenderable(this, key))

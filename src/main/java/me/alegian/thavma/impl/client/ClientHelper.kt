@@ -17,9 +17,11 @@ fun getClientPlayerEquipmentItem(slot: EquipmentSlot): Item? {
   return Minecraft.getInstance().player?.getItemBySlot(slot)?.item
 }
 
-fun setClientScreen(screen: Screen) {
+fun setScreen(screen: Screen) {
   Minecraft.getInstance().setScreen(screen)
 }
 
 fun <T> clientRegistry(key: ResourceKey<Registry<T>>) =
   Minecraft.getInstance().connection?.registryAccess()?.registry(key)?.getOrNull()
+
+fun pushScreen(screen: Screen) = Minecraft.getInstance().pushGuiLayer(screen)

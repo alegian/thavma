@@ -25,12 +25,12 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   override fun init() {
     super.init()
 
-    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key, category) ->
+    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key) ->
       tabs[key] = addRenderableOnly(TabRenderable(this, key))
     }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.also {
-      for ((tabCategory, tab) in tabs.entries)
-        tab.setEntries(it.filter { e -> e.category.compareTo(tabCategory) == 0 })
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.forEach {
+      val tab = tabs[it.category]
+      if(tab != null) addRenderableWidget(EntryWidget.of(this, tab, it))
     }
 
     addRenderableOnly(frame)

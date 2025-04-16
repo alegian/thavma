@@ -35,6 +35,7 @@ object Thavma {
     Aspects.REGISTRAR.register(KFF_MOD_BUS)
     T7Attributes.REGISTRAR.register(KFF_MOD_BUS)
     T7GlobalLootModifierSerializers.REGISTRAR.register(KFF_MOD_BUS)
+    PageTypes.REGISTRAR.register(KFF_MOD_BUS)
 
     registerCommonModEvents()
     registerClientModEvents()

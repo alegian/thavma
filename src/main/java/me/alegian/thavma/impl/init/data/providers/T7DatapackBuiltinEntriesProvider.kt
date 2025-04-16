@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -102,21 +103,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category", 1f))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ctx.register(ResearchEntries.E0_0, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf()))
-        ctx.register(ResearchEntries.E4_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -2), true, listOf()))
-        ctx.register(ResearchEntries.E1_12, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(1, 12), false, listOf()))
-        ctx.register(ResearchEntries.E12_2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(12, 2), true, listOf()))
-        ctx.register(ResearchEntries.E4_7, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, 7), true, listOf()))
-        ctx.register(ResearchEntries.E7_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(7, 4), true, listOf()))
-        ctx.register(ResearchEntries.E2_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -2), true, listOf(ResearchEntries.E0_0)))
-        ctx.register(ResearchEntries.E4_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -4), true, listOf()))
-        ctx.register(ResearchEntries.E2_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -4), true, listOf()))
-        ctx.register(ResearchEntries.E3_3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 3), false, listOf(ResearchEntries.E4_7, ResearchEntries.E7_4)))
-        ctx.register(ResearchEntries.E3_m3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, -3), false, listOf(ResearchEntries.E4_m2)))
-        ctx.register(ResearchEntries.E3_1, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 1), false, listOf(ResearchEntries.E1_12)))
-        ctx.register(ResearchEntries.Em1_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(-1, 4), false, listOf(ResearchEntries.E12_2)))
+        val pageTest = TextPage(Component.literal("Test Page"), Component.literal("my page is awesome and data driven"))
 
-        ctx.register(ResearchEntries.SECOND_TAB_ENTRY, ResearchEntry(ResearchCategories.SECOND, Vector2i(0, 1), false, listOf()))
+        ctx.register(ResearchEntries.E0_0, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf(), listOf(pageTest)))
+        ctx.register(ResearchEntries.E4_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -2), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E1_12, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(1, 12), false, listOf(), listOf()))
+        ctx.register(ResearchEntries.E12_2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(12, 2), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E4_7, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, 7), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E7_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(7, 4), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E2_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -2), true, listOf(ResearchEntries.E0_0), listOf()))
+        ctx.register(ResearchEntries.E4_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -4), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E2_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -4), true, listOf(), listOf()))
+        ctx.register(ResearchEntries.E3_3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 3), false, listOf(ResearchEntries.E4_7, ResearchEntries.E7_4), listOf()))
+        ctx.register(ResearchEntries.E3_m3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, -3), false, listOf(ResearchEntries.E4_m2), listOf()))
+        ctx.register(ResearchEntries.E3_1, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 1), false, listOf(ResearchEntries.E1_12), listOf()))
+        ctx.register(ResearchEntries.Em1_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(-1, 4), false, listOf(ResearchEntries.E12_2), listOf()))
+
+        ctx.register(ResearchEntries.SECOND_TAB_ENTRY, ResearchEntry(ResearchCategories.SECOND, Vector2i(0, 1), false, listOf(), listOf()))
       }
   }
 }

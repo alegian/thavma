@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.client.extension.OculusItemExtensions
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.VisGuiOverlay
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
+import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
@@ -26,12 +27,18 @@ import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.ShaderInstance
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.fml.ModLoader
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers
 import net.neoforged.neoforge.client.event.ModelEvent.RegisterGeometryLoaders
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
+
+private fun clientSetup(event: FMLClientSetupEvent){
+  ModLoader.postEvent(RegisterPageRenderersEvent())
+}
 
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
   event.registerAboveAll(rl("vis"), VisGuiOverlay.LAYER)
@@ -159,9 +166,14 @@ private fun registerScreens(event: RegisterMenuScreensEvent) {
   event.register(T7MenuTypes.RESEARCH.get(), ::ResearchScreen)
 }
 
+private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
+  event.register(PageTypes.TEXT.get(), TextPageRenderer)
+}
+
 fun registerClientModEvents() {
   if (DIST != Dist.CLIENT) return
 
+  KFF_MOD_BUS.addListener(::clientSetup)
   KFF_MOD_BUS.addListener(::registerGuiLayers)
   KFF_MOD_BUS.addListener(::registerEntityRenderers)
   KFF_MOD_BUS.addListener(::registerParticleProviders)
@@ -173,4 +185,5 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerShaders)
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
+  KFF_MOD_BUS.addListener(::registerPageRenderers)
 }

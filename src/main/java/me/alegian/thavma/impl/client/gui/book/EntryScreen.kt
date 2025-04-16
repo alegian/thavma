@@ -2,10 +2,10 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
-import me.alegian.thavma.impl.client.util.drawString
 import me.alegian.thavma.impl.client.util.usePose
-import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
@@ -29,7 +29,12 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
       guiGraphics.blit(BG)
 
       val page = entry.pages.getOrNull(0)
-      if (page is TextPage) guiGraphics.drawString(font, page.text)
+      if(page!=null) renderPage(page, guiGraphics, font)
     }
   }
+}
+
+private fun <T: Page> renderPage(page: T, guiGraphics: GuiGraphics, font: Font) {
+  val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
+  renderer.render(page, guiGraphics, font)
 }

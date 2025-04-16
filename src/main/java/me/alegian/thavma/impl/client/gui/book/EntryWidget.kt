@@ -14,18 +14,19 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
-import org.joml.Vector2i
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
  * @param preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val pos: Vector2i, val children: List<EntryWidget> = listOf(), val preferX: Boolean = false) :
+class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<EntryWidget> = listOf()) :
   AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)) {
   init {
     tooltip = Tooltip.create(message)
   }
+  private val pos = entry.position
+  private val preferX = entry.preferX
 
   override fun getX(): Int {
     return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
@@ -68,7 +69,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val po
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    pushScreen(EntryScreen())
+    pushScreen(EntryScreen(entry))
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
@@ -93,7 +94,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val po
   companion object {
     // TODO: first argument should not be required
     fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry): EntryWidget {
-      return EntryWidget(screen, tab, entry.position, entry.resolveChildren().map { of(screen, tab, it) }, entry.preferX)
+      return EntryWidget(screen, tab, entry, entry.resolveChildren().map { of(screen, tab, it) })
     }
   }
 }

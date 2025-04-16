@@ -1,6 +1,13 @@
 {
   "category": "thavma:test_category",
   "children": [],
+  "pages": [
+    {
+      "type": "thavma:text",
+      "text": "my page is awesome and data driven",
+      "title": "Test Page"
+    }
+  ],
   "position": [
     0,
     0

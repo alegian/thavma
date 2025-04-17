@@ -8,7 +8,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
-import net.minecraft.world.phys.Vec2
 
 private val BG = Texture("gui/book/background", 510, 282, 512, 512)
 
@@ -42,21 +41,9 @@ class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")
             addRenderableOnly(texture(BG))
           }
 
-          Row({
-            size = grow()
-          }) {
-            afterLayout {
-              if (page != null) addRenderableOnly(pageRenderable(page, position, size))
-            }
-          }
+          initPage(page)
 
-          Row({
-            size = grow()
-          }) {
-            afterLayout {
-              if (page != null) addRenderableOnly(pageRenderable(page, position, size))
-            }
-          }
+          initPage(page)
         }
       }
     }
@@ -65,9 +52,15 @@ class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     renderTransparentBackground(guiGraphics)
   }
-}
 
-private fun <T : Page> pageRenderable(page: T, position: Vec2, size: Vec2): Renderable {
-  val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
-  return renderer.asRenderable(page, position, size)
+  public override fun <T : Renderable> addRenderableOnly(renderable: T): T {
+    return super.addRenderableOnly(renderable)
+  }
+
+  // wrapper around unchecked cast
+  private fun <T : Page?> initPage(page: T) {
+    if(page == null) return
+    val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
+    renderer.initPage(this, page)
+  }
 }

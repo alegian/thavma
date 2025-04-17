@@ -14,6 +14,7 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
 import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
+import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
 import net.minecraft.core.HolderLookup
@@ -23,7 +24,6 @@ import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
@@ -104,7 +104,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category", 1f))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        val pageTest = TextPage(Component.literal("Test Page").withStyle(Style.EMPTY.withBold(true)), Component.literal("my page is awesome and data driven"))
+        val pageTest = TextPage(Component.literal("Test Page").withStyle(ChatFormatting.BOLD), Component.literal("my page is awesome and data driven"))
 
         ctx.register(ResearchEntries.E0_0, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf(), listOf(pageTest)))
         ctx.register(ResearchEntries.E4_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -2), true, listOf(), listOf()))

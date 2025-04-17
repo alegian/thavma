@@ -4,22 +4,20 @@ import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
 private val BG = Texture("gui/book/background", 510, 282, 512, 512)
+val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
 class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
-  private var left = 0.0
-  private var top = 0.0
   private val page = entry.pages.getOrNull(0)
 
   override fun init() {
     super.init()
-    left = (width - BG.width) / 2.0
-    top = (height - BG.height) / 2.0
 
     Row({
       width = fixed(this@EntryScreen.width)
@@ -55,6 +53,10 @@ class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")
 
   public override fun <T : Renderable> addRenderableOnly(renderable: T): T {
     return super.addRenderableOnly(renderable)
+  }
+
+  fun getFont(): Font{
+    return font
   }
 
   // wrapper around unchecked cast

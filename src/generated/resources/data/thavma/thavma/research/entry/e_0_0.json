@@ -5,7 +5,10 @@
     {
       "type": "thavma:text",
       "text": "my page is awesome and data driven",
-      "title": "Test Page"
+      "title": {
+        "bold": true,
+        "text": "Test Page"
+      }
     }
   ],
   "position": [

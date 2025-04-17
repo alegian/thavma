@@ -6,6 +6,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.max
+import kotlin.math.round
 
 /**
  * A Layout System for creating Component-based GUIs.
@@ -192,11 +193,11 @@ class T7LayoutElement internal constructor(
     val childrenLength = children.map { c -> c.size.dot(direction.basis) }.sum()
     val remainingMain = (size - padding.all).dot(direction.basis) - childrenLength
 
-    var mainOffset = remainingMain * align.main.factor
+    var mainOffset = round(remainingMain * align.main.factor)
 
     for (child in children) {
       val remainingCross = (size - padding.all - child.size).dot(direction.crossBasis)
-      var crossOffset = remainingCross * align.cross.factor
+      var crossOffset = round(remainingCross * align.cross.factor)
 
       child.position = childPosition + (direction.basis * mainOffset + direction.crossBasis * crossOffset)
 

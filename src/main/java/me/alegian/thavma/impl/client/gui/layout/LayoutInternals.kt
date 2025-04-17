@@ -84,6 +84,8 @@ internal fun createElement(
     element.calculateDynamicSizesRecursively()
     // third pass: DFS from root
     element.calculatePositionsRecursively()
+    // fourth pass: DFS from root
+    element.afterLayoutRecursively()
     currParent = null
   }
   return element
@@ -202,9 +204,15 @@ class T7LayoutElement internal constructor(
 
       child.calculatePositionsRecursively()
     }
+  }
 
-    // side effects the user specifies
-    afterLayoutCallback(this)
+  /**
+   * fourth pass: side effects after layout (e.g. drawing)
+   */
+  internal fun afterLayoutRecursively() {
+    afterLayoutCallback()
+    for (child in children)
+      child.afterLayoutRecursively()
   }
 
   // TODO: clean up. padding at the start of an aligned container

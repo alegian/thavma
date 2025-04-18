@@ -67,6 +67,6 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   }
 
   companion object {
-    val TEXTURE = Texture("gui/research_table/circle", 18, 18, 18, 18)
+    val TEXTURE = Texture("gui/research_table/circle", 22, 22, 22, 22)
   }
 }

@@ -22,9 +22,9 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
 import kotlin.math.ceil
 
 private const val BORDER = 5
-private val BG = Texture("gui/research_table/bg", 243, 166, 256, 256)
-private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 121, 72, 121)
-private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 156, 156, 156, 156)
+private val BG = Texture("gui/research_table/bg", 231, 154, 256, 256)
+private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 104, 72, 104)
+private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 144, 144, 144, 144)
 
 open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<ResearchMenu>(menu, pPlayerInventory, pTitle, BG) {
   private var page = 0
@@ -77,7 +77,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   fun AspectsSection() {
-    Column({ height = grow() }) {
+    Column({
+      height = grow()
+      gap = BORDER
+    }) {
       TextureBox(ASPECTS_BG) {
         Row({
           size = grow()
@@ -93,7 +96,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
         }
       }
       Row({ size = grow() }) {
-        Box({ size = grow() }) {
+        Box({
+          width = fixed(ButtonWidget.LEFT_TEXTURE.width)
+          height = fixed(ButtonWidget.LEFT_TEXTURE.height)
+        }) {
           afterLayout {
             addRenderableWidget(ButtonWidget(position, false) {
               // add an extra maxPages to avoid negative modulos
@@ -102,7 +108,11 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             })
           }
         }
-        Box({ size = grow() }) {
+        Box({ size = grow() }) {}
+        Box({
+          width = fixed(ButtonWidget.RIGHT_TEXTURE.width)
+          height = fixed(ButtonWidget.RIGHT_TEXTURE.height)
+        }) {
           afterLayout {
             addRenderableWidget(ButtonWidget(position, true) {
               page = (page + 1) % maxPages
@@ -160,7 +170,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
 
   private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
     val textureSize = CircleWidget.TEXTURE.size
-    val reps = vec2(7, 5)
+    val reps = vec2(5, 5)
     val gaps = vec2(0, HEX_GRID_GAP)
     val actualSize = textureSize * (reps + vec2(0, 0.5)) + gaps * (reps - 1)
     val offsets = position + (containerSize - actualSize) / 2f

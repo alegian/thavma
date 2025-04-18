@@ -195,6 +195,11 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
 
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     super.render(guiGraphics, mouseX, mouseY, partialTick)
+
+    // layered rendering of puzzle elements, to avoid overlap issues
+    for(widget in circleWidgets.values) widget.renderConnectionsDeferred(guiGraphics)
+    for(widget in circleWidgets.values) widget.renderAspectDeferred(guiGraphics)
+
     renderSelectedAspect(guiGraphics, mouseX, mouseY)
   }
 

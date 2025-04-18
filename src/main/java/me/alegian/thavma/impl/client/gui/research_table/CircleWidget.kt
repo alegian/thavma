@@ -23,15 +23,42 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
       researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
     }
 
+  /**
+   * this renders only the background of the widget.
+   * rendering more things here causes overlaps,
+   * so we defer the rest of the rendering to the screen,
+   * to do in batches
+   */
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     guiGraphics.usePose {
       translateXY(x, y)
       guiGraphics.blit(TEXTURE)
-      aspect?.let {
+    }
+  }
+
+  /**
+   * render the connections (above the background)
+   * called by the screen in batch
+   */
+  fun renderConnectionsDeferred(guiGraphics: GuiGraphics) {
+    aspect?.let {
+      guiGraphics.usePose {
+        translateXY(x, y)
         translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
-
         renderConnections(it, guiGraphics)
+      }
+    }
+  }
 
+  /**
+   * render the aspects (above the connections)
+   * called by the screen in batch
+   */
+  fun renderAspectDeferred(guiGraphics: GuiGraphics) {
+    aspect?.let {
+      guiGraphics.usePose {
+        translateXY(x, y)
+        translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
         scaleXY(0.8f)
         AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
       }

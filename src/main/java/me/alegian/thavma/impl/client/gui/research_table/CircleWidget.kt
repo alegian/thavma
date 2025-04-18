@@ -1,9 +1,12 @@
 package me.alegian.thavma.impl.client.gui.research_table
 
+import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import net.minecraft.ChatFormatting
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
@@ -53,11 +56,24 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   }
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
-    if(aspect == null) aspect = researchScreen.selectedAspect
+    if (aspect == null)
+      aspect = researchScreen.selectedAspect?.also {
+        tooltip = T7Tooltip(
+          Component.translatable(it.translationId),
+          Component.translatable(removeTranslationId).withStyle(ChatFormatting.GRAY)
+        )
+
+        playDownSound(Minecraft.getInstance().soundManager)
+      }
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    if(aspect != null) aspect = null
+    if (aspect != null) {
+      aspect = null
+      tooltip = null
+
+      playDownSound(Minecraft.getInstance().soundManager)
+    }
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
@@ -67,6 +83,8 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   }
 
   companion object {
+    private val namespace = ".circleWidget"
     val TEXTURE = Texture("gui/research_table/circle", 22, 22, 22, 22)
+    val removeTranslationId = ResearchScreen.translationId + namespace + ".remove"
   }
 }

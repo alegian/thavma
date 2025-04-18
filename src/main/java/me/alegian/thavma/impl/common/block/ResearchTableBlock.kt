@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
-import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.common.block.entity.ResearchTableBE
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import net.minecraft.core.BlockPos
@@ -39,16 +39,12 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
     this.registerDefaultState(stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(FACING, Direction.NORTH))
   }
 
-  companion object{
-    val CONTAINER_TITLE = "container." + Thavma.MODID + ".research_table"
-  }
-
   override fun getMenuProvider(pState: BlockState, pLevel: Level, pPos: BlockPos): MenuProvider {
     return SimpleMenuProvider(
       { pContainerId, pPlayerInventory, player ->
         ResearchMenu(pContainerId, pPlayerInventory, ContainerLevelAccess.create(pLevel, pPos))
       },
-      Component.translatable(CONTAINER_TITLE)
+      Component.translatable(ResearchScreen.translationId)
     )
   }
 

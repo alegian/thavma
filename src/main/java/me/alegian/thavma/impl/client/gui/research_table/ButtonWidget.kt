@@ -12,7 +12,8 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.Vec2
 
-class ButtonWidget(position: Vec2, private val invert: Boolean, private val handleClick: () -> Unit) : AbstractWidget(position.x.toInt(), position.y.toInt(), LEFT_TEXTURE.width, LEFT_TEXTURE.height, Component.literal("button")) {
+class ButtonWidget(position: Vec2, private val invert: Boolean, private val handleClick: () -> Unit) :
+  AbstractWidget(position.x.toInt(), position.y.toInt(), LEFT_TEXTURE.width, LEFT_TEXTURE.height, Component.translatable(if (invert) rightTranslationId else leftTranslationId)) {
   init {
     tooltip = Tooltip.create(message)
   }
@@ -37,5 +38,8 @@ class ButtonWidget(position: Vec2, private val invert: Boolean, private val hand
   companion object {
     val LEFT_TEXTURE = Texture("gui/research_table/left_button", 35, 12, 35, 12)
     val RIGHT_TEXTURE = Texture("gui/research_table/right_button", 35, 12, 35, 12)
+    private val namespace = ".buttonWidget"
+    val leftTranslationId = ResearchScreen.translationId + namespace + ".left"
+    val rightTranslationId = ResearchScreen.translationId + namespace + ".right"
   }
 }

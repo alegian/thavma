@@ -57,8 +57,8 @@ private fun livingDamagePost(event: LivingDamageEvent.Post) {
       serverPlayer.blockPosition(),
       SoundEvents.ENDER_DRAGON_GROWL,
       SoundSource.PLAYERS,
-      1.0f,
-      1.0f
+      0.1f,
+      2.0f
     )
   }
 }

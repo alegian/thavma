@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.research_table
 
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.gui.T7ContainerScreen
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
@@ -214,6 +215,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     val result = super.mouseReleased(mouseX, mouseY, button)
     if (selectedAspect != null) selectedAspect = null
     return result
+  }
+
+  companion object{
+    val translationId = "container." + Thavma.MODID + ".research_table"
   }
 }
 

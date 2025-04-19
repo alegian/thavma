@@ -13,8 +13,8 @@ import net.minecraft.network.chat.Component
 private val BG = Texture("gui/book/background", 510, 282, 512, 512)
 val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
-class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
-  private val page = entry.pages.getOrNull(0)
+class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
+  private val currentPage = 0
 
   override fun init() {
     super.init()
@@ -30,18 +30,26 @@ class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")
       }) {
         Row({
           size = grow()
-          paddingTop = 24
-          paddingX = 24
+          paddingTop = 32
+          paddingX = 32
           paddingBottom = 42
-          gap = 32
+          gap = 48
         }) {
           afterLayout {
             addRenderableOnly(texture(BG))
           }
 
-          initPage(page)
+          Row({
+            size = grow()
+          }) {
+            initPage(entry.pages.getOrNull(currentPage))
+          }
 
-          initPage(page)
+          Row({
+            size = grow()
+          }) {
+            initPage(entry.pages.getOrNull(currentPage + 1))
+          }
         }
       }
     }
@@ -55,13 +63,13 @@ class EntryScreen(entry: ResearchEntry) : Screen(Component.literal("Book Entry")
     return super.addRenderableOnly(renderable)
   }
 
-  fun getFont(): Font{
+  fun getFont(): Font {
     return font
   }
 
   // wrapper around unchecked cast
   private fun <T : Page?> initPage(page: T) {
-    if(page == null) return
+    if (page == null) return
     val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
     renderer.initPage(this, page)
   }

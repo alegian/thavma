@@ -161,14 +161,14 @@ class T7LayoutElement internal constructor(
     val mainGrowables = mutableListOf<T7LayoutElement>()
 
     for (child in children) {
-      remainingSize -= (child.size * mainBasis)
       val canGrow = child.growBasis.dot(mainBasis) != 0f
       if (canGrow) mainGrowables.add(child)
+      else remainingSize -= (child.size * mainBasis)
     }
 
     // main axis growth
     for (child in mainGrowables) {
-      child.size += (remainingSize / mainGrowables.size.toFloat()) * mainBasis
+      child.size = (remainingSize / mainGrowables.size.toFloat()) * mainBasis + child.size * crossBasis
     }
 
     // cross axis growth

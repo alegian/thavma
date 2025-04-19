@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
 import net.minecraft.util.FastColor
+import net.minecraft.util.FormattedCharSequence
 
 fun GuiGraphics.usePose(block: PoseStack.() -> Unit) {
   pose().use(block)
@@ -18,6 +19,10 @@ fun GuiGraphics.drawCenteredString(font: Font, text: Component, centerX: Float, 
 }
 
 fun GuiGraphics.drawString(font: Font, text: Component, color: Int = 0) {
+  drawString(font, text, 0, 0, color, false)
+}
+
+fun GuiGraphics.drawString(font: Font, text: FormattedCharSequence, color: Int = 0) {
   drawString(font, text, 0, 0, color, false)
 }
 

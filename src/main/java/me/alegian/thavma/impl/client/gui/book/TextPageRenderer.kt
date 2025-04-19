@@ -12,8 +12,11 @@ import net.minecraft.network.chat.Component
 
 object TextPageRenderer : PageRenderer<TextPage> {
   override fun initPage(screen: EntryScreen, page: TextPage) {
+    val LINE_HEIGHT = screen.getFont().lineHeight + 2
+
     Column({
       size = grow()
+      gap = 4
     }) {
       Title(screen, page.title)
       Separator(screen)
@@ -24,7 +27,14 @@ object TextPageRenderer : PageRenderer<TextPage> {
           screen.addRenderableOnly(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
             guiGraphics.usePose {
               translateXY(position.x, position.y)
-              guiGraphics.drawString(Minecraft.getInstance().font, page.text)
+
+              for(paragraph in page.paragraphs) {
+                for (line in screen.getFont().split(paragraph, size.x.toInt())) {
+                  guiGraphics.drawString(Minecraft.getInstance().font, line)
+                  translateXY(0, LINE_HEIGHT)
+                }
+                translateXY(0, LINE_HEIGHT)
+              }
             }
           })
         }

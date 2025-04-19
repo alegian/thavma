@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.init.registries.deferred.PageTypes
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 
-class TextPage(val title: Component, val text: Component) : Page {
+class TextPage(val title: Component, val paragraphs: List<Component>) : Page {
   override val type: PageType<*>
     get() = PageTypes.TEXT.get()
 
@@ -13,11 +13,11 @@ class TextPage(val title: Component, val text: Component) : Page {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
         ComponentSerialization.CODEC.fieldOf("title").forGetter(TextPage::title),
-        ComponentSerialization.CODEC.fieldOf("text").forGetter(TextPage::text),
+        ComponentSerialization.CODEC.listOf().fieldOf("paragraphs").forGetter(TextPage::paragraphs),
       ).apply(builder, ::TextPage)
     }
 
     fun titleTranslationId(baseId: String) = "$baseId.title"
-    fun textTranslationId(baseId: String) = "$baseId.text"
+    fun paragraphTranslationId(baseId: String, index: Int) = "$baseId.paragraph$index"
   }
 }

@@ -4,9 +4,14 @@
   "pages": [
     {
       "type": "thavma:text",
-      "text": {
-        "translate": "research/entry.thavma.occulus.text"
-      },
+      "paragraphs": [
+        {
+          "translate": "research/entry.thavma.occulus.paragraph0"
+        },
+        {
+          "translate": "research/entry.thavma.occulus.paragraph1"
+        }
+      ],
       "title": {
         "bold": true,
         "translate": "research/entry.thavma.occulus.title"

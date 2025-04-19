@@ -6,9 +6,14 @@
   "pages": [
     {
       "type": "thavma:text",
-      "text": {
-        "translate": "research/entry.thavma.welcome.text"
-      },
+      "paragraphs": [
+        {
+          "translate": "research/entry.thavma.welcome.paragraph0"
+        },
+        {
+          "translate": "research/entry.thavma.welcome.paragraph1"
+        }
+      ],
       "title": {
         "bold": true,
         "translate": "research/entry.thavma.welcome.title"

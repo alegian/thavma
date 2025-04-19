@@ -146,5 +146,7 @@ private class ResearchEntryBuilder(
 
 private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>): TextPage {
   val baseId = ResearchEntry.translationId(entryKey)
-  return TextPage(Component.translatable(TextPage.titleTranslationId(baseId)).withStyle(ChatFormatting.BOLD), Component.translatable(TextPage.textTranslationId(baseId)))
+  return TextPage(Component.translatable(TextPage.titleTranslationId(baseId)).withStyle(ChatFormatting.BOLD), simpleParagraphs(2, baseId))
 }
+
+private fun simpleParagraphs(count: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, it)) }

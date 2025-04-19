@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import net.minecraft.client.gui.GuiGraphics
@@ -41,8 +41,8 @@ class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCa
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {
     if (screen.currentCategory.compareTo(category) != 0) return
 
-    val corner = T7Textures.Thaumonomicon.FRAME_CORNER
-    val edge = T7Textures.Thaumonomicon.FRAME_EDGE
+    val corner = FrameRenderable.CORNER_TEXTURE
+    val edge = FrameRenderable.EDGE_TEXTURE
     graphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)
 
     graphics.usePose {
@@ -53,7 +53,7 @@ class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCa
       translateXY(screenWidth / 2, screenHeight / 2)
       scaleXY(1 / zoomFactor())
       graphics.blit(
-        T7Textures.Thaumonomicon.TAB_BG.location,
+        TEXTURE.location,
         -3840,
         -2160,
         0,
@@ -67,5 +67,9 @@ class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCa
     }
 
     graphics.disableCrop()
+  }
+
+  companion object {
+    val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
   }
 }

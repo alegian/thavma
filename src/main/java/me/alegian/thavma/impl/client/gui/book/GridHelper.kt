@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import net.minecraft.client.gui.GuiGraphics
@@ -12,6 +12,10 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 const val CELL_SIZE = 48f
+val ARROW_HEAD = Texture("gui/book/arrow_head", 32, 32)
+val LINE = Texture("gui/book/line", 32, 32)
+val CORNER_1X1 = Texture("gui/book/corner_1x1", 32, 32)
+val CORNER_2X2 = Texture("gui/book/corner_2x2", 96, 96)
 
 /**
  * Renders a connection between two nodes.
@@ -59,7 +63,7 @@ private fun renderLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, ver
     guiGraphics,
     signX,
     signY,
-    T7Textures.Thaumonomicon.LINE.location,
+    LINE.location,
     vertical
   )
 
@@ -69,8 +73,8 @@ private fun renderLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, ver
  */
 private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect: Boolean) {
   val textureLoc =
-    if (abs(dx) == 1f) T7Textures.Thaumonomicon.CORNER_1X1.location
-    else T7Textures.Thaumonomicon.CORNER_2X2.location
+    if (abs(dx) == 1f) CORNER_1X1.location
+    else CORNER_2X2.location
 
   renderGridElement(
     guiGraphics,

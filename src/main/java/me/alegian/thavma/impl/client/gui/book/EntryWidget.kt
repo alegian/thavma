@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.pushScreen
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
@@ -23,6 +23,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   init {
     tooltip = Tooltip.create(message)
   }
+
   private val pos = entry.position
   private val preferX = entry.preferX
 
@@ -82,7 +83,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       guiGraphics,
       1f,
       1f,
-      T7Textures.Thaumonomicon.NODE.location,
+      TEXTURE.location,
       false
     )
 
@@ -94,7 +95,8 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   companion object {
-    // TODO: first argument should not be required
+    val TEXTURE = Texture("gui/book/node", 32, 32)
+
     fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry): EntryWidget {
       return EntryWidget(screen, tab, entry, entry.resolveChildren().map { of(screen, tab, it) })
     }

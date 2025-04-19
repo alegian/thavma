@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui
 
+import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.usePose
@@ -47,7 +48,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           height = fixed(font.lineHeight)
           width = grow()
         }) {
-          addRenderableOnly(text(this@T7ContainerScreen.title, 0x83FF9B))
+          addRenderableOnly(text(this@T7ContainerScreen.title, T7Colors.GREEN))
         }
 
         TextureBox(bgTexture) {

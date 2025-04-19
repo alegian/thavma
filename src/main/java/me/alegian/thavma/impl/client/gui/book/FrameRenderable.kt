@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.math.Axis
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
@@ -10,31 +10,56 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import org.joml.Vector3f
 
-// the wooden frame around the contents
-val frame = Renderable { guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float ->
+// the frame around the scrollable content
+object FrameRenderable : Renderable {
+  val CORNER_TEXTURE = Texture("gui/book/frame_corner", 32, 32)
+  val EDGE_TEXTURE = Texture("gui/book/frame_edge", 32, 24)
+
+  /**
+   * Renders the edge layer before the corners to avoid overlay bugs
+   */
+  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    val screenHeight = guiGraphics.guiHeight()
+    val screenWidth = guiGraphics.guiWidth()
+    // allows negative size drawing, which simplifies math
+    RenderSystem.disableCull()
+    guiGraphics.usePose {
+      translateXY(screenWidth / 2, screenHeight / 2)
+
+      renderIn4Directions(guiGraphics){xDirection, yDirection->
+        renderEdge(guiGraphics, xDirection * yDirection == -1f)
+      }
+
+      renderIn4Directions(guiGraphics){_, _->
+        renderCorner(guiGraphics)
+      }
+    }
+    RenderSystem.enableCull()
+  }
+}
+
+/**
+ * flips x axis, y axis, both, or neither
+ * before drawing something
+ */
+private fun renderIn4Directions(guiGraphics: GuiGraphics, drawCall: (xDirection:Float, yDirection:Float) -> Unit) {
   val screenHeight = guiGraphics.guiHeight()
   val screenWidth = guiGraphics.guiWidth()
-  // allows negative size drawing, which greatly simplifies math
-  RenderSystem.disableCull()
-  guiGraphics.usePose {
-    translateXY(screenWidth / 2, screenHeight / 2)
-    for (xDirection in listOf(-1f, 1f)) {
-      for (yDirection in listOf(-1f, 1f)) {
-        guiGraphics.usePose {
-          scale(xDirection, yDirection, 1f)
-          translateXY(-screenWidth / 2, -screenHeight / 2)
 
-          renderCorner(guiGraphics)
-          renderEdge(guiGraphics, xDirection * yDirection == -1f)
-        }
+  for (xDirection in listOf(-1f, 1f)) {
+    for (yDirection in listOf(-1f, 1f)) {
+      guiGraphics.usePose {
+        scale(xDirection, yDirection, 1f)
+        translateXY(-screenWidth / 2, -screenHeight / 2)
+
+        drawCall(xDirection, yDirection)
       }
     }
   }
-  RenderSystem.enableCull()
 }
 
 private fun renderCorner(guiGraphics: GuiGraphics) = guiGraphics.blit(
-  T7Textures.Thaumonomicon.FRAME_CORNER
+  FrameRenderable.CORNER_TEXTURE
 )
 
 /**
@@ -43,8 +68,8 @@ private fun renderCorner(guiGraphics: GuiGraphics) = guiGraphics.blit(
 private fun renderEdge(guiGraphics: GuiGraphics, reflect: Boolean) {
   val screenHeight = guiGraphics.guiHeight()
   val screenWidth = guiGraphics.guiWidth()
-  val texture = T7Textures.Thaumonomicon.FRAME_EDGE
-  val corner = T7Textures.Thaumonomicon.FRAME_CORNER
+  val texture = FrameRenderable.EDGE_TEXTURE
+  val corner = FrameRenderable.CORNER_TEXTURE
   val drawWidth =
     if (!reflect) screenWidth - corner.width * 2
     else screenHeight - corner.height * 2

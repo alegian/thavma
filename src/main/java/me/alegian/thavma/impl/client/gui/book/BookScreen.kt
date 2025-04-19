@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.clientRegistry
-import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
@@ -10,7 +9,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import kotlin.jvm.optionals.getOrNull
 
-private val cornerHeight = T7Textures.Thaumonomicon.FRAME_CORNER.height
+private val cornerHeight = FrameRenderable.CORNER_TEXTURE.height
 private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
 
 class BookScreen : Screen(Component.literal("Thaumonomicon")) {
@@ -36,7 +35,7 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
     }
     updateEntryWidgets()
 
-    addRenderableOnly(frame)
+    addRenderableOnly(FrameRenderable)
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
       ?.sortedBy { it.index }
       ?.forEach { addSelectorWidget(it) }

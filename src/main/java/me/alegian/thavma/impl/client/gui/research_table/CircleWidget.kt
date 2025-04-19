@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.research_table
 
+import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
@@ -77,7 +78,7 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
       guiGraphics.usePose {
         rotateZ(angleDegrees)
         translateXY(0, -0.5)
-        guiGraphics.hLine(0, TEXTURE.width + HEX_GRID_GAP, 0, 0xFF0000FF.toInt())
+        guiGraphics.hLine(0, TEXTURE.width + HEX_GRID_GAP, 0, T7Colors.GREEN or (0xff shl 24))
       }
     }
   }

@@ -6,11 +6,12 @@ import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
 import me.alegian.thavma.impl.client.gui.research_table.CircleWidget
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
+import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
@@ -30,8 +31,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
@@ -83,6 +82,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICH
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.ai.attributes.Attribute
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -203,9 +203,27 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(REVEALING, "Revealing")
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
+
+    simpleTextPage(
+      ResearchEntries.WELCOME,
+      "Welcome",
+      "I was merely toying with that wand -if it can even be called that- when the book flew into my hands. The cover reads \"Thavma\", but on the inside most pages appear blank, sealed by some magic. I believe I’ve stumbled upon something of great significance. If I am to unlock the book's secrets, I will first need to break that seal. It won't be easy... but I am certain it is worth my efforts."
+    )
+
+    simpleTextPage(
+      ResearchEntries.OCCULUS,
+      "The Oculus",
+      "The part of the book I can read describes an arcane tool that \"allows the user to see\", whatever that might mean. I have a feeling that crafting it could assist my work in unsealing the other pages. I should look at the world through its lens, in hopes of uncovering something useful."
+    )
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {
     add(Util.makeDescriptionId(Registries.ATTRIBUTE.location().path, attributeHolder.id), name)
+  }
+
+  private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>, title: String, text: String) {
+    val baseId = ResearchEntry.translationId(entryKey)
+    add(TextPage.titleTranslationId(baseId), title)
+    add(TextPage.textTranslationId(baseId), text)
   }
 }

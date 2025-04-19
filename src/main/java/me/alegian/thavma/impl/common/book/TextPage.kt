@@ -9,12 +9,15 @@ class TextPage(val title: Component, val text: Component) : Page {
   override val type: PageType<*>
     get() = PageTypes.TEXT.get()
 
-  companion object{
+  companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
         ComponentSerialization.CODEC.fieldOf("title").forGetter(TextPage::title),
         ComponentSerialization.CODEC.fieldOf("text").forGetter(TextPage::text),
       ).apply(builder, ::TextPage)
     }
+
+    fun titleTranslationId(baseId: String) = "$baseId.title"
+    fun textTranslationId(baseId: String) = "$baseId.text"
   }
 }

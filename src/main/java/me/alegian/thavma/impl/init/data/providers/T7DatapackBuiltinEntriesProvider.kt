@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
@@ -23,6 +24,7 @@ import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
@@ -104,23 +106,45 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category", 1f))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        val pageTest = TextPage(Component.literal("Test Page").withStyle(ChatFormatting.BOLD), Component.literal("my page is awesome and data driven"))
+        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false)
+          .addPage(::simpleTextPage)
+          .addChild(ResearchEntries.OCCULUS)
+          .build(ctx)
 
-        ctx.register(ResearchEntries.E0_0, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, listOf(), listOf(pageTest)))
-        ctx.register(ResearchEntries.E4_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -2), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E1_12, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(1, 12), false, listOf(), listOf()))
-        ctx.register(ResearchEntries.E12_2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(12, 2), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E4_7, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, 7), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E7_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(7, 4), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E2_m2, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -2), true, listOf(ResearchEntries.E0_0), listOf()))
-        ctx.register(ResearchEntries.E4_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(4, -4), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E2_m4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(2, -4), true, listOf(), listOf()))
-        ctx.register(ResearchEntries.E3_3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 3), false, listOf(ResearchEntries.E4_7, ResearchEntries.E7_4), listOf()))
-        ctx.register(ResearchEntries.E3_m3, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, -3), false, listOf(ResearchEntries.E4_m2), listOf()))
-        ctx.register(ResearchEntries.E3_1, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(3, 1), false, listOf(ResearchEntries.E1_12), listOf()))
-        ctx.register(ResearchEntries.Em1_4, ResearchEntry(ResearchCategories.TEST_CATEGORY, Vector2i(-1, 4), false, listOf(ResearchEntries.E12_2), listOf()))
+        ResearchEntryBuilder(ResearchEntries.OCCULUS, ResearchCategories.TEST_CATEGORY, Vector2i(2, 2), false)
+          .addPage(::simpleTextPage)
+          .build(ctx)
 
-        ctx.register(ResearchEntries.SECOND_TAB_ENTRY, ResearchEntry(ResearchCategories.SECOND, Vector2i(0, 1), false, listOf(), listOf()))
+        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.SECOND, Vector2i(0, 0), false)
+          .build(ctx)
       }
   }
+}
+
+private class ResearchEntryBuilder(
+  private val key: ResourceKey<ResearchEntry>,
+  private val category: ResourceKey<ResearchCategory>,
+  private val pos: Vector2i,
+  private val preferX: Boolean
+) {
+  private val children = mutableListOf<ResourceKey<ResearchEntry>>()
+  private val pages = mutableListOf<Page>()
+
+  fun addChild(entryKey: ResourceKey<ResearchEntry>): ResearchEntryBuilder {
+    children.add(entryKey)
+    return this
+  }
+
+  fun addPage(makePage: (ResourceKey<ResearchEntry>) -> Page): ResearchEntryBuilder {
+    pages.add(makePage(key))
+    return this
+  }
+
+  fun build(ctx: BootstrapContext<ResearchEntry>) =
+    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages))
+}
+
+private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>): TextPage {
+  val baseId = ResearchEntry.translationId(entryKey)
+  return TextPage(Component.translatable(TextPage.titleTranslationId(baseId)).withStyle(ChatFormatting.BOLD), Component.translatable(TextPage.textTranslationId(baseId)))
 }

@@ -1,13 +1,17 @@
 {
   "category": "thavma:test_category",
-  "children": [],
+  "children": [
+    "thavma:occulus"
+  ],
   "pages": [
     {
       "type": "thavma:text",
-      "text": "my page is awesome and data driven",
+      "text": {
+        "translate": "research/entry.thavma.welcome.text"
+      },
       "title": {
         "bold": true,
-        "text": "Test Page"
+        "translate": "research/entry.thavma.welcome.title"
       }
     }
   ],

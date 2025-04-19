@@ -1,0 +1,21 @@
+{
+  "category": "thavma:test_category",
+  "children": [],
+  "pages": [
+    {
+      "type": "thavma:text",
+      "text": {
+        "translate": "research/entry.thavma.occulus.text"
+      },
+      "title": {
+        "bold": true,
+        "translate": "research/entry.thavma.occulus.title"
+      }
+    }
+  ],
+  "position": [
+    2,
+    2
+  ],
+  "preferX": false
+}

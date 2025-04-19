@@ -135,5 +135,9 @@
   "item.thavma.terra_testa": "Terra Testa",
   "item.thavma.thaumonomicon": "Thaumonomicon",
   "item.thavma.zephyr": "Zephyr",
+  "research/entry.thavma.occulus.text": "The part of the book I can read describes an arcane tool that \"allows the user to see\", whatever that might mean. I have a feeling that crafting it could assist my work in unsealing the other pages. I should look at the world through its lens, in hopes of uncovering something useful.",
+  "research/entry.thavma.occulus.title": "The Oculus",
+  "research/entry.thavma.welcome.text": "I was merely toying with that wand -if it can even be called that- when the book flew into my hands. The cover reads \"Thavma\", but on the inside most pages appear blank, sealed by some magic. I believe I’ve stumbled upon something of great significance. If I am to unlock the book's secrets, I will first need to break that seal. It won't be easy... but I am certain it is worth my efforts.",
+  "research/entry.thavma.welcome.title": "Welcome",
   "thavma": "Thavma"
 }

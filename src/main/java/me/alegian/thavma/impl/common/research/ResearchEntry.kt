@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
+import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
 import org.joml.Vector2i
 
@@ -28,6 +29,8 @@ class ResearchEntry(
         Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages)
       ).apply(it, ::ResearchEntry)
     }
+
+    fun translationId(entryKey: ResourceKey<ResearchEntry>) = Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
   }
 
   fun resolveChildren(): List<ResearchEntry> {

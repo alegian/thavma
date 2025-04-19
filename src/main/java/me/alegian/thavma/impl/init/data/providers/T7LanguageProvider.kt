@@ -207,13 +207,24 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     simpleTextPage(
       ResearchEntries.WELCOME,
       "Welcome",
-      "I was merely toying with that wand -if it can even be called that- when the book flew into my hands. The cover reads \"Thavma\", but on the inside most pages appear blank, sealed by some magic. I believe I’ve stumbled upon something of great significance. If I am to unlock the book's secrets, I will first need to break that seal. It won't be easy... but I am certain it is worth my efforts."
+      """
+        I was merely toying with that wand -if it can even be called that- when the book
+        flew into my hands. The cover reads "Thavma", but on the inside most pages
+        appear blank, sealed by some magic. I believe I’ve stumbled upon something of
+        great significance. If I am to unlock the book's secrets, I will first need to
+        break that seal. It won't be easy... but I am certain it is worth my efforts.
+      """
     )
 
     simpleTextPage(
       ResearchEntries.OCCULUS,
       "The Oculus",
-      "The part of the book I can read describes an arcane tool that \"allows the user to see\", whatever that might mean. I have a feeling that crafting it could assist my work in unsealing the other pages. I should look at the world through its lens, in hopes of uncovering something useful."
+      """
+        The part of the book I can read describes an arcane tool that "allows the user
+        to see", whatever that might mean. I have a feeling that crafting it could assist
+        my work in unsealing the other pages. I should look at the world through its lens,
+        in hopes of uncovering something useful.
+      """
     )
   }
 
@@ -224,6 +235,6 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
   private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>, title: String, text: String) {
     val baseId = ResearchEntry.translationId(entryKey)
     add(TextPage.titleTranslationId(baseId), title)
-    add(TextPage.textTranslationId(baseId), text)
+    add(TextPage.textTranslationId(baseId), text.trimIndent().replace("\n", " "))
   }
 }

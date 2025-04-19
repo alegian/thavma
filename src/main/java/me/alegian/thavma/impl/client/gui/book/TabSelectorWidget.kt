@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
-import me.alegian.thavma.impl.client.texture.T7Textures
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
@@ -31,6 +31,6 @@ class TabSelectorWidget(x: Int, y: Int, category: ResearchCategory, private val 
   }
 
   companion object {
-    val TEXTURE = T7Textures.Thaumonomicon.FRAME_CORNER
+    val TEXTURE = Texture("gui/book/tab_selector", 32, 32, 32, 32)
   }
 }

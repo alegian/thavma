@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
 import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
@@ -29,6 +30,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.Cost
@@ -106,16 +109,16 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category", 1f))
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false)
+        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
           .addPage(::simpleTextPage)
           .addChild(ResearchEntries.OCCULUS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.OCCULUS, ResearchCategories.TEST_CATEGORY, Vector2i(2, 2), false)
+        ResearchEntryBuilder(ResearchEntries.OCCULUS, ResearchCategories.TEST_CATEGORY, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
           .addPage(::simpleTextPage)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.SECOND, Vector2i(0, 0), false)
+        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.SECOND, Vector2i(0, 0), false, Items.DIAMOND.defaultInstance)
           .build(ctx)
       }
   }
@@ -125,7 +128,8 @@ private class ResearchEntryBuilder(
   private val key: ResourceKey<ResearchEntry>,
   private val category: ResourceKey<ResearchCategory>,
   private val pos: Vector2i,
-  private val preferX: Boolean
+  private val preferX: Boolean,
+  private val icon: ItemStack
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
   private val pages = mutableListOf<Page>()
@@ -141,7 +145,7 @@ private class ResearchEntryBuilder(
   }
 
   fun build(ctx: BootstrapContext<ResearchEntry>) =
-    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages))
+    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages, icon))
 }
 
 private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>): TextPage {

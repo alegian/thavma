@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.Util
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.ItemStack
 import org.joml.Vector2i
 
 class ResearchEntry(
@@ -15,7 +16,8 @@ class ResearchEntry(
   val position: Vector2i,
   val preferX: Boolean,
   val children: List<ResourceKey<ResearchEntry>>,
-  val pages: List<Page>
+  val pages: List<Page>,
+  val icon: ItemStack
 ) {
   private var resolvedChildren: List<ResearchEntry>? = null
 
@@ -26,7 +28,8 @@ class ResearchEntry(
         T7ExtraCodecs.VECTOR2I.fieldOf("position").forGetter(ResearchEntry::position),
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
         ResourceKey.codec(T7DatapackRegistries.RESEARCH_ENTRY).listOf().fieldOf("children").forGetter(ResearchEntry::children),
-        Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages)
+        Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
+        ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon)
       ).apply(it, ::ResearchEntry)
     }
 

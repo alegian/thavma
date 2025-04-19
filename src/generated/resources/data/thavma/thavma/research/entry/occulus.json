@@ -1,6 +1,10 @@
 {
   "category": "thavma:test_category",
   "children": [],
+  "icon": {
+    "count": 1,
+    "id": "thavma:oculus"
+  },
   "pages": [
     {
       "type": "thavma:text",

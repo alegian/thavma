@@ -3,6 +3,10 @@
   "children": [
     "thavma:occulus"
   ],
+  "icon": {
+    "count": 1,
+    "id": "thavma:thaumonomicon"
+  },
   "pages": [
     {
       "type": "thavma:text",

@@ -1,6 +1,10 @@
 {
   "category": "thavma:second",
   "children": [],
+  "icon": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  },
   "pages": [],
   "position": [
     0,

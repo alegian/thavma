@@ -12,7 +12,6 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 
 /**
@@ -87,7 +86,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     guiGraphics.usePose {
       scaleXY(1 / CELL_SIZE) // back to pixel space
       scaleXY(2f) // items are 16x, nodes are 32x
-      guiGraphics.renderItem(Items.DIAMOND.defaultInstance, -8, -8)
+      guiGraphics.renderItem(entry.icon, -8, -8)
     }
   }
 

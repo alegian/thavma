@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.blit
@@ -13,6 +14,8 @@ import org.joml.Vector3f
 val frame = Renderable { guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float ->
   val screenHeight = guiGraphics.guiHeight()
   val screenWidth = guiGraphics.guiWidth()
+  // allows negative size drawing, which greatly simplifies math
+  RenderSystem.disableCull()
   guiGraphics.usePose {
     translateXY(screenWidth / 2, screenHeight / 2)
     for (xDirection in listOf(-1f, 1f)) {
@@ -27,6 +30,7 @@ val frame = Renderable { guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, tic
       }
     }
   }
+  RenderSystem.enableCull()
 }
 
 private fun renderCorner(guiGraphics: GuiGraphics) = guiGraphics.blit(

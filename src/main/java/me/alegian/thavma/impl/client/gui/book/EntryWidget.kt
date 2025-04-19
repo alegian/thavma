@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.T7Textures
 import me.alegian.thavma.impl.client.util.scaleXY
@@ -58,12 +59,16 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       translateXY(pos.x, pos.y)
 
       renderEntry(guiGraphics)
+
+      // allows negative size drawing, which greatly simplifies math
+      RenderSystem.disableCull()
       for (child in children) {
         val dv = child.pos - pos
         guiGraphics.usePose {
           renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.preferX, false)
         }
       }
+      RenderSystem.enableCull()
     }
   }
 

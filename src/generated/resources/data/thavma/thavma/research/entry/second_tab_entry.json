@@ -1,5 +1,5 @@
 {
-  "category": "thavma:second",
+  "category": "thavma:alchemy",
   "children": [],
   "icon": {
     "count": 1,
@@ -10,5 +10,9 @@
     0,
     0
   ],
-  "preferX": false
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.second_tab_entry"
+  }
 }

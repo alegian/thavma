@@ -7,6 +7,8 @@ import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.Util
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
 import org.joml.Vector2i
@@ -17,7 +19,8 @@ class ResearchEntry(
   val preferX: Boolean,
   val children: List<ResourceKey<ResearchEntry>>,
   val pages: List<Page>,
-  val icon: ItemStack
+  val icon: ItemStack,
+  val title: Component
 ) {
   private var resolvedChildren: List<ResearchEntry>? = null
 
@@ -29,7 +32,8 @@ class ResearchEntry(
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
         ResourceKey.codec(T7DatapackRegistries.RESEARCH_ENTRY).listOf().fieldOf("children").forGetter(ResearchEntry::children),
         Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
-        ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon)
+        ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
+        ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title)
       ).apply(it, ::ResearchEntry)
     }
 

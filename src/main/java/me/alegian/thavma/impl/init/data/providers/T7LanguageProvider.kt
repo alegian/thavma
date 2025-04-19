@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.gui.research_table.CircleWidget
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
@@ -204,7 +205,13 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
 
-    simpleTextPage(
+    addCategory(ResearchCategories.INTRODUCTION, "Introduction")
+    addEntry(ResearchEntries.WELCOME, "Welcome")
+    addEntry(ResearchEntries.OCULUS, "The Oculus")
+    addCategory(ResearchCategories.ALCHEMY, "Alchemy")
+    addEntry(ResearchEntries.SECOND_TAB_ENTRY, "Second Tab Entry")
+
+    addTextPage(
       ResearchEntries.WELCOME,
       "Welcome",
       """
@@ -219,8 +226,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       """
     )
 
-    simpleTextPage(
-      ResearchEntries.OCCULUS,
+    addTextPage(
+      ResearchEntries.OCULUS,
       "The Oculus",
       """
         The part of the book I can read describes an arcane tool that "allows the user
@@ -238,7 +245,15 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(Util.makeDescriptionId(Registries.ATTRIBUTE.location().path, attributeHolder.id), name)
   }
 
-  private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>, title: String, vararg paragraphs: String) {
+  private fun addEntry(key: ResourceKey<ResearchEntry>, name: String) {
+    add(ResearchEntry.translationId(key), name)
+  }
+
+  private fun addCategory(key: ResourceKey<ResearchCategory>, name: String) {
+    add(ResearchCategory.translationId(key), name)
+  }
+
+  private fun addTextPage(entryKey: ResourceKey<ResearchEntry>, title: String, vararg paragraphs: String) {
     val baseId = ResearchEntry.translationId(entryKey)
     add(TextPage.titleTranslationId(baseId), title)
     for (i in paragraphs.indices)

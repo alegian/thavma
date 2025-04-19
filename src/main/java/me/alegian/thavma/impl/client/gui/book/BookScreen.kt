@@ -15,7 +15,7 @@ private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
 
 class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   private var isScrolling = false
-  var currentCategory = ResearchCategories.TEST_CATEGORY
+  var currentCategory = ResearchCategories.INTRODUCTION
   private val tabs = mutableMapOf<ResourceKey<ResearchCategory>, TabRenderable>()
   private val currentTab get() = tabs[currentCategory]
   private var selectorOffset = 0

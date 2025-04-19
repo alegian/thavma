@@ -12,8 +12,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
-import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Rarity
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -21,7 +19,7 @@ import net.minecraft.world.item.Rarity
  * Straight lines will ignore this preference
  */
 class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<EntryWidget> = listOf()) :
-  AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), Component.literal("This is research").withStyle(Rarity.UNCOMMON.styleModifier)) {
+  AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), entry.title) {
   init {
     tooltip = Tooltip.create(message)
   }

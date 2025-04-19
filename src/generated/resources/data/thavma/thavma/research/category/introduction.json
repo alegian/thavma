@@ -1,0 +1,10 @@
+{
+  "icon": {
+    "count": 1,
+    "id": "thavma:thaumonomicon"
+  },
+  "index": 0.0,
+  "title": {
+    "translate": "research/category.thavma.introduction"
+  }
+}

@@ -32,6 +32,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantment.Cost
@@ -105,20 +106,20 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
       }
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
-        ctx.register(ResearchCategories.TEST_CATEGORY, ResearchCategory("Test Category", 0f))
-        ctx.register(ResearchCategories.SECOND, ResearchCategory("Second Category", 1f))
+        ctx.registerCategory(ResearchCategories.INTRODUCTION, T7Items.THAUMONOMICON.get().defaultInstance, 0f)
+        ctx.registerCategory(ResearchCategories.ALCHEMY, Items.DIAMOND.defaultInstance, 1f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.TEST_CATEGORY, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.INTRODUCTION, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
           .addPage(::simpleTextPage)
-          .addChild(ResearchEntries.OCCULUS)
+          .addChild(ResearchEntries.OCULUS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.OCCULUS, ResearchCategories.TEST_CATEGORY, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.OCULUS, ResearchCategories.INTRODUCTION, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
           .addPage(::simpleTextPage)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.SECOND, Vector2i(0, 0), false, Items.DIAMOND.defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.ALCHEMY, Vector2i(0, 0), false, Items.DIAMOND.defaultInstance)
           .build(ctx)
       }
   }
@@ -145,7 +146,11 @@ private class ResearchEntryBuilder(
   }
 
   fun build(ctx: BootstrapContext<ResearchEntry>) =
-    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages, icon))
+    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier)))
+}
+
+private fun BootstrapContext<ResearchCategory>.registerCategory(key: ResourceKey<ResearchCategory>, icon: ItemStack, sortIndex: Float) {
+  register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
 
 private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>): TextPage {

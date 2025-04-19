@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceKey
 
 object ResearchEntries {
   val WELCOME = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("welcome"))
-  val OCCULUS = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("occulus"))
+  val OCULUS = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("oculus"))
 
   val SECOND_TAB_ENTRY = ResourceKey.create(T7DatapackRegistries.RESEARCH_ENTRY, rl("second_tab_entry"))
 }

@@ -1,36 +1,34 @@
 {
   "category": "thavma:introduction",
-  "children": [
-    "thavma:oculus"
-  ],
+  "children": [],
   "icon": {
     "count": 1,
-    "id": "thavma:thaumonomicon"
+    "id": "thavma:oculus"
   },
   "pages": [
     {
       "type": "thavma:text",
       "paragraphs": [
         {
-          "translate": "research/entry.thavma.welcome.paragraph0"
+          "translate": "research/entry.thavma.oculus.paragraph0"
         },
         {
-          "translate": "research/entry.thavma.welcome.paragraph1"
+          "translate": "research/entry.thavma.oculus.paragraph1"
         }
       ],
       "title": {
         "bold": true,
-        "translate": "research/entry.thavma.welcome.title"
+        "translate": "research/entry.thavma.oculus.title"
       }
     }
   ],
   "position": [
-    0,
-    0
+    2,
+    2
   ],
   "preferX": false,
   "title": {
     "color": "yellow",
-    "translate": "research/entry.thavma.welcome"
+    "translate": "research/entry.thavma.oculus"
   }
 }

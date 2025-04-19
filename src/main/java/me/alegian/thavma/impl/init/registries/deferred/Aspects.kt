@@ -15,13 +15,13 @@ object Aspects {
   val IGNIS = register("ignis", 0xffff5a01.toInt(), listOf())
   val AQUA = register("aqua", 0xff3cd4fc.toInt(), listOf())
   val ORDO = register("ordo", 0xffd5d4ec.toInt(), listOf())
-  val PERDITIO = register("perditio", 0xff404040.toInt(), listOf())
+  val PERDITIO = register("perditio", 0xff202020.toInt(), listOf())
 
   // DO NOT use this to check if an aspect is primal. This array is used to auto-generate ores and other content. Instead, use Aspect::isPrimal
   val PRIMAL_ASPECTS = listOf(IGNIS, AER, TERRA, AQUA, ORDO, PERDITIO)
 
   // SECONDARY
-  val VACUOS = register("vacuos", 0xff888888.toInt(), listOf(AER, PERDITIO))
+  val VACUOS = register("vacuos", 0xffa0a0a0.toInt(), listOf(AER, PERDITIO))
   val LUX = register("lux", 0xffffffc0.toInt(), listOf(AER, IGNIS))
   val MOTUS = register("motus", 0xffcdccf4.toInt(), listOf(AER, ORDO))
   val GELUM = register("gelum", 0xffe1ffff.toInt(), listOf(IGNIS, PERDITIO))

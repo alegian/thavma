@@ -205,29 +205,38 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
 
-    addCategory(ResearchCategories.INTRODUCTION, "Introduction")
-    addEntry(ResearchEntries.WELCOME, "Welcome")
+    addCategory(ResearchCategories.THAVMA, "Thavma")
+    addEntry(ResearchEntries.THAVMA, "Thavma")
     addEntry(ResearchEntries.OCULUS, "The Oculus")
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
-    addEntry(ResearchEntries.SECOND_TAB_ENTRY, "Second Tab Entry")
+    addEntry(ResearchEntries.ALCHEMY, "Second Tab Entry")
 
     addTextPage(
-      ResearchEntries.WELCOME,
-      "Welcome",
+      ResearchEntries.THAVMA, 0,
+      "Thavma",
       """
-        I was merely toying with that wand -if it can even be called that- when the book
-        flew into my hands. The cover reads "Thavma", but on the inside most pages
-        appear blank, sealed by some magic.
+        I was merely toying with that wand -if it can even be called that- when this tome
+        flew into my hands! I can sense great power within it.
       """,
       """
-        I believe I’ve stumbled upon something of
-        great significance. If I am to unlock the book's secrets, I will first need to
-        break that seal. It won't be easy... but I am certain it is worth my efforts.
+        The cover reads "Thavma", but a lot of its pages appear blank, sealed by some magic.
+      """,
+      """
+        To read them, I will first need to break that seal. It won't be easy... but
+        I have a feeling it will be worth my efforts.
       """
     )
 
     addTextPage(
-      ResearchEntries.OCULUS,
+      ResearchEntries.THAVMA, 1,
+      null,
+      """
+        I will document all my findings inside the book, so that I can recall them later.
+      """
+    )
+
+    addTextPage(
+      ResearchEntries.OCULUS, 0,
       "The Oculus",
       """
         The part of the book I can read describes an arcane tool that "allows the user
@@ -235,8 +244,11 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         my work in unsealing the other pages.
       """,
       """
-        I should look at the world through its lens,
-        in hopes of uncovering something useful.
+        The blueprint describes a hexagonal device, much like a prism,
+        made with those colorful crystals I found lying in a cave.
+      """,
+      """
+        I should look at the world through its lens, maybe it will uncover something useful.
       """
     )
   }
@@ -253,10 +265,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchCategory.translationId(key), name)
   }
 
-  private fun addTextPage(entryKey: ResourceKey<ResearchEntry>, title: String, vararg paragraphs: String) {
+  private fun addTextPage(entryKey: ResourceKey<ResearchEntry>, pageIndex: Int, title: String?, vararg paragraphs: String) {
     val baseId = ResearchEntry.translationId(entryKey)
-    add(TextPage.titleTranslationId(baseId), title)
-    for (i in paragraphs.indices)
-      add(TextPage.paragraphTranslationId(baseId, i), paragraphs[i].trimIndent().replace("\n", " "))
+    if (title != null) add(TextPage.titleTranslationId(baseId, pageIndex), title)
+    for (parIndex in paragraphs.indices)
+      add(TextPage.paragraphTranslationId(baseId, pageIndex, parIndex), paragraphs[parIndex].trimIndent().replace("\n", " "))
   }
 }

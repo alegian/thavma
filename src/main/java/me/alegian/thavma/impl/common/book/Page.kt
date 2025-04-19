@@ -7,5 +7,7 @@ interface Page {
 
   companion object{
     val CODEC = T7Registries.PAGE_TYPE.byNameCodec().dispatch({ page -> page.type }, { type -> type.codec })
+
+    fun translationId(baseId: String, pageIndex: Int) = "$baseId.page$pageIndex"
   }
 }

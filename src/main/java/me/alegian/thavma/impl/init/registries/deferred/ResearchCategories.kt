@@ -5,6 +5,6 @@ import me.alegian.thavma.impl.rl
 import net.minecraft.resources.ResourceKey
 
 object ResearchCategories {
-  val INTRODUCTION = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("introduction"))
+  val THAVMA = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("thavma"))
   val ALCHEMY = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("alchemy"))
 }

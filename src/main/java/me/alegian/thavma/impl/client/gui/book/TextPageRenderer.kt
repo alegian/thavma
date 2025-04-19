@@ -18,8 +18,10 @@ object TextPageRenderer : PageRenderer<TextPage> {
       size = grow()
       gap = 4
     }) {
-      Title(screen, page.title)
-      Separator(screen)
+      if (page.title != null) {
+        Title(screen, page.title)
+        Separator(screen)
+      }
       Row({
         size = grow()
       }) {
@@ -28,7 +30,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
             guiGraphics.usePose {
               translateXY(position.x, position.y)
 
-              for(paragraph in page.paragraphs) {
+              for (paragraph in page.paragraphs) {
                 for (line in screen.getFont().split(paragraph, size.x.toInt())) {
                   guiGraphics.drawString(Minecraft.getInstance().font, line)
                   translateXY(0, LINE_HEIGHT)

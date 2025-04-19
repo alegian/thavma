@@ -22,7 +22,7 @@ class TabSelectorWidget(x: Int, y: Int, private val category: ResearchCategory, 
       guiGraphics.blit(TEXTURE)
 
       translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
-      scaleXY(2 * 0.8) // tabs are 32x, items are 16x, but we dont want full size
+      scaleXY(2 * 0.7) // tabs are 32x, items are 16x, but we don't want full size
       guiGraphics.renderItem(category.icon, -8, -8)
     }
   }

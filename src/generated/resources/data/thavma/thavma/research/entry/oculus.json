@@ -1,5 +1,5 @@
 {
-  "category": "thavma:introduction",
+  "category": "thavma:thavma",
   "children": [],
   "icon": {
     "count": 1,
@@ -10,15 +10,18 @@
       "type": "thavma:text",
       "paragraphs": [
         {
-          "translate": "research/entry.thavma.oculus.paragraph0"
+          "translate": "research/entry.thavma.oculus.page0.paragraph0"
         },
         {
-          "translate": "research/entry.thavma.oculus.paragraph1"
+          "translate": "research/entry.thavma.oculus.page0.paragraph1"
+        },
+        {
+          "translate": "research/entry.thavma.oculus.page0.paragraph2"
         }
       ],
       "title": {
         "bold": true,
-        "translate": "research/entry.thavma.oculus.title"
+        "translate": "research/entry.thavma.oculus.page0.title"
       }
     }
   ],

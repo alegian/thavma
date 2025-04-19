@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
 import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
@@ -31,7 +32,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.Enchantment
@@ -106,20 +106,21 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
       }
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
-        ctx.registerCategory(ResearchCategories.INTRODUCTION, T7Items.THAUMONOMICON.get().defaultInstance, 0f)
-        ctx.registerCategory(ResearchCategories.ALCHEMY, Items.DIAMOND.defaultInstance, 1f)
+        ctx.registerCategory(ResearchCategories.THAVMA, T7Items.THAUMONOMICON.get().defaultInstance, 0f)
+        ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.WELCOME, ResearchCategories.INTRODUCTION, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
-          .addPage(::simpleTextPage)
+        ResearchEntryBuilder(ResearchEntries.THAVMA, ResearchCategories.THAVMA, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
+          .addPage(simpleTextPage(3, true))
+          .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.OCULUS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.OCULUS, ResearchCategories.INTRODUCTION, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
-          .addPage(::simpleTextPage)
+        ResearchEntryBuilder(ResearchEntries.OCULUS, ResearchCategories.THAVMA, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
+          .addPage(simpleTextPage(3, true))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.SECOND_TAB_ENTRY, ResearchCategories.ALCHEMY, Vector2i(0, 0), false, Items.DIAMOND.defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.ALCHEMY, ResearchCategories.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
           .build(ctx)
       }
   }
@@ -140,8 +141,8 @@ private class ResearchEntryBuilder(
     return this
   }
 
-  fun addPage(makePage: (ResourceKey<ResearchEntry>) -> Page): ResearchEntryBuilder {
-    pages.add(makePage(key))
+  fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
+    pages.add(makePage(key, pages.size))
     return this
   }
 
@@ -153,9 +154,17 @@ private fun BootstrapContext<ResearchCategory>.registerCategory(key: ResourceKey
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
 
-private fun simpleTextPage(entryKey: ResourceKey<ResearchEntry>): TextPage {
-  val baseId = ResearchEntry.translationId(entryKey)
-  return TextPage(Component.translatable(TextPage.titleTranslationId(baseId)).withStyle(ChatFormatting.BOLD), simpleParagraphs(2, baseId))
+private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey<ResearchEntry>, Int) -> Page {
+  return { entryKey, pageIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    TextPage(
+      if(hasTitle) simpleTitle(pageIndex, baseId) else null,
+      simpleParagraphs(paragraphCount, pageIndex, baseId)
+    )
+  }
 }
 
-private fun simpleParagraphs(count: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, it)) }
+private fun simpleTitle(pageIndex: Int, baseId: String) =
+  Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
+
+private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }

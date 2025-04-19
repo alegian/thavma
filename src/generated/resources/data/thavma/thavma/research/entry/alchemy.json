@@ -3,7 +3,7 @@
   "children": [],
   "icon": {
     "count": 1,
-    "id": "minecraft:diamond"
+    "id": "thavma:crucible"
   },
   "pages": [],
   "position": [
@@ -13,6 +13,6 @@
   "preferX": false,
   "title": {
     "color": "yellow",
-    "translate": "research/entry.thavma.second_tab_entry"
+    "translate": "research/entry.thavma.alchemy"
   }
 }

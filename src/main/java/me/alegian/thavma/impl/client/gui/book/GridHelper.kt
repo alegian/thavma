@@ -33,9 +33,9 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
   val inversion = if (invert) -1f else 1f
   val preference = if (preferX) -1f else 1f
 
-  if (absDx <= 0f && absDy <= 0f) return
+  if (absDx + absDy <= 1f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
-  else if (!invert && (preferX && absDx > absDy || !preferX && absDy > absDx)) {
+  else if (!invert && (preferX && absDx > absDy && absDy > 0 || !preferX && absDy > absDx && absDx > 0)) {
     translateXY(dx, dy)
     renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true)
   } else if (absDx == absDy) {

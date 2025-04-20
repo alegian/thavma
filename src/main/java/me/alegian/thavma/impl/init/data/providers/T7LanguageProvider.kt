@@ -206,13 +206,13 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
 
     addCategory(ResearchCategories.THAVMA, "Thavma")
-    addEntry(ResearchEntries.THAVMA, "Thavma")
-    addEntry(ResearchEntries.OCULUS, "The Oculus")
+    addEntry(ResearchEntries.Thavma.THAVMA, "Thavma")
+    addEntry(ResearchEntries.Thavma.OCULUS, "The Oculus")
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
-    addEntry(ResearchEntries.ALCHEMY, "Second Tab Entry")
+    addEntry(ResearchEntries.Alchemy.ALCHEMY, "Second Tab Entry")
 
     addTextPage(
-      ResearchEntries.THAVMA, 0,
+      ResearchEntries.Thavma.THAVMA, 0,
       "Thavma",
       """
         I was merely toying with that wand -if it can even be called that- when this tome
@@ -228,7 +228,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
 
     addTextPage(
-      ResearchEntries.THAVMA, 1,
+      ResearchEntries.Thavma.THAVMA, 1,
       null,
       """
         I will document all my findings inside the book, so that I can recall them later.
@@ -236,7 +236,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
 
     addTextPage(
-      ResearchEntries.OCULUS, 0,
+      ResearchEntries.Thavma.OCULUS, 0,
       "The Oculus",
       """
         The part of the book I can read describes an arcane tool that "allows the user

@@ -1,0 +1,20 @@
+{
+  "category": "thavma:thavma",
+  "children": [
+    "thavma:thavma/research_table"
+  ],
+  "icon": {
+    "count": 1,
+    "id": "thavma:greatwood_log"
+  },
+  "pages": [],
+  "position": [
+    0,
+    -3
+  ],
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.thavma.trees"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "category": "thavma:thavma",
+  "children": [],
+  "icon": {
+    "count": 1,
+    "id": "thavma:crucible"
+  },
+  "pages": [],
+  "position": [
+    -2,
+    2
+  ],
+  "preferX": true,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.thavma.alchemy"
+  }
+}

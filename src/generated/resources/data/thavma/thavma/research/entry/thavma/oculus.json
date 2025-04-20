@@ -1,6 +1,8 @@
 {
   "category": "thavma:thavma",
-  "children": [],
+  "children": [
+    "thavma:thavma/research_table"
+  ],
   "icon": {
     "count": 1,
     "id": "thavma:oculus"
@@ -27,7 +29,7 @@
   ],
   "position": [
     2,
-    2
+    -2
   ],
   "preferX": false,
   "title": {

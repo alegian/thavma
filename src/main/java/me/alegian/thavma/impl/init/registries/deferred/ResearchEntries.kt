@@ -9,10 +9,21 @@ object ResearchEntries {
   // used in datagen
   val CATEGORIES = mutableMapOf<ResourceKey<ResearchEntry>, ResourceKey<ResearchCategory>>()
 
-  val THAVMA = register("thavma", ResearchCategories.THAVMA)
-  val OCULUS = register("oculus", ResearchCategories.THAVMA)
+  object Thavma {
+    val THAVMA = register("thavma", ResearchCategories.THAVMA)
+    val TREES = register("trees", ResearchCategories.THAVMA)
+    val ORES = register("ores", ResearchCategories.THAVMA)
+    val OCULUS = register("oculus", ResearchCategories.THAVMA)
+    val RESEARCH_TABLE = register("research_table", ResearchCategories.THAVMA)
+    val ALCHEMY = register("alchemy", ResearchCategories.THAVMA)
+    val WANDS = register("wands", ResearchCategories.THAVMA)
+    val INFUSION = register("infusion", ResearchCategories.THAVMA)
+    val TECHNOLOGY = register("technology", ResearchCategories.THAVMA)
+  }
 
-  val ALCHEMY = register("alchemy", ResearchCategories.ALCHEMY)
+  object Alchemy {
+    val ALCHEMY = register("alchemy", ResearchCategories.ALCHEMY)
+  }
 }
 
 // prepend category id to entry id to avoid duplicates

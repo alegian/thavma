@@ -1,0 +1,23 @@
+{
+  "category": "thavma:thavma",
+  "children": [
+    "thavma:thavma/wands",
+    "thavma:thavma/technology",
+    "thavma:thavma/alchemy",
+    "thavma:thavma/infusion"
+  ],
+  "icon": {
+    "count": 1,
+    "id": "thavma:research_table"
+  },
+  "pages": [],
+  "position": [
+    0,
+    0
+  ],
+  "preferX": true,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.thavma.research_table"
+  }
+}

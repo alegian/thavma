@@ -1,7 +1,8 @@
 {
   "category": "thavma:thavma",
   "children": [
-    "thavma:thavma/oculus"
+    "thavma:thavma/trees",
+    "thavma:thavma/ores"
   ],
   "icon": {
     "count": 1,
@@ -37,7 +38,7 @@
   ],
   "position": [
     0,
-    0
+    -6
   ],
   "preferX": false,
   "title": {

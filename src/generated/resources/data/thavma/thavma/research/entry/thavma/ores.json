@@ -1,0 +1,20 @@
+{
+  "category": "thavma:thavma",
+  "children": [
+    "thavma:thavma/oculus"
+  ],
+  "icon": {
+    "count": 1,
+    "id": "thavma:aqua_testa"
+  },
+  "pages": [],
+  "position": [
+    2,
+    -4
+  ],
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.thavma.ores"
+  }
+}

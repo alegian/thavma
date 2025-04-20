@@ -13,10 +13,7 @@ import me.alegian.thavma.impl.init.data.worldgen.tree.GreatwoodTree
 import me.alegian.thavma.impl.init.data.worldgen.tree.SilverwoodTree
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
-import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
+import me.alegian.thavma.impl.init.registries.deferred.*
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
@@ -110,17 +107,46 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.THAVMA, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.THAUMONOMICON.get().defaultInstance)
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
-          .addChild(ResearchEntries.OCULUS)
+          .addChild(ResearchEntries.Thavma.TREES)
+          .addChild(ResearchEntries.Thavma.ORES)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.OCULUS, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
+          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.TESTAS[Aspects.AQUA]!!.get().defaultInstance)
+          .addChild(ResearchEntries.Thavma.OCULUS)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.OCULUS, Vector2i(2, -2), false, T7Items.OCULUS.get().defaultInstance)
+          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+          .addChild(ResearchEntries.Thavma.WANDS)
+          .addChild(ResearchEntries.Thavma.TECHNOLOGY)
+          .addChild(ResearchEntries.Thavma.ALCHEMY)
+          .addChild(ResearchEntries.Thavma.INFUSION)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.ARCANUM.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
           .build(ctx)
       }
   }

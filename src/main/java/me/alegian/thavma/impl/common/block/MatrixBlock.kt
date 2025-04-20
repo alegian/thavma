@@ -40,7 +40,7 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
 
     override fun getRenderShape(state: BlockState) = RenderShape.ENTITYBLOCK_ANIMATED
 
-    override fun newBlockEntity(pos: BlockPos, blockState: BlockState) = MatrixBE(pos, blockState)
+    override fun newBlockEntity(pos: BlockPos, blockState: BlockState) = MatrixBE(pos, blockState, true)
 
     override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos) = true
 }

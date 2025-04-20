@@ -19,7 +19,8 @@ import software.bernie.geckolib.util.GeckoLibUtil
  */
 class MatrixBE(
     pos: BlockPos = BlockPos(0, 0, 0),
-    blockState: BlockState = T7Blocks.MATRIX.get().defaultBlockState()
+    blockState: BlockState = T7Blocks.MATRIX.get().defaultBlockState(),
+    val hasRing: Boolean = false
 ) : BlockEntity(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
     private val cache = GeckoLibUtil.createInstanceCache(this)
     private val ANIM_CONTROLLER = AnimationController(

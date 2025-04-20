@@ -88,8 +88,8 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     )
 
     guiGraphics.usePose {
-      scaleXY(1 / CELL_SIZE) // back to pixel space
-      scaleXY(2f) // items are 16x, nodes are 32x
+      scaleXY(1f / CELL_SIZE) // back to pixel space
+      scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we dont want full size
       guiGraphics.renderItem(entry.icon, -8, -8)
     }
   }

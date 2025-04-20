@@ -1,7 +1,7 @@
 {
   "category": "thavma:thavma",
   "children": [
-    "thavma:oculus"
+    "thavma:thavma/oculus"
   ],
   "icon": {
     "count": 1,
@@ -12,25 +12,25 @@
       "type": "thavma:text",
       "paragraphs": [
         {
-          "translate": "research/entry.thavma.thavma.page0.paragraph0"
+          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph0"
         },
         {
-          "translate": "research/entry.thavma.thavma.page0.paragraph1"
+          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph1"
         },
         {
-          "translate": "research/entry.thavma.thavma.page0.paragraph2"
+          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph2"
         }
       ],
       "title": {
         "bold": true,
-        "translate": "research/entry.thavma.thavma.page0.title"
+        "translate": "research/entry.thavma.thavma.thavma.page0.title"
       }
     },
     {
       "type": "thavma:text",
       "paragraphs": [
         {
-          "translate": "research/entry.thavma.thavma.page1.paragraph0"
+          "translate": "research/entry.thavma.thavma.thavma.page1.paragraph0"
         }
       ]
     }
@@ -42,6 +42,6 @@
   "preferX": false,
   "title": {
     "color": "yellow",
-    "translate": "research/entry.thavma.thavma"
+    "translate": "research/entry.thavma.thavma.thavma"
   }
 }

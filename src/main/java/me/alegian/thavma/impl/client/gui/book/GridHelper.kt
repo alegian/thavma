@@ -11,7 +11,7 @@ import org.joml.Vector3f
 import kotlin.math.abs
 import kotlin.math.sign
 
-const val CELL_SIZE = 48f
+val CELL_SIZE = EntryWidget.TEXTURE.width
 val ARROW_HEAD = Texture("gui/book/arrow_head", 32, 32)
 val LINE = Texture("gui/book/line", 32, 32)
 val CORNER_1X1 = Texture("gui/book/corner_1x1", 32, 32)

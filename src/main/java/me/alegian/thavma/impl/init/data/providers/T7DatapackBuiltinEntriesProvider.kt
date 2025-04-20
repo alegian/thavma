@@ -110,17 +110,17 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.THAVMA, ResearchCategories.THAVMA, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.THAVMA, Vector2i(0, 0), false, T7Items.THAUMONOMICON.get().defaultInstance)
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.OCULUS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.OCULUS, ResearchCategories.THAVMA, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.OCULUS, Vector2i(2, 2), false, T7Items.OCULUS.get().defaultInstance)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.ALCHEMY, ResearchCategories.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
           .build(ctx)
       }
   }
@@ -128,7 +128,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
 private class ResearchEntryBuilder(
   private val key: ResourceKey<ResearchEntry>,
-  private val category: ResourceKey<ResearchCategory>,
   private val pos: Vector2i,
   private val preferX: Boolean,
   private val icon: ItemStack
@@ -146,8 +145,9 @@ private class ResearchEntryBuilder(
     return this
   }
 
-  fun build(ctx: BootstrapContext<ResearchEntry>) =
-    ctx.register(key, ResearchEntry(category, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier)))
+  fun build(ctx: BootstrapContext<ResearchEntry>) = ResearchEntries.CATEGORIES[key]?.let { cat ->
+    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier)))
+  }
 }
 
 private fun BootstrapContext<ResearchCategory>.registerCategory(key: ResourceKey<ResearchCategory>, icon: ItemStack, sortIndex: Float) {
@@ -158,7 +158,7 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
   return { entryKey, pageIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     TextPage(
-      if(hasTitle) simpleTitle(pageIndex, baseId) else null,
+      if (hasTitle) simpleTitle(pageIndex, baseId) else null,
       simpleParagraphs(paragraphCount, pageIndex, baseId)
     )
   }

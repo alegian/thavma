@@ -10,18 +10,18 @@
       "type": "thavma:text",
       "paragraphs": [
         {
-          "translate": "research/entry.thavma.oculus.page0.paragraph0"
+          "translate": "research/entry.thavma.thavma.oculus.page0.paragraph0"
         },
         {
-          "translate": "research/entry.thavma.oculus.page0.paragraph1"
+          "translate": "research/entry.thavma.thavma.oculus.page0.paragraph1"
         },
         {
-          "translate": "research/entry.thavma.oculus.page0.paragraph2"
+          "translate": "research/entry.thavma.thavma.oculus.page0.paragraph2"
         }
       ],
       "title": {
         "bold": true,
-        "translate": "research/entry.thavma.oculus.page0.title"
+        "translate": "research/entry.thavma.thavma.oculus.page0.title"
       }
     }
   ],
@@ -32,6 +32,6 @@
   "preferX": false,
   "title": {
     "color": "yellow",
-    "translate": "research/entry.thavma.oculus"
+    "translate": "research/entry.thavma.thavma.oculus"
   }
 }

@@ -13,12 +13,14 @@ import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.entity.projectile.ProjectileUtil.getHitResultOnViewVector
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import software.bernie.geckolib.animatable.GeoItem
 import software.bernie.geckolib.animatable.client.GeoRenderProvider
@@ -41,19 +43,19 @@ class OculusItem(props: Properties) : Item(
   private val cache: AnimatableInstanceCache? = GeckoLibUtil.createInstanceCache(this)
 
   override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack?> {
-    val hitResult = getHitResultOnViewVector(
-      player, { entity -> !entity.isSpectator && entity.isPickable }, player.blockInteractionRange()
-    )
-    if (hitResult.type == HitResult.Type.MISS) return InteractionResultHolder.pass(player.getItemInHand(hand))
+    val hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE)
+    if (hitResult.type != HitResult.Type.BLOCK || hitResult !is BlockHitResult) return InteractionResultHolder.pass(player.getItemInHand(hand))
+    val block = level.getBlockState(hitResult.blockPos).block
+    if (SCANNED.contains(block)) return InteractionResultHolder.pass(player.getItemInHand(hand))
 
     player.startUsingItem(hand)
     return InteractionResultHolder.success(player.getItemInHand(hand))
   }
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
-    if(remainingUseDuration % 4 == 3 && level.isClientSide)
+    if (remainingUseDuration % 4 == 3 && level.isClientSide)
       level.playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.4f, 1f)
-    if(remainingUseDuration == 1)
+    if (remainingUseDuration == 1)
       releaseUsing(stack, level, livingEntity, getUseDuration(stack, livingEntity))
   }
 
@@ -66,8 +68,13 @@ class OculusItem(props: Properties) : Item(
   }
 
   override fun releaseUsing(itemStack: ItemStack, level: Level, entity: LivingEntity, timeCharged: Int) {
-    if (level.isClientSide && entity is Player && timeCharged == getUseDuration(itemStack, entity)) {
-      level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
+    if (entity is Player && timeCharged == getUseDuration(itemStack, entity)) {
+      val hitResult = getPlayerPOVHitResult(level, entity, ClipContext.Fluid.NONE)
+      if (hitResult is BlockHitResult && hitResult.type == HitResult.Type.BLOCK) {
+        val block = level.getBlockState(hitResult.blockPos).block
+        SCANNED.add(block)
+      }
+      if (level.isClientSide) level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
     }
   }
 
@@ -92,5 +99,10 @@ class OculusItem(props: Properties) : Item(
         return renderer
       }
     })
+  }
+
+  companion object {
+    // TODO: replace with data attachment
+    val SCANNED = mutableSetOf<Block>()
   }
 }

@@ -1,20 +1,22 @@
-package me.alegian.thavma.impl.client.gui
+package me.alegian.thavma.impl.client.gui.layer
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 
-object VisGuiOverlay {
-  private val STAR = Texture("gui/overlay/star", 130, 130)
-  private val BAR_FRAME = Texture("gui/overlay/bar_frame", 96, 96)
-  private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
+private val STAR = Texture("gui/overlay/star", 130, 130)
+private val BAR_FRAME = Texture("gui/overlay/bar_frame", 96, 96)
+private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
 
-  val LAYER = LayeredDraw.Layer { graphics, _ ->
-    val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
-    if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return@Layer
+object WandLayer : LayeredDraw.Layer {
+  override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
+    val aspectContainer = AspectContainer.Companion.getAspectContainerInHand(Minecraft.getInstance().player)
+    if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return
 
     val aspectMap = aspectContainer.aspects
     val maxAmount = aspectContainer.capacity
@@ -30,7 +32,7 @@ object VisGuiOverlay {
       translateXY(STAR.width / 2.0, STAR.height / 2.0)
       rotateZ(15f)
 
-      for (deferredAspect in PRIMAL_ASPECTS) {
+      for (deferredAspect in Aspects.PRIMAL_ASPECTS) {
         val a = deferredAspect.get()
         graphics.usePose {
           translateXY(0.0, STAR.height / 2.0)

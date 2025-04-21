@@ -6,9 +6,10 @@ import me.alegian.thavma.impl.client.T7VertexFormats
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.OculusItemExtensions
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
-import me.alegian.thavma.impl.client.gui.VisGuiOverlay
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
+import me.alegian.thavma.impl.client.gui.layer.OculusLayer
+import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
@@ -41,7 +42,8 @@ private fun clientSetup(event: FMLClientSetupEvent){
 }
 
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
-  event.registerAboveAll(rl("vis"), VisGuiOverlay.LAYER)
+  event.registerAboveAll(rl("vis"), WandLayer)
+  event.registerAboveAll(rl("oculus"), OculusLayer)
 }
 
 private fun registerEntityRenderers(event: RegisterRenderers) {

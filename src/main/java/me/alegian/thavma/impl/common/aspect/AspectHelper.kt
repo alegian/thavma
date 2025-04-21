@@ -23,5 +23,5 @@ fun getAspects(itemLike: ItemLike): AspectMap? {
 }
 
 fun getAspects(itemStack: ItemStack): AspectMap? {
-    return getAspects(itemStack.item)?.scale(itemStack.count) ?: return null
+    return getAspects(itemStack.item)?.scale(itemStack.count)
 }

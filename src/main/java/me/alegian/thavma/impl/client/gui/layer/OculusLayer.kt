@@ -1,5 +1,10 @@
 package me.alegian.thavma.impl.client.gui.layer
 
+import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.util.scaleXY
+import me.alegian.thavma.impl.client.util.translateXY
+import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.item.OculusItem
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
@@ -21,16 +26,25 @@ object OculusLayer : LayeredDraw.Layer {
 
     if (level != null && player != null && hitResult?.type == HitResult.Type.BLOCK && hitResult is BlockHitResult) {
       val block = level.getBlockState(hitResult.blockPos).block
-      if(player.getItemInHand(InteractionHand.MAIN_HAND).item !is OculusItem) return
+      if (player.getItemInHand(InteractionHand.MAIN_HAND).item !is OculusItem) return
       if (!OculusItem.SCANNED.contains(block)) return
 
       graphics.drawCenteredString(
         mc.font,
         Component.translatable(block.descriptionId),
         width / 2,
-        height / 3,
+        3 * height / 8,
         0xFFFFFF
       )
+
+      val aspects = getAspects(block) ?: return
+
+      graphics.usePose {
+        translateXY(width / 2, 5 * height / 8)
+        scaleXY(2)
+        scale(AspectRenderer.PIXEL_RESOLUTION.toFloat(), (-AspectRenderer.PIXEL_RESOLUTION).toFloat(), 1f)
+        AspectRenderer.renderAspectsWrapped(aspects, graphics)
+      }
     }
   }
 }

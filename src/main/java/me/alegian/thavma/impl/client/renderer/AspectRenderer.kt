@@ -19,9 +19,10 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 import kotlin.math.ceil
 import kotlin.math.min
 
+private const val ROW_SIZE: Int = 5 // max aspects per row
+private const val QUAD_SIZE: Float = .3f // aspect width is .3 blocks
+
 object AspectRenderer {
-  private const val ROW_SIZE: Int = 5 // max aspects per row
-  private const val QUAD_SIZE: Float = .3f // aspect width is .3 blocks
   const val PIXEL_RESOLUTION: Int = 16 // pixels per block
 
   /**
@@ -37,20 +38,24 @@ object AspectRenderer {
       translate(-camera.position + blockPos.center + Vec3(0.0, 0.75 + QUAD_SIZE / 2, 0.0))
       val angle = calculatePlayerAngle(blockPos.center)
       mulPose(Axis.YP.rotation(angle))
+
       scaleXY(QUAD_SIZE) // this puts us in "aspect space" where 1 means 1 aspect width
-
-      // these offsets account for wrapping to new lines, and centering the aspects
-      val offsets = calculateOffsets(aspects.size())
-
-      for ((i, aspectStack) in aspects.displayedAspects().withIndex())
-        guiGraphics.usePose {
-          translate(offsets[i])
-
-          // gui rendering is done in pixel space
-          scale(1f / PIXEL_RESOLUTION, -1f / PIXEL_RESOLUTION, 1f)
-          renderAspect(guiGraphics, aspectStack, -PIXEL_RESOLUTION / 2, -PIXEL_RESOLUTION / 2)
-        }
+      renderAspectsWrapped(aspects, guiGraphics)
     }
+  }
+
+  fun renderAspectsWrapped(aspects: AspectMap, guiGraphics: GuiGraphics) {
+    // these offsets account for wrapping to new lines, and centering the aspects
+    val offsets = calculateOffsets(aspects.size())
+
+    for ((i, aspectStack) in aspects.displayedAspects().withIndex())
+      guiGraphics.usePose {
+        translate(offsets[i])
+
+        // gui rendering is done in pixel space
+        scale(1f / PIXEL_RESOLUTION, -1f / PIXEL_RESOLUTION, 1f)
+        renderAspect(guiGraphics, aspectStack, -PIXEL_RESOLUTION / 2, -PIXEL_RESOLUTION / 2)
+      }
   }
 
   fun renderAspect(guiGraphics: GuiGraphics, aspectStack: AspectStack, pX: Int, pY: Int) {

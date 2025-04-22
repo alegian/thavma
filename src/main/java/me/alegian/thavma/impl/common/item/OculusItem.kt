@@ -1,11 +1,14 @@
 package me.alegian.thavma.impl.common.item
 
+import me.alegian.thavma.impl.common.entity.EntityHelper.hasScanned
+import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
@@ -19,7 +22,6 @@ import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import software.bernie.geckolib.animatable.GeoItem
@@ -44,9 +46,12 @@ class OculusItem(props: Properties) : Item(
 
   override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack?> {
     val hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE)
-    if (hitResult.type != HitResult.Type.BLOCK || hitResult !is BlockHitResult) return InteractionResultHolder.pass(player.getItemInHand(hand))
-    val block = level.getBlockState(hitResult.blockPos).block
-    if (SCANNED.contains(block)) return InteractionResultHolder.pass(player.getItemInHand(hand))
+    if (
+      hitResult.type != HitResult.Type.BLOCK ||
+      hitResult !is BlockHitResult ||
+      player.hasScanned(level.getBlockState(hitResult.blockPos))
+    )
+      return InteractionResultHolder.pass(player.getItemInHand(hand))
 
     player.startUsingItem(hand)
     return InteractionResultHolder.success(player.getItemInHand(hand))
@@ -69,12 +74,13 @@ class OculusItem(props: Properties) : Item(
 
   override fun releaseUsing(itemStack: ItemStack, level: Level, entity: LivingEntity, timeCharged: Int) {
     if (entity is Player && timeCharged == getUseDuration(itemStack, entity)) {
-      val hitResult = getPlayerPOVHitResult(level, entity, ClipContext.Fluid.NONE)
-      if (hitResult is BlockHitResult && hitResult.type == HitResult.Type.BLOCK) {
-        val block = level.getBlockState(hitResult.blockPos).block
-        SCANNED.add(block)
+      if (entity is ServerPlayer) {
+        val hitResult = getPlayerPOVHitResult(level, entity, ClipContext.Fluid.NONE)
+        if (hitResult is BlockHitResult && hitResult.type == HitResult.Type.BLOCK)
+          entity.setScanned(level.getBlockState(hitResult.blockPos))
       }
-      if (level.isClientSide) level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
+      if (level.isClientSide)
+        level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
     }
   }
 
@@ -99,10 +105,5 @@ class OculusItem(props: Properties) : Item(
         return renderer
       }
     })
-  }
-
-  companion object {
-    // TODO: replace with data attachment
-    val SCANNED = mutableSetOf<Block>()
   }
 }

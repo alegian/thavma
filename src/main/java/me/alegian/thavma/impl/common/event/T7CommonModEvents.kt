@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
+import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.data.providers.*
@@ -28,6 +29,7 @@ import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.ModifyRegistriesEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
@@ -143,6 +145,15 @@ private fun registerSpawnPlacements(event: RegisterSpawnPlacementsEvent) {
   )
 }
 
+private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent){
+  val registrar = event.registrar("1")
+  registrar.playToClient(
+    ScanPayload.TYPE,
+    ScanPayload.STREAM_CODEC,
+    ScanPayload::handle
+  )
+}
+
 fun registerCommonModEvents() {
   KFF_MOD_BUS.addListener(::registerRegistries)
   KFF_MOD_BUS.addListener(::registerDatapackRegistries)
@@ -154,4 +165,5 @@ fun registerCommonModEvents() {
   KFF_MOD_BUS.addListener(::entityAttributeModification)
   KFF_MOD_BUS.addListener(::entityAttributeCreation)
   KFF_MOD_BUS.addListener(::registerSpawnPlacements)
+  KFF_MOD_BUS.addListener(::registerPayloadHandlers)
 }

@@ -12,9 +12,11 @@ import me.alegian.thavma.impl.client.renderer.level.trajectory
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.BlockPos
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent
 import net.neoforged.neoforge.client.event.RenderHighlightEvent
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
@@ -121,6 +124,11 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   }
 }
 
+private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
+  val oldScans = event.oldPlayer.getData(T7Attachments.SCANNED).scanned.toList()
+  event.newPlayer.setScanned(oldScans)
+}
+
 fun registerClientGameEvents() {
   if (DIST != Dist.CLIENT) return
 
@@ -129,4 +137,5 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::gatherTooltipComponents)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
   KFF_GAME_BUS.addListener(::renderLevelAfterBEs)
+  KFF_GAME_BUS.addListener(::playerClone)
 }

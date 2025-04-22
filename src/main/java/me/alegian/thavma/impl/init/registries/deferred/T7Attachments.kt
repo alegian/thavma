@@ -8,5 +8,5 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 object T7Attachments {
   val REGISTRAR = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Thavma.MODID)
 
-  val SCANNED = REGISTRAR.register("scanned") { -> ScannedAttachment.Companion.TYPE }
+  val SCANNED = REGISTRAR.register("scanned") { -> ScannedAttachment.TYPE }
 }

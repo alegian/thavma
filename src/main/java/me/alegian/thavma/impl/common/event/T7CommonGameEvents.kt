@@ -2,8 +2,10 @@ package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.EntityHelper
+import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
+import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.registries.Registries
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import kotlin.math.max
@@ -105,10 +108,19 @@ private fun preLivingDamage(event: LivingDamageEvent.Pre) {
   event.container.newDamage = max(0.0, (event.newDamage - damageBlocked).toDouble()).toFloat()
 }
 
+fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent){
+  val player = event.entity
+  if (player !is ServerPlayer) return
+
+  val oldScans = player.getData(T7Attachments.SCANNED).scanned.toList()
+  player.setScanned(oldScans)
+}
+
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
   KFF_GAME_BUS.addListener(::breakBlock)
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
+  KFF_GAME_BUS.addListener(::playerLoggedIn)
 }

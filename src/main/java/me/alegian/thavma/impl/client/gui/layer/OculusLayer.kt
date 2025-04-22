@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.getAspects
+import me.alegian.thavma.impl.common.entity.EntityHelper.hasScanned
 import me.alegian.thavma.impl.common.item.OculusItem
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
@@ -27,7 +28,7 @@ object OculusLayer : LayeredDraw.Layer {
     if (level != null && player != null && hitResult?.type == HitResult.Type.BLOCK && hitResult is BlockHitResult) {
       val block = level.getBlockState(hitResult.blockPos).block
       if (player.getItemInHand(InteractionHand.MAIN_HAND).item !is OculusItem) return
-      if (!OculusItem.SCANNED.contains(block)) return
+      if (!player.hasScanned(block)) return
 
       graphics.drawCenteredString(
         mc.font,

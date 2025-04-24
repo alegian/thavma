@@ -5,6 +5,8 @@ import me.alegian.thavma.impl.client.gui.T7ContainerScreen
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
+import me.alegian.thavma.impl.client.util.translateXY
+import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
@@ -208,7 +210,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
    */
   private fun renderSelectedAspect(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
     selectedAspect?.let {
-      AspectRenderer.drawAspectIcon(guiGraphics, it, mouseX - 8, mouseY - 8)
+      guiGraphics.usePose {
+        translateXY(mouseX - 8, mouseY - 8)
+        AspectRenderer.drawAspectIcon(guiGraphics, it)
+      }
     }
   }
 

@@ -2,6 +2,8 @@ package me.alegian.thavma.impl.client.gui.research_table
 
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.util.translateXY
+import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.Aspect
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
@@ -21,7 +23,10 @@ class AspectWidget(position: Vec2, private val researchScreen: ResearchScreen, p
   }
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    AspectRenderer.drawAspectIcon(guiGraphics, aspect, x, y)
+    guiGraphics.usePose {
+      translateXY(x, y)
+      AspectRenderer.drawAspectIcon(guiGraphics, aspect)
+    }
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

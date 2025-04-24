@@ -12,7 +12,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 import net.minecraft.network.chat.Component
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 
@@ -25,27 +24,32 @@ object OculusLayer : LayeredDraw.Layer {
     val level = mc.level
     val player = mc.player
 
-    if (level != null && player != null && hitResult?.type == HitResult.Type.BLOCK && hitResult is BlockHitResult) {
-      val block = level.getBlockState(hitResult.blockPos).block
-      if (player.getItemInHand(InteractionHand.MAIN_HAND).item !is OculusItem) return
-      if (!player.hasScanned(block)) return
+    if (
+      level == null ||
+      player == null ||
+      hitResult?.type != HitResult.Type.BLOCK ||
+      hitResult !is BlockHitResult ||
+      !player.isHolding { stack -> stack.item is OculusItem }
+    ) return
 
-      graphics.drawCenteredString(
-        mc.font,
-        Component.translatable(block.descriptionId),
-        width / 2,
-        3 * height / 8,
-        0xFFFFFF
-      )
+    val block = level.getBlockState(hitResult.blockPos).block
+    if (!player.hasScanned(block)) return
 
-      val aspects = getAspects(block) ?: return
+    graphics.drawCenteredString(
+      mc.font,
+      Component.translatable(block.descriptionId),
+      width / 2,
+      3 * height / 8,
+      0xFFFFFF
+    )
 
-      graphics.usePose {
-        translateXY(width / 2, 5 * height / 8)
-        scaleXY(2)
-        scale(AspectRenderer.PIXEL_RESOLUTION.toFloat(), (-AspectRenderer.PIXEL_RESOLUTION).toFloat(), 1f)
-        AspectRenderer.renderAspectsWrapped(aspects, graphics)
-      }
+    val aspects = getAspects(block) ?: return
+
+    graphics.usePose {
+      translateXY(width / 2, 5 * height / 8)
+      scaleXY(2)
+      scale(16f, -16f, 1f)
+      AspectRenderer.renderAspectsWrapped(aspects, graphics)
     }
   }
 }

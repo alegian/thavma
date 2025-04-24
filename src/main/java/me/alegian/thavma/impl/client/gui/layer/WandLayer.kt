@@ -15,7 +15,7 @@ private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
 
 object WandLayer : LayeredDraw.Layer {
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
-    val aspectContainer = AspectContainer.Companion.getAspectContainerInHand(Minecraft.getInstance().player)
+    val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
     if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return
 
     val aspectMap = aspectContainer.aspects
@@ -37,7 +37,16 @@ object WandLayer : LayeredDraw.Layer {
         graphics.usePose {
           translateXY(0.0, STAR.height / 2.0)
           graphics.setColor(a.color)
-          graphics.blit(BAR_CONTENT.location, -BAR_CONTENT.width / 2, (BAR_FRAME.height - BAR_CONTENT.height) / 2, 0f, 0f, BAR_CONTENT.width, BAR_CONTENT.height * aspectMap[a] / maxAmount, BAR_CONTENT.width, BAR_CONTENT.height)
+          graphics.blit(
+            BAR_CONTENT.location,
+            -BAR_CONTENT.width / 2,
+            (BAR_FRAME.height - BAR_CONTENT.height) / 2,
+            0f, 0f,
+            BAR_CONTENT.width,
+            BAR_CONTENT.height * aspectMap[a] / maxAmount,
+            BAR_CONTENT.width,
+            BAR_CONTENT.height
+          )
           graphics.resetColor()
           graphics.blit(BAR_FRAME.location, -BAR_FRAME.width / 2, 0, 0f, 0f, BAR_FRAME.width, BAR_FRAME.height, BAR_FRAME.width, BAR_FRAME.height)
         }

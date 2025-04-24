@@ -61,7 +61,8 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
         translateXY(x, y)
         translateXY(TEXTURE.width / 2, TEXTURE.height / 2)
         scaleXY(0.8f)
-        AspectRenderer.drawAspectIcon(guiGraphics, it, -8, -8)
+        translateXY(-8, -8)
+        AspectRenderer.drawAspectIcon(guiGraphics, it)
       }
     }
   }

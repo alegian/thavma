@@ -96,7 +96,10 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
             translateXY((SLOTS[0].width - ASPECT_SOCKET.width) / 2.0, (SLOTS[0].height - ASPECT_SOCKET.height) / 2.0)
             guiGraphics.blit(ASPECT_SOCKET)
           }
-          if (requiredAmount != 0) AspectRenderer.renderAspect(guiGraphics, requiredStack, (SLOTS[0].width - AspectRenderer.PIXEL_RESOLUTION) / 2, (SLOTS[0].height - AspectRenderer.PIXEL_RESOLUTION) / 2)
+          if (requiredAmount != 0) {
+            translateXY((SLOTS[0].width - 16) / 2, (SLOTS[0].height - 16) / 2)
+            AspectRenderer.renderAspect(guiGraphics, requiredStack)
+          }
         }
       }
     }

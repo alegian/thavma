@@ -1,9 +1,7 @@
 package me.alegian.thavma.impl.common.aspect
 
-import com.google.common.collect.ImmutableList
 import com.mojang.serialization.Codec
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.REGISTRAR
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
@@ -24,6 +22,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
    * This is read-only access to copy the map into a new one.
    */
   protected val map: LinkedHashMap<Aspect, Int>
+  val size = map.size
 
   init {
     this.map = LinkedHashMap(map)
@@ -75,19 +74,6 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
   operator fun get(aspect: Aspect): Int {
     return map.getOrDefault(aspect, 0)
-  }
-
-  // TODO: optimize
-  fun displayedAspects(): ImmutableList<AspectStack> {
-    return REGISTRAR.entries.stream()
-      .map { da -> da.get() }
-      .filter { a -> this[a] > 0 }
-      .map { a -> AspectStack.of(a, this[a]) }
-      .collect(ImmutableList.toImmutableList())
-  }
-
-  fun size(): Int {
-    return map.size
   }
 
   val isEmpty: Boolean

@@ -127,7 +127,7 @@ class AuraNodeBE(pos: BlockPos?, blockState: BlockState?) :
 
   fun dropItems() {
     AspectContainer.from(this)?.let {
-      val container = SimpleContainer(it.aspects.size())
+      val container = SimpleContainer(it.aspects.size)
       for (stack in it.aspects) {
         // TODO: somehow clean this up
         val deferredAspect = T7Registries.ASPECT.wrapAsHolder(stack.aspect)

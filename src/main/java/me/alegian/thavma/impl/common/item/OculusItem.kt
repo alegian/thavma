@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -26,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import software.bernie.geckolib.animatable.GeoItem
 import software.bernie.geckolib.animatable.client.GeoRenderProvider
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar
 import software.bernie.geckolib.model.DefaultedItemGeoModel
 import software.bernie.geckolib.renderer.GeoItemRenderer
@@ -42,7 +40,7 @@ class OculusItem(props: Properties) : Item(
     ).build()
   ).stacksTo(1)
 ), GeoItem {
-  private val cache: AnimatableInstanceCache? = GeckoLibUtil.createInstanceCache(this)
+  private val cache = GeckoLibUtil.createInstanceCache(this)
 
   override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack?> {
     val hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE)
@@ -87,23 +85,18 @@ class OculusItem(props: Properties) : Item(
   override fun registerControllers(controllers: ControllerRegistrar?) {
   }
 
-  override fun getAnimatableInstanceCache(): AnimatableInstanceCache? {
-    return this.cache
-  }
+  override fun getAnimatableInstanceCache() = cache
 
   override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider?>) {
     consumer.accept(object : GeoRenderProvider {
       private val renderer by lazy {
-        GeoItemRenderer<OculusItem>(object : DefaultedItemGeoModel<OculusItem>(rl("oculus")) {
-          override fun getRenderType(animatable: OculusItem, texture: ResourceLocation): RenderType {
-            return RenderType.entityTranslucent(texture)
-          }
+        GeoItemRenderer(object : DefaultedItemGeoModel<OculusItem>(rl("oculus")) {
+          override fun getRenderType(animatable: OculusItem, texture: ResourceLocation) =
+            RenderType.entityTranslucent(texture)
         })
       }
 
-      override fun getGeoItemRenderer(): BlockEntityWithoutLevelRenderer {
-        return renderer
-      }
+      override fun getGeoItemRenderer() = renderer
     })
   }
 }

@@ -76,7 +76,7 @@ object T7Items {
     HammerItem(
       T7Tiers.ARCANUM_TIER,
       Item.Properties().attributes(
-        HammerItem.createAttributes(
+        DiggerItem.createAttributes(
           T7Tiers.ARCANUM_TIER,
           4.0f, -3.0f
         )

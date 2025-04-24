@@ -48,7 +48,6 @@ object OculusLayer : LayeredDraw.Layer {
     graphics.usePose {
       translateXY(width / 2, 5 * height / 8)
       scaleXY(2)
-      scale(16f, -16f, 1f)
       AspectRenderer.renderAspectsWrapped(aspects, graphics)
     }
   }

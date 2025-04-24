@@ -10,7 +10,6 @@ import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.rl
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -45,7 +44,7 @@ private val IDLE_ANIMATION: RawAnimation = RawAnimation.begin().thenPlay("idle")
 open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, val coreMaterial: WandCoreMaterial) :
   Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)), GeoItem {
 
-  private val cache by lazy { GeckoLibUtil.createInstanceCache(this) }
+  private val cache = GeckoLibUtil.createInstanceCache(this)
 
   init {
     GeckoLibUtil.SYNCED_ANIMATABLES[this.syncableId()] = this
@@ -174,9 +173,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
         )
       }
 
-      override fun getGeoItemRenderer(): BlockEntityWithoutLevelRenderer {
-        return this.renderer
-      }
+      override fun getGeoItemRenderer() = renderer
     })
   }
 

@@ -5,6 +5,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Helper Entity mainly used for spawning Entity Renderers.
@@ -18,7 +19,7 @@ public abstract class RendererEntity extends Entity {
   }
 
   @Override
-  protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+  protected void defineSynchedData(SynchedEntityData.@NotNull Builder pBuilder) {
   }
 
   @Override

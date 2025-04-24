@@ -77,7 +77,7 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
 }
 
 private fun registerReloadListenerEvent(event: RegisterClientReloadListenersEvent) {
-  event.registerReloadListener(AspectAtlas.INSTANCE)
+  event.registerReloadListener(AspectAtlas)
 }
 
 private fun registerGeometryLoaders(event: RegisterGeometryLoaders) {

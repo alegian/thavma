@@ -40,13 +40,12 @@ object AspectRenderer {
       mulPose(Axis.YP.rotation(angle))
 
       scaleXY(QUAD_SIZE) // this puts us in "aspect space"
+      scaleXY(1 / 16f) // this puts us in "pixel space"
+      scale(1f, -1f, 1f) // world Y to GUI Y
       renderAspectsWrapped(aspects, guiGraphics)
     }
   }
 
-  /**
-   * assumes aspect space (where 1 means 1 aspect width)
-   */
   fun renderAspectsWrapped(aspects: AspectMap, guiGraphics: GuiGraphics) {
     // these offsets account for wrapping to new lines, and centering the aspects
     val offsets = calculateOffsets(aspects.size)
@@ -54,8 +53,7 @@ object AspectRenderer {
     for ((i, aspectStack) in aspects.withIndex())
       guiGraphics.usePose {
         translateXY(offsets[i])
-        translateXY(-0.5, 0)
-        scale(1 / 16f, -1 / 16f, 1f)
+        translateXY(-8, 0)
         renderAspect(guiGraphics, aspectStack)
       }
   }
@@ -66,7 +64,7 @@ object AspectRenderer {
   }
 
   fun drawAspectIcon(guiGraphics: GuiGraphics, aspect: Aspect) {
-    val sprite = AspectAtlas.sprite(rl(aspect.id))
+    val sprite = AspectAtlas.getSprite(rl(aspect.id))
 
     RenderSystem.disableDepthTest()
     guiGraphics.blit(
@@ -89,7 +87,7 @@ object AspectRenderer {
       val cols = min((numAspects - (i * ROW_SIZE)), ROW_SIZE)
       for (j in 0..<cols) {
         val xOffset = (cols - 1) / -2f + j
-        offsets[i * ROW_SIZE + j] = vec2(xOffset, i + 0.5)
+        offsets[i * ROW_SIZE + j] = vec2(16 * xOffset, -16 * i - 8)
       }
     }
 

@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.item.OculusItem
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 
 object OculusLayer : LayeredDraw.Layer {
@@ -27,24 +29,38 @@ object OculusLayer : LayeredDraw.Layer {
     if (
       level == null ||
       player == null ||
-      hitResult?.type != HitResult.Type.BLOCK ||
-      hitResult !is BlockHitResult ||
+      hitResult?.type == HitResult.Type.MISS ||
       !player.isHolding { stack -> stack.item is OculusItem }
     ) return
 
-    val block = level.getBlockState(hitResult.blockPos).block
-    if (!player.hasScanned(block)) return
+    var displayName: Component? = null
+    var aspects: AspectMap? = null
 
+    when(hitResult){
+      is BlockHitResult -> {
+        val blockState = level.getBlockState(hitResult.blockPos)
+        if (!player.hasScanned(blockState)) return
+        displayName = Component.translatable(blockState.block.descriptionId)
+        aspects = getAspects(blockState.block)
+      }
+      is EntityHitResult -> {
+        val entity = hitResult.entity
+        if (!player.hasScanned(entity)) return
+        displayName = entity.name
+        // TODO: get entity aspects
+      }
+    }
+
+    if(displayName == null) return
     graphics.drawCenteredString(
       mc.font,
-      Component.translatable(block.descriptionId),
+      displayName,
       width / 2,
       3 * height / 8,
       0xFFFFFF
     )
 
-    val aspects = getAspects(block) ?: return
-
+    if(aspects == null) return
     graphics.usePose {
       translateXY(width / 2, 5 * height / 8)
       scaleXY(2)

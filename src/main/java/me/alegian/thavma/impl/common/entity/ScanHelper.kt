@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.entity
 
+import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.Util
@@ -10,11 +11,16 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.projectile.ProjectileUtil
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
+import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.network.PacketDistributor
 
 private fun Player.hasScanned(key: String) = getData(T7Attachments.SCANNED).scanned.contains(key)
@@ -25,15 +31,11 @@ fun Player.hasScanned(entity: Entity): Boolean {
   return hasScanned(entityScanKey(entity.type))
 }
 
-fun Player.hasScanned(blockState: BlockState): Boolean {
-  return hasScanned(blockState.block)
-}
-
 // blocks fall back to items if possible
-fun Player.hasScanned(block: Block): Boolean {
-  val item = block.asItem()
+fun Player.hasScanned(blockState: BlockState): Boolean {
+  val item = blockState.block.asItem()
   if (item != Items.AIR) return hasScanned(itemScanKey(item))
-  return hasScanned(blockScanKey(block))
+  return hasScanned(blockScanKey(blockState.block))
 }
 
 fun Player.hasScanned(itemStack: ItemStack): Boolean {
@@ -91,3 +93,18 @@ private fun itemScanKey(item: Item): String =
     Registries.ITEM.location().path,
     BuiltInRegistries.ITEM.getKey(item)
   )
+
+// for client, use Minecraft.hitResult
+fun Player.getScanHitResult(): HitResult {
+  val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))
+  val predicate = { entity: Entity -> !entity.isSpectator && entity.isPickable }
+  val trueHitResult = ProjectileUtil.getHitResult(eyePosition, this, predicate, rayVec, level(), 0.0f, ClipContext.Block.OUTLINE)
+
+  val valid = when (trueHitResult) {
+    is BlockHitResult -> trueHitResult.location.closerThan(eyePosition, blockInteractionRange())
+    is EntityHitResult -> trueHitResult.location.closerThan(eyePosition, entityInteractionRange())
+    else -> false
+  }
+
+  return if (valid) trueHitResult else BlockHitResult.miss(eyePosition, direction, blockPosition())
+}

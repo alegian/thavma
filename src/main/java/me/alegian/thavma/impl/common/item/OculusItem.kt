@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.item
 
+import me.alegian.thavma.impl.common.entity.getScanHitResult
 import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.OCULUS
@@ -19,9 +20,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.item.component.ItemAttributeModifiers
-import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import software.bernie.geckolib.animatable.GeoItem
 import software.bernie.geckolib.animatable.client.GeoRenderProvider
@@ -43,20 +44,23 @@ class OculusItem(props: Properties) : Item(
   private val cache = GeckoLibUtil.createInstanceCache(this)
 
   override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack?> {
-    val hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE)
-    if (
-      hitResult.type != HitResult.Type.BLOCK ||
-      hitResult !is BlockHitResult ||
-      player.hasScanned(level.getBlockState(hitResult.blockPos))
-    )
+    val hitResult = player.getScanHitResult()
+    if (hitResult.type == HitResult.Type.MISS)
       return InteractionResultHolder.pass(player.getItemInHand(hand))
+
+    val hasScanned = when (hitResult) {
+      is BlockHitResult -> player.hasScanned(level.getBlockState(hitResult.blockPos))
+      is EntityHitResult -> player.hasScanned(hitResult.entity)
+      else -> false
+    }
+    if(hasScanned) return InteractionResultHolder.pass(player.getItemInHand(hand))
 
     player.startUsingItem(hand)
     return InteractionResultHolder.success(player.getItemInHand(hand))
   }
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
-    if (remainingUseDuration % 4 == 3 && level.isClientSide)
+    if (remainingUseDuration % 3 == 2 && level.isClientSide)
       level.playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.4f, 1f)
     if (remainingUseDuration == 1)
       releaseUsing(stack, level, livingEntity, getUseDuration(stack, livingEntity))
@@ -67,15 +71,18 @@ class OculusItem(props: Properties) : Item(
   }
 
   override fun getUseDuration(pStack: ItemStack, pEntity: LivingEntity): Int {
-    return 40
+    return 32
   }
 
   override fun releaseUsing(itemStack: ItemStack, level: Level, entity: LivingEntity, timeCharged: Int) {
     if (entity is Player && timeCharged == getUseDuration(itemStack, entity)) {
       if (entity is ServerPlayer) {
-        val hitResult = getPlayerPOVHitResult(level, entity, ClipContext.Fluid.NONE)
-        if (hitResult is BlockHitResult && hitResult.type == HitResult.Type.BLOCK)
-          entity.setScanned(level.getBlockState(hitResult.blockPos))
+        val hitResult = entity.getScanHitResult()
+        if (hitResult.type != HitResult.Type.MISS)
+          when (hitResult) {
+            is BlockHitResult -> entity.setScanned(level.getBlockState(hitResult.blockPos))
+            is EntityHitResult -> entity.setScanned(hitResult.entity)
+          }
       }
       if (level.isClientSide)
         level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)

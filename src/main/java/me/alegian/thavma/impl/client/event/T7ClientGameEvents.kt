@@ -12,7 +12,7 @@ import me.alegian.thavma.impl.client.renderer.level.trajectory
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
+import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects

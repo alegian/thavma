@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.common.entity.EntityHelper.hasScanned
-import me.alegian.thavma.impl.common.entity.EntityHelper.setScanned
+import me.alegian.thavma.impl.common.entity.hasScanned
+import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl

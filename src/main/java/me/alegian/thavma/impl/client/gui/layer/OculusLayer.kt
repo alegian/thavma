@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.getAspects
-import me.alegian.thavma.impl.common.entity.EntityHelper.hasScanned
+import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.item.OculusItem
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft

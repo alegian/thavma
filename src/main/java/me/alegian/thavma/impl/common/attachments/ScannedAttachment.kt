@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.common.attachments
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.common.codec.mutableSetOf
-import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.attachment.AttachmentType
 
 /**
@@ -10,12 +10,12 @@ import net.neoforged.neoforge.attachment.AttachmentType
  * with the oculus
  */
 data class ScannedAttachment(
-  val scanned: MutableSet<ResourceLocation> = mutableSetOf()
+  val scanned: MutableSet<String> = mutableSetOf()
 ) {
   companion object {
     private val CODEC = RecordCodecBuilder.create {
       it.group(
-        ResourceLocation.CODEC.mutableSetOf().fieldOf("scanned").forGetter(ScannedAttachment::scanned)
+        Codec.STRING.mutableSetOf().fieldOf("scanned").forGetter(ScannedAttachment::scanned)
       ).apply(it, ::ScannedAttachment)
     }
 

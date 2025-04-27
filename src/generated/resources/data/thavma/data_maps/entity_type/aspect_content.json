@@ -1,0 +1,49 @@
+{
+  "values": {
+    "minecraft:cow": {
+      "thavma:bestia": 15,
+      "thavma:terra": 15
+    },
+    "minecraft:creeper": {
+      "thavma:herba": 15,
+      "thavma:ignis": 15
+    },
+    "minecraft:enderman": {
+      "thavma:alienis": 15,
+      "thavma:desiderium": 5,
+      "thavma:motus": 15
+    },
+    "minecraft:pig": {
+      "thavma:bestia": 10,
+      "thavma:desiderium": 5,
+      "thavma:terra": 10
+    },
+    "minecraft:sheep": {
+      "thavma:bestia": 10,
+      "thavma:terra": 10
+    },
+    "minecraft:skeleton": {
+      "thavma:exanimis": 20,
+      "thavma:humanus": 5,
+      "thavma:terra": 5
+    },
+    "minecraft:slime": {
+      "thavma:alkimia": 5,
+      "thavma:aqua": 10,
+      "thavma:victus": 10
+    },
+    "minecraft:spider": {
+      "thavma:bestia": 10,
+      "thavma:perditio": 10,
+      "thavma:vinculum": 10
+    },
+    "minecraft:villager": {
+      "thavma:humanus": 15
+    },
+    "minecraft:zombie": {
+      "thavma:exanimis": 20,
+      "thavma:humanus": 10,
+      "thavma:terra": 5
+    }
+  }
+}

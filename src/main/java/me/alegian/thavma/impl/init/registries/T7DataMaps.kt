@@ -24,5 +24,14 @@ object T7DataMaps {
             )
             .synced(AspectMap.CODEC, true)
             .build()
+
+        val ENTITY = DataMapType
+            .builder(
+                rl("aspect_content"),
+                Registries.ENTITY_TYPE,
+                AspectMap.CODEC
+            )
+            .synced(AspectMap.CODEC, true)
+            .build()
     }
 }

@@ -47,7 +47,7 @@ object OculusLayer : LayeredDraw.Layer {
         val entity = hitResult.entity
         if (!player.hasScanned(entity)) return
         displayName = entity.name
-        // TODO: get entity aspects
+        aspects = getAspects(entity)
       }
     }
 

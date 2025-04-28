@@ -10,16 +10,13 @@ class TextPage(val title: Component?, val paragraphs: List<Component>) : Page {
   override val type: PageType<*>
     get() = PageTypes.TEXT.get()
 
-  // TODO: make custom codec helper
-  // only for codec
-  private fun optionalTitle() = Optional.ofNullable(title)
   // only for codec
   private constructor(title: Optional<Component>, paragraphs: List<Component>) : this(title.orElse(null), paragraphs)
 
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
-        ComponentSerialization.CODEC.optionalFieldOf("title").forGetter(TextPage::optionalTitle),
+        ComponentSerialization.CODEC.optionalFieldOf("title").forGetter { p -> Optional.ofNullable(p.title) },
         ComponentSerialization.CODEC.listOf().fieldOf("paragraphs").forGetter(TextPage::paragraphs),
       ).apply(builder, ::TextPage)
     }

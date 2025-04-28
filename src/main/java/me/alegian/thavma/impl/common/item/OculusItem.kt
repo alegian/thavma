@@ -61,7 +61,7 @@ class OculusItem(props: Properties) : Item(
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
     if (remainingUseDuration % 3 == 2 && level.isClientSide)
-      level.playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.4f, 1f)
+      level.playSound(livingEntity, livingEntity.blockPosition(), SoundEvents.COPPER_BULB_TURN_OFF, SoundSource.PLAYERS, 0.4f, 1f)
     if (remainingUseDuration == 1)
       releaseUsing(stack, level, livingEntity, getUseDuration(stack, livingEntity))
   }

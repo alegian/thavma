@@ -11,6 +11,8 @@ import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
+import me.alegian.thavma.impl.common.util.Dimensions
+import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.vec2
 import me.alegian.thavma.impl.init.registries.T7Registries
@@ -36,11 +38,11 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
   val reseachState = mutableMapOf<Pair<Int, Int>, Aspect?>()
-  val circleWidgets = mutableMapOf<Pair<Int, Int>, CircleWidget>()
+  val socketWidgets = mutableMapOf<Pair<Int, Int>, SocketWidget>()
 
   override fun init() {
     aspectWidgets.clear()
-    circleWidgets.clear()
+    socketWidgets.clear()
     super.init()
   }
 
@@ -56,19 +58,19 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       }) {
         Row({ width = grow() }) {
           Box({
-            width = fixed(RuneSlot.Companion.TEXTURE.width)
-            height = fixed(RuneSlot.Companion.TEXTURE.height)
+            width = fixed(RuneSlot.TEXTURE.width)
+            height = fixed(RuneSlot.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.Companion.TEXTURE))
+            addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
           }
 
           Box({ width = grow() }) {}
 
           Box({
-            width = fixed(ScrollSlot.Companion.TEXTURE.width)
-            height = fixed(ScrollSlot.Companion.TEXTURE.height)
+            width = fixed(ScrollSlot.TEXTURE.width)
+            height = fixed(ScrollSlot.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.Companion.TEXTURE))
+            addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
           }
         }
 
@@ -79,7 +81,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     }
   }
 
-  fun AspectsSection() {
+  private fun AspectsSection() {
     Column({
       height = grow()
       gap = BORDER
@@ -163,7 +165,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     }
   }
 
-  fun PuzzleSection() {
+  private fun PuzzleSection() {
     TextureBox(PUZZLE_BG) {
       afterLayout {
         makePuzzleWidgets(position, size)
@@ -172,25 +174,26 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
-    val textureSize = CircleWidget.TEXTURE.size
-    val reps = vec2(5, 5)
+    val textureSize = SocketWidget.TEXTURE.size
+    val reps = Dimensions(5, 5)
     val gaps = vec2(0, HEX_GRID_GAP)
-    val actualSize = textureSize * (reps + vec2(0, 0.5)) + gaps * (reps - 1)
+    val gridSize = reps.vec2
+    val actualSize = textureSize * (gridSize + vec2(0, 0.5)) + gaps * (gridSize - 1)
     val offsets = position + (containerSize - actualSize) / 2f
 
-    for (row in 0 until reps.y.toInt()) {
-      for (col in 0 until reps.x.toInt()) {
-        val indices = vec2(col, row)
-        var totalOffset = offsets + (textureSize + gaps) * indices
+    for (row in 0 until reps.rows) {
+      for (col in 0 until reps.cols) {
+        val indices = Indices(row, col)
+        var totalOffset = offsets + (textureSize + gaps) * indices.vec2
         if (col % 2 == 1) totalOffset += vec2(0, textureSize.y / 2)
         val newWidget = addRenderableWidget(
-          CircleWidget(
+          SocketWidget(
             totalOffset,
             indices,
             this
           )
         )
-        circleWidgets[axial(indices).toIntPair()] = newWidget
+        socketWidgets[indices.axial.pair] = newWidget
       }
     }
   }
@@ -199,8 +202,8 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     super.render(guiGraphics, mouseX, mouseY, partialTick)
 
     // layered rendering of puzzle elements, to avoid overlap issues
-    for(widget in circleWidgets.values) widget.renderConnectionsDeferred(guiGraphics)
-    for(widget in circleWidgets.values) widget.renderAspectDeferred(guiGraphics)
+    for (widget in socketWidgets.values) widget.renderConnectionsDeferred(guiGraphics)
+    for (widget in socketWidgets.values) widget.renderAspectDeferred(guiGraphics)
 
     renderSelectedAspect(guiGraphics, mouseX, mouseY)
   }
@@ -218,7 +221,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   /**
-   * makes sure that the event is properly propagated to the circle widget
+   * makes sure that the event is properly propagated to the socket widget
    */
   override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int): Boolean {
     if (selectedAspect != null) focused = null
@@ -227,7 +230,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     return result
   }
 
-  companion object{
+  companion object {
     val translationId = "container." + Thavma.MODID + ".research_table"
   }
 }

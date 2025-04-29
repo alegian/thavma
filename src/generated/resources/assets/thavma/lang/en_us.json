@@ -74,7 +74,7 @@
   "container.thavma.research_table.aspectWidget.description": "Click and drag to use",
   "container.thavma.research_table.buttonWidget.left": "Previous Page",
   "container.thavma.research_table.buttonWidget.right": "Next Page",
-  "container.thavma.research_table.circleWidget.remove": "Click to remove",
+  "container.thavma.research_table.socketWidget.remove": "Click to remove",
   "entity.thavma.angry_zombie": "Angry Zombie",
   "item.thavma.aer_testa": "Aer Testa",
   "item.thavma.angry_zombie_spawn_egg": "Angry Zombie Spawn Egg",

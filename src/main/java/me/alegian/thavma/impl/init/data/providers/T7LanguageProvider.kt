@@ -3,8 +3,8 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
-import me.alegian.thavma.impl.client.gui.research_table.CircleWidget
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
+import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.research.ResearchCategory
@@ -197,7 +197,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchScreen.translationId, "Research Table")
     add(AspectWidget.descriptionTranslationId, "Click and drag to use")
     add(AspectWidget.costTranslationId, "Rune Cost:")
-    add(CircleWidget.removeTranslationId, "Click to remove")
+    add(SocketWidget.removeTranslationId, "Click to remove")
     add(ButtonWidget.leftTranslationId, "Previous Page")
     add(ButtonWidget.rightTranslationId, "Next Page")
 

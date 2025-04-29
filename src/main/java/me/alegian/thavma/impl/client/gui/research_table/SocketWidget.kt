@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.util.Indices
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -14,14 +15,13 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
 import kotlin.math.atan2
 
-class CircleWidget(val position: Vec2, private val indices: Vec2, private val researchScreen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
+class SocketWidget(val position: Vec2, private val indices: Indices, private val researchScreen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
   var aspect
-    get() = researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())]
+    get() = researchScreen.reseachState[indices.pair]
     set(value) {
-      researchScreen.reseachState[Pair(indices.x.toInt(), indices.y.toInt())] = value
+      researchScreen.reseachState[indices.pair] = value
     }
 
   /**
@@ -69,8 +69,8 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
 
   private fun renderConnections(aspect: Aspect, guiGraphics: GuiGraphics) {
     for (neighborOffset in axialNeighbors) {
-      val neighborIdx = axial(indices) + neighborOffset
-      val neighbor = researchScreen.circleWidgets[neighborIdx.toIntPair()]
+      val neighborIdx = indices.axial + neighborOffset
+      val neighbor = researchScreen.socketWidgets[neighborIdx.pair]
       if (neighbor == null) continue
       if (neighbor.aspect?.components?.map { it.get() }?.contains(aspect) != true) continue
       val dx = neighbor.position.x - position.x
@@ -112,8 +112,8 @@ class CircleWidget(val position: Vec2, private val indices: Vec2, private val re
   }
 
   companion object {
-    private val namespace = ".circleWidget"
-    val TEXTURE = Texture("gui/research_table/circle", 22, 22, 22, 22)
+    private val namespace = ".socketWidget"
+    val TEXTURE = Texture("gui/research_table/socket", 22, 22, 22, 22)
     val removeTranslationId = ResearchScreen.translationId + namespace + ".remove"
   }
 }

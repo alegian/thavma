@@ -23,6 +23,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
     set(value) {
       researchScreen.reseachState[indices.pair] = value
     }
+  val broken = indices.row % 3 == 0 && indices.col % 3 == 2
 
   /**
    * this renders only the background of the widget.
@@ -33,7 +34,9 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     guiGraphics.usePose {
       translateXY(x, y)
-      guiGraphics.blit(TEXTURE)
+      var texture = TEXTURE
+      if (broken) texture = BROKEN_TEXTURE
+      guiGraphics.blit(texture)
     }
   }
 
@@ -85,7 +88,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
-    if (aspect == null)
+    if (aspect == null && !broken)
       aspect = researchScreen.selectedAspect?.also {
         tooltip = T7Tooltip(
           Component.translatable(it.translationId),
@@ -114,6 +117,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   companion object {
     private val namespace = ".socketWidget"
     val TEXTURE = Texture("gui/research_table/socket", 22, 22, 22, 22)
+    val BROKEN_TEXTURE = Texture("gui/research_table/broken_socket", 22, 22, 22, 22)
     val removeTranslationId = ResearchScreen.translationId + namespace + ".remove"
   }
 }

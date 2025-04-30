@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "thavma:block/table",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "thavma:block/table"
+    },
+    "facing=south": {
+      "model": "thavma:block/table",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "thavma:block/table",
+      "y": 270
+    }
+  }
+}

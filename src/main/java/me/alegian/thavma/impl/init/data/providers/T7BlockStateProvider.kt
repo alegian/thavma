@@ -24,6 +24,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -78,6 +79,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.blockEntity1x2x1(PILLAR.get())
 
     this.simpleBlockWithItem(ESSENTIA_CONTAINER.get(), this.models().getExistingFile(rl("essentia_container")))
+    this.horizontalBlockWithItem(TABLE.get(), this.models().getExistingFile(rl("table")))
     this.horizontalBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(rl("research_table")))
 
     this.itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))

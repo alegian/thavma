@@ -32,6 +32,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
@@ -172,6 +173,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(PILLAR.get(), "Infusion Pillar")
     add(PEDESTAL.get(), "Infusion Pedestal")
     add(RESEARCH_TABLE.get(), "Research Table")
+    add(TABLE.get(), "Table")
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
 
     for ((aspect, infusedStone) in T7Blocks.INFUSED_STONES)

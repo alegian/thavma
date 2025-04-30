@@ -23,20 +23,18 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BedPart
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
-import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.BlockHitResult
 
-private val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
-private val PART: EnumProperty<BedPart> = BlockStateProperties.BED_PART
+private val FACING = BlockStateProperties.HORIZONTAL_FACING
+private val PART = BlockStateProperties.BED_PART
 
 /**
  * 2-block system like bed. Loot table drops nothing for FOOT and drops self for HEAD
  */
 class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion().pushReaction(PushReaction.BLOCK)), EntityBlock {
   init {
-    this.registerDefaultState(stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(FACING, Direction.NORTH))
+    registerDefaultState(stateDefinition.any().setValue(PART, BedPart.FOOT).setValue(FACING, Direction.NORTH))
   }
 
   override fun getMenuProvider(pState: BlockState, pLevel: Level, pPos: BlockPos): MenuProvider {

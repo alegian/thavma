@@ -46,6 +46,10 @@ object T7Blocks {
         "infusion_pedestal"
     ) { PedestalBlock() }
 
+    val TABLE = register(
+        "table"
+    ) { TableBlock() }
+
     val RESEARCH_TABLE = register(
         "research_table"
     ) { ResearchTableBlock() }

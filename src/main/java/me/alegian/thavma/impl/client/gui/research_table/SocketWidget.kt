@@ -12,8 +12,10 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.phys.Vec2
 import kotlin.math.atan2
 
@@ -23,7 +25,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
     set(value) {
       researchScreen.reseachState[indices.pair] = value
     }
-  val broken = indices.row % 3 == 0 && indices.col % 3 == 2
+  var broken = false
 
   /**
    * this renders only the background of the widget.
@@ -95,7 +97,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
           Component.translatable(removeTranslationId).withStyle(ChatFormatting.GRAY)
         )
 
-        playDownSound(Minecraft.getInstance().soundManager)
+        Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.CHISELED_BOOKSHELF_INSERT, 1.0f, 1.0f))
       }
   }
 
@@ -103,8 +105,9 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
     if (aspect != null) {
       aspect = null
       tooltip = null
+      broken = true
 
-      playDownSound(Minecraft.getInstance().soundManager)
+      Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.DEEPSLATE_BREAK, 1.0f, 1.0f))
     }
   }
 

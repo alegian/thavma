@@ -12,6 +12,9 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.resources.sounds.SimpleSoundInstance
+import net.minecraft.client.sounds.SoundManager
+import net.minecraft.sounds.SoundEvents
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -92,6 +95,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we dont want full size
       guiGraphics.renderItem(entry.icon, -8, -8)
     }
+  }
+
+  override fun playDownSound(handler: SoundManager) {
+    handler.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0f, 1.0f))
   }
 
   companion object {

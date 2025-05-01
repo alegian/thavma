@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.item
 
 import me.alegian.thavma.impl.client.renderer.geo.WandRenderer
+import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyThaumonomiconEntity
 import me.alegian.thavma.impl.common.entity.VisEntity
@@ -62,6 +63,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     val level = context.level
     val blockPos = context.clickedPos
     val blockState = level.getBlockState(blockPos)
+    val block = blockState.block
 
     if (blockState.`is`(T7Blocks.AURA_NODE.get())) {
       val player = context.player
@@ -79,6 +81,15 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     }
     if (blockState.`is`(Blocks.CAULDRON)) {
       if (!level.isClientSide()) level.setBlockAndUpdate(blockPos, T7Blocks.CRUCIBLE.get().stateWithBoiling(level, blockPos))
+      level.playSound(context.player, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0f, 1.0f)
+      return InteractionResult.SUCCESS
+    }
+    if (
+      block is TableBlock &&
+      !level.isClientSide() &&
+      level is ServerLevel &&
+      block.tryConvertToResearchTable(level, blockPos, blockState)
+    ) {
       level.playSound(context.player, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0f, 1.0f)
       return InteractionResult.SUCCESS
     }

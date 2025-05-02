@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/iron_trapdoor_top",
+  "loader": "thavma:with_transform_parent",
+  "render_type": "minecraft:cutout",
+  "transform_parent": "minecraft:block/block"
+}

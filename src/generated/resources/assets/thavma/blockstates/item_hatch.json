@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "thavma:block/item_hatch"
+    }
+  }
+}

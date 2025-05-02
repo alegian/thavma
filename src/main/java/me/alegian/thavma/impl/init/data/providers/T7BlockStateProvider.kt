@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
@@ -49,6 +50,15 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
         .texture("bottom", rl("block/crucible_bottom"))
         .texture("side", rl("block/crucible_side"))
         .texture("inside", rl("block/crucible_inner"))
+        .customLoader(WithTransformParentModel::Builder)
+        .transformParent(ResourceLocation.withDefaultNamespace("block/block"))
+        .end()
+    )
+
+    simpleBlockWithItem(
+      ITEM_HATCH.get(), models()
+        .withExistingParent(name(ITEM_HATCH.get()), mcLoc("block/iron_trapdoor_top"))
+        .renderType(RenderType.cutout().name)
         .customLoader(WithTransformParentModel::Builder)
         .transformParent(ResourceLocation.withDefaultNamespace("block/block"))
         .end()

@@ -16,6 +16,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
@@ -55,6 +56,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     this.dropSelf(PILLAR.get())
     this.dropSelf(PEDESTAL.get())
     this.dropSelf(TABLE.get())
+    this.dropSelf(ITEM_HATCH.get())
     this.add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
     this.dropSelf(ELEMENTAL_STONE.get())
 

@@ -23,6 +23,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
@@ -174,6 +175,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(PEDESTAL.get(), "Infusion Pedestal")
     add(RESEARCH_TABLE.get(), "Research Table")
     add(TABLE.get(), "Table")
+    add(ITEM_HATCH.get(), "Item Hatch")
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
 
     for ((aspect, infusedStone) in T7Blocks.INFUSED_STONES)

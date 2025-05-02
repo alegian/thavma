@@ -20,3 +20,5 @@ fun PoseStack.translateXY(vec: Vec2) = translateXY(vec.x, vec.y)
 fun PoseStack.scaleXY(scale: Number) = scale(scale.toFloat(), scale.toFloat(), 1f)
 
 fun PoseStack.rotateZ(deg: Number) = mulPose(Matrix4f().rotateZ((deg.toFloat() / 180 * Math.PI).toFloat()))
+fun PoseStack.rotateX(deg: Number) = mulPose(Matrix4f().rotateX((deg.toFloat() / 180 * Math.PI).toFloat()))
+fun PoseStack.rotateY(deg: Number) = mulPose(Matrix4f().rotateY((deg.toFloat() / 180 * Math.PI).toFloat()))

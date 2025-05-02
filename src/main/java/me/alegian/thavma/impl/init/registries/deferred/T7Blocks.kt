@@ -23,8 +23,9 @@ object T7Blocks {
   ) { AuraNodeBlock() }
 
   val ESSENTIA_CONTAINER = register(
-    "essentia_container"
-  ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)) }
+    "essentia_container",
+    ::EssentiaContainerBlock
+  )
 
   val CRUCIBLE = register(
     "crucible"

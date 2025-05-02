@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.properties.SlabType
 import net.neoforged.neoforge.common.Tags
 import kotlin.math.min
 
-class AuraNodeBE(pos: BlockPos?, blockState: BlockState?) :
+class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
   DataComponentBE(T7BlockEntities.AURA_NODE.get(), pos, blockState) {
   private val glassPositions = ArrayList<BlockPos>()
   private val slabPositions = ArrayList<BlockPos>()

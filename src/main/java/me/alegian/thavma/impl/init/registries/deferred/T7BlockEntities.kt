@@ -21,6 +21,9 @@ object T7BlockEntities {
             T7Capabilities.AspectContainer.BLOCK, CRUCIBLE.get()
         ) { be, _ -> AspectContainer(be) }
         event.registerBlockEntity(
+            T7Capabilities.AspectContainer.BLOCK, ESSENTIA_CONTAINER.get()
+        ) { be, _ -> AspectContainer(be) }
+        event.registerBlockEntity(
             T7Capabilities.AspectContainer.BLOCK, AURA_NODE.get()
         ) { be, _ -> AspectContainer(be) }
     }
@@ -35,6 +38,10 @@ object T7BlockEntities {
 
     val CRUCIBLE = REGISTRAR.register("crucible") { ->
         BlockEntityType.Builder.of(::CrucibleBE, T7Blocks.CRUCIBLE.get()).build(null)
+    }
+
+    val ESSENTIA_CONTAINER = REGISTRAR.register("essentia_container") { ->
+        BlockEntityType.Builder.of(::EssentiaContainerBE, T7Blocks.ESSENTIA_CONTAINER.get()).build(null)
     }
 
     val WORKBENCH = REGISTRAR.register("arcane_workbench") { ->

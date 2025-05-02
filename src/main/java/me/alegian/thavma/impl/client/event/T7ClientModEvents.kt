@@ -49,6 +49,7 @@ private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
 private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.AURA_NODE.get()) { _ -> AuraNodeBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.CRUCIBLE.get()) { _ -> CrucibleBER() }
+  event.registerBlockEntityRenderer(T7BlockEntities.ESSENTIA_CONTAINER.get()) { _ -> EssentiaContainerBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.WORKBENCH.get()) { _ -> WorkbenchBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.RESEARCH_TABLE.get()) { _ -> ResearchTableBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.MATRIX.get()) { _ -> MatrixBER() }

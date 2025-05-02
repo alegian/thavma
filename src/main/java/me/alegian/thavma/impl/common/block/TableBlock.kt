@@ -40,6 +40,11 @@ class TableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion())
    */
   fun tryConvertToResearchTable(level: ServerLevel, blockPos: BlockPos, blockState: BlockState): Boolean {
     val direction = blockState.getValue(HORIZONTAL_FACING)
+
+    return convertInDirection(level, blockPos, direction) || convertInDirection(level, blockPos, direction.opposite)
+  }
+
+  private fun convertInDirection(level: ServerLevel, blockPos: BlockPos, direction: Direction): Boolean {
     val secondPos = blockPos.relative(direction)
     if (level.getBlockState(secondPos).block == this) {
       level.setBlock(blockPos, T7Blocks.RESEARCH_TABLE.get().defaultBlockState().setValue(HORIZONTAL_FACING, direction), 0)

@@ -80,8 +80,8 @@ open class AspectContainer(
   }
 
   companion object {
-    fun at(level: Level, pos: BlockPos): IAspectContainer? {
-      return level.getCapability(BLOCK, pos)
+    fun at(level: Level?, pos: BlockPos): IAspectContainer? {
+      return level?.getCapability(BLOCK, pos)
     }
 
     fun getAspectContainerInHand(player: Player?): IAspectContainer? {
@@ -112,6 +112,13 @@ open class AspectContainer(
     fun blockSourceItemSink(level: Level, blockPos: BlockPos, itemStack: ItemStack): Pair? {
       val sink = from(itemStack)
       val source = at(level, blockPos)
+      if (sink == null || source == null) return null
+      return Pair(source, sink)
+    }
+
+    fun itemSourceBlockSink(level: Level, blockPos: BlockPos, itemStack: ItemStack): Pair? {
+      val sink = at(level, blockPos)
+      val source = from(itemStack)
       if (sink == null || source == null) return null
       return Pair(source, sink)
     }

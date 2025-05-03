@@ -22,7 +22,7 @@ object T7BlockEntities {
         ) { be, _ -> AspectContainer(be) }
         event.registerBlockEntity(
             T7Capabilities.AspectContainer.BLOCK, ESSENTIA_CONTAINER.get()
-        ) { be, _ -> AspectContainer(be) }
+        ) { be, _ -> AspectContainer(be, 64) }
         event.registerBlockEntity(
             T7Capabilities.AspectContainer.BLOCK, AURA_NODE.get()
         ) { be, _ -> AspectContainer(be) }

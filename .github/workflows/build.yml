@@ -17,8 +17,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
+      - name: Find built asset
+        id: find_file
+        run: |
+          FILE=$(find build/libs -name "*.jar" | head -n 1)
+          echo "asset=$FILE" >> $GITHUB_OUTPUT
+      - name: Upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.find_file.outputs.asset }}
+          make_latest: true

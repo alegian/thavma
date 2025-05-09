@@ -1,6 +1,9 @@
-name: Build
+name: Release
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - "*.*.*-*.*.*" # Just reusing the already existing version codes (e.g.: 1.21.1-0.6.0), all that is needed to create a release is to make a new git tag following this format
 
 jobs:
   build:
@@ -27,7 +30,7 @@ jobs:
           FILE=$(find build/libs -name "*.jar" | head -n 1)
           echo "asset=$FILE" >> $GITHUB_OUTPUT
       - name: Upload assets
-        uses: actions/upload-artifact@v4
+        uses: softprops/action-gh-release@v2
         with:
-          name: Mod
-          path: ${{ steps.find_file.outputs.asset }}
+          files: ${{ steps.find_file.outputs.asset }}
+          make_latest: true

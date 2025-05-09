@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "*.*.*-*.*.*" # Just reusing the already existing version codes (e.g.: 1.21.1-0.6.0), all that is needed to create a release is to make a new git tag following this format
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1000
+          fetch-tags: true
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+      - name: Find built asset
+        id: find_file
+        run: |
+          FILE=$(find build/libs -name "*.jar" | head -n 1)
+          echo "asset=$FILE" >> $GITHUB_OUTPUT
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mod
+          path: ${{ steps.find_file.outputs.asset }}

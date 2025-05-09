@@ -27,7 +27,7 @@ jobs:
           FILE=$(find build/libs -name "*.jar" | head -n 1)
           echo "asset=$FILE" >> $GITHUB_OUTPUT
       - name: Upload assets
-        uses: softprops/action-gh-release@v2
+        uses: actions/upload-artifact@v4
         with:
-          files: ${{ steps.find_file.outputs.asset }}
-          make_latest: true
+          name: Mod
+          path: ${{ steps.find_file.outputs.asset }}

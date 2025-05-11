@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
+import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -146,12 +147,17 @@ private fun registerSpawnPlacements(event: RegisterSpawnPlacementsEvent) {
   )
 }
 
-private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent){
+private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
   val registrar = event.registrar("1")
   registrar.playToClient(
     ScanPayload.TYPE,
     ScanPayload.STREAM_CODEC,
     ScanPayload::handle
+  )
+  registrar.playToServer(
+    ResearchScrollPayload.TYPE,
+    ResearchScrollPayload.STREAM_CODEC,
+    ResearchScrollPayload::handle
   )
 }
 

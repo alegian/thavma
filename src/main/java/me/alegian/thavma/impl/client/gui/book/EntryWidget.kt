@@ -1,13 +1,16 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
+import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
@@ -15,6 +18,8 @@ import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.sounds.SoundManager
 import net.minecraft.sounds.SoundEvents
+import net.neoforged.neoforge.network.PacketDistributor
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -75,6 +80,9 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY) ?: return
+    val entryKey = registry.getResourceKey(entry).getOrNull() ?: return
+    PacketDistributor.sendToServer(ResearchScrollPayload(entryKey))
     pushScreen(EntryScreen(entry))
   }
 

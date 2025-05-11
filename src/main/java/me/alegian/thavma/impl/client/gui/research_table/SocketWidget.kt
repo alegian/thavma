@@ -22,13 +22,13 @@ import kotlin.math.atan2
 
 class SocketWidget(val position: Vec2, private val indices: Indices, private val screen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
   var state
-    get() = screen.menu.reseachState?.get(indices) ?: SocketState(indices)
+    get() = screen.menu.researchState?.get(indices) ?: SocketState(indices)
     set(value) {
-      val oldState = screen.menu.reseachState
-      if(oldState == null) return
+      val oldState = screen.menu.researchState
+      if (oldState == null) return
       val newState = HashMap(oldState)
       newState[indices] = value
-      screen.menu.reseachState = newState
+      screen.menu.researchState = newState
     }
 
   /**

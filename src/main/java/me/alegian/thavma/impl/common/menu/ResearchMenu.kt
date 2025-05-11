@@ -16,14 +16,16 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
   val scrollContainer = ScrollContainer(this)
   val runeContainer = RuneContainer(this)
   override val quickMovePriorities = listOf(scrollContainer, runeContainer)
-  var reseachState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
+  var researchState
+    get() = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
     set(newState) {
-      if (level.isClientSide) return
       if (newState == null) return
-      val itemStack = scrollContainer.getItem(0)
-      if (itemStack.item != T7Items.RESEARCH_SCROLL) return
+      val itemStack = scrollContainer.getItem(0).copy()
+      if (itemStack.item != T7Items.RESEARCH_SCROLL.get()) return
 
+      // TODO: move this to SocketStatePayload
       itemStack.set(T7DataComponents.RESEARCH_STATE, newState.values.toList())
+      scrollContainer.setItem(0, itemStack)
     }
 
   /**

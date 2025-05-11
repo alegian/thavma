@@ -7,10 +7,9 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.network.handling.IPayloadContext
 
+// S2C
 class ScanPayload(val newScans: List<String>): CustomPacketPayload {
-  override fun type(): CustomPacketPayload.Type<out CustomPacketPayload> {
-    return TYPE
-  }
+  override fun type() = TYPE
 
   companion object{
     val TYPE = CustomPacketPayload.Type<ScanPayload>(rl("scan"))

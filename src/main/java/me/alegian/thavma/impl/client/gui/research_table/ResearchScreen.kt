@@ -173,8 +173,6 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   private fun makeSocketWidgets(position: Vec2, containerSize: Vec2) {
-    val reseachState = menu.reseachState
-    if(reseachState == null) return
     val textureSize = SocketWidget.TEXTURE.size
     val reps = Dimensions(5, 5)
     val gaps = vec2(0, HEX_GRID_GAP)

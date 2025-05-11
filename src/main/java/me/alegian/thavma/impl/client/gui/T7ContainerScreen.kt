@@ -76,14 +76,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
                 height = fixed(SLOT_TEXTURE.height * 3)
                 width = grow()
               }) {
-                addRenderableOnly(slotGrid(3, 9, menu.playerInventory.range.slots) { _, _ -> SLOT_TEXTURE })
+                addRenderableOnly(slotGrid(3, 9, menu.inventory.range.slots) { _, _ -> SLOT_TEXTURE })
               }
 
               Box({
                 height = fixed(SLOT_TEXTURE.height)
                 width = grow()
               }) {
-                addRenderableOnly(slotGrid(1, 9, menu.playerInventory.range.slots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
+                addRenderableOnly(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
               }
             }
           }

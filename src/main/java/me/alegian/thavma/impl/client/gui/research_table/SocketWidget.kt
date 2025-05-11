@@ -19,11 +19,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.phys.Vec2
 import kotlin.math.atan2
 
-class SocketWidget(val position: Vec2, private val indices: Indices, private val researchScreen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
+class SocketWidget(val position: Vec2, private val indices: Indices, private val screen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
   var state
-    get() = researchScreen.reseachState[indices]!!
+    get() = screen.menu.reseachState[indices]!!
     set(value) {
-      researchScreen.reseachState[indices] = value
+      screen.menu.reseachState[indices] = value
     }
 
   /**
@@ -74,7 +74,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   private fun renderConnections(aspect: Aspect, guiGraphics: GuiGraphics) {
     for (neighborOffset in axialNeighbors) {
       val neighborIdx = indices.axial + neighborOffset
-      val neighbor = researchScreen.socketWidgets[neighborIdx]
+      val neighbor = screen.socketWidgets[neighborIdx]
       if (neighbor == null) continue
       if (neighbor.state.aspect?.components?.map { it.get() }?.contains(aspect) != true) continue
       val dx = neighbor.position.x - position.x
@@ -90,7 +90,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
     if (state.aspect == null && !state.broken)
-      state = state.withAspect(researchScreen.selectedAspect)
+      state = state.withAspect(screen.selectedAspect)
 
     state.aspect?.let {
       tooltip = T7Tooltip(

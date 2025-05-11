@@ -38,7 +38,6 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var aspectsPerPage = 0
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
-  val reseachState = mutableMapOf<Indices, SocketState>()
   val socketWidgets = mutableMapOf<Indices, SocketWidget>()
 
   override fun init() {
@@ -185,7 +184,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     for (row in 0 until reps.rows) {
       for (col in 0 until reps.cols) {
         val indices = Indices(row, col)
-        reseachState[indices] = SocketState(null, false)
+        menu.reseachState[indices] = SocketState(indices, null, false)
         var totalOffset = offsets + (textureSize + gaps) * indices.vec2
         if (col % 2 == 1) totalOffset += vec2(0, textureSize.y / 2)
         val newWidget = addRenderableWidget(

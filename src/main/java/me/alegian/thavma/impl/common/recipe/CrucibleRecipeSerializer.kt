@@ -19,12 +19,12 @@ class CrucibleRecipeSerializer : RecipeSerializer<CrucibleRecipe> {
   }
 
   companion object {
-    val CODEC = RecordCodecBuilder.mapCodec { inst: RecordCodecBuilder.Instance<CrucibleRecipe> ->
-      inst.group(
+    val CODEC = RecordCodecBuilder.mapCodec { builder ->
+      builder.group(
         AspectMap.CODEC.fieldOf("aspects").forGetter(CrucibleRecipe::aspects),
         Ingredient.CODEC.fieldOf("catalyst").forGetter(CrucibleRecipe::catalyst),
         ItemStack.CODEC.fieldOf("result").forGetter(CrucibleRecipe::result)
-      ).apply(inst, ::CrucibleRecipe)
+      ).apply(builder, ::CrucibleRecipe)
     }
     val STREAM_CODEC = StreamCodec.composite(
       AspectMap.STREAM_CODEC, CrucibleRecipe::aspects,

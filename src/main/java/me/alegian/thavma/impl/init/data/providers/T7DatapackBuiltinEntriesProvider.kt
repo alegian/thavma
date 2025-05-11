@@ -6,6 +6,8 @@ import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.common.research.SocketState
+import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
 import me.alegian.thavma.impl.init.data.worldgen.spawn.AngryZombieSpawn
@@ -172,7 +174,9 @@ private class ResearchEntryBuilder(
   }
 
   fun build(ctx: BootstrapContext<ResearchEntry>) = ResearchEntries.CATEGORIES[key]?.let { cat ->
-    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier)))
+    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), listOf(
+      SocketState(Indices(2,2), Aspects.AQUA.get(), false)
+    )))
   }
 }
 

@@ -34,7 +34,6 @@ class WorkbenchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val 
   }
 
   private fun refreshRecipeResult() {
-    val level = player.level()
     val optionalRecipeHolder = level.recipeManager.getRecipeFor(T7RecipeTypes.WORKBENCH.get(), craftingContainer.asCraftInput(), level)
 
     requiredAspects = optionalRecipeHolder.map { r -> r.value().aspects }.orElse(AspectMap())

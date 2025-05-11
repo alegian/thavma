@@ -9,6 +9,8 @@ import net.minecraft.network.codec.StreamCodec
 import java.util.*
 
 data class SocketState(val indices: Indices, val aspect: Aspect?, val broken: Boolean) {
+  constructor(i: Indices) : this(i, null, false)
+
   // only for codec
   private constructor(i: Indices, oa: Optional<Aspect>, b: Boolean) : this(i, oa.orElse(null), b)
 

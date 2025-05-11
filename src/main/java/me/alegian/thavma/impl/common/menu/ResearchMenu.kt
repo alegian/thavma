@@ -2,9 +2,9 @@ package me.alegian.thavma.impl.common.menu
 
 import me.alegian.thavma.impl.common.menu.container.RuneContainer
 import me.alegian.thavma.impl.common.menu.container.ScrollContainer
-import me.alegian.thavma.impl.common.research.SocketState
-import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7MenuTypes.RESEARCH
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -15,8 +15,16 @@ import net.minecraft.world.item.ItemStack
 class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val levelAccess: ContainerLevelAccess = ContainerLevelAccess.NULL) : Menu(RESEARCH.get(), pContainerId, pPlayerInventory) {
   val scrollContainer = ScrollContainer(this)
   val runeContainer = RuneContainer(this)
-  val reseachState = mutableMapOf<Indices, SocketState>()
   override val quickMovePriorities = listOf(scrollContainer, runeContainer)
+  var reseachState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
+    set(newState) {
+      if (level.isClientSide) return
+      if (newState == null) return
+      val itemStack = scrollContainer.getItem(0)
+      if (itemStack.item != T7Items.RESEARCH_SCROLL) return
+
+      itemStack.set(T7DataComponents.RESEARCH_STATE, newState.values.toList())
+    }
 
   /**
    * Slot index must be container unique, but not necessarily menu unique

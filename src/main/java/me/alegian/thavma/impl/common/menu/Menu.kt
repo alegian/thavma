@@ -27,8 +27,8 @@ abstract class Menu (menuType: MenuType<*>, containerId: Int, playerInventory: I
     return this.moveItemStackTo(slotItem, range.start, range.end + 1, false)
   }
 
-  val player: Player
-    get() = inventory.player
+  val player = inventory.player
+  val level = player.level()
 
   /**
    * slotIndex is relative to this.slots and NOT slot id

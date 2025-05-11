@@ -20,7 +20,8 @@ class ResearchEntry(
   val children: List<ResourceKey<ResearchEntry>>,
   val pages: List<Page>,
   val icon: ItemStack,
-  val title: Component
+  val title: Component,
+  val defaultResearchState: List<SocketState>
 ) {
   private var resolvedChildren: List<ResearchEntry>? = null
 
@@ -33,7 +34,8 @@ class ResearchEntry(
         ResourceKey.codec(T7DatapackRegistries.RESEARCH_ENTRY).listOf().fieldOf("children").forGetter(ResearchEntry::children),
         Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
         ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
-        ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title)
+        ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title),
+        SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState)
       ).apply(it, ::ResearchEntry)
     }
 

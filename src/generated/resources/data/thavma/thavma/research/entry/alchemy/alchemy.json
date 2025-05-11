@@ -1,6 +1,16 @@
 {
   "category": "thavma:alchemy",
   "children": [],
+  "defaultResearchState": [
+    {
+      "aspect": "thavma:aqua",
+      "broken": false,
+      "indices": {
+        "col": 2,
+        "row": 2
+      }
+    }
+  ],
   "icon": {
     "count": 1,
     "id": "thavma:crucible"

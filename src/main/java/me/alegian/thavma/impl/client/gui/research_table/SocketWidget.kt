@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -21,9 +22,13 @@ import kotlin.math.atan2
 
 class SocketWidget(val position: Vec2, private val indices: Indices, private val screen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
   var state
-    get() = screen.menu.reseachState[indices]!!
+    get() = screen.menu.reseachState?.get(indices) ?: SocketState(indices)
     set(value) {
-      screen.menu.reseachState[indices] = value
+      val oldState = screen.menu.reseachState
+      if(oldState == null) return
+      val newState = HashMap(oldState)
+      newState[indices] = value
+      screen.menu.reseachState = newState
     }
 
   /**

@@ -11,6 +11,7 @@ import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
+import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Dimensions
 import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.common.util.minus
@@ -37,8 +38,8 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var aspectsPerPage = 0
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
-  val reseachState = mutableMapOf<Pair<Int, Int>, Aspect?>()
-  val socketWidgets = mutableMapOf<Pair<Int, Int>, SocketWidget>()
+  val reseachState = mutableMapOf<Indices, SocketState>()
+  val socketWidgets = mutableMapOf<Indices, SocketWidget>()
 
   override fun init() {
     aspectWidgets.clear()
@@ -168,12 +169,12 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private fun PuzzleSection() {
     TextureBox(PUZZLE_BG) {
       afterLayout {
-        makePuzzleWidgets(position, size)
+        makeSocketWidgets(position, size)
       }
     }
   }
 
-  private fun makePuzzleWidgets(position: Vec2, containerSize: Vec2) {
+  private fun makeSocketWidgets(position: Vec2, containerSize: Vec2) {
     val textureSize = SocketWidget.TEXTURE.size
     val reps = Dimensions(5, 5)
     val gaps = vec2(0, HEX_GRID_GAP)
@@ -184,6 +185,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     for (row in 0 until reps.rows) {
       for (col in 0 until reps.cols) {
         val indices = Indices(row, col)
+        reseachState[indices] = SocketState(null, false)
         var totalOffset = offsets + (textureSize + gaps) * indices.vec2
         if (col % 2 == 1) totalOffset += vec2(0, textureSize.y / 2)
         val newWidget = addRenderableWidget(
@@ -193,7 +195,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             this
           )
         )
-        socketWidgets[indices.axial.pair] = newWidget
+        socketWidgets[indices.axial] = newWidget
       }
     }
   }

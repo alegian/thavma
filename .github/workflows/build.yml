@@ -12,12 +12,12 @@ jobs:
           fetch-depth: 1000
           fetch-tags: true
 
-      - name: Setup JDK 17
+      - name: Setup JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Build with Gradle
+          java-version: '21'
+          distribution: 'corretto'
+      - name: Build
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build
@@ -26,8 +26,8 @@ jobs:
         run: |
           FILE=$(find build/libs -name "*.jar" | head -n 1)
           echo "asset=$FILE" >> $GITHUB_OUTPUT
-      - name: Upload assets
+      - name: Upload jar artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Mod
+          name: Mod Jar
           path: ${{ steps.find_file.outputs.asset }}

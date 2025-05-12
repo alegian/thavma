@@ -12,8 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1000
-          fetch-tags: true
+          fetch-depth: 1
+          ref: ${{ github.ref }}
 
       - name: Setup JDK
         uses: actions/setup-java@v2

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.event
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.payload.ScanPayload
+import me.alegian.thavma.impl.common.payload.SocketStatePayload
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.data.providers.*
@@ -158,6 +159,11 @@ private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
     ResearchScrollPayload.TYPE,
     ResearchScrollPayload.STREAM_CODEC,
     ResearchScrollPayload::handle
+  )
+  registrar.playToServer(
+    SocketStatePayload.TYPE,
+    SocketStatePayload.STREAM_CODEC,
+    SocketStatePayload::handle
   )
 }
 

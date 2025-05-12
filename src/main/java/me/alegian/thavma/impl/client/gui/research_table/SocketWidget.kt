@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.payload.SocketStatePayload
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
 import net.minecraft.ChatFormatting
@@ -18,18 +19,13 @@ import net.minecraft.client.sounds.SoundManager
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.phys.Vec2
+import net.neoforged.neoforge.network.PacketDistributor
 import kotlin.math.atan2
 
 class SocketWidget(val position: Vec2, private val indices: Indices, private val screen: ResearchScreen) : AbstractWidget(position.x.toInt(), position.y.toInt(), TEXTURE.width, TEXTURE.height, Component.empty()) {
   var state
     get() = screen.menu.researchState?.get(indices) ?: SocketState(indices)
-    set(value) {
-      val oldState = screen.menu.researchState
-      if (oldState == null) return
-      val newState = HashMap(oldState)
-      newState[indices] = value
-      screen.menu.researchState = newState
-    }
+    set(value) = PacketDistributor.sendToServer(SocketStatePayload(value))
 
   /**
    * this renders only the background of the widget.
@@ -38,6 +34,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
    * to do in batches
    */
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    if(screen.menu.researchState == null) return
     guiGraphics.usePose {
       translateXY(x, y)
       var texture = TEXTURE
@@ -123,9 +120,9 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   companion object {
-    private val namespace = ".socketWidget"
+    private const val NAMESPACE = ".socketWidget"
     val TEXTURE = Texture("gui/research_table/socket", 22, 22, 22, 22)
     val BROKEN_TEXTURE = Texture("gui/research_table/broken_socket", 22, 22, 22, 22)
-    val removeTranslationId = ResearchScreen.translationId + namespace + ".remove"
+    val removeTranslationId = ResearchScreen.translationId + NAMESPACE + ".remove"
   }
 }

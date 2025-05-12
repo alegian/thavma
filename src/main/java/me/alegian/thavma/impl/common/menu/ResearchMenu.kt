@@ -2,6 +2,8 @@ package me.alegian.thavma.impl.common.menu
 
 import me.alegian.thavma.impl.common.menu.container.RuneContainer
 import me.alegian.thavma.impl.common.menu.container.ScrollContainer
+import me.alegian.thavma.impl.common.research.SocketState
+import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -16,17 +18,7 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
   val scrollContainer = ScrollContainer(this)
   val runeContainer = RuneContainer(this)
   override val quickMovePriorities = listOf(scrollContainer, runeContainer)
-  var researchState
-    get() = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
-    set(newState) {
-      if (newState == null) return
-      val itemStack = scrollContainer.getItem(0).copy()
-      if (itemStack.item != T7Items.RESEARCH_SCROLL.get()) return
-
-      // TODO: move this to SocketStatePayload
-      itemStack.set(T7DataComponents.RESEARCH_STATE, newState.values.toList())
-      scrollContainer.setItem(0, itemStack)
-    }
+  var researchState : Map<Indices, SocketState>? = null
 
   /**
    * Slot index must be container unique, but not necessarily menu unique
@@ -50,5 +42,7 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
   override fun stillValid(pPlayer: Player) = stillValid(levelAccess, pPlayer, RESEARCH_TABLE.get())
 
   override fun slotChanged(containerToSend: AbstractContainerMenu, dataSlotIndex: Int, stack: ItemStack) {
+    if(stack.item != T7Items.RESEARCH_SCROLL.get()) return
+    researchState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
   }
 }

@@ -6,9 +6,19 @@
       "aspect": "thavma:aqua",
       "broken": false,
       "indices": {
-        "col": 2,
+        "col": 0,
         "row": 2
-      }
+      },
+      "locked": true
+    },
+    {
+      "aspect": "thavma:alkimia",
+      "broken": false,
+      "indices": {
+        "col": 4,
+        "row": 2
+      },
+      "locked": true
     }
   ],
   "icon": {

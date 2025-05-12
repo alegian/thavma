@@ -5,12 +5,30 @@
   ],
   "defaultResearchState": [
     {
-      "aspect": "thavma:aqua",
+      "aspect": "thavma:lux",
       "broken": false,
+      "indices": {
+        "col": 0,
+        "row": 2
+      },
+      "locked": true
+    },
+    {
+      "aspect": "thavma:praecantatio",
+      "broken": false,
+      "indices": {
+        "col": 4,
+        "row": 2
+      },
+      "locked": true
+    },
+    {
+      "broken": true,
       "indices": {
         "col": 2,
         "row": 2
-      }
+      },
+      "locked": true
     }
   ],
   "icon": {

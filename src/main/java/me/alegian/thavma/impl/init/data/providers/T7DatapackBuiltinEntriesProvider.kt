@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
@@ -16,6 +17,7 @@ import me.alegian.thavma.impl.init.data.worldgen.tree.SilverwoodTree
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
 import me.alegian.thavma.impl.init.registries.deferred.*
+import me.alegian.thavma.impl.init.registries.deferred.util.DeferredAspect
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
@@ -110,6 +112,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.THAUMONOMICON.get().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.ORDO), lockedAspect(2, 4, Aspects.PRAECANTATIO))
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
@@ -117,19 +120,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.TESTAS[Aspects.AQUA]!!.get().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.TERRA), lockedAspect(2, 4, Aspects.ORDO))
           .addChild(ResearchEntries.Thavma.OCULUS)
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.OCULUS, Vector2i(2, -2), false, T7Items.OCULUS.get().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.LUX), lockedAspect(2, 4, Aspects.PRAECANTATIO), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -137,18 +144,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.ARCANUM.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+          .research(lockedAspect(2,0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.TERRA), lockedAspect(2, 4, Aspects.PRAECANTATIO))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.HUMANUS))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+          .research(lockedAspect(2,0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
       }
   }
@@ -162,6 +174,7 @@ private class ResearchEntryBuilder(
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
   private val pages = mutableListOf<Page>()
+  private val socketStates = mutableListOf<SocketState>()
 
   fun addChild(entryKey: ResourceKey<ResearchEntry>): ResearchEntryBuilder {
     children.add(entryKey)
@@ -173,10 +186,13 @@ private class ResearchEntryBuilder(
     return this
   }
 
+  fun research(vararg states: SocketState): ResearchEntryBuilder {
+    socketStates.addAll(states)
+    return this
+  }
+
   fun build(ctx: BootstrapContext<ResearchEntry>) = ResearchEntries.CATEGORIES[key]?.let { cat ->
-    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), listOf(
-      SocketState(Indices(2,2), Aspects.AQUA.get(), false)
-    )))
+    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates))
   }
 }
 
@@ -198,3 +214,6 @@ private fun simpleTitle(pageIndex: Int, baseId: String) =
   Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
 
 private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
+
+private fun lockedAspect(row:Int, col:Int, a: DeferredAspect<Aspect>) = SocketState(Indices(row, col), a.get(), false, true)
+private fun broken(row:Int, col:Int) = SocketState(Indices(row, col), null, true, true)

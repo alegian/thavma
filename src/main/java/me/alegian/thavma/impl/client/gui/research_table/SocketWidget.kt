@@ -34,7 +34,8 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
    * to do in batches
    */
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    if(screen.menu.researchState == null) return
+    if (screen.menu.researchState == null) return
+    updateTooltip()
     guiGraphics.usePose {
       translateXY(x, y)
       var texture = TEXTURE
@@ -91,26 +92,29 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
-    if (state.aspect == null && !state.broken)
-      state = state.withAspect(screen.selectedAspect)
+    if (state.aspect != null || state.broken) return
+    val carriedAspect = screen.selectedAspect ?: return
 
-    state.aspect?.let {
-      tooltip = T7Tooltip(
-        Component.translatable(it.translationId),
-        Component.translatable(removeTranslationId).withStyle(ChatFormatting.GRAY)
-      )
+    state = state.withAspect(carriedAspect)
 
-      Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.CHISELED_BOOKSHELF_INSERT, 1.0f, 1.0f))
-    }
+    Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.CHISELED_BOOKSHELF_INSERT, 1.0f, 1.0f))
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    if (state.aspect != null) {
+    if (state.aspect != null && !state.locked) {
       tooltip = null
       state = state.withAspect(null).withBroken(true)
 
       Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.DEEPSLATE_BREAK, 1.0f, 1.0f))
     }
+  }
+
+  private fun updateTooltip() {
+    val aspect = state.aspect ?: return
+    tooltip = T7Tooltip(
+      Component.translatable(aspect.translationId),
+      Component.translatable(removeTranslationId).withStyle(ChatFormatting.GRAY)
+    )
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

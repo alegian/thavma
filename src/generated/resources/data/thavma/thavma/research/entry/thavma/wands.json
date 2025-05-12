@@ -3,12 +3,22 @@
   "children": [],
   "defaultResearchState": [
     {
-      "aspect": "thavma:aqua",
+      "aspect": "thavma:praecantatio",
       "broken": false,
       "indices": {
-        "col": 2,
+        "col": 0,
         "row": 2
-      }
+      },
+      "locked": true
+    },
+    {
+      "aspect": "thavma:instrumentum",
+      "broken": false,
+      "indices": {
+        "col": 4,
+        "row": 2
+      },
+      "locked": true
     }
   ],
   "icon": {

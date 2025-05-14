@@ -18,6 +18,8 @@ data class Indices(val row: Int, val col: Int) {
    */
   val axial by lazy { Indices(row - (col - (col and 1)) / 2, col) }
 
+  val axialNeighbors by lazy { AXIAL_ADJACENT.map { this + it } }
+
   operator fun plus(other: Indices) = Indices(row + other.row, col + other.col)
 
   companion object {
@@ -35,3 +37,12 @@ data class Indices(val row: Int, val col: Int) {
     )
   }
 }
+
+private val AXIAL_ADJACENT = listOf(
+  Indices(1, 0),
+  Indices(0, 1),
+  Indices(-1, 0),
+  Indices(0, -1),
+  Indices(-1, 1),
+  Indices(1, -1),
+)

@@ -31,7 +31,7 @@ class SocketStatePayload(val state: SocketState) : CustomPacketPayload {
       if (itemStack.item !is ResearchScrollItem) return
 
       val oldState = itemStack.get(T7DataComponents.RESEARCH_STATE) ?: return
-      val newState = oldState.changeSocket(payload.state)
+      val newState = oldState.changeSocket(context.player().level(), payload.state)
 
       itemStack.set(T7DataComponents.RESEARCH_STATE, newState)
       menu.scrollContainer.setItem(0, itemStack)

@@ -19,6 +19,7 @@ data class SocketState(
 
   fun withAspect(a: Aspect?) = SocketState(indices, a, broken, locked)
   fun withBroken(b: Boolean) = SocketState(indices, aspect, b, locked)
+  fun withLocked(l: Boolean) = SocketState(indices, aspect, broken, l)
 
   companion object {
     val CODEC = RecordCodecBuilder.create { builder ->

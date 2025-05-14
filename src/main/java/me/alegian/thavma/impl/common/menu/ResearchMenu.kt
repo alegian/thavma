@@ -19,6 +19,7 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
   val runeContainer = RuneContainer(this)
   override val quickMovePriorities = listOf(scrollContainer, runeContainer)
   var researchState: Map<Indices, SocketState>? = null
+  var completed = false
 
   /**
    * Slot index must be container unique, but not necessarily menu unique
@@ -46,6 +47,8 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
 
   override fun slotsChanged(container: Container) {
     if (container !is ScrollContainer<*>) return
-    researchState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.socketStates?.associateBy { it.indices }
+    val scrollState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)
+    researchState = scrollState?.socketStates?.associateBy { it.indices }
+    completed = scrollState?.completed ?: false
   }
 }

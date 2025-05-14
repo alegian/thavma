@@ -35,6 +35,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
    */
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     if (screen.menu.researchState == null) return
+    if (screen.menu.completed && state.aspect == null) return
     updateTooltip()
     guiGraphics.usePose {
       translateXY(x, y)
@@ -75,8 +76,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   private fun renderConnections(aspect: Aspect, guiGraphics: GuiGraphics) {
-    for (neighborOffset in axialNeighbors) {
-      val neighborIdx = indices.axial + neighborOffset
+    for (neighborIdx in indices.axial.axialNeighbors) {
       val neighbor = screen.socketWidgets[neighborIdx]
       if (neighbor == null) continue
       if (neighbor.state.aspect?.components?.map { it.get() }?.contains(aspect) != true) continue
@@ -92,7 +92,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   override fun onRelease(mouseX: Double, mouseY: Double) {
-    if (state.aspect != null || state.broken) return
+    if (state.aspect != null || state.broken || state.locked) return
     val carriedAspect = screen.selectedAspect ?: return
 
     state = state.withAspect(carriedAspect)

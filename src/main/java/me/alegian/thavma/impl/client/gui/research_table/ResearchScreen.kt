@@ -30,6 +30,7 @@ private const val BORDER = 5
 private val BG = Texture("gui/research_table/bg", 231, 154, 256, 256)
 private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 104, 72, 104)
 private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 144, 144, 144, 144)
+const val HEX_GRID_GAP = 2
 
 open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<ResearchMenu>(menu, pPlayerInventory, pTitle, BG) {
   private var page = 0

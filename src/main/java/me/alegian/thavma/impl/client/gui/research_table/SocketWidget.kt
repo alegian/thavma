@@ -102,7 +102,6 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
     if (state.aspect != null && !state.locked) {
-      tooltip = null
       state = state.withAspect(null).withBroken(true)
 
       Minecraft.getInstance().soundManager.play(SimpleSoundInstance.forUI(SoundEvents.DEEPSLATE_BREAK, 1.0f, 1.0f))
@@ -110,11 +109,11 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   }
 
   private fun updateTooltip() {
-    val aspect = state.aspect ?: return
-    tooltip = T7Tooltip(
+    val aspect = state.aspect
+    tooltip = if (aspect != null) T7Tooltip(
       Component.translatable(aspect.translationId),
       Component.translatable(removeTranslationId).withStyle(ChatFormatting.GRAY)
-    )
+    ) else null
   }
 
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

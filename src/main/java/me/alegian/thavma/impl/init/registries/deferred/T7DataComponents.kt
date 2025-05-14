@@ -2,9 +2,8 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.research.SocketState
+import me.alegian.thavma.impl.common.research.ResearchState
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.codec.ByteBufCodecs
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object T7DataComponents {
@@ -18,7 +17,7 @@ object T7DataComponents {
 
   val RESEARCH_STATE = REGISTRAR.registerComponentType("research_state") { builder ->
     builder
-      .persistent(SocketState.CODEC.listOf())
-      .networkSynchronized(SocketState.STREAM_CODEC.apply(ByteBufCodecs.list()))
+      .persistent(ResearchState.CODEC)
+      .networkSynchronized(ResearchState.STREAM_CODEC)
   }
 }

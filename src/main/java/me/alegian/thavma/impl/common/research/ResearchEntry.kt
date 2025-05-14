@@ -48,6 +48,9 @@ class ResearchEntry(
     val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
     if (registry == null) return listOf()
 
-    resolvedChildren = children.map { registry.getOrThrow(it) }.also { return it }
+    val resolved = children.map { registry.getOrThrow(it) }
+    resolvedChildren = resolved
+
+    return resolved
   }
 }

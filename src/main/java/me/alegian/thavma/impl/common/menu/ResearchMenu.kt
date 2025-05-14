@@ -46,6 +46,6 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
 
   override fun slotsChanged(container: Container) {
     if (container !is ScrollContainer<*>) return
-    researchState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.associateBy { it.indices }
+    researchState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)?.socketStates?.associateBy { it.indices }
   }
 }

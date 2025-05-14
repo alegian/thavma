@@ -256,7 +256,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       """
     )
 
-    add(RESEARCH_SCROLL.get().completedTranslation(), "Completed")
+    add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

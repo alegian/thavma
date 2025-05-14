@@ -27,7 +27,7 @@ import kotlin.jvm.optionals.getOrNull
  * Straight lines will ignore this preference
  */
 class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<EntryWidget> = listOf()) :
-  AbstractWidget(0, 0, CELL_SIZE.toInt(), CELL_SIZE.toInt(), entry.title) {
+  AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.title) {
   init {
     tooltip = Tooltip.create(message)
   }

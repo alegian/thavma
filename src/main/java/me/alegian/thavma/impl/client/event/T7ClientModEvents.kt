@@ -24,9 +24,11 @@ import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.block.entity.PedestalBE
 import me.alegian.thavma.impl.common.block.entity.PillarBE
 import me.alegian.thavma.impl.common.block.entity.WorkbenchBE
+import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.ShaderInstance
+import net.minecraft.client.renderer.item.ItemProperties
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.ModLoader
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
@@ -37,8 +39,12 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
-private fun clientSetup(event: FMLClientSetupEvent){
+private fun clientSetup(event: FMLClientSetupEvent) {
   ModLoader.postEvent(RegisterPageRenderersEvent())
+  ItemProperties.register(T7Items.RESEARCH_SCROLL.get(), T7ItemProperties.COMPLETED) { stack, level, entity, seed ->
+    val completed = stack.get(T7DataComponents.RESEARCH_STATE)?.completed ?: false
+    if (completed) 1f else 0f
+  }
 }
 
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {

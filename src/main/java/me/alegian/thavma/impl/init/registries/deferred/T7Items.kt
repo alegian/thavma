@@ -37,7 +37,6 @@ object T7Items {
   val ORICHALCUM_INGOT = REGISTRAR.registerSimpleItem("orichalcum_ingot")
   val ORICHALCUM_NUGGET = REGISTRAR.registerSimpleItem("orichalcum_nugget")
   val RESEARCH_SCROLL = REGISTRAR.register("research_scroll", ::ResearchScrollItem)
-  val COMPLETED_RESEARCH = REGISTRAR.registerSimpleItem("completed_research", Item.Properties().stacksTo(1))
 
   val ARCANUM_SWORD = REGISTRAR.register("arcanum_sword") { ->
     SwordItem(

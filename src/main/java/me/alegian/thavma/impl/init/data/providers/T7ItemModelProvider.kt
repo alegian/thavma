@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
@@ -15,7 +16,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.COMPLETED_RESEARCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
@@ -41,8 +41,10 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredItem
 
@@ -65,8 +67,19 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(ARCANUM_NUGGET.get())
     basicItem(ORICHALCUM_INGOT.get())
     basicItem(ORICHALCUM_NUGGET.get())
-    basicItem(RESEARCH_SCROLL.get())
-    basicItem(COMPLETED_RESEARCH.get())
+
+    val scrollRL = BuiltInRegistries.ITEM.getKey(RESEARCH_SCROLL.get())
+    val completedRL = scrollRL.withSuffix("_completed")
+    basicItem(completedRL)
+    basicItem(scrollRL)
+      .override()
+      .predicate(T7ItemProperties.COMPLETED, 1f)
+      .model(
+        ModelFile.ExistingModelFile(
+          completedRL.withPrefix("item/"),
+          existingFileHelper
+        )
+      ).end()
 
     basicItem(GOGGLES.get())
     basicItem(GOGGLES_CURIO.get())

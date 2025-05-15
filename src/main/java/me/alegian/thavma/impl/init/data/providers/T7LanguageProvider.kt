@@ -48,7 +48,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.COMPLETED_RESEARCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
@@ -118,7 +117,6 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
     add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(RESEARCH_SCROLL.get(), "Research Scroll")
-    add(COMPLETED_RESEARCH.get(), "Completed Research")
     add(OCULUS.get(), "Oculus")
     add(THAUMONOMICON.get(), "Thaumonomicon")
 

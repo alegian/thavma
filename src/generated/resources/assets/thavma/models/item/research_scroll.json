@@ -1,5 +1,13 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "thavma:item/research_scroll_completed",
+      "predicate": {
+        "thavma:completed": 1.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "thavma:item/research_scroll"
   }

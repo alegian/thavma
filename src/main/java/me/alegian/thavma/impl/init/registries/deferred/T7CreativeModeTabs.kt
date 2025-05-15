@@ -96,7 +96,6 @@ object T7CreativeModeTabs {
           output.accept(T7Items.ORICHALCUM_INGOT)
           output.accept(T7Items.ORICHALCUM_NUGGET)
           output.accept(T7Items.RESEARCH_SCROLL)
-          output.accept(T7Items.COMPLETED_RESEARCH)
           output.accept(T7Items.OCULUS)
           output.accept(T7Items.THAUMONOMICON)
 

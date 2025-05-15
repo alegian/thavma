@@ -29,7 +29,7 @@ class ResearchScrollItem : Item(Properties().stacksTo(1)) {
 
     if (level.isClientSide)
       level.playSound(player, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
-    
+
     return InteractionResultHolder.success(stack)
   }
 

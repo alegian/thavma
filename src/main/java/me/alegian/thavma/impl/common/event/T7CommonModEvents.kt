@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
+import me.alegian.thavma.impl.common.payload.KnowledgePayload
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.common.payload.SocketStatePayload
@@ -154,6 +155,11 @@ private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
     ScanPayload.TYPE,
     ScanPayload.STREAM_CODEC,
     ScanPayload::handle
+  )
+  registrar.playToClient(
+    KnowledgePayload.TYPE,
+    KnowledgePayload.STREAM_CODEC,
+    KnowledgePayload::handle
   )
   registrar.playToServer(
     ResearchScrollPayload.TYPE,

@@ -116,7 +116,7 @@ fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent){
   val oldScans = player.getData(T7Attachments.SCANNED).scanned.toList()
   player.setScanned(oldScans)
   val oldKnowledge = player.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
-  player.setKnowledge(oldKnowledge)
+  player.setKnowledge(oldKnowledge, true)
 }
 
 fun registerCommonGameEvents() {

@@ -7,6 +7,8 @@ import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.init.registries.deferred.T7MenuTypes.RESEARCH
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -49,6 +51,9 @@ class ResearchMenu(pContainerId: Int, pPlayerInventory: Inventory, private val l
     if (container !is ScrollContainer<*>) return
     val scrollState = scrollContainer.getItem(0).get(T7DataComponents.RESEARCH_STATE)
     researchState = scrollState?.socketStates?.associateBy { it.indices }
-    completed = scrollState?.completed ?: false
+    val newCompleted = scrollState?.completed ?: false
+    if (newCompleted && !completed && level.isClientSide)
+      level.playSound(player, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.4f, 1f)
+    completed = newCompleted
   }
 }

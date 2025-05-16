@@ -11,8 +11,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.network.handling.IPayloadContext
 
-// S2C
-class KnowledgePayload(val newKnowledge: List<ResourceKey<ResearchEntry>>) : CustomPacketPayload {
+/**
+ * S2C
+ * firstPacket is used to not show "research complete" toasts on the first sync
+ * which happens every login
+ */
+class KnowledgePayload(val newKnowledge: List<ResourceKey<ResearchEntry>>, val firstPacket: Boolean = false) : CustomPacketPayload {
   override fun type() = TYPE
 
   companion object {
@@ -21,13 +25,17 @@ class KnowledgePayload(val newKnowledge: List<ResourceKey<ResearchEntry>>) : Cus
     val STREAM_CODEC = StreamCodec.composite(
       ResourceKey.streamCodec(T7DatapackRegistries.RESEARCH_ENTRY).apply(ByteBufCodecs.list()),
       KnowledgePayload::newKnowledge,
+      ByteBufCodecs.BOOL,
+      KnowledgePayload::firstPacket,
       ::KnowledgePayload
     )
 
     fun handle(payload: KnowledgePayload, context: IPayloadContext) {
       val player = context.player()
       player.setKnowledge(payload.newKnowledge)
-      for(research in payload.newKnowledge)
+
+      if (payload.firstPacket) return
+      for (research in payload.newKnowledge)
         researchToast(research)
     }
   }

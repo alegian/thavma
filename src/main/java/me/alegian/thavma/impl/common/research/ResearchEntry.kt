@@ -40,6 +40,8 @@ class ResearchEntry(
     }
 
     fun translationId(entryKey: ResourceKey<ResearchEntry>) = Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
+
+    val TOAST_TRANSLATION = "research.toast"
   }
 
   fun resolveChildren(): List<ResearchEntry> {

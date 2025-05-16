@@ -1,5 +1,7 @@
 package me.alegian.thavma.impl.client
 
+import me.alegian.thavma.impl.client.gui.toast.ResearchToast
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
@@ -25,3 +27,7 @@ fun <T> clientRegistry(key: ResourceKey<Registry<T>>) =
   Minecraft.getInstance().connection?.registryAccess()?.registry(key)?.getOrNull()
 
 fun pushScreen(screen: Screen) = Minecraft.getInstance().pushGuiLayer(screen)
+
+fun researchToast(entry: ResourceKey<ResearchEntry>) {
+  Minecraft.getInstance().toasts.addToast(ResearchToast(entry))
+}

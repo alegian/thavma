@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:arcanum_hoe"
+        "recipe": "thavma:thavmite_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:arcanum_hoe"
+      "thavma:thavmite_leggings"
     ]
   }
 }

@@ -8,7 +8,7 @@ import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.T7Capabilities
 import me.alegian.thavma.impl.init.registries.T7Tiers
-import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.ARCANUM
+import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.THAVMITE
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.Registry
 import net.minecraft.world.item.*
@@ -38,79 +38,83 @@ object T7Items {
   val ORICHALCUM_NUGGET = REGISTRAR.registerSimpleItem("orichalcum_nugget")
   val RESEARCH_SCROLL = REGISTRAR.register("research_scroll", ::ResearchScrollItem)
 
-  val ARCANUM_SWORD = REGISTRAR.register("arcanum_sword") { ->
+  val THAVMITE_SWORD = REGISTRAR.register("thavmite_sword") { ->
     SwordItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         SwordItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           3, -2.4f
         )
       )
     )
   }
-  val ARCANUM_SHOVEL = REGISTRAR.register("arcanum_shovel") { ->
+  val THAVMITE_SHOVEL = REGISTRAR.register("thavmite_shovel") { ->
     ShovelItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         ShovelItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           1.5f, -3.0f
         )
       )
     )
   }
-  val ARCANUM_PICKAXE = REGISTRAR.register("arcanum_pickaxe") { ->
+  val THAVMITE_PICKAXE = REGISTRAR.register("thavmite_pickaxe") { ->
     PickaxeItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         PickaxeItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           1.0f, -2.8f
         )
       )
     )
   }
-  val ARCANUM_HAMMER = REGISTRAR.register("arcanum_hammer") { ->
+  val THAVMITE_HAMMER = REGISTRAR.register("thavmite_hammer") { ->
     HammerItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         DiggerItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           4.0f, -3.0f
         )
       )
     )
   }
-  val ARCANUM_AXE = REGISTRAR.register("arcanum_axe") { ->
+  val THAVMITE_AXE = REGISTRAR.register("thavmite_axe") { ->
     AxeItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         AxeItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           5.0f, -3.0f
         )
       )
     )
   }
-  val ARCANUM_HOE = REGISTRAR.register("arcanum_hoe") { ->
+  val THAVMITE_HOE = REGISTRAR.register("thavmite_hoe") { ->
     HoeItem(
-      T7Tiers.ARCANUM_TIER,
+      T7Tiers.THAVMITE_TIER,
       Item.Properties().attributes(
         HoeItem.createAttributes(
-          T7Tiers.ARCANUM_TIER,
+          T7Tiers.THAVMITE_TIER,
           -3.0f, 0.0f
         )
       )
     )
   }
-  val ARCANUM_KATANA = REGISTRAR.register("arcanum_katana", ::KatanaItem)
+
+  val THAVMITE_KATANA = REGISTRAR.register("thavmite_katana", ::KatanaItem)
   val ZEPHYR = REGISTRAR.register("zephyr", ::ZephyrItem)
+
   val OCULUS = REGISTRAR.registerItem("oculus", ::OculusItem)
   val BOOK = REGISTRAR.register("book", ::T7BookItem)
 
   val GOGGLES = REGISTRAR.register("goggles", ::GogglesItem)
   val GOGGLES_CURIO = REGISTRAR.registerSimpleItem("goggles_curio", Item.Properties().stacksTo(1))
+  val DAWN_CHARM = REGISTRAR.registerSimpleItem("charm_of_the_dawn", Item.Properties().stacksTo(1))
+
   val RESEARCHER_CHESTPLATE = REGISTRAR.registerItem(
     "researcher_chestplate",
     { props -> ResearcherArmorItem(ArmorItem.Type.CHESTPLATE, props) },
@@ -126,27 +130,28 @@ object T7Items {
     { props -> ResearcherArmorItem(ArmorItem.Type.BOOTS, props) },
     Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
-  val ARCANUM_HELMET = REGISTRAR.registerItem(
-    "arcanum_helmet",
-    { props -> ArcanumHelmetItem(props) },
+
+  val THAVMITE_HELMET = REGISTRAR.registerItem(
+    "thavmite_helmet",
+    { props -> ThavmiteHelmetItem(props) },
     Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(21))
   )
-  val DAWN_CHARM = REGISTRAR.registerSimpleItem("charm_of_the_dawn", Item.Properties().stacksTo(1))
-  val ARCANUM_CHESTPLATE = REGISTRAR.registerItem(
-    "arcanum_chestplate",
-    { props -> ArmorItem(ARCANUM, ArmorItem.Type.CHESTPLATE, props) },
+  val THAVMITE_CHESTPLATE = REGISTRAR.registerItem(
+    "thavmite_chestplate",
+    { props -> ArmorItem(THAVMITE, ArmorItem.Type.CHESTPLATE, props) },
     Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(21))
   )
-  val ARCANUM_LEGGINGS = REGISTRAR.registerItem(
-    "arcanum_leggings",
-    { props -> ArmorItem(ARCANUM, ArmorItem.Type.LEGGINGS, props) },
+  val THAVMITE_LEGGINGS = REGISTRAR.registerItem(
+    "thavmite_leggings",
+    { props -> ArmorItem(THAVMITE, ArmorItem.Type.LEGGINGS, props) },
     Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(21))
   )
-  val ARCANUM_BOOTS = REGISTRAR.registerItem(
-    "arcanum_boots",
-    { props -> ArmorItem(ARCANUM, ArmorItem.Type.BOOTS, props) },
+  val THAVMITE_BOOTS = REGISTRAR.registerItem(
+    "thavmite_boots",
+    { props -> ArmorItem(THAVMITE, ArmorItem.Type.BOOTS, props) },
     Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
+
   val CUSTOS_ARCANUM_HELMET = REGISTRAR.registerItem(
     "custos_arcanum_helmet",
     { props -> CustosArcanumArmorItem(ArmorItem.Type.HELMET, props) },

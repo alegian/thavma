@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:arcanum_boots"
+        "recipe": "thavma:thavmite_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:arcanum_boots"
+      "thavma:thavmite_boots"
     ]
   }
 }

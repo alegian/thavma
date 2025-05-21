@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    "aaa",
-    " s ",
+    " a ",
+    " a ",
     " s "
   ],
   "result": {
     "count": 1,
-    "id": "thavma:arcanum_pickaxe"
+    "id": "thavma:thavmite_sword"
   }
 }

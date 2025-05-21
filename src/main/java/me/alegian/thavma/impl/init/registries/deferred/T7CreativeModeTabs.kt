@@ -120,10 +120,10 @@ object T7CreativeModeTabs {
           output.accept(T7Items.RESEARCHER_LEGGINGS)
           output.accept(T7Items.RESEARCHER_BOOTS)
 
-          output.accept(T7Items.ARCANUM_HELMET)
-          output.accept(T7Items.ARCANUM_CHESTPLATE)
-          output.accept(T7Items.ARCANUM_LEGGINGS)
-          output.accept(T7Items.ARCANUM_BOOTS)
+          output.accept(T7Items.THAVMITE_HELMET)
+          output.accept(T7Items.THAVMITE_CHESTPLATE)
+          output.accept(T7Items.THAVMITE_LEGGINGS)
+          output.accept(T7Items.THAVMITE_BOOTS)
 
           output.accept(T7Items.CUSTOS_ARCANUM_HELMET)
           output.accept(T7Items.CUSTOS_ARCANUM_CHESTPLATE)
@@ -132,14 +132,14 @@ object T7CreativeModeTabs {
 
           for (shard in T7Items.SHARDS.values) output.accept(shard)
 
-          output.accept(T7Items.ARCANUM_AXE)
-          output.accept(T7Items.ARCANUM_PICKAXE)
-          output.accept(T7Items.ARCANUM_HAMMER)
-          output.accept(T7Items.ARCANUM_SHOVEL)
-          output.accept(T7Items.ARCANUM_HOE)
+          output.accept(T7Items.THAVMITE_AXE)
+          output.accept(T7Items.THAVMITE_PICKAXE)
+          output.accept(T7Items.THAVMITE_HAMMER)
+          output.accept(T7Items.THAVMITE_SHOVEL)
+          output.accept(T7Items.THAVMITE_HOE)
 
-          output.accept(T7Items.ARCANUM_SWORD)
-          output.accept(T7Items.ARCANUM_KATANA)
+          output.accept(T7Items.THAVMITE_SWORD)
+          output.accept(T7Items.THAVMITE_KATANA)
           output.accept(T7Items.ZEPHYR)
 
           output.accept(T7Items.ANGRY_ZOMBIE_SPAWN_EGG)

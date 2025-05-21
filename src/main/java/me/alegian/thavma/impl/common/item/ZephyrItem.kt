@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.init.registries.T7Tiers.ARCANUM_TIER
+import me.alegian.thavma.impl.init.registries.T7Tiers.THAVMITE_TIER
 import me.alegian.thavma.impl.rl
 import net.minecraft.world.item.SwordItem
 import software.bernie.geckolib.animatable.GeoItem
@@ -12,10 +12,10 @@ import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
 class ZephyrItem : SwordItem(
-  ARCANUM_TIER,
+  THAVMITE_TIER,
   Properties().fireResistant().attributes(
     createAttributes(
-      ARCANUM_TIER,
+      THAVMITE_TIER,
       3, -2.4f
     )
   )

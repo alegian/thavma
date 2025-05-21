@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thavma:item/arcanum_helmet"
+    "layer0": "thavma:item/thavmite_helmet"
   }
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:arcanum_chestplate"
+        "recipe": "thavma:thavmite_chestplate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:arcanum_chestplate"
+      "thavma:thavmite_chestplate"
     ]
   }
 }

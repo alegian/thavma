@@ -4,18 +4,14 @@
   "key": {
     "a": {
       "item": "thavma:thavmite_ingot"
-    },
-    "s": {
-      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
-    "aa ",
-    " s ",
-    " s "
+    "aaa",
+    "a a"
   ],
   "result": {
     "count": 1,
-    "id": "thavma:arcanum_hoe"
+    "id": "thavma:thavmite_helmet"
   }
 }

@@ -34,18 +34,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_KATANA
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
@@ -70,8 +59,19 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
@@ -127,10 +127,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(RESEARCHER_CHESTPLATE.get(), "Researcher Chestplate")
     add(RESEARCHER_LEGGINGS.get(), "Researcher Leggings")
 
-    add(ARCANUM_BOOTS.get(), "Arcanum Boots")
-    add(ARCANUM_HELMET.get(), "Arcanum Helmet")
-    add(ARCANUM_CHESTPLATE.get(), "Arcanum Chestplate")
-    add(ARCANUM_LEGGINGS.get(), "Arcanum Leggings")
+    add(THAVMITE_BOOTS.get(), "Thavmite Boots")
+    add(THAVMITE_HELMET.get(), "Thavmite Helmet")
+    add(THAVMITE_CHESTPLATE.get(), "Thavmite Chestplate")
+    add(THAVMITE_LEGGINGS.get(), "Thavmite Leggings")
 
     add(CUSTOS_ARCANUM_BOOTS.get(), "Custos Arcanum Boots")
     add(CUSTOS_ARCANUM_HELMET.get(), "Custos Arcanum Helmet")
@@ -140,13 +140,13 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     for ((aspect, shard) in T7Items.SHARDS)
       add(shard.get(), aspectTranslations[aspect]!! + " Shard")
 
-    add(ARCANUM_SWORD.get(), "Arcanum Sword")
-    add(ARCANUM_AXE.get(), "Arcanum Axe")
-    add(ARCANUM_PICKAXE.get(), "Arcanum Pickaxe")
-    add(ARCANUM_HAMMER.get(), "Arcanum Hammer")
-    add(ARCANUM_SHOVEL.get(), "Arcanum Shovel")
-    add(ARCANUM_HOE.get(), "Arcanum Hoe")
-    add(ARCANUM_KATANA.get(), "Arcanum Katana")
+    add(THAVMITE_SWORD.get(), "Thavmite Sword")
+    add(THAVMITE_AXE.get(), "Thavmite Axe")
+    add(THAVMITE_PICKAXE.get(), "Thavmite Pickaxe")
+    add(THAVMITE_HAMMER.get(), "Thavmite Hammer")
+    add(THAVMITE_SHOVEL.get(), "Thavmite Shovel")
+    add(THAVMITE_HOE.get(), "Thavmite Hoe")
+    add(THAVMITE_KATANA.get(), "Thavmite Katana")
     add(ZEPHYR.get(), "Zephyr")
 
     val handleNames: MutableMap<WandHandleMaterial, String> = HashMap()

@@ -10,12 +10,12 @@
     }
   },
   "pattern": [
-    " a ",
-    " s ",
+    "aaa",
+    "aaa",
     " s "
   ],
   "result": {
     "count": 1,
-    "id": "thavma:arcanum_shovel"
+    "id": "thavma:thavmite_hammer"
   }
 }

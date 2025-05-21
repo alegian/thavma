@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.SimpleTier
 
 object T7Tiers {
-    val ARCANUM_TIER = SimpleTier(
+    val THAVMITE_TIER = SimpleTier(
         BlockTags.INCORRECT_FOR_DIAMOND_TOOL,
         1000,
         7f,

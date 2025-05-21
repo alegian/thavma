@@ -98,7 +98,7 @@ public class T7RecipeProvider extends RecipeProvider {
     T7RecipeProvider.ingot(pRecipeOutput, T7Items.INSTANCE.getTHAVMITE_INGOT().get(), T7Items.INSTANCE.getTHAVMITE_NUGGET().get(), T7Blocks.INSTANCE.getTHAVMITE_BLOCK().get());
     T7RecipeProvider.ingot(pRecipeOutput, T7Items.INSTANCE.getORICHALCUM_INGOT().get(), T7Items.INSTANCE.getORICHALCUM_NUGGET().get(), T7Blocks.INSTANCE.getORICHALCUM_BLOCK().get());
 
-    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getARCANUM_SWORD().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getTHAVMITE_SWORD().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern(" a ")
@@ -106,7 +106,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern(" s ")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getARCANUM_PICKAXE().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getTHAVMITE_PICKAXE().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern("aaa")
@@ -114,7 +114,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern(" s ")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getARCANUM_HAMMER().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getTHAVMITE_HAMMER().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern("aaa")
@@ -122,7 +122,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern(" s ")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getARCANUM_AXE().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getTHAVMITE_AXE().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern("aa ")
@@ -130,7 +130,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern(" s ")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getARCANUM_SHOVEL().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getTHAVMITE_SHOVEL().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern(" a ")
@@ -138,7 +138,7 @@ public class T7RecipeProvider extends RecipeProvider {
         .pattern(" s ")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getARCANUM_HOE().get())
+    ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getTHAVMITE_HOE().get())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT().get())
         .define('s', Tags.Items.RODS_WOODEN)
         .pattern("aa ")
@@ -159,27 +159,27 @@ public class T7RecipeProvider extends RecipeProvider {
         .requires(T7Items.INSTANCE.getGOGGLES())
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getGOGGLES()), RecipeProvider.has(T7Items.INSTANCE.getGOGGLES()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getARCANUM_HELMET())
+    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getTHAVMITE_HELMET())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT())
         .pattern("aaa")
         .pattern("a a")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getARCANUM_CHESTPLATE())
+    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getTHAVMITE_CHESTPLATE())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT())
         .pattern("a a")
         .pattern("aaa")
         .pattern("aaa")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getARCANUM_LEGGINGS())
+    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getTHAVMITE_LEGGINGS())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT())
         .pattern("aaa")
         .pattern("a a")
         .pattern("a a")
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
-    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getARCANUM_BOOTS())
+    ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.INSTANCE.getTHAVMITE_BOOTS())
         .define('a', T7Items.INSTANCE.getTHAVMITE_INGOT())
         .pattern("a a")
         .pattern("a a")

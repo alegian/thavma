@@ -3,17 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
@@ -37,8 +27,18 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.BuiltInRegistries
@@ -88,22 +88,22 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(RESEARCHER_LEGGINGS.get())
     basicItem(RESEARCHER_BOOTS.get())
 
-    basicItem(ARCANUM_HELMET.get())
-    basicItem(ARCANUM_CHESTPLATE.get())
-    basicItem(ARCANUM_LEGGINGS.get())
-    basicItem(ARCANUM_BOOTS.get())
+    basicItem(THAVMITE_HELMET.get())
+    basicItem(THAVMITE_CHESTPLATE.get())
+    basicItem(THAVMITE_LEGGINGS.get())
+    basicItem(THAVMITE_BOOTS.get())
 
     basicItem(CUSTOS_ARCANUM_HELMET.get())
     basicItem(CUSTOS_ARCANUM_CHESTPLATE.get())
     basicItem(CUSTOS_ARCANUM_LEGGINGS.get())
     basicItem(CUSTOS_ARCANUM_BOOTS.get())
 
-    handheldItem(ARCANUM_SWORD)
-    handheldItem(ARCANUM_AXE)
-    handheldItem(ARCANUM_PICKAXE)
-    handheldItem(ARCANUM_HAMMER)
-    handheldItem(ARCANUM_SHOVEL)
-    handheldItem(ARCANUM_HOE)
+    handheldItem(THAVMITE_SWORD)
+    handheldItem(THAVMITE_AXE)
+    handheldItem(THAVMITE_PICKAXE)
+    handheldItem(THAVMITE_HAMMER)
+    handheldItem(THAVMITE_SHOVEL)
+    handheldItem(THAVMITE_HOE)
 
     for (shard in SHARDS.values) withVanillaParent(shard.id.path, "shard", "generated")
 

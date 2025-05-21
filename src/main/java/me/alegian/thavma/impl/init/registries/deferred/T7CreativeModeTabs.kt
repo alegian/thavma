@@ -27,9 +27,9 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ARCANUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
+import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.CreativeModeTab
@@ -81,7 +81,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.IRON_HANDLE)
           output.accept(T7Items.GOLD_HANDLE)
           output.accept(T7Items.ORICHALCUM_HANDLE)
-          output.accept(T7Items.ARCANUM_HANDLE)
+          output.accept(T7Items.THAVMITE_HANDLE)
 
           output.accept(T7Items.EYE_OF_WARDEN)
           output.accept(T7Items.ROTTEN_BRAIN)
@@ -108,7 +108,7 @@ object T7CreativeModeTabs {
           )
           output.accept(
             T7Items.wandOrThrow(
-              ARCANUM.get(),
+              THAVMITE.get(),
               SILVERWOOD.get()
             )
           )
@@ -125,10 +125,10 @@ object T7CreativeModeTabs {
           output.accept(T7Items.THAVMITE_LEGGINGS)
           output.accept(T7Items.THAVMITE_BOOTS)
 
-          output.accept(T7Items.CUSTOS_ARCANUM_HELMET)
-          output.accept(T7Items.CUSTOS_ARCANUM_CHESTPLATE)
-          output.accept(T7Items.CUSTOS_ARCANUM_LEGGINGS)
-          output.accept(T7Items.CUSTOS_ARCANUM_BOOTS)
+          output.accept(T7Items.THAVMITE_VANGUARD_HELMET)
+          output.accept(T7Items.THAVMITE_VANGUARD_CHESTPLATE)
+          output.accept(T7Items.THAVMITE_VANGUARD_LEGGINGS)
+          output.accept(T7Items.THAVMITE_VANGUARD_BOOTS)
 
           for (shard in T7Items.SHARDS.values) output.accept(shard)
 

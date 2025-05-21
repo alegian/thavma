@@ -147,7 +147,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .research(lockedAspect(2,0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.ARCANUM.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
           .research(lockedAspect(2,0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 

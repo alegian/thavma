@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.CUSTOS_ARCANUM
+import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.THAVMITE_VANGUARD
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.world.entity.EquipmentSlot
@@ -15,7 +15,7 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
-class CustosArcanumArmorItem(type: Type, properties: Properties) : ArmorItem(CUSTOS_ARCANUM, type, properties), GeoItem {
+class ThavmiteVanguardArmorItem(type: Type, properties: Properties) : ArmorItem(THAVMITE_VANGUARD, type, properties), GeoItem {
   private val cache = GeckoLibUtil.createInstanceCache(this)
 
   override fun registerControllers(controllers: ControllerRegistrar) {
@@ -26,7 +26,7 @@ class CustosArcanumArmorItem(type: Type, properties: Properties) : ArmorItem(CUS
   override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider>) {
     consumer.accept(object : GeoRenderProvider {
       private val renderer by lazy {
-        GeoArmorRenderer(DefaultedItemGeoModel<CustosArcanumArmorItem>(rl("custos_arcanum_armor")))
+        GeoArmorRenderer(DefaultedItemGeoModel<ThavmiteVanguardArmorItem>(rl("thavmite_vanguard_armor")))
       }
 
       override fun <T : LivingEntity> getGeoArmorRenderer(livingEntity: T?, itemStack: ItemStack, equipmentSlot: EquipmentSlot?, original: HumanoidModel<T>?) = renderer

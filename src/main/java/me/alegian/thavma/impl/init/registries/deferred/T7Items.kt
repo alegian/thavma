@@ -22,7 +22,7 @@ object T7Items {
   val IRON_HANDLE = REGISTRAR.registerSimpleItem("iron_handle")
   val GOLD_HANDLE = REGISTRAR.registerSimpleItem("gold_handle")
   val ORICHALCUM_HANDLE = REGISTRAR.registerSimpleItem("orichalcum_handle")
-  val ARCANUM_HANDLE = REGISTRAR.registerSimpleItem("arcanum_handle")
+  val THAVMITE_HANDLE = REGISTRAR.registerSimpleItem("thavmite_handle")
 
   val EYE_OF_WARDEN = REGISTRAR.registerSimpleItem("eye_of_warden", Item.Properties().rarity(Rarity.EPIC))
   val ROTTEN_BRAIN = REGISTRAR.registerSimpleItem("rotten_brain", Item.Properties())
@@ -152,26 +152,26 @@ object T7Items {
     Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
 
-  val CUSTOS_ARCANUM_HELMET = REGISTRAR.registerItem(
-    "custos_arcanum_helmet",
-    { props -> CustosArcanumArmorItem(ArmorItem.Type.HELMET, props) },
+  val THAVMITE_VANGUARD_HELMET = REGISTRAR.registerItem(
+    "thavmite_vanguard_helmet",
+    { props -> ThavmiteVanguardArmorItem(ArmorItem.Type.HELMET, props) },
     Item.Properties().fireResistant().durability(ArmorItem.Type.HELMET.getDurability(21))
   )
-  val CUSTOS_ARCANUM_CHESTPLATE =
+  val THAVMITE_VANGUARD_CHESTPLATE =
     REGISTRAR.registerItem(
-      "custos_arcanum_chestplate",
-      { props -> CustosArcanumArmorItem(ArmorItem.Type.CHESTPLATE, props) },
+      "thavmite_vanguard_chestplate",
+      { props -> ThavmiteVanguardArmorItem(ArmorItem.Type.CHESTPLATE, props) },
       Item.Properties().fireResistant().durability(ArmorItem.Type.CHESTPLATE.getDurability(21))
     )
-  val CUSTOS_ARCANUM_LEGGINGS =
+  val THAVMITE_VANGUARD_LEGGINGS =
     REGISTRAR.registerItem(
-      "custos_arcanum_leggings",
-      { props -> CustosArcanumArmorItem(ArmorItem.Type.LEGGINGS, props) },
+      "thavmite_vanguard_leggings",
+      { props -> ThavmiteVanguardArmorItem(ArmorItem.Type.LEGGINGS, props) },
       Item.Properties().fireResistant().durability(ArmorItem.Type.LEGGINGS.getDurability(21))
     )
-  val CUSTOS_ARCANUM_BOOTS = REGISTRAR.registerItem(
-    "custos_arcanum_boots",
-    { props -> CustosArcanumArmorItem(ArmorItem.Type.BOOTS, props) },
+  val THAVMITE_VANGUARD_BOOTS = REGISTRAR.registerItem(
+    "thavmite_vanguard_boots",
+    { props -> ThavmiteVanguardArmorItem(ArmorItem.Type.BOOTS, props) },
     Item.Properties().fireResistant().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
 

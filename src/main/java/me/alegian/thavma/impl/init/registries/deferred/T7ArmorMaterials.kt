@@ -67,8 +67,8 @@ object T7ArmorMaterials {
     )
   }
 
-  val CUSTOS_ARCANUM = REGISTRAR.register(
-    "custos_arcanum"
+  val THAVMITE_VANGUARD = REGISTRAR.register(
+    "thavmite_vanguard"
   ) { ->
     ArmorMaterial(
       mapOf(
@@ -81,7 +81,7 @@ object T7ArmorMaterials {
       SoundEvents.ARMOR_EQUIP_NETHERITE,
       { Ingredient.of(T7Items.THAVMITE_INGOT) },
       listOf(
-        ArmorMaterial.Layer(rl("custos_arcanum"))
+        ArmorMaterial.Layer(rl("thavmite_vanguard"))
       ),
       3.0f,
       0.1f

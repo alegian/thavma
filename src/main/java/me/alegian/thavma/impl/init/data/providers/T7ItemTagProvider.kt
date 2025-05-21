@@ -5,11 +5,6 @@ import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
 import me.alegian.thavma.impl.init.registries.T7Tags.SHARD
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_CORE
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
@@ -26,6 +21,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
@@ -35,6 +31,10 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_HELMET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.HolderLookup
@@ -55,7 +55,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       IRON_HANDLE.get(),
       GOLD_HANDLE.get(),
       ORICHALCUM_HANDLE.get(),
-      ARCANUM_HANDLE.get()
+      THAVMITE_HANDLE.get()
     )
 
     tag(WAND_CORE)
@@ -92,23 +92,23 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
 
     tag(ItemTags.FOOT_ARMOR).add(
       THAVMITE_BOOTS.get(),
-      CUSTOS_ARCANUM_BOOTS.get(),
+      THAVMITE_VANGUARD_BOOTS.get(),
       RESEARCHER_BOOTS.get()
     )
     tag(ItemTags.LEG_ARMOR).add(
       THAVMITE_LEGGINGS.get(),
-      CUSTOS_ARCANUM_LEGGINGS.get(),
+      THAVMITE_VANGUARD_LEGGINGS.get(),
       RESEARCHER_LEGGINGS.get()
     )
     tag(ItemTags.CHEST_ARMOR).add(
       THAVMITE_CHESTPLATE.get(),
-      CUSTOS_ARCANUM_CHESTPLATE.get(),
+      THAVMITE_VANGUARD_CHESTPLATE.get(),
       RESEARCHER_CHESTPLATE.get()
     )
     tag(ItemTags.HEAD_ARMOR).add(
       GOGGLES.get(),
       THAVMITE_HELMET.get(),
-      CUSTOS_ARCANUM_HELMET.get()
+      THAVMITE_VANGUARD_HELMET.get()
     )
 
     tag(CATALYST).add(Items.DRAGON_EGG)

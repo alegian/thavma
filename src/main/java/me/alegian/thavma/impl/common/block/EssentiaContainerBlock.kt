@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.EssentiaContainerBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.item.TestaItem
+import me.alegian.thavma.impl.common.item.ShardItem
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -27,10 +27,10 @@ class EssentiaContainerBlock : Block(Properties.ofFullCopy(Blocks.GLASS)), Entit
   override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext) = SHAPE
 
   override fun useItemOn(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hitResult: BlockHitResult): ItemInteractionResult {
-    val testa = stack.item
-    if (testa !is TestaItem) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    val shard = stack.item
+    if (shard !is ShardItem) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
-    val transferred = AspectContainer.at(level, pos)?.insert(testa.aspect.get(), 8, level.isClientSide)
+    val transferred = AspectContainer.at(level, pos)?.insert(shard.aspect.get(), 8, level.isClientSide)
     if (transferred == null || transferred <= 0) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
     if (!level.isClientSide && level is ServerLevel) level.updateBlockEntityS2C(pos)
 

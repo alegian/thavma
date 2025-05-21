@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_arcanum_ingot": {
+    "has_thavmite_block": {
       "conditions": {
         "items": [
           {
-            "items": "thavma:arcanum_ingot"
+            "items": "thavma:thavmite_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:arcanum_nugget"
+        "recipe": "thavma:thavmite_ingot_from_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_arcanum_ingot"
+      "has_thavmite_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "thavma:arcanum_nugget"
+      "thavma:thavmite_ingot_from_block"
     ]
   }
 }

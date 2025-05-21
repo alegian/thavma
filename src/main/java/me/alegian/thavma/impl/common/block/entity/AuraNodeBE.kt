@@ -131,7 +131,7 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
       for (stack in it.aspects) {
         // TODO: somehow clean this up
         val deferredAspect = T7Registries.ASPECT.wrapAsHolder(stack.aspect)
-        T7Items.TESTAS[deferredAspect]?.toStack(min(stack.amount, 64))?.let(container::addItem)
+        T7Items.SHARDS[deferredAspect]?.toStack(min(stack.amount, 64))?.let(container::addItem)
       }
 
       level?.let { Containers.dropContents(it, blockPos, container) }

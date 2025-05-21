@@ -66,7 +66,7 @@ object T7ArmorMaterials {
             },
             25,
             SoundEvents.ARMOR_EQUIP_IRON,
-            { Ingredient.of(T7Items.ARCANUM_INGOT) },
+            { Ingredient.of(T7Items.THAVMITE_INGOT) },
             listOf(
                 ArmorMaterial.Layer(rl("arcanum"))
             ),
@@ -89,7 +89,7 @@ object T7ArmorMaterials {
             },
             25,
             SoundEvents.ARMOR_EQUIP_NETHERITE,
-            { Ingredient.of(T7Items.ARCANUM_INGOT) },
+            { Ingredient.of(T7Items.THAVMITE_INGOT) },
             listOf(
                 ArmorMaterial.Layer(rl("arcanum"))
             ),

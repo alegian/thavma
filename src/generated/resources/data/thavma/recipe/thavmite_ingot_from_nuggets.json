@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "building",
+  "category": "misc",
   "key": {
     "#": {
-      "item": "thavma:arcanum_ingot"
+      "item": "thavma:thavmite_nugget"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "thavma:arcanum_block"
+    "id": "thavma:thavmite_ingot"
   }
 }

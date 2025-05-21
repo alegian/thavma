@@ -10,9 +10,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
@@ -36,9 +34,11 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.BuiltInRegistries
@@ -63,8 +63,8 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(SILVERWOOD_CORE.get())
 
     basicItem(RUNE.get())
-    basicItem(ARCANUM_INGOT.get())
-    basicItem(ARCANUM_NUGGET.get())
+    basicItem(THAVMITE_INGOT.get())
+    basicItem(THAVMITE_NUGGET.get())
     basicItem(ORICHALCUM_INGOT.get())
     basicItem(ORICHALCUM_NUGGET.get())
 
@@ -105,7 +105,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     handheldItem(ARCANUM_SHOVEL)
     handheldItem(ARCANUM_HOE)
 
-    for (testa in TESTAS.values) withVanillaParent(testa.id.path, "testa", "generated")
+    for (shard in SHARDS.values) withVanillaParent(shard.id.path, "shard", "generated")
 
     for (wand in WANDS.values()) withExistingParent(wand.name, rl("wand"))
 

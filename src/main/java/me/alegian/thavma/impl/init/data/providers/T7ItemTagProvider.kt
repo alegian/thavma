@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
-import me.alegian.thavma.impl.init.registries.T7Tags.TESTA
+import me.alegian.thavma.impl.init.registries.T7Tags.SHARD
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_CORE
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
@@ -12,10 +12,8 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_KATANA
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
@@ -33,8 +31,10 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGINGS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.HolderLookup
@@ -65,15 +65,15 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
         SILVERWOOD_CORE.get()
       )
 
-    for (testa in TESTAS.values) tag(TESTA).add(testa.get())
+    for (shard in SHARDS.values) tag(SHARD).add(shard.get())
 
     tag(Tags.Items.INGOTS).add(
-      ARCANUM_INGOT.get(),
+      THAVMITE_INGOT.get(),
       ORICHALCUM_INGOT.get()
     )
 
     tag(Tags.Items.NUGGETS).add(
-      ARCANUM_NUGGET.get(),
+      THAVMITE_NUGGET.get(),
       ORICHALCUM_NUGGET.get()
     )
 

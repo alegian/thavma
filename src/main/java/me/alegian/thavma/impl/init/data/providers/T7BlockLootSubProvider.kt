@@ -1,11 +1,10 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.common.block.InfusedBlock
-import me.alegian.thavma.impl.common.item.TestaItem
+import me.alegian.thavma.impl.common.item.ShardItem
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
@@ -27,7 +26,8 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.TESTAS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
@@ -60,14 +60,14 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     this.add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
     this.dropSelf(ELEMENTAL_STONE.get())
 
-    this.dropSelf(ARCANUM_BLOCK.get())
+    this.dropSelf(THAVMITE_BLOCK.get())
     this.dropSelf(ORICHALCUM_BLOCK.get())
 
     this.dropSelf(ESSENTIA_CONTAINER.get())
 
     for (aspect in PRIMAL_ASPECTS) {
-      this.infusedBlock(INFUSED_STONES[aspect], TESTAS[aspect])
-      this.infusedBlock(INFUSED_DEEPSLATES[aspect], TESTAS[aspect])
+      this.infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])
+      this.infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
     }
   }
 
@@ -78,7 +78,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
       .toList()
   }
 
-  private fun infusedBlock(block: DeferredBlock<InfusedBlock>?, item: DeferredItem<TestaItem>?) {
+  private fun infusedBlock(block: DeferredBlock<InfusedBlock>?, item: DeferredItem<ShardItem>?) {
     if (block == null || item == null) throw IllegalStateException("Thavma Exception: Null block or item when creating loot table for infused ore")
     this.add(block.get()) { b -> this.createOreDrop(b, item.get()) }
   }

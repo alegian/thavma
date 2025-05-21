@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
@@ -24,6 +23,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
@@ -45,7 +45,7 @@ object T7CreativeModeTabs {
       CreativeModeTab
         .builder()
         .title(Component.translatable(Thavma.MODID))
-        .icon { T7Items.THAUMONOMICON.get().defaultInstance }
+        .icon { T7Items.BOOK.get().defaultInstance }
         .displayItems { _, output ->
           output.accept(AURA_NODE.get())
           output.accept(ESSENTIA_CONTAINER.get())
@@ -65,7 +65,7 @@ object T7CreativeModeTabs {
           for (infusedStone in INFUSED_STONES.values) output.accept(infusedStone.get())
           for (infusedStone in INFUSED_DEEPSLATES.values) output.accept(infusedStone.get())
 
-          output.accept(ARCANUM_BLOCK.get())
+          output.accept(THAVMITE_BLOCK.get())
           output.accept(ORICHALCUM_BLOCK.get())
 
           output.accept(GREATWOOD_LEAVES.get())
@@ -91,13 +91,13 @@ object T7CreativeModeTabs {
           output.accept(T7Items.SILVERWOOD_CORE)
 
           output.accept(T7Items.RUNE)
-          output.accept(T7Items.ARCANUM_INGOT)
-          output.accept(T7Items.ARCANUM_NUGGET)
+          output.accept(T7Items.THAVMITE_INGOT)
+          output.accept(T7Items.THAVMITE_NUGGET)
           output.accept(T7Items.ORICHALCUM_INGOT)
           output.accept(T7Items.ORICHALCUM_NUGGET)
           output.accept(T7Items.RESEARCH_SCROLL)
           output.accept(T7Items.OCULUS)
-          output.accept(T7Items.THAUMONOMICON)
+          output.accept(T7Items.BOOK)
 
           output.accept(T7Items.wandOrThrow(IRON.get(), WOOD.get()))
           output.accept(
@@ -130,7 +130,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.CUSTOS_ARCANUM_LEGGINGS)
           output.accept(T7Items.CUSTOS_ARCANUM_BOOTS)
 
-          for (testa in T7Items.TESTAS.values) output.accept(testa)
+          for (shard in T7Items.SHARDS.values) output.accept(shard)
 
           output.accept(T7Items.ARCANUM_AXE)
           output.accept(T7Items.ARCANUM_PICKAXE)

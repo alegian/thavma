@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "thavma:arcanum_ingot"
+      "item": "thavma:thavmite_ingot"
     }
   ],
   "result": {
     "count": 9,
-    "id": "thavma:arcanum_nugget"
+    "id": "thavma:thavmite_nugget"
   }
 }

@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.BLOCK
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -14,6 +13,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
@@ -34,7 +34,7 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
         // TODO: add nitor
         tag(BLOCK).addTag(BlockTags.FIRE).addTag(BlockTags.CAMPFIRES)
         tag(BlockTags.NEEDS_IRON_TOOL).add(
-            ARCANUM_BLOCK.get(),
+            THAVMITE_BLOCK.get(),
             ORICHALCUM_BLOCK.get()
         )
         tag(BlockTags.MINEABLE_WITH_AXE).add(
@@ -50,12 +50,12 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
         tag(BlockTags.PLANKS).add(GREATWOOD_PLANKS.get(), SILVERWOOD_PLANKS.get())
 
         tag(Tags.Blocks.STORAGE_BLOCKS).add(
-            ARCANUM_BLOCK.get(),
+            THAVMITE_BLOCK.get(),
             ORICHALCUM_BLOCK.get()
         )
 
         tag(BlockTags.BEACON_BASE_BLOCKS).add(
-            ARCANUM_BLOCK.get(),
+            THAVMITE_BLOCK.get(),
             ORICHALCUM_BLOCK.get()
         )
     }

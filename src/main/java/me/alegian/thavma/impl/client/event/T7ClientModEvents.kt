@@ -102,7 +102,7 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
       },
       T7Blocks.INFUSED_DEEPSLATES[aspect],
       T7Blocks.INFUSED_STONES[aspect],
-      T7Items.TESTAS[aspect]
+      T7Items.SHARDS[aspect]
     )
   }
   event.register(

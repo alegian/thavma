@@ -14,7 +14,6 @@ import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
@@ -34,6 +33,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
@@ -41,13 +41,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_KATANA
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
@@ -71,7 +70,8 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAUMONOMICON
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
@@ -112,13 +112,13 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SILVERWOOD_CORE.get(), "Silverwood Wand Core")
 
     add(RUNE.get(), "Rune")
-    add(ARCANUM_INGOT.get(), "Arcanum Ingot")
-    add(ARCANUM_NUGGET.get(), "Arcanum Nugget")
+    add(THAVMITE_INGOT.get(), "Thavmite Ingot")
+    add(THAVMITE_NUGGET.get(), "Thavmite Nugget")
     add(ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
     add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(RESEARCH_SCROLL.get(), "Research Scroll")
     add(OCULUS.get(), "Oculus")
-    add(THAUMONOMICON.get(), "Thaumonomicon")
+    add(BOOK.get(), "Elements of Thavma")
 
     add(GOGGLES.get(), "Goggles Of Revealing")
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
@@ -137,8 +137,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(CUSTOS_ARCANUM_CHESTPLATE.get(), "Custos Arcanum Chestplate")
     add(CUSTOS_ARCANUM_LEGGINGS.get(), "Custos Arcanum Leggings")
 
-    for ((aspect, testa) in T7Items.TESTAS)
-      add(testa.get(), aspectTranslations[aspect]!! + " Testa")
+    for ((aspect, shard) in T7Items.SHARDS)
+      add(shard.get(), aspectTranslations[aspect]!! + " Shard")
 
     add(ARCANUM_SWORD.get(), "Arcanum Sword")
     add(ARCANUM_AXE.get(), "Arcanum Axe")
@@ -181,7 +181,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     for ((aspect, infusedDeepslate) in T7Blocks.INFUSED_DEEPSLATES)
       add(infusedDeepslate.get(), aspectTranslations[aspect]!! + " Infused Deepslate")
 
-    add(ARCANUM_BLOCK.get(), "Arcanum Block")
+    add(THAVMITE_BLOCK.get(), "Thavmite Block")
     add(ORICHALCUM_BLOCK.get(), "Orichalcum Block")
 
     add(GREATWOOD_LOG.get(), "Greatwood Log")

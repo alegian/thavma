@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "item": "thavma:arcanum_ingot"
+      "item": "thavma:thavmite_ingot"
     },
     "s": {
       "tag": "c:rods/wooden"

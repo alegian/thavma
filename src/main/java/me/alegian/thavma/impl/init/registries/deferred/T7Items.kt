@@ -32,8 +32,8 @@ object T7Items {
   val SILVERWOOD_CORE = REGISTRAR.registerSimpleItem("silverwood_core")
 
   val RUNE = REGISTRAR.registerSimpleItem("rune")
-  val ARCANUM_INGOT = REGISTRAR.registerSimpleItem("arcanum_ingot")
-  val ARCANUM_NUGGET = REGISTRAR.registerSimpleItem("arcanum_nugget")
+  val THAVMITE_INGOT = REGISTRAR.registerSimpleItem("thavmite_ingot")
+  val THAVMITE_NUGGET = REGISTRAR.registerSimpleItem("thavmite_nugget")
   val ORICHALCUM_INGOT = REGISTRAR.registerSimpleItem("orichalcum_ingot")
   val ORICHALCUM_NUGGET = REGISTRAR.registerSimpleItem("orichalcum_nugget")
   val RESEARCH_SCROLL = REGISTRAR.register("research_scroll", ::ResearchScrollItem)
@@ -107,7 +107,7 @@ object T7Items {
   val ARCANUM_KATANA = REGISTRAR.register("arcanum_katana", ::KatanaItem)
   val ZEPHYR = REGISTRAR.register("zephyr", ::ZephyrItem)
   val OCULUS = REGISTRAR.registerItem("oculus", ::OculusItem)
-  val THAUMONOMICON = REGISTRAR.register("thaumonomicon", ::ThaumonomiconItem)
+  val BOOK = REGISTRAR.register("book", ::T7BookItem)
 
   val GOGGLES = REGISTRAR.register("goggles", ::GogglesItem)
   val GOGGLES_CURIO = REGISTRAR.registerSimpleItem("goggles_curio", Item.Properties().stacksTo(1))
@@ -170,8 +170,8 @@ object T7Items {
     Item.Properties().fireResistant().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
 
-  val TESTAS = linkedMapWithPrimalKeys { aspect ->
-    REGISTRAR.registerItem(aspect.id.path + "_testa") { _ -> TestaItem(aspect) }
+  val SHARDS = linkedMapWithPrimalKeys { aspect ->
+    REGISTRAR.registerItem(aspect.id.path + "_shard") { _ -> ShardItem(aspect) }
   }
 
   val ANGRY_ZOMBIE_SPAWN_EGG = REGISTRAR.registerItem("angry_zombie_spawn_egg") { p -> DeferredSpawnEggItem(T7EntityTypes.ANGRY_ZOMBIE, 0x00AFAF, 0x9e2323, p) }

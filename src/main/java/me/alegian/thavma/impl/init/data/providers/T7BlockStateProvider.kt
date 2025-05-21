@@ -4,7 +4,6 @@ import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
@@ -26,6 +25,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -78,7 +78,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.leavesBlockWithItem(SILVERWOOD_LEAVES.get())
     this.saplingBlockWithItem(SILVERWOOD_SAPLING.get())
 
-    this.simpleBlockWithItem(ARCANUM_BLOCK.get())
+    this.simpleBlockWithItem(THAVMITE_BLOCK.get())
     this.simpleBlockWithItem(ORICHALCUM_BLOCK.get())
 
     this.simpleBlockWithItem(ELEMENTAL_STONE.get())

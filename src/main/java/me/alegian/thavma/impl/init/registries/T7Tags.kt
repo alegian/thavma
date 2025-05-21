@@ -7,7 +7,7 @@ import net.minecraft.tags.TagKey
 object T7Tags {
   val WAND_HANDLE = TagKey.create(Registries.ITEM, rl("wand_handle"))
   val WAND_CORE = TagKey.create(Registries.ITEM, rl("wand_core"))
-  val TESTA = TagKey.create(Registries.ITEM, rl("testa"))
+  val SHARD = TagKey.create(Registries.ITEM, rl("shard"))
   val CATALYST = TagKey.create(Registries.ITEM, rl("catalyst"))
 
   val SONIC = TagKey.create(Registries.DAMAGE_TYPE, rl("sonic"))

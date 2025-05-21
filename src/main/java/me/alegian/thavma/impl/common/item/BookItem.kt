@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
-class ThaumonomiconItem : Item(Properties().stacksTo(1)) {
+class T7BookItem : Item(Properties().stacksTo(1)) {
   override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
     if (level.isClientSide()) setScreen(BookScreen())
 

@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.item
 import me.alegian.thavma.impl.client.renderer.geo.WandRenderer
 import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.entity.FancyThaumonomiconEntity
+import me.alegian.thavma.impl.common.entity.FancyBookEntity
 import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
@@ -95,7 +95,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     }
     if (blockState.`is`(Blocks.BOOKSHELF)) {
       if (!level.isClientSide() && level.removeBlock(blockPos, false)) level.addFreshEntity(
-        FancyThaumonomiconEntity(level, blockPos)
+        FancyBookEntity(level, blockPos)
       )
       level.playSound(context.player, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0f, 1.0f)
       return InteractionResult.SUCCESS

@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "thavma:arcanum_block"
+      "item": "thavma:thavmite_block"
     }
   ],
   "result": {
     "count": 9,
-    "id": "thavma:arcanum_ingot"
+    "id": "thavma:thavmite_ingot"
   }
 }

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "thavma:arcanum_block"
+          "name": "thavma:thavmite_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "thavma:blocks/arcanum_block"
+  "random_sequence": "thavma:blocks/thavmite_block"
 }

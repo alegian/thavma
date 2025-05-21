@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "thavma:block/arcanum_block"
+    "all": "thavma:block/thavmite_block"
   }
 }

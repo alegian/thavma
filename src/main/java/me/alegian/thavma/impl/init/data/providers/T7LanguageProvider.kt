@@ -37,6 +37,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
@@ -107,6 +108,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(EYE_OF_WARDEN.get(), "Eye of Warden")
     add(ROTTEN_BRAIN.get(), "Rotten Brain")
     add(SIGIL.get(), "Sigil")
+    add(FABRIC.get(), "Infused Fabric")
 
     add(GREATWOOD_CORE.get(), "Greatwood Wand Core")
     add(SILVERWOOD_CORE.get(), "Silverwood Wand Core")
@@ -124,8 +126,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
     add(DAWN_CHARM.get(), "Charm of the Dawn")
     add(RESEARCHER_BOOTS.get(), "Researcher Boots")
-    add(RESEARCHER_CHESTPLATE.get(), "Researcher Chestplate")
-    add(RESEARCHER_LEGGINGS.get(), "Researcher Leggings")
+    add(RESEARCHER_CHESTPLATE.get(), "Researcher Robes")
+    add(RESEARCHER_LEGGINGS.get(), "Researcher Pants")
 
     add(THAVMITE_BOOTS.get(), "Thavmite Boots")
     add(THAVMITE_HELMET.get(), "Thavmite Helmet")

@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
@@ -58,6 +59,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(EYE_OF_WARDEN.get())
     basicItem(ROTTEN_BRAIN.get())
     basicItem(SIGIL.get())
+    basicItem(FABRIC.get())
 
     basicItem(GREATWOOD_CORE.get())
     basicItem(SILVERWOOD_CORE.get())

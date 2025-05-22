@@ -57,7 +57,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
    *
    * 1. Receiving Vis from an Aura Node, by spawning a VisEntity<br></br>
    * 2. Turning Cauldrons into Crucibles<br></br>
-   * 3. Creating Thaumonomicons from Bookcases
+   * 3. Creating "Elements of Thavma" books from Bookcases
    */
   override fun useOn(context: UseOnContext): InteractionResult {
     val level = context.level

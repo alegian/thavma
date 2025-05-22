@@ -28,8 +28,8 @@ object T7ArmorMaterials {
     )
   }
 
-  val RESEARCHER = REGISTRAR.register(
-    "researcher"
+  val APPRENTICE = REGISTRAR.register(
+    "apprentice"
   ) { ->
     ArmorMaterial(
       mapOf(

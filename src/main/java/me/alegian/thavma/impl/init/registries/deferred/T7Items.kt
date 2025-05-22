@@ -116,19 +116,19 @@ object T7Items {
   val GOGGLES_CURIO = REGISTRAR.registerSimpleItem("goggles_curio", Item.Properties().stacksTo(1))
   val DAWN_CHARM = REGISTRAR.registerSimpleItem("charm_of_the_dawn", Item.Properties().stacksTo(1))
 
-  val RESEARCHER_CHESTPLATE = REGISTRAR.registerItem(
-    "researcher_chestplate",
-    { props -> ResearcherArmorItem(ArmorItem.Type.CHESTPLATE, props) },
+  val APPRENTICE_CHESTPLATE = REGISTRAR.registerItem(
+    "apprentice_chestplate",
+    { props -> ApprenticeArmorItem(ArmorItem.Type.CHESTPLATE, props) },
     Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(21))
   )
-  val RESEARCHER_LEGGINGS = REGISTRAR.registerItem(
-    "researcher_leggings",
-    { props -> ResearcherArmorItem(ArmorItem.Type.LEGGINGS, props) },
+  val APPRENTICE_LEGGINGS = REGISTRAR.registerItem(
+    "apprentice_leggings",
+    { props -> ApprenticeArmorItem(ArmorItem.Type.LEGGINGS, props) },
     Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(21))
   )
-  val RESEARCHER_BOOTS = REGISTRAR.registerItem(
-    "researcher_boots",
-    { props -> ResearcherArmorItem(ArmorItem.Type.BOOTS, props) },
+  val APPRENTICE_BOOTS = REGISTRAR.registerItem(
+    "apprentice_boots",
+    { props -> ApprenticeArmorItem(ArmorItem.Type.BOOTS, props) },
     Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(21))
   )
 

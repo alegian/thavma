@@ -34,6 +34,9 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
@@ -47,9 +50,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
@@ -125,9 +125,9 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(GOGGLES.get(), "Goggles Of Revealing")
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
     add(DAWN_CHARM.get(), "Charm of the Dawn")
-    add(RESEARCHER_BOOTS.get(), "Researcher Boots")
-    add(RESEARCHER_CHESTPLATE.get(), "Researcher Robes")
-    add(RESEARCHER_LEGGINGS.get(), "Researcher Pants")
+    add(APPRENTICE_BOOTS.get(), "Apprentice Boots")
+    add(APPRENTICE_CHESTPLATE.get(), "Apprentice Robes")
+    add(APPRENTICE_LEGGINGS.get(), "Apprentice Pants")
 
     add(THAVMITE_BOOTS.get(), "Thavmite Boots")
     add(THAVMITE_HELMET.get(), "Thavmite Helmet")

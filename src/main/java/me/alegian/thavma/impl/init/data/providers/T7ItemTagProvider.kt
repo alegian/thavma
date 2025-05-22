@@ -5,6 +5,9 @@ import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
 import me.alegian.thavma.impl.init.registries.T7Tags.SHARD
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_CORE
 import me.alegian.thavma.impl.init.registries.T7Tags.WAND_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
@@ -12,9 +15,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
@@ -93,17 +93,17 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     tag(ItemTags.FOOT_ARMOR).add(
       THAVMITE_BOOTS.get(),
       THAVMITE_VANGUARD_BOOTS.get(),
-      RESEARCHER_BOOTS.get()
+      APPRENTICE_BOOTS.get()
     )
     tag(ItemTags.LEG_ARMOR).add(
       THAVMITE_LEGGINGS.get(),
       THAVMITE_VANGUARD_LEGGINGS.get(),
-      RESEARCHER_LEGGINGS.get()
+      APPRENTICE_LEGGINGS.get()
     )
     tag(ItemTags.CHEST_ARMOR).add(
       THAVMITE_CHESTPLATE.get(),
       THAVMITE_VANGUARD_CHESTPLATE.get(),
-      RESEARCHER_CHESTPLATE.get()
+      APPRENTICE_CHESTPLATE.get()
     )
     tag(ItemTags.HEAD_ARMOR).add(
       GOGGLES.get(),

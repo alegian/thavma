@@ -117,9 +117,9 @@ object T7CreativeModeTabs {
           output.accept(T7Items.GOGGLES)
           output.accept(T7Items.GOGGLES_CURIO)
           output.accept(T7Items.DAWN_CHARM)
-          output.accept(T7Items.RESEARCHER_CHESTPLATE)
-          output.accept(T7Items.RESEARCHER_LEGGINGS)
-          output.accept(T7Items.RESEARCHER_BOOTS)
+          output.accept(T7Items.APPRENTICE_CHESTPLATE)
+          output.accept(T7Items.APPRENTICE_LEGGINGS)
+          output.accept(T7Items.APPRENTICE_BOOTS)
 
           output.accept(T7Items.THAVMITE_HELMET)
           output.accept(T7Items.THAVMITE_CHESTPLATE)

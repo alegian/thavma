@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.RESEARCHER
+import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.APPRENTICE
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.world.entity.EquipmentSlot
@@ -15,7 +15,7 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
-class ResearcherArmorItem(type: Type, properties: Properties) : ArmorItem(RESEARCHER, type, properties), GeoItem {
+class ApprenticeArmorItem(type: Type, properties: Properties) : ArmorItem(APPRENTICE, type, properties), GeoItem {
   private val cache = GeckoLibUtil.createInstanceCache(this)
 
   override fun registerControllers(controllers: ControllerRegistrar?) {
@@ -26,7 +26,7 @@ class ResearcherArmorItem(type: Type, properties: Properties) : ArmorItem(RESEAR
   override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider>) {
     consumer.accept(object : GeoRenderProvider {
       private val renderer by lazy {
-        GeoArmorRenderer(DefaultedItemGeoModel<ResearcherArmorItem>(rl("researcher_armor")))
+        GeoArmorRenderer(DefaultedItemGeoModel<ApprenticeArmorItem>(rl("apprentice_armor")))
       }
 
       override fun <T : LivingEntity> getGeoArmorRenderer(livingEntity: T?, itemStack: ItemStack, equipmentSlot: EquipmentSlot?, original: HumanoidModel<T>?) = renderer

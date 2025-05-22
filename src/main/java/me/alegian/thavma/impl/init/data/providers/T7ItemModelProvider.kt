@@ -3,6 +3,9 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
@@ -14,9 +17,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
@@ -86,9 +86,9 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(GOGGLES.get())
     basicItem(GOGGLES_CURIO.get())
     basicItem(DAWN_CHARM.get())
-    basicItem(RESEARCHER_CHESTPLATE.get())
-    basicItem(RESEARCHER_LEGGINGS.get())
-    basicItem(RESEARCHER_BOOTS.get())
+    basicItem(APPRENTICE_CHESTPLATE.get())
+    basicItem(APPRENTICE_LEGGINGS.get())
+    basicItem(APPRENTICE_BOOTS.get())
 
     basicItem(THAVMITE_HELMET.get())
     basicItem(THAVMITE_CHESTPLATE.get())

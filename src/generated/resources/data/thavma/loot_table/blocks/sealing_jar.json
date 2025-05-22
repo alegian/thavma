@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "thavma:essentia_container"
+          "name": "thavma:sealing_jar"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "thavma:blocks/essentia_container"
+  "random_sequence": "thavma:blocks/sealing_jar"
 }

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.common.block.entity.AuraNodeBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.use
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
@@ -81,7 +81,7 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       poseStack.pushPose()
       poseStack.scale(3f, 3f, 3f)
       poseStack.translate(-0.5, -0.5, -0.5)
-      Minecraft.getInstance().blockRenderer.renderSingleBlock(ESSENTIA_CONTAINER.get().defaultBlockState(), poseStack, bufferSource, combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.translucent())
+      Minecraft.getInstance().blockRenderer.renderSingleBlock(SEALING_JAR.get().defaultBlockState(), poseStack, bufferSource, combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.translucent())
       poseStack.popPose()
     }
   }

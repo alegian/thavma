@@ -8,7 +8,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -21,6 +20,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -63,7 +63,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     this.dropSelf(THAVMITE_BLOCK.get())
     this.dropSelf(ORICHALCUM_BLOCK.get())
 
-    this.dropSelf(ESSENTIA_CONTAINER.get())
+    this.dropSelf(SEALING_JAR.get())
 
     for (aspect in PRIMAL_ASPECTS) {
       this.infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])

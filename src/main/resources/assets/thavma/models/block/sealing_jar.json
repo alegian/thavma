@@ -6,8 +6,8 @@
   ],
   "render_type": "minecraft:translucent",
   "textures": {
-    "2": "thavma:block/essentia_container",
-    "particle": "thavma:block/essentia_container"
+    "2": "thavma:block/sealing_jar",
+    "particle": "thavma:block/sealing_jar"
   },
   "elements": [
     {

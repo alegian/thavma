@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.client.util.rotateX
 import me.alegian.thavma.impl.client.util.rotateZ
-import me.alegian.thavma.impl.common.block.entity.EssentiaContainerBE
+import me.alegian.thavma.impl.common.block.entity.SealingJarBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.use
 import net.minecraft.client.Minecraft
@@ -18,8 +18,8 @@ import net.neoforged.neoforge.client.RenderTypeHelper
 
 private const val MAX_HEIGHT = 10 / 16f
 
-class EssentiaContainerBER : BlockEntityRenderer<EssentiaContainerBE> {
-  override fun render(be: EssentiaContainerBE, partialTick: Float, poseStack: PoseStack, bufferSource: MultiBufferSource, packedLight: Int, packedOverlay: Int) {
+class SealingJarBER : BlockEntityRenderer<SealingJarBE> {
+  override fun render(be: SealingJarBE, partialTick: Float, poseStack: PoseStack, bufferSource: MultiBufferSource, packedLight: Int, packedOverlay: Int) {
     AspectContainer.at(be.level, be.blockPos)?.let {
       val stack = it.aspects.firstOrNull()
       if (stack == null) return

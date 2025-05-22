@@ -17,7 +17,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -28,6 +27,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -195,7 +195,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SILVERWOOD_PLANKS.get(), "Silverwood Planks")
     add(SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
 
-    add(ESSENTIA_CONTAINER.get(), "Essentia Container")
+    add(SEALING_JAR.get(), "Sealing Jar")
 
     add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
     add(ResearchScreen.translationId, "Research Table")

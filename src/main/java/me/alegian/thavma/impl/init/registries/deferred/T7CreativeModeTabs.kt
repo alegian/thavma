@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -18,6 +17,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -48,7 +48,7 @@ object T7CreativeModeTabs {
         .icon { T7Items.BOOK.get().defaultInstance }
         .displayItems { _, output ->
           output.accept(AURA_NODE.get())
-          output.accept(ESSENTIA_CONTAINER.get())
+          output.accept(SEALING_JAR.get())
 
           output.accept(CRUCIBLE.get())
           output.accept(ARCANE_WORKBENCH.get())

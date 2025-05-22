@@ -22,9 +22,9 @@ object T7Blocks {
     "aura_node"
   ) { AuraNodeBlock() }
 
-  val ESSENTIA_CONTAINER = register(
-    "essentia_container",
-    ::EssentiaContainerBlock
+  val SEALING_JAR = register(
+    "sealing_jar",
+    ::SealingJarBlock
   )
 
   val CRUCIBLE = register(

@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
-import me.alegian.thavma.impl.common.block.entity.EssentiaContainerBE
+import me.alegian.thavma.impl.common.block.entity.SealingJarBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.ShardItem
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
@@ -21,8 +21,8 @@ import net.minecraft.world.phys.shapes.CollisionContext
 
 private val SHAPE = Block.box(3.0, 0.0, 3.0, 13.0, 14.0, 13.0)
 
-class EssentiaContainerBlock : Block(Properties.ofFullCopy(Blocks.GLASS)), EntityBlock {
-  override fun newBlockEntity(pos: BlockPos, state: BlockState) = EssentiaContainerBE(pos, state)
+class SealingJarBlock : Block(Properties.ofFullCopy(Blocks.GLASS)), EntityBlock {
+  override fun newBlockEntity(pos: BlockPos, state: BlockState) = SealingJarBE(pos, state)
 
   override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext) = SHAPE
 

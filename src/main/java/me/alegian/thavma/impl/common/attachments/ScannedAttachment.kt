@@ -7,7 +7,7 @@ import net.neoforged.neoforge.attachment.AttachmentType
 
 /**
  * Data Attachment, used on players to save what has been scanned
- * with the oculus
+ * with the arcane lens
  */
 data class ScannedAttachment(
   val scanned: MutableSet<String> = mutableSetOf()

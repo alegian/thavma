@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.item
 import me.alegian.thavma.impl.common.entity.getScanHitResult
 import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.entity.setScanned
-import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.OCULUS
+import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.ARCANE_LENS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.RenderType
@@ -32,11 +32,11 @@ import software.bernie.geckolib.renderer.GeoItemRenderer
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
-class OculusItem(props: Properties) : Item(
+class ArcaneLensItem(props: Properties) : Item(
   props.attributes(
     ItemAttributeModifiers.builder().add(
       REVEALING,
-      OCULUS,
+      ARCANE_LENS,
       EquipmentSlotGroup.MAINHAND
     ).build()
   ).stacksTo(1)
@@ -97,8 +97,8 @@ class OculusItem(props: Properties) : Item(
   override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider?>) {
     consumer.accept(object : GeoRenderProvider {
       private val renderer by lazy {
-        GeoItemRenderer(object : DefaultedItemGeoModel<OculusItem>(rl("oculus")) {
-          override fun getRenderType(animatable: OculusItem, texture: ResourceLocation) =
+        GeoItemRenderer(object : DefaultedItemGeoModel<ArcaneLensItem>(rl("arcane_lens")) {
+          override fun getRenderType(animatable: ArcaneLensItem, texture: ResourceLocation) =
             RenderType.entityTranslucent(texture)
         })
       }

@@ -97,7 +97,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.ORICHALCUM_INGOT)
           output.accept(T7Items.ORICHALCUM_NUGGET)
           output.accept(T7Items.RESEARCH_SCROLL)
-          output.accept(T7Items.OCULUS)
+          output.accept(T7Items.ARCANE_LENS)
           output.accept(T7Items.BOOK)
 
           output.accept(T7Items.wandOrThrow(IRON.get(), WOOD.get()))

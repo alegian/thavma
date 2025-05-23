@@ -7,7 +7,7 @@ import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.entity.hasScanned
-import me.alegian.thavma.impl.common.item.OculusItem
+import me.alegian.thavma.impl.common.item.ArcaneLensItem
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -17,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 
-object OculusLayer : LayeredDraw.Layer {
+object ArcaneLensLayer : LayeredDraw.Layer {
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val width = graphics.guiWidth()
     val height = graphics.guiHeight()
@@ -30,7 +30,7 @@ object OculusLayer : LayeredDraw.Layer {
       level == null ||
       player == null ||
       hitResult?.type == HitResult.Type.MISS ||
-      !player.isHolding { stack -> stack.item is OculusItem }
+      !player.isHolding { stack -> stack.item is ArcaneLensItem }
     ) return
 
     var displayName: Component? = null

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_oculus": {
+    "has_arcane_lens": {
       "conditions": {
         "items": [
           {
-            "items": "thavma:oculus"
+            "items": "thavma:arcane_lens"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_oculus"
+      "has_arcane_lens"
     ]
   ],
   "rewards": {

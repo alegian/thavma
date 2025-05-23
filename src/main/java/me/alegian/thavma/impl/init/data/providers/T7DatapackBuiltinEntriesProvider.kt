@@ -126,10 +126,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance)
           .research(lockedAspect(2,0, Aspects.TERRA), lockedAspect(2, 4, Aspects.ORDO))
-          .addChild(ResearchEntries.Thavma.OCULUS)
+          .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.OCULUS, Vector2i(2, -2), false, T7Items.OCULUS.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
           .research(lockedAspect(2,0, Aspects.LUX), lockedAspect(2, 4, Aspects.PRAECANTATIO), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))

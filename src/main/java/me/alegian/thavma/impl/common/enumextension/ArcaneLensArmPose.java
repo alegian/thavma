@@ -5,7 +5,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.client.IArmPoseTransformer;
 
-public class OculusArmPose {
+public class ArcaneLensArmPose {
   private static final boolean TWO_HANDED = true;
 
   private static final IArmPoseTransformer ARM_POSE_TRANSFORMER = (model, entity, arm) -> {
@@ -23,6 +23,6 @@ public class OculusArmPose {
   );
 
   public static HumanoidModel.ArmPose value() {
-    return HumanoidModel.ArmPose.valueOf(Thavma.MODID + "_OCULUS");
+    return HumanoidModel.ArmPose.valueOf(Thavma.MODID + "_ARCANE_LENS");
   }
 }

@@ -109,7 +109,7 @@ object T7Items {
   val THAVMITE_KATANA = REGISTRAR.register("thavmite_katana", ::KatanaItem)
   val ZEPHYR = REGISTRAR.register("zephyr", ::ZephyrItem)
 
-  val OCULUS = REGISTRAR.registerItem("oculus", ::OculusItem)
+  val ARCANE_LENS = REGISTRAR.registerItem("arcane_lens", ::ArcaneLensItem)
   val BOOK = REGISTRAR.register("book", ::T7BookItem)
 
   val GOGGLES = REGISTRAR.register("goggles", ::GogglesItem)

@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.client.extension;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.alegian.thavma.impl.common.enumextension.OculusArmPose;
+import me.alegian.thavma.impl.common.enumextension.ArcaneLensArmPose;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
@@ -13,10 +13,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 @OnlyIn(Dist.CLIENT)
-public class OculusItemExtensions implements IClientItemExtensions {
+public class ArcaneLensItemExtensions implements IClientItemExtensions {
   @Override
   public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-    return OculusArmPose.value();
+    return ArcaneLensArmPose.value();
   }
 
   @Override

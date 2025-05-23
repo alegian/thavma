@@ -147,13 +147,13 @@ public class T7RecipeProvider extends RecipeProvider {
         .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getTHAVMITE_INGOT().get()), RecipeProvider.has(T7Items.INSTANCE.getTHAVMITE_INGOT().get()))
         .save(pRecipeOutput);
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.INSTANCE.getGOGGLES().get())
-        .define('o', T7Items.INSTANCE.getOCULUS())
+        .define('o', T7Items.INSTANCE.getARCANE_LENS())
         .define('g', Items.GOLD_INGOT)
         .define('l', Items.LEATHER)
         .pattern("lgl")
         .pattern("l l")
         .pattern("ogo")
-        .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getOCULUS().get()), RecipeProvider.has(T7Items.INSTANCE.getOCULUS().get()))
+        .unlockedBy(RecipeProvider.getHasName(T7Items.INSTANCE.getARCANE_LENS().get()), RecipeProvider.has(T7Items.INSTANCE.getARCANE_LENS().get()))
         .save(pRecipeOutput);
     ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, T7Items.INSTANCE.getGOGGLES_CURIO())
         .requires(T7Items.INSTANCE.getGOGGLES())

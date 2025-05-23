@@ -1,7 +1,7 @@
 {
   "category": "thavma:thavma",
   "children": [
-    "thavma:thavma/oculus"
+    "thavma:thavma/arcane_lens"
   ],
   "defaultResearchState": [
     {

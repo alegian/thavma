@@ -13,7 +13,7 @@ object ResearchEntries {
     val THAVMA = register("thavma", ResearchCategories.THAVMA)
     val TREES = register("trees", ResearchCategories.THAVMA)
     val ORES = register("ores", ResearchCategories.THAVMA)
-    val OCULUS = register("oculus", ResearchCategories.THAVMA)
+    val ARCANE_LENS = register("arcane_lens", ResearchCategories.THAVMA)
     val RESEARCH_TABLE = register("research_table", ResearchCategories.THAVMA)
     val ALCHEMY = register("alchemy", ResearchCategories.THAVMA)
     val WANDS = register("wands", ResearchCategories.THAVMA)

@@ -77,6 +77,6 @@
     }
   },
   "textures": {
-    "particle": "item/oculus"
+    "particle": "item/arcane_lens"
   }
 }

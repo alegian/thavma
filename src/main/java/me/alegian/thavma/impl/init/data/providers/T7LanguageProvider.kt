@@ -37,6 +37,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANE_LENS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
@@ -46,7 +47,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
@@ -119,7 +119,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
     add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(RESEARCH_SCROLL.get(), "Research Scroll")
-    add(OCULUS.get(), "Oculus")
+    add(ARCANE_LENS.get(), "Arcane Lens")
     add(BOOK.get(), "Elements of Thavma")
 
     add(GOGGLES.get(), "Goggles Of Revealing")
@@ -211,7 +211,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.THAVMA, "Thavma")
     addEntry(ResearchEntries.Thavma.THAVMA, "Thavma")
-    addEntry(ResearchEntries.Thavma.OCULUS, "The Oculus")
+    addEntry(ResearchEntries.Thavma.ARCANE_LENS, "The Arcane Lens")
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Second Tab Entry")
 
@@ -223,7 +223,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         flew into my hands! I can sense great power within it.
       """,
       """
-        The cover reads "Thavma", but a lot of its pages appear blank, sealed by some magic.
+        The cover reads "Elements of Thavma", but a lot of its pages appear blank, sealed by some magic.
       """,
       """
         To read them, I will first need to break that seal. It won't be easy... but
@@ -240,8 +240,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
 
     addTextPage(
-      ResearchEntries.Thavma.OCULUS, 0,
-      "The Oculus",
+      ResearchEntries.Thavma.ARCANE_LENS, 0,
+      "The Arcane Lens",
       """
         The part of the book I can read describes an arcane tool that "allows the user
         to see", whatever that might mean. I have a feeling that crafting it could assist

@@ -4,11 +4,9 @@ import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -21,11 +19,13 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -78,7 +78,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.leavesBlockWithItem(SILVERWOOD_LEAVES.get())
     this.saplingBlockWithItem(SILVERWOOD_SAPLING.get())
 
-    this.simpleBlockWithItem(ARCANUM_BLOCK.get())
+    this.simpleBlockWithItem(THAVMITE_BLOCK.get())
     this.simpleBlockWithItem(ORICHALCUM_BLOCK.get())
 
     this.simpleBlockWithItem(ELEMENTAL_STONE.get())
@@ -88,9 +88,9 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.blockEntity1x1x1(PEDESTAL.get())
     this.blockEntity1x2x1(PILLAR.get())
 
-    this.simpleBlockWithItem(ESSENTIA_CONTAINER.get(), this.models().getExistingFile(rl("essentia_container")))
-    this.horizontalBlockWithItem(TABLE.get(), this.models().getExistingFile(rl("table")))
-    this.horizontalBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(rl("research_table")))
+    this.simpleBlockWithItem(SEALING_JAR.get(), this.models().getExistingFile(key(SEALING_JAR.get())))
+    this.horizontalBlockWithItem(TABLE.get(), this.models().getExistingFile(key(TABLE.get())))
+    this.horizontalBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(key(RESEARCH_TABLE.get())))
 
     this.itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
   }

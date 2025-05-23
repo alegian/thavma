@@ -32,8 +32,8 @@ object T7AttributeModifiers {
             AttributeModifier.Operation.ADD_VALUE
         )
 
-        val OCULUS = AttributeModifier(
-            LOCATION.withSuffix("oculus"),
+        val ARCANE_LENS = AttributeModifier(
+            LOCATION.withSuffix("arcane_lens"),
             1.0,
             AttributeModifier.Operation.ADD_VALUE
         )

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "thavma:thavmite_ingot"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "a a"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_helmet"
+  }
+}

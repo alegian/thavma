@@ -121,11 +121,11 @@ private fun gatherData(event: GatherDataEvent) {
 
 private fun modifyDefaultComponents(event: ModifyDefaultComponentsEvent) {
   event.modify(
-    T7Items.ARCANUM_HAMMER
+    T7Items.THAVMITE_HAMMER
   ) {
     it.set(
       DataComponents.MAX_DAMAGE,
-      T7Items.ARCANUM_HAMMER.get().tier.uses * 2
+      T7Items.THAVMITE_HAMMER.get().tier.uses * 2
     )
   }
 }

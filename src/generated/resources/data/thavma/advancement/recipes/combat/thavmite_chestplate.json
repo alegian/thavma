@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_thavmite_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:thavmite_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:thavmite_chestplate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_thavmite_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:thavmite_chestplate"
+    ]
+  }
+}

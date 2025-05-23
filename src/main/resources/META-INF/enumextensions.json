@@ -11,10 +11,10 @@
     },
     {
       "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
-      "name": "thavma_OCULUS",
+      "name": "thavma_ARCANE_LENS",
       "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
       "parameters": {
-        "class": "me/alegian/thavma/impl/common/enumextension/OculusArmPose",
+        "class": "me/alegian/thavma/impl/common/enumextension/ArcaneLensArmPose",
         "field": "ENUM_PARAMS"
       }
     }

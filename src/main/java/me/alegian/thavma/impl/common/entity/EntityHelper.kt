@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.entity
 
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_KATANA
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
 import net.minecraft.client.Minecraft
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.ItemTags
@@ -24,7 +24,7 @@ object EntityHelper {
   }
 
   fun isHandKatana(hand: InteractionHand): Boolean {
-    return Minecraft.getInstance().player?.getItemInHand(hand)?.item == ARCANUM_KATANA.get()
+    return Minecraft.getInstance().player?.getItemInHand(hand)?.item == THAVMITE_KATANA.get()
   }
 
   fun getServerHitResult(player: ServerPlayer): BlockHitResult {

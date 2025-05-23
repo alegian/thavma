@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_thavmite_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:thavmite_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:thavmite_ingot_from_nuggets"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_thavmite_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:thavmite_ingot_from_nuggets"
+    ]
+  }
+}

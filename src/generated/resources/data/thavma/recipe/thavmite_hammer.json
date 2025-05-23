@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "thavma:thavmite_ingot"
+    },
+    "s": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    " s "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_hammer"
+  }
+}

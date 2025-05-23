@@ -3,12 +3,12 @@ package me.alegian.thavma.impl.client.event
 import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.T7RenderStateShards
 import me.alegian.thavma.impl.client.T7VertexFormats
+import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
-import me.alegian.thavma.impl.client.extension.OculusItemExtensions
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
-import me.alegian.thavma.impl.client.gui.layer.OculusLayer
+import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
@@ -49,13 +49,13 @@ private fun clientSetup(event: FMLClientSetupEvent) {
 
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
   event.registerAboveAll(rl("vis"), WandLayer)
-  event.registerAboveAll(rl("oculus"), OculusLayer)
+  event.registerAboveAll(rl("arcane_lens"), ArcaneLensLayer)
 }
 
 private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.AURA_NODE.get()) { _ -> AuraNodeBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.CRUCIBLE.get()) { _ -> CrucibleBER() }
-  event.registerBlockEntityRenderer(T7BlockEntities.ESSENTIA_CONTAINER.get()) { _ -> EssentiaContainerBER() }
+  event.registerBlockEntityRenderer(T7BlockEntities.SEALING_JAR.get()) { _ -> SealingJarBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.WORKBENCH.get()) { _ -> WorkbenchBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.RESEARCH_TABLE.get()) { _ -> ResearchTableBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.MATRIX.get()) { _ -> MatrixBER() }
@@ -76,7 +76,7 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
   for (wand in T7Items.WANDS.values())
     event.registerItem(WandItemExtensions(), wand)
 
-  event.registerItem(OculusItemExtensions(), T7Items.OCULUS.get())
+  event.registerItem(ArcaneLensItemExtensions(), T7Items.ARCANE_LENS.get())
   event.registerItem(BEWLRItemExtensionFactory.create(WorkbenchBE().withDefaultAnimations()), T7Blocks.ARCANE_WORKBENCH.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(MatrixBE()), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(PillarBE()), T7Blocks.PILLAR.get().asItem())
@@ -102,7 +102,7 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
       },
       T7Blocks.INFUSED_DEEPSLATES[aspect],
       T7Blocks.INFUSED_STONES[aspect],
-      T7Items.TESTAS[aspect]
+      T7Items.SHARDS[aspect]
     )
   }
   event.register(

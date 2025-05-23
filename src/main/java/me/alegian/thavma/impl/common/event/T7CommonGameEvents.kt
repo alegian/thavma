@@ -48,7 +48,7 @@ private fun entityTickPre(event: EntityTickEvent.Pre) {
 
 private fun livingDamagePost(event: LivingDamageEvent.Post) {
   val itemStack = event.source.weaponItem ?: return
-  if (itemStack.item != T7Items.ARCANUM_KATANA.get()) return
+  if (itemStack.item != T7Items.THAVMITE_KATANA.get()) return
 
   val entity = event.entity
   if (entity.health <= 10) {

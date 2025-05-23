@@ -1,7 +1,7 @@
 {
   "category": "thavma:thavma",
   "children": [
-    "thavma:thavma/oculus"
+    "thavma:thavma/arcane_lens"
   ],
   "defaultResearchState": [
     {
@@ -25,7 +25,7 @@
   ],
   "icon": {
     "count": 1,
-    "id": "thavma:aqua_testa"
+    "id": "thavma:aqua_shard"
   },
   "pages": [],
   "position": [

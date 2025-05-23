@@ -14,5 +14,5 @@ object WandHandleMaterials {
 
     val ORICHALCUM = REGISTRAR.register("orichalcum", ::WandHandleMaterial)
 
-    val ARCANUM = REGISTRAR.register("arcanum", ::WandHandleMaterial)
+    val THAVMITE = REGISTRAR.register("thavmite", ::WandHandleMaterial)
 }

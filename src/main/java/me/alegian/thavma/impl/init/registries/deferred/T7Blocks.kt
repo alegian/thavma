@@ -22,9 +22,9 @@ object T7Blocks {
     "aura_node"
   ) { AuraNodeBlock() }
 
-  val ESSENTIA_CONTAINER = register(
-    "essentia_container",
-    ::EssentiaContainerBlock
+  val SEALING_JAR = register(
+    "sealing_jar",
+    ::SealingJarBlock
   )
 
   val CRUCIBLE = register(
@@ -107,10 +107,8 @@ object T7Blocks {
     "silverwood_sapling"
   ) { sapling(SilverwoodTree.GROWER) }
 
-  private fun s() = "apling"
-
-  val ARCANUM_BLOCK = register(
-    "arcanum_block"
+  val THAVMITE_BLOCK = register(
+    "thavmite_block"
   ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)) }
 
   val ORICHALCUM_BLOCK = register(

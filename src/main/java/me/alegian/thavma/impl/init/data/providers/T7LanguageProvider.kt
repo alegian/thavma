@@ -14,11 +14,9 @@ import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ESSENTIA_CONTAINER
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -29,58 +27,61 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_AXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_INGOT
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_KATANA
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_PICKAXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SHOVEL
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANUM_SWORD
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.CUSTOS_ARCANUM_LEGGINGS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANE_LENS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.OCULUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCHER_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAUMONOMICON
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_CHESTPLATE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_HELMET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ARCANUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
+import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -102,58 +103,59 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(IRON_HANDLE.get(), "Iron Wand Handle")
     add(GOLD_HANDLE.get(), "Gold Wand Handle")
     add(ORICHALCUM_HANDLE.get(), "Orichalcum Wand Handle")
-    add(ARCANUM_HANDLE.get(), "Arcanum Wand Handle")
+    add(THAVMITE_HANDLE.get(), "Thavmite Wand Handle")
 
     add(EYE_OF_WARDEN.get(), "Eye of Warden")
     add(ROTTEN_BRAIN.get(), "Rotten Brain")
     add(SIGIL.get(), "Sigil")
+    add(FABRIC.get(), "Infused Fabric")
 
     add(GREATWOOD_CORE.get(), "Greatwood Wand Core")
     add(SILVERWOOD_CORE.get(), "Silverwood Wand Core")
 
     add(RUNE.get(), "Rune")
-    add(ARCANUM_INGOT.get(), "Arcanum Ingot")
-    add(ARCANUM_NUGGET.get(), "Arcanum Nugget")
+    add(THAVMITE_INGOT.get(), "Thavmite Ingot")
+    add(THAVMITE_NUGGET.get(), "Thavmite Nugget")
     add(ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
     add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(RESEARCH_SCROLL.get(), "Research Scroll")
-    add(OCULUS.get(), "Oculus")
-    add(THAUMONOMICON.get(), "Thaumonomicon")
+    add(ARCANE_LENS.get(), "Arcane Lens")
+    add(BOOK.get(), "Elements of Thavma")
 
     add(GOGGLES.get(), "Goggles Of Revealing")
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
     add(DAWN_CHARM.get(), "Charm of the Dawn")
-    add(RESEARCHER_BOOTS.get(), "Researcher Boots")
-    add(RESEARCHER_CHESTPLATE.get(), "Researcher Chestplate")
-    add(RESEARCHER_LEGGINGS.get(), "Researcher Leggings")
+    add(APPRENTICE_BOOTS.get(), "Apprentice Boots")
+    add(APPRENTICE_CHESTPLATE.get(), "Apprentice Robes")
+    add(APPRENTICE_LEGGINGS.get(), "Apprentice Pants")
 
-    add(ARCANUM_BOOTS.get(), "Arcanum Boots")
-    add(ARCANUM_HELMET.get(), "Arcanum Helmet")
-    add(ARCANUM_CHESTPLATE.get(), "Arcanum Chestplate")
-    add(ARCANUM_LEGGINGS.get(), "Arcanum Leggings")
+    add(THAVMITE_BOOTS.get(), "Thavmite Boots")
+    add(THAVMITE_HELMET.get(), "Thavmite Helmet")
+    add(THAVMITE_CHESTPLATE.get(), "Thavmite Chestplate")
+    add(THAVMITE_LEGGINGS.get(), "Thavmite Leggings")
 
-    add(CUSTOS_ARCANUM_BOOTS.get(), "Custos Arcanum Boots")
-    add(CUSTOS_ARCANUM_HELMET.get(), "Custos Arcanum Helmet")
-    add(CUSTOS_ARCANUM_CHESTPLATE.get(), "Custos Arcanum Chestplate")
-    add(CUSTOS_ARCANUM_LEGGINGS.get(), "Custos Arcanum Leggings")
+    add(THAVMITE_VANGUARD_BOOTS.get(), "Thavmite Vanguard Boots")
+    add(THAVMITE_VANGUARD_HELMET.get(), "Thavmite Vanguard Helmet")
+    add(THAVMITE_VANGUARD_CHESTPLATE.get(), "Thavmite Vanguard Chestplate")
+    add(THAVMITE_VANGUARD_LEGGINGS.get(), "Thavmite Vanguard Leggings")
 
-    for ((aspect, testa) in T7Items.TESTAS)
-      add(testa.get(), aspectTranslations[aspect]!! + " Testa")
+    for ((aspect, shard) in T7Items.SHARDS)
+      add(shard.get(), aspectTranslations[aspect]!! + " Shard")
 
-    add(ARCANUM_SWORD.get(), "Arcanum Sword")
-    add(ARCANUM_AXE.get(), "Arcanum Axe")
-    add(ARCANUM_PICKAXE.get(), "Arcanum Pickaxe")
-    add(ARCANUM_HAMMER.get(), "Arcanum Hammer")
-    add(ARCANUM_SHOVEL.get(), "Arcanum Shovel")
-    add(ARCANUM_HOE.get(), "Arcanum Hoe")
-    add(ARCANUM_KATANA.get(), "Arcanum Katana")
+    add(THAVMITE_SWORD.get(), "Thavmite Sword")
+    add(THAVMITE_AXE.get(), "Thavmite Axe")
+    add(THAVMITE_PICKAXE.get(), "Thavmite Pickaxe")
+    add(THAVMITE_HAMMER.get(), "Thavmite Hammer")
+    add(THAVMITE_SHOVEL.get(), "Thavmite Shovel")
+    add(THAVMITE_HOE.get(), "Thavmite Hoe")
+    add(THAVMITE_KATANA.get(), "Thavmite Katana")
     add(ZEPHYR.get(), "Zephyr")
 
     val handleNames: MutableMap<WandHandleMaterial, String> = HashMap()
     handleNames[IRON.get()] = "Iron Handle"
     handleNames[GOLD.get()] = "Gold Handle"
     handleNames[ORICHALCUM.get()] = "Orichalcum Handle"
-    handleNames[ARCANUM.get()] = "Arcanum Handle"
+    handleNames[THAVMITE.get()] = "Thavmite Handle"
 
     val coreNames: MutableMap<WandCoreMaterial, String> = HashMap()
     coreNames[WOOD.get()] = "Wooden"
@@ -181,7 +183,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     for ((aspect, infusedDeepslate) in T7Blocks.INFUSED_DEEPSLATES)
       add(infusedDeepslate.get(), aspectTranslations[aspect]!! + " Infused Deepslate")
 
-    add(ARCANUM_BLOCK.get(), "Arcanum Block")
+    add(THAVMITE_BLOCK.get(), "Thavmite Block")
     add(ORICHALCUM_BLOCK.get(), "Orichalcum Block")
 
     add(GREATWOOD_LOG.get(), "Greatwood Log")
@@ -193,7 +195,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SILVERWOOD_PLANKS.get(), "Silverwood Planks")
     add(SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
 
-    add(ESSENTIA_CONTAINER.get(), "Essentia Container")
+    add(SEALING_JAR.get(), "Sealing Jar")
 
     add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
     add(ResearchScreen.translationId, "Research Table")
@@ -209,7 +211,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.THAVMA, "Thavma")
     addEntry(ResearchEntries.Thavma.THAVMA, "Thavma")
-    addEntry(ResearchEntries.Thavma.OCULUS, "The Oculus")
+    addEntry(ResearchEntries.Thavma.ARCANE_LENS, "The Arcane Lens")
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Second Tab Entry")
 
@@ -221,7 +223,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         flew into my hands! I can sense great power within it.
       """,
       """
-        The cover reads "Thavma", but a lot of its pages appear blank, sealed by some magic.
+        The cover reads "Elements of Thavma", but a lot of its pages appear blank, sealed by some magic.
       """,
       """
         To read them, I will first need to break that seal. It won't be easy... but
@@ -238,8 +240,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
 
     addTextPage(
-      ResearchEntries.Thavma.OCULUS, 0,
-      "The Oculus",
+      ResearchEntries.Thavma.ARCANE_LENS, 0,
+      "The Arcane Lens",
       """
         The part of the book I can read describes an arcane tool that "allows the user
         to see", whatever that might mean. I have a feeling that crafting it could assist

@@ -15,8 +15,10 @@ import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -177,6 +179,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(TABLE.get(), "Table")
     add(ITEM_HATCH.get(), "Item Hatch")
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
+    add(CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
+    add(ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
 
     for ((aspect, infusedStone) in T7Blocks.INFUSED_STONES)
       add(infusedStone.get(), aspectTranslations[aspect]!! + " Infused Stone")

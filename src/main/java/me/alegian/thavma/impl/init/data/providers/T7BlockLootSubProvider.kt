@@ -6,8 +6,10 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -39,35 +41,37 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLAGS, lookupProvider) {
   override fun generate() {
-    this.dropSelf(GREATWOOD_LOG.get())
-    this.dropSelf(GREATWOOD_PLANKS.get())
-    this.add(GREATWOOD_LEAVES.get()) { l -> this.createLeavesDrops(l, GREATWOOD_SAPLING.get(), *NORMAL_LEAVES_SAPLING_CHANCES) }
-    this.dropSelf(GREATWOOD_SAPLING.get())
+    dropSelf(GREATWOOD_LOG.get())
+    dropSelf(GREATWOOD_PLANKS.get())
+    add(GREATWOOD_LEAVES.get()) { l -> this.createLeavesDrops(l, GREATWOOD_SAPLING.get(), *NORMAL_LEAVES_SAPLING_CHANCES) }
+    dropSelf(GREATWOOD_SAPLING.get())
 
-    this.dropSelf(SILVERWOOD_LOG.get())
-    this.dropSelf(SILVERWOOD_PLANKS.get())
-    this.add(SILVERWOOD_LEAVES.get()) { l -> this.createLeavesDrops(l, SILVERWOOD_SAPLING.get(), *NORMAL_LEAVES_SAPLING_CHANCES) }
-    this.dropSelf(SILVERWOOD_SAPLING.get())
+    dropSelf(SILVERWOOD_LOG.get())
+    dropSelf(SILVERWOOD_PLANKS.get())
+    add(SILVERWOOD_LEAVES.get()) { l -> this.createLeavesDrops(l, SILVERWOOD_SAPLING.get(), *NORMAL_LEAVES_SAPLING_CHANCES) }
+    dropSelf(SILVERWOOD_SAPLING.get())
 
-    this.dropSelf(CRUCIBLE.get())
-    this.dropSelf(AURA_NODE.get()) // TODO: replace
-    this.dropSelf(ARCANE_WORKBENCH.get())
-    this.dropSelf(MATRIX.get())
-    this.dropSelf(PILLAR.get())
-    this.dropSelf(PEDESTAL.get())
-    this.dropSelf(TABLE.get())
-    this.dropSelf(ITEM_HATCH.get())
-    this.add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
-    this.dropSelf(ELEMENTAL_STONE.get())
+    dropSelf(CRUCIBLE.get())
+    dropSelf(AURA_NODE.get()) // TODO: replace
+    dropSelf(ARCANE_WORKBENCH.get())
+    dropSelf(MATRIX.get())
+    dropSelf(PILLAR.get())
+    dropSelf(PEDESTAL.get())
+    dropSelf(TABLE.get())
+    dropSelf(ITEM_HATCH.get())
+    add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
+    dropSelf(ELEMENTAL_STONE.get())
+    dropSelf(CRACKED_ELEMENTAL_STONE.get())
+    dropSelf(ELEMENTAL_STONE_BRICKS.get())
 
-    this.dropSelf(THAVMITE_BLOCK.get())
-    this.dropSelf(ORICHALCUM_BLOCK.get())
+    dropSelf(THAVMITE_BLOCK.get())
+    dropSelf(ORICHALCUM_BLOCK.get())
 
-    this.dropSelf(SEALING_JAR.get())
+    dropSelf(SEALING_JAR.get())
 
     for (aspect in PRIMAL_ASPECTS) {
-      this.infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])
-      this.infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
+      infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])
+      infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
     }
   }
 

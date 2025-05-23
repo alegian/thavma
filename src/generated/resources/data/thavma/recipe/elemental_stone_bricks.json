@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "s": {
+      "item": "thavma:elemental_stone"
+    }
+  },
+  "pattern": [
+    "ss ",
+    "ss "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:elemental_stone_bricks"
+  }
+}

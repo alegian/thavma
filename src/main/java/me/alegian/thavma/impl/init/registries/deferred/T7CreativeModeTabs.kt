@@ -3,8 +3,10 @@ package me.alegian.thavma.impl.init.registries.deferred
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -61,6 +63,8 @@ object T7CreativeModeTabs {
           output.accept(PEDESTAL.get())
 
           output.accept(ELEMENTAL_STONE.get())
+          output.accept(CRACKED_ELEMENTAL_STONE.get())
+          output.accept(ELEMENTAL_STONE_BRICKS.get())
 
           for (infusedStone in INFUSED_STONES.values) output.accept(infusedStone.get())
           for (infusedStone in INFUSED_DEEPSLATES.values) output.accept(infusedStone.get())

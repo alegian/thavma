@@ -5,8 +5,10 @@ import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -42,7 +44,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) : BlockStateProvider(output, Thavma.MODID, exFileHelper) {
   override fun registerStatesAndModels() {
-    this.simpleBlockWithItem(
+    simpleBlockWithItem(
       CRUCIBLE.get(), this.models().getBuilder(CRUCIBLE.id.path)
         .parent(UncheckedModelFile("block/cauldron"))
         .texture("particle", rl("block/crucible_side"))
@@ -64,35 +66,37 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
         .end()
     )
 
-    for (infusedStone in INFUSED_STONES.values) this.infusedBlockWithItem(infusedStone.get())
+    for (infusedStone in INFUSED_STONES.values) infusedBlockWithItem(infusedStone.get())
 
-    for (infusedDeepslate in INFUSED_DEEPSLATES.values) this.infusedBlockWithItem(infusedDeepslate.get())
+    for (infusedDeepslate in INFUSED_DEEPSLATES.values) infusedBlockWithItem(infusedDeepslate.get())
 
-    this.logBlockWithItem(GREATWOOD_LOG.get())
-    this.simpleBlockWithItem(GREATWOOD_PLANKS.get())
-    this.leavesBlockWithItem(GREATWOOD_LEAVES.get())
-    this.saplingBlockWithItem(GREATWOOD_SAPLING.get())
+    logBlockWithItem(GREATWOOD_LOG.get())
+    simpleBlockWithItem(GREATWOOD_PLANKS.get())
+    leavesBlockWithItem(GREATWOOD_LEAVES.get())
+    saplingBlockWithItem(GREATWOOD_SAPLING.get())
 
-    this.logBlockWithItem(SILVERWOOD_LOG.get())
-    this.simpleBlockWithItem(SILVERWOOD_PLANKS.get())
-    this.leavesBlockWithItem(SILVERWOOD_LEAVES.get())
-    this.saplingBlockWithItem(SILVERWOOD_SAPLING.get())
+    logBlockWithItem(SILVERWOOD_LOG.get())
+    simpleBlockWithItem(SILVERWOOD_PLANKS.get())
+    leavesBlockWithItem(SILVERWOOD_LEAVES.get())
+    saplingBlockWithItem(SILVERWOOD_SAPLING.get())
 
-    this.simpleBlockWithItem(THAVMITE_BLOCK.get())
-    this.simpleBlockWithItem(ORICHALCUM_BLOCK.get())
+    simpleBlockWithItem(THAVMITE_BLOCK.get())
+    simpleBlockWithItem(ORICHALCUM_BLOCK.get())
 
-    this.simpleBlockWithItem(ELEMENTAL_STONE.get())
+    simpleBlockWithItem(ELEMENTAL_STONE.get())
+    simpleBlockWithItem(CRACKED_ELEMENTAL_STONE.get())
+    simpleBlockWithItem(ELEMENTAL_STONE_BRICKS.get())
 
-    this.blockEntity1x1x1(ARCANE_WORKBENCH.get())
-    this.blockEntity1x1x1(MATRIX.get())
-    this.blockEntity1x1x1(PEDESTAL.get())
-    this.blockEntity1x2x1(PILLAR.get())
+    blockEntity1x1x1(ARCANE_WORKBENCH.get())
+    blockEntity1x1x1(MATRIX.get())
+    blockEntity1x1x1(PEDESTAL.get())
+    blockEntity1x2x1(PILLAR.get())
 
-    this.simpleBlockWithItem(SEALING_JAR.get(), this.models().getExistingFile(key(SEALING_JAR.get())))
-    this.horizontalBlockWithItem(TABLE.get(), this.models().getExistingFile(key(TABLE.get())))
-    this.horizontalBlockWithItem(RESEARCH_TABLE.get(), this.models().getExistingFile(key(RESEARCH_TABLE.get())))
+    simpleBlockWithItem(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
+    horizontalBlockWithItem(TABLE.get(), models().getExistingFile(key(TABLE.get())))
+    horizontalBlockWithItem(RESEARCH_TABLE.get(), models().getExistingFile(key(RESEARCH_TABLE.get())))
 
-    this.itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
+    itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
   }
 
   private fun simpleBlockWithItem(block: Block) {

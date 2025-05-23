@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.common.item.ShardItem
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
@@ -63,6 +64,8 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     dropSelf(ELEMENTAL_STONE.get())
     dropSelf(CRACKED_ELEMENTAL_STONE.get())
     dropSelf(ELEMENTAL_STONE_BRICKS.get())
+
+    dropSelf(ARCANE_LEVITATOR.get())
 
     dropSelf(THAVMITE_BLOCK.get())
     dropSelf(ORICHALCUM_BLOCK.get())

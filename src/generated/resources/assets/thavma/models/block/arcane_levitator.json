@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "thavma:block/arcane_levitator_bottom",
+    "side": "thavma:block/arcane_levitator_side",
+    "top": "thavma:block/arcane_levitator_top"
+  }
+}

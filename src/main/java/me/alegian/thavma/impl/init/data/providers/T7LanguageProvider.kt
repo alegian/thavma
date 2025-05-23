@@ -13,6 +13,7 @@ import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
@@ -24,6 +25,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.LEVITATOR_COLUMN
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
@@ -181,6 +183,9 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
     add(CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
     add(ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
+
+    add(ARCANE_LEVITATOR.get(), "Arcane Levitator")
+    add(LEVITATOR_COLUMN.get(), "Arcane Levitator Column")
 
     for ((aspect, infusedStone) in T7Blocks.INFUSED_STONES)
       add(infusedStone.get(), aspectTranslations[aspect]!! + " Infused Stone")

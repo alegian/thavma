@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.common.block.InfusedBlock
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
@@ -95,6 +96,16 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     simpleBlockWithItem(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
     horizontalBlockWithItem(TABLE.get(), models().getExistingFile(key(TABLE.get())))
     horizontalBlockWithItem(RESEARCH_TABLE.get(), models().getExistingFile(key(RESEARCH_TABLE.get())))
+
+    simpleBlockWithItem(
+      ARCANE_LEVITATOR.get(),
+      models().cubeBottomTop(
+        name(ARCANE_LEVITATOR.get()),
+        blockTexture(ARCANE_LEVITATOR.get()).withSuffix("_side"),
+        blockTexture(ARCANE_LEVITATOR.get()).withSuffix("_bottom"),
+        blockTexture(ARCANE_LEVITATOR.get()).withSuffix("_top")
+      )
+    )
 
     itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
   }

@@ -1,5 +1,8 @@
 package me.alegian.thavma.impl.common.block
 
+import me.alegian.thavma.impl.common.block.entity.LevitatorColumnBE
+import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.LEVITATOR_COLUMN
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -10,10 +13,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.RenderShape
-import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.shapes.CollisionContext
@@ -27,7 +27,7 @@ class LevitatorColumnBlock : Block(
     .noLootTable()
     .pushReaction(PushReaction.DESTROY)
     .sound(SoundType.EMPTY)
-) {
+), EntityBlock {
   override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
     val oldSpeed = entity.deltaMovement
     val newSpeedY = if (entity.isCrouching)
@@ -40,7 +40,9 @@ class LevitatorColumnBlock : Block(
   }
 
   override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-    setAndExpandUpwards(level, pos)
+    level.getBE(pos, LEVITATOR_COLUMN.get())?.levitatorY?.let{
+      setAndExpand(level, pos, it)
+    }
   }
 
 
@@ -70,23 +72,27 @@ class LevitatorColumnBlock : Block(
 
   override fun getRenderShape(state: BlockState) = RenderShape.INVISIBLE
 
+  override fun newBlockEntity(pos: BlockPos, state: BlockState) = LevitatorColumnBE(pos, state)
+
   companion object {
     fun canExistIn(blockState: BlockState) =
       blockState.block is LevitatorColumnBlock || blockState.isAir
 
-    fun setAndExpandUpwards(level: ServerLevel, pos: BlockPos) {
+    fun setAndExpand(level: ServerLevel, pos: BlockPos, levitatorY: Int) {
       val currentState = level.getBlockState(pos)
 
       if (canExistIn(currentState)) {
         var newState = T7Blocks.LEVITATOR_COLUMN.get().defaultBlockState()
-        if(!currentState.canSurvive(level, pos)) newState = Blocks.AIR.defaultBlockState()
+        if (!currentState.canSurvive(level, pos)) newState = Blocks.AIR.defaultBlockState()
 
         level.setBlock(pos, newState, UPDATE_CLIENTS)
         val newPos = pos.mutable().move(Direction.UP)
 
-        while (canExistIn(level.getBlockState(newPos))) {
-          if (!level.setBlock(newPos, newState, UPDATE_CLIENTS)) {
-            return
+        while (canExistIn(level.getBlockState(newPos)) && newPos.y - levitatorY <= 16) {
+          level.setBlock(newPos, newState, UPDATE_CLIENTS)
+
+          level.getBE(newPos, LEVITATOR_COLUMN.get())?.let {
+            it.levitatorY = levitatorY
           }
 
           newPos.move(Direction.UP)

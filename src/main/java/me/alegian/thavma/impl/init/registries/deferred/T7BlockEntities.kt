@@ -59,4 +59,8 @@ object T7BlockEntities {
   val RESEARCH_TABLE = REGISTRAR.register("research_table") { ->
     BlockEntityType.Builder.of(::ResearchTableBE, T7Blocks.RESEARCH_TABLE.get()).build(null)
   }
+
+  val LEVITATOR_COLUMN = REGISTRAR.register("levitator_column") { ->
+    BlockEntityType.Builder.of(::LevitatorColumnBE, T7Blocks.LEVITATOR_COLUMN.get()).build(null)
+  }
 }

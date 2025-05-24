@@ -18,6 +18,9 @@ class ArcaneLevitator : Block(Properties.ofFullCopy(Blocks.STONE)) {
     level.scheduleTick(pos, this, 20)
   }
 
+  /**
+   * on block removed above
+   */
   override fun updateShape(state: BlockState, direction: Direction, neighborState: BlockState, level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos): BlockState {
     if (direction == Direction.UP && LevitatorColumnBlock.canExistIn(neighborState))
       level.scheduleTick(pos, this, 20)
@@ -29,6 +32,6 @@ class ArcaneLevitator : Block(Properties.ofFullCopy(Blocks.STONE)) {
    * columns are placed only by ticking
    */
   override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-    LevitatorColumnBlock.setAndExpandUpwards(level, pos.above())
+    LevitatorColumnBlock.setAndExpand(level, pos.above(), pos.y)
   }
 }

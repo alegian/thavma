@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockState
@@ -61,7 +62,7 @@ class LevitatorColumnBlock : Block(
       level.scheduleTick(pos, this, 5)
     }
 
-    return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    return super.updateShape(state, direction, neighborState, level, pos, neighborPos)
   }
 
   override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext) =
@@ -75,8 +76,11 @@ class LevitatorColumnBlock : Block(
 
     fun setAndExpandUpwards(level: ServerLevel, pos: BlockPos) {
       val currentState = level.getBlockState(pos)
+
       if (canExistIn(currentState)) {
-        val newState = T7Blocks.LEVITATOR_COLUMN.get().defaultBlockState()
+        var newState = T7Blocks.LEVITATOR_COLUMN.get().defaultBlockState()
+        if(!currentState.canSurvive(level, pos)) newState = Blocks.AIR.defaultBlockState()
+
         level.setBlock(pos, newState, UPDATE_CLIENTS)
         val newPos = pos.mutable().move(Direction.UP)
 

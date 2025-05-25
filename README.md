@@ -1,6 +1,12 @@
 # Thavma
 
-## Preface
+## Downloads
+
+- [Curseforge](https://www.curseforge.com/minecraft/mc-mods/thavma)
+- [Modrinth](https://modrinth.com/mod/thavma)
+- [Github](https://github.com/alegian/thavma/releases)
+
+## Description
 
 A complete rewrite & re-imagination of azanor's Thaumcraft for modern versions of Minecraft.
 I am in no way associated with azanor and I have not used any of their assets.

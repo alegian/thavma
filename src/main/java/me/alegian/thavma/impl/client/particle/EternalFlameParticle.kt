@@ -13,9 +13,9 @@ class EternalFlameParticle(level: ClientLevel, private val centerX: Double, priv
 
   init {
     // add randomness to position
-    xo += random.nextDouble() * 0.4 - 0.2
-    yo += random.nextDouble() * 0.4 - 0.2
-    zo += random.nextDouble() * 0.4 - 0.2
+    xo += random.nextDouble() * 0.2 - 0.1
+    yo += random.nextDouble() * 0.2 - 0.1
+    zo += random.nextDouble() * 0.2 - 0.1
     setPos(xo, yo, zo)
     // undo the random that is hardcoded in speed
     xd = xSpeed
@@ -23,9 +23,9 @@ class EternalFlameParticle(level: ClientLevel, private val centerX: Double, priv
     zd = zSpeed
 
     hasPhysics = false
-    gravity = -0.1f
+    gravity = -0.05f
     pickSprite(spriteSet)
-    lifetime = 30
+    lifetime = 40
     quadSize *= 2f
     initialSize = quadSize
   }

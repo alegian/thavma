@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -84,6 +85,8 @@ object T7CreativeModeTabs {
           output.accept(SILVERWOOD_SAPLING.get())
           output.accept(SILVERWOOD_LOG.get())
           output.accept(SILVERWOOD_PLANKS.get())
+
+          output.accept(ETERNAL_FLAME.get())
 
           output.accept(T7Items.IRON_HANDLE)
           output.accept(T7Items.GOLD_HANDLE)

@@ -9,4 +9,5 @@ object T7ParticleTypes {
     val REGISTRAR = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, Thavma.MODID)
 
     val CRUCIBLE_BUBBLE = REGISTRAR.register("crucible_bubble") { -> SimpleParticleType(true) }
+    val ETERNAL_FLAME = REGISTRAR.register("eternal_flame") { -> SimpleParticleType(true) }
 }

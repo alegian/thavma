@@ -10,6 +10,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -107,7 +108,8 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
       )
     )
 
-    itemModels().getBuilder(AURA_NODE.id.path).parent(UncheckedModelFile("item/generated")).renderType(RenderType.translucent().name).texture("layer0", rl("item/aura_node"))
+    itemModels().basicItem(AURA_NODE.get().asItem()).renderType(RenderType.translucent().name)
+    itemModels().basicItem(ETERNAL_FLAME.get().asItem())
   }
 
   private fun simpleBlockWithItem(block: Block) {

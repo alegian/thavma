@@ -63,4 +63,8 @@ object T7BlockEntities {
   val LEVITATOR_COLUMN = REGISTRAR.register("levitator_column") { ->
     BlockEntityType.Builder.of(::LevitatorColumnBE, T7Blocks.LEVITATOR_COLUMN.get()).build(null)
   }
+
+  val ETERNAL_FLAME = REGISTRAR.register("eternal_flame") { ->
+    BlockEntityType.Builder.of(::EternalFlameBE, T7Blocks.ETERNAL_FLAME.get()).build(null)
+  }
 }

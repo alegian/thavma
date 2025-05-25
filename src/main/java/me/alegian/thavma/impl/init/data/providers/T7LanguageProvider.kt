@@ -20,6 +20,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -205,6 +206,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
 
     add(SEALING_JAR.get(), "Sealing Jar")
+
+    add(ETERNAL_FLAME.get(), "Eternal Flame")
 
     add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
     add(ResearchScreen.translationId, "Research Table")

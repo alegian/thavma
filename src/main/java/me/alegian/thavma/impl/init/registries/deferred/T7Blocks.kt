@@ -63,8 +63,8 @@ object T7Blocks {
   val CRACKED_ELEMENTAL_STONE = register("cracked_elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRACKED_STONE_BRICKS)) }
   val ELEMENTAL_STONE_BRICKS = register("elemental_stone_bricks") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)) }
 
-  val ARCANE_LEVITATOR = register("arcane_levitator"){ ArcaneLevitator() }
-  val LEVITATOR_COLUMN = register("arcane_levitator_column"){ LevitatorColumnBlock() }
+  val ARCANE_LEVITATOR = register("arcane_levitator") { ArcaneLevitator() }
+  val LEVITATOR_COLUMN = register("arcane_levitator_column") { LevitatorColumnBlock() }
 
   val INFUSED_STONES = linkedMapWithPrimalKeys { aspect ->
     register(aspect.id.path + "_infused_stone") { InfusedBlock(aspect, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE)) { Blocks.STONE } }
@@ -117,6 +117,8 @@ object T7Blocks {
   val ORICHALCUM_BLOCK = register(
     "orichalcum_block"
   ) { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)) }
+
+  val ETERNAL_FLAME = register("eternal_flame") { EternalFlame() }
 
   private fun <T : Block> register(name: String, sup: Supplier<T>): DeferredBlock<T> {
     val block = REGISTRAR.register(name, sup)

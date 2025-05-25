@@ -11,6 +11,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -76,6 +77,8 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
       infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])
       infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
     }
+
+    dropSelf(ETERNAL_FLAME.get())
   }
 
   override fun getKnownBlocks(): Iterable<Block> {

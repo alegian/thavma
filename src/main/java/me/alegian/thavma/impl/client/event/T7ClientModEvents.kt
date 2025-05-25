@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.client.particle.CrucibleBubbleParticle
+import me.alegian.thavma.impl.client.particle.EternalFlameParticle
 import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
@@ -68,8 +69,13 @@ private fun registerEntityRenderers(event: RegisterRenderers) {
 
 private fun registerParticleProviders(event: RegisterParticleProvidersEvent) {
   event.registerSpriteSet(
-    T7ParticleTypes.CRUCIBLE_BUBBLE.get()
-  ) { pSprites -> CrucibleBubbleParticle.Provider(pSprites) }
+    T7ParticleTypes.CRUCIBLE_BUBBLE.get(),
+    CrucibleBubbleParticle::Provider
+  )
+  event.registerSpriteSet(
+    T7ParticleTypes.ETERNAL_FLAME.get(),
+    EternalFlameParticle::Provider
+  )
 }
 
 private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {

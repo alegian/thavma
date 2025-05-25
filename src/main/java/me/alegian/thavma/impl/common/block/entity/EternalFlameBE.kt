@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import kotlin.random.Random
 
 class EternalFlameBE(pos: BlockPos, state: BlockState) : BlockEntity(ETERNAL_FLAME.get(), pos, state) {
   companion object {
@@ -13,7 +14,14 @@ class EternalFlameBE(pos: BlockPos, state: BlockState) : BlockEntity(ETERNAL_FLA
       if (!level.isClientSide) return
 
       val center = pos.center
-      level.addAlwaysVisibleParticle(T7ParticleTypes.ETERNAL_FLAME.get(), center.x, center.y, center.z, 0.02, 0.02, 0.02)
+      val random = Random(pos.asLong() + level.gameTime)
+      level.addAlwaysVisibleParticle(
+        T7ParticleTypes.ETERNAL_FLAME.get(),
+        center.x, center.y, center.z,
+        random.nextDouble(-0.04, 0.04),
+        random.nextDouble(-0.04, 0.04),
+        random.nextDouble(-0.04, 0.04),
+      )
     }
   }
 }

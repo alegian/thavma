@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 
-class ArcaneLevitator : Block(Properties.ofFullCopy(Blocks.STONE)) {
+class ArcaneLevitatorBlock : Block(Properties.ofFullCopy(Blocks.STONE)) {
   /**
    * try place columns on place
    */

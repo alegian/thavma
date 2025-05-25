@@ -14,13 +14,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.PushReaction
 
-class EternalFlame : Block(
+class EternalFlameBlock : Block(
   Properties.of()
     .noCollission()
     .instabreak()
     .sound(SoundType.WOOL)
     .lightLevel { 15 }
     .pushReaction(PushReaction.DESTROY)
+    .noTerrainParticles()
 ) , EntityBlock{
   override fun newBlockEntity(pos: BlockPos, state: BlockState) = EternalFlameBE(pos, state)
 

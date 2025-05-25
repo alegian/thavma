@@ -48,7 +48,7 @@ class LevitatorColumnBlock : Block(
 
   override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
     val belowBlock = level.getBlockState(pos.below()).block
-    return belowBlock is ArcaneLevitator || belowBlock is LevitatorColumnBlock
+    return belowBlock is ArcaneLevitatorBlock || belowBlock is LevitatorColumnBlock
   }
 
   /**

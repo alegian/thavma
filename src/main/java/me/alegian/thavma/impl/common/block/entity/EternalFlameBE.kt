@@ -19,7 +19,7 @@ class EternalFlameBE(pos: BlockPos, state: BlockState) : BlockEntity(ETERNAL_FLA
         T7ParticleTypes.ETERNAL_FLAME.get(),
         center.x, center.y, center.z,
         random.nextDouble(-0.04, 0.04),
-        random.nextDouble(-0.04, 0.04),
+        .0,
         random.nextDouble(-0.04, 0.04),
       )
     }

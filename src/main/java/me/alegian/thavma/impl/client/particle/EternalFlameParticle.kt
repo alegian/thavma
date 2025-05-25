@@ -7,19 +7,26 @@ import net.minecraft.client.particle.TextureSheetParticle
 import net.minecraft.client.renderer.LightTexture
 import net.minecraft.core.particles.SimpleParticleType
 
-class EternalFlameParticle(level: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double, spriteSet: SpriteSet) : TextureSheetParticle(level, x, y, z, .0, .0, .0) {
+class EternalFlameParticle(level: ClientLevel, private val centerX: Double, private val centerY: Double, private val centerZ: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double, spriteSet: SpriteSet) : TextureSheetParticle(level, centerX, centerY, centerZ, .0, .0, .0) {
   private var initialSize = 0f
   private val initialAlpha = 1f
 
   init {
-    // undo the random that is hardcoded in particles
+    // add randomness to position
+    xo += random.nextDouble() * 0.4 - 0.2
+    yo += random.nextDouble() * 0.4 - 0.2
+    zo += random.nextDouble() * 0.4 - 0.2
+    setPos(xo, yo, zo)
+    // undo the random that is hardcoded in speed
     xd = xSpeed
     yd = ySpeed
     zd = zSpeed
 
     hasPhysics = false
+    gravity = -0.1f
     pickSprite(spriteSet)
-    lifetime = 40
+    lifetime = 30
+    quadSize *= 2f
     initialSize = quadSize
   }
 
@@ -32,6 +39,10 @@ class EternalFlameParticle(level: ClientLevel, x: Double, y: Double, z: Double, 
     val normalizedLifeLeft = 1 - age.toFloat() / lifetime
     quadSize = initialSize * normalizedLifeLeft
     alpha = initialAlpha * normalizedLifeLeft
+    // gravitate inward along X and Z
+    val k = 0.08
+    xd -= k * (x - centerX)
+    zd -= k * (z - centerZ)
   }
 
   override fun getLightColor(partialTick: Float) = LightTexture.FULL_BRIGHT

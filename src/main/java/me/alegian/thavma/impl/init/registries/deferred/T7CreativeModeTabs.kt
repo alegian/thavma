@@ -13,6 +13,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
@@ -87,6 +88,7 @@ object T7CreativeModeTabs {
           output.accept(SILVERWOOD_PLANKS.get())
 
           output.accept(ETERNAL_FLAME.get())
+          output.accept(HUNGRY_CHEST.get())
 
           output.accept(T7Items.IRON_HANDLE)
           output.accept(T7Items.GOLD_HANDLE)

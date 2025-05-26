@@ -21,10 +21,7 @@ import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
 import me.alegian.thavma.impl.client.renderer.entity.VisER
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
-import me.alegian.thavma.impl.common.block.entity.MatrixBE
-import me.alegian.thavma.impl.common.block.entity.PedestalBE
-import me.alegian.thavma.impl.common.block.entity.PillarBE
-import me.alegian.thavma.impl.common.block.entity.WorkbenchBE
+import me.alegian.thavma.impl.common.block.entity.*
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.rl
@@ -62,6 +59,7 @@ private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.MATRIX.get()) { _ -> MatrixBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PILLAR.get()) { _ -> PillarBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PEDESTAL.get()) { _ -> PedestalBER() }
+  event.registerBlockEntityRenderer(T7BlockEntities.HUNGRY_CHEST.get()) { ctx -> HungryChestBER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.FANCY_ITEM.get()) { ctx -> FancyItemER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.VIS.get()) { ctx -> VisER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.ANGRY_ZOMBIE.get()) { ctx -> AngryZombieER(ctx) }
@@ -87,6 +85,7 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
   event.registerItem(BEWLRItemExtensionFactory.create(MatrixBE()), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(PillarBE()), T7Blocks.PILLAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(PedestalBE()), T7Blocks.PEDESTAL.get().asItem())
+  event.registerItem(BEWLRItemExtensionFactory.create(HungryChestBE()), T7Blocks.HUNGRY_CHEST.get().asItem())
 }
 
 private fun registerReloadListenerEvent(event: RegisterClientReloadListenersEvent) {

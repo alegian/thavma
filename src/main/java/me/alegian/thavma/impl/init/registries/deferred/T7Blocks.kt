@@ -120,6 +120,8 @@ object T7Blocks {
 
   val ETERNAL_FLAME = register("eternal_flame") { EternalFlameBlock() }
 
+  val HUNGRY_CHEST = register("hungry_chest") { HungryChestBlock() }
+
   private fun <T : Block> register(name: String, sup: Supplier<T>): DeferredBlock<T> {
     val block = REGISTRAR.register(name, sup)
     T7Items.REGISTRAR.registerSimpleBlockItem(name, block)

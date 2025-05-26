@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
@@ -92,6 +93,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     blockEntity1x1x1(ARCANE_WORKBENCH.get())
     blockEntity1x1x1(MATRIX.get())
     blockEntity1x1x1(PEDESTAL.get())
+    blockEntity1x1x1(HUNGRY_CHEST.get(), blockTexture(GREATWOOD_PLANKS.get()))
     blockEntity1x2x1(PILLAR.get())
 
     simpleBlockWithItem(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
@@ -142,9 +144,11 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     this.itemModels().withExistingParent(this.name(block), "item/generated").texture("layer0", blockRL)
   }
 
-  fun blockEntity1x1x1(block: Block) {
-    this.simpleBlockWithItem(block, this.models().getBuilder(this.name(block)).texture("particle", this.blockTexture(block)))
-    this.itemModels().withExistingParent(this.name(block), "item/chest").texture("particle", this.blockTexture(block))
+  fun blockEntity1x1x1(block: Block) = blockEntity1x1x1(block, blockTexture(block))
+
+  fun blockEntity1x1x1(block: Block, particle: ResourceLocation) {
+    this.simpleBlockWithItem(block, this.models().getBuilder(this.name(block)).texture("particle", particle))
+    this.itemModels().withExistingParent(this.name(block), "item/chest").texture("particle", particle)
   }
 
   fun blockEntity1x2x1(block: Block) {

@@ -67,4 +67,8 @@ object T7BlockEntities {
   val ETERNAL_FLAME = REGISTRAR.register("eternal_flame") { ->
     BlockEntityType.Builder.of(::EternalFlameBE, T7Blocks.ETERNAL_FLAME.get()).build(null)
   }
+
+  val HUNGRY_CHEST = REGISTRAR.register("hungry_chest") { ->
+    BlockEntityType.Builder.of(::HungryChestBE, T7Blocks.HUNGRY_CHEST.get()).build(null)
+  }
 }

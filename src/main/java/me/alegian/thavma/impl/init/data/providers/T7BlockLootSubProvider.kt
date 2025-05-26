@@ -16,6 +16,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
@@ -79,6 +80,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     }
 
     dropSelf(ETERNAL_FLAME.get())
+    dropSelf(HUNGRY_CHEST.get())
   }
 
   override fun getKnownBlocks(): Iterable<Block> {

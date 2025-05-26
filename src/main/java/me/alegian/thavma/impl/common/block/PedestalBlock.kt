@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.neoforged.neoforge.items.ItemHandlerHelper.giveItemToPlayer
 
 private val SHAPE = box(4.0, 0.0, 4.0, 12.0, 14.0, 12.0)
 
@@ -49,7 +50,7 @@ class PedestalBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().pu
       if (!it.inventory.getStackInSlot(0).isEmpty) {
         val stackFromPedestal = it.inventory.extractItem(0, 1, false)
         it.inventory.setStackInSlot(0, ItemStack.EMPTY)
-        player.inventory.add(stackFromPedestal)
+        giveItemToPlayer(player, stackFromPedestal)
         level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1f, 1f)
       } else if (it.inventory.getStackInSlot(0).isEmpty && !stack.isEmpty) {
         it.inventory.insertItem(0, ItemStack(stack.item, 1), false)

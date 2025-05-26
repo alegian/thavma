@@ -11,10 +11,7 @@ import me.alegian.thavma.impl.init.data.providers.*
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Registries
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
-import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandCoreCombinations
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandHandleCombinations
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
@@ -24,14 +21,17 @@ import net.minecraft.data.loot.LootTableProvider.SubProviderEntry
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.SpawnPlacementTypes
 import net.minecraft.world.entity.monster.Monster
+import net.minecraft.world.level.block.ChestBlock
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.ModifyRegistriesEvent
@@ -63,6 +63,13 @@ private fun modifyRegistries(event: ModifyRegistriesEvent) {
 private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
   T7Items.registerCapabilities(event)
   T7BlockEntities.registerCapabilities(event)
+  event.registerBlock(
+    Capabilities.ItemHandler.BLOCK,
+    { level, pos, state, be, side ->
+      InvWrapper(ChestBlock.getContainer(state.block as ChestBlock, state, level, pos, true)!!)
+    },
+    T7Blocks.HUNGRY_CHEST.get()
+  )
 
   CuriosIntegration.get().registerCapabilities(event)
 }

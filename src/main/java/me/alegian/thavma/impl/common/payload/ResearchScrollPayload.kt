@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.rl
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.resources.ResourceKey
+import net.neoforged.neoforge.items.ItemHandlerHelper.giveItemToPlayer
 import net.neoforged.neoforge.network.handling.IPayloadContext
 import kotlin.jvm.optionals.getOrNull
 
@@ -33,7 +34,7 @@ class ResearchScrollPayload(val entry: ResourceKey<ResearchEntry>) : CustomPacke
       val defaultState = registry.get(payload.entry)?.defaultResearchState ?: return
       stack.set(T7DataComponents.RESEARCH_STATE, ResearchState(payload.entry, defaultState, false))
 
-      if (!player.addItem(stack)) player.drop(stack, false)
+      giveItemToPlayer(player, stack)
     }
   }
 }

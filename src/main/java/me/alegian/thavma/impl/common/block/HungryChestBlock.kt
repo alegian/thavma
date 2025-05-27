@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.block.entity.HungryChestBE
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import net.minecraft.core.BlockPos
@@ -27,4 +28,8 @@ class HungryChestBlock : ChestBlock(
   }
 
   override fun newBlockEntity(pos: BlockPos, state: BlockState) = HungryChestBE(pos, state)
+
+  companion object{
+    val CONTAINER_TITLE = "container." + Thavma.MODID + ".hungry_chest"
+  }
 }

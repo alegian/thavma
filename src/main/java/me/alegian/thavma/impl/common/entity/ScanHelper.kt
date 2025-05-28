@@ -19,7 +19,6 @@ import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.network.PacketDistributor
 
@@ -100,11 +99,11 @@ fun Player.getScanHitResult(): HitResult {
   val predicate = { entity: Entity -> !entity.isSpectator && entity.isPickable }
   val trueHitResult = ProjectileUtil.getHitResult(eyePosition, this, predicate, rayVec, level(), 0.0f, ClipContext.Block.OUTLINE)
 
-  val valid = when (trueHitResult) {
-    is BlockHitResult -> trueHitResult.location.closerThan(eyePosition, blockInteractionRange())
-    is EntityHitResult -> trueHitResult.location.closerThan(eyePosition, entityInteractionRange())
-    else -> false
-  }
+  val range =
+    if (trueHitResult is BlockHitResult) blockInteractionRange()
+    else entityInteractionRange()
+
+  val valid = trueHitResult.location.closerThan(eyePosition, range)
 
   return if (valid) trueHitResult else BlockHitResult.miss(eyePosition, direction, blockPosition())
 }

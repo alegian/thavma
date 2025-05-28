@@ -2,15 +2,6 @@
   "entries": [
     {
       "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
-      "name": "thavma_WAND",
-      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
-      "parameters": {
-        "class": "me/alegian/thavma/impl/common/enumextension/WandArmPose",
-        "field": "ENUM_PARAMS"
-      }
-    },
-    {
-      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
       "name": "thavma_ARCANE_LENS",
       "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
       "parameters": {

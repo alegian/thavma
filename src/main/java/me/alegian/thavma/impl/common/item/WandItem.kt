@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.item
 
 import me.alegian.thavma.impl.client.renderer.geo.WandRenderer
+import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyBookEntity
@@ -65,7 +66,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     val blockState = level.getBlockState(blockPos)
     val block = blockState.block
 
-    if (blockState.`is`(T7Blocks.AURA_NODE.get())) {
+    if (block is AuraNodeBlock) {
       val player = context.player
 
       val transferPair = AspectContainer.blockSourceItemSink(level, blockPos, context.itemInHand)

@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
+import me.alegian.thavma.impl.client.util.scale
 import me.alegian.thavma.impl.common.block.entity.AuraNodeBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.use
@@ -10,12 +11,9 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.util.Mth
-import net.neoforged.api.distmarker.Dist
-import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.model.data.ModelData
 import kotlin.math.max
 
-@OnlyIn(Dist.CLIENT)
 class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
   private var scale = 1f
 
@@ -23,10 +21,10 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
     val containingCountdown = be.containingCountdown
 
     poseStack.pushPose()
-    this.setupPose(poseStack, containingCountdown, partialTick)
+    setupPose(poseStack, containingCountdown, partialTick)
 
     renderContainer(poseStack, bufferSource, combinedLight, combinedOverlay, containingCountdown)
-    this.renderNode(be, poseStack, bufferSource)
+    renderNode(be, poseStack, bufferSource)
 
     poseStack.popPose()
   }
@@ -37,11 +35,11 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
    */
   private fun setupPose(poseStack: PoseStack, containingCountdown: Int, partialTick: Float) {
     poseStack.translate(0.5, 0.5, 0.5)
-    this.scale = 1f
+    scale = 1f
 
     if (containingCountdown < 0) return
 
-    this.scale = max(
+    scale = max(
       Mth.lerp(
         partialTick,
         containingCountdown.toFloat() / AuraNodeBE.MAX_COUNTDOWN,
@@ -49,7 +47,7 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       ).toDouble(), MIN_SCALE.toDouble()
     ).toFloat()
 
-    poseStack.scale(this.scale, this.scale, this.scale)
+    poseStack.scale(scale)
   }
 
   /**

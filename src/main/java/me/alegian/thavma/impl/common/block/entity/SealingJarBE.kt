@@ -7,5 +7,6 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.level.block.state.BlockState
 
 class SealingJarBE(pos: BlockPos, blockState: BlockState): DataComponentBE(SEALING_JAR.get(), pos, blockState) {
-  override fun getComponentTypes(): Array<DataComponentType<*>> = arrayOf(ASPECTS.get())
+  override val componentTypes: Array<DataComponentType<*>>
+    get() = arrayOf(ASPECTS.get())
 }

@@ -17,12 +17,10 @@ import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.phys.Vec3
-import net.neoforged.api.distmarker.Dist
-import net.neoforged.api.distmarker.OnlyIn
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 
-@OnlyIn(Dist.CLIENT)
+// TODO: move to world rendering
 class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity>(pContext) {
   override fun render(visEntity: VisEntity, pEntityYaw: Float, pPartialTick: Float, poseStack: PoseStack, pBufferSource: MultiBufferSource, pPackedLight: Int) {
     val player = visEntity.player ?: return

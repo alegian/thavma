@@ -22,6 +22,8 @@ open class CrucibleBE(pos: BlockPos, blockState: BlockState) :
   DataComponentBE(CRUCIBLE.get(), pos, blockState) {
   val fluidHandler by lazy { CrucibleFluidHandler(this) }
   private val particles = ArrayList<CrucibleBubbleParticle>()
+  override val componentTypes: Array<DataComponentType<*>>
+    get() = arrayOf(ASPECTS.get())
 
   val waterHeight: Double
     get() {
@@ -54,10 +56,6 @@ open class CrucibleBE(pos: BlockPos, blockState: BlockState) :
     this.loadAdditional(Objects.requireNonNull(pkt.tag), lookupProvider)
     // delete floating particles from previous water level
     this.clearParticles()
-  }
-
-  override fun getComponentTypes(): Array<DataComponentType<*>> {
-    return arrayOf(ASPECTS.get())
   }
 
   override fun loadAdditional(pTag: CompoundTag, pRegistries: HolderLookup.Provider) {

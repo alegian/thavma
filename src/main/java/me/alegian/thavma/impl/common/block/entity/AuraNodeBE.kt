@@ -27,6 +27,8 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
   DataComponentBE(T7BlockEntities.AURA_NODE.get(), pos, blockState) {
   private val glassPositions = ArrayList<BlockPos>()
   private val slabPositions = ArrayList<BlockPos>()
+  override val componentTypes: Array<DataComponentType<*>>
+    get() = arrayOf(ASPECTS.get())
 
   /**
    * The countdown in ticks after which a node will break
@@ -119,10 +121,6 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
 
   fun decrementContainingCountdown() {
     containingCountdown--
-  }
-
-  override fun getComponentTypes(): Array<DataComponentType<*>> {
-    return arrayOf(ASPECTS.get())
   }
 
   fun dropItems() {

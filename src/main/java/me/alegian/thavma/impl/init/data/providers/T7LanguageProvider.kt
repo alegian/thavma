@@ -19,6 +19,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
@@ -184,6 +185,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(TABLE.get(), "Table")
     add(ITEM_HATCH.get(), "Item Hatch")
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
+    add(ELEMENTAL_CORE.get(), "Elemental Core")
     add(CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
     add(ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
 

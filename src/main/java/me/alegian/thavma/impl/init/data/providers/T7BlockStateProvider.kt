@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
@@ -87,6 +88,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     simpleBlockWithItem(ORICHALCUM_BLOCK.get())
 
     simpleBlockWithItem(ELEMENTAL_STONE.get())
+    simpleBlockWithItem(ELEMENTAL_CORE.get())
     simpleBlockWithItem(CRACKED_ELEMENTAL_STONE.get())
     simpleBlockWithItem(ELEMENTAL_STONE_BRICKS.get())
 

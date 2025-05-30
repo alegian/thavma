@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
@@ -64,6 +65,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     dropSelf(ITEM_HATCH.get())
     add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
     dropSelf(ELEMENTAL_STONE.get())
+    dropSelf(ELEMENTAL_CORE.get())
     dropSelf(CRACKED_ELEMENTAL_STONE.get())
     dropSelf(ELEMENTAL_STONE_BRICKS.get())
 

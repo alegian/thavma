@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
@@ -66,6 +67,7 @@ object T7CreativeModeTabs {
           output.accept(PEDESTAL.get())
 
           output.accept(ELEMENTAL_STONE.get())
+          output.accept(ELEMENTAL_CORE.get())
           output.accept(CRACKED_ELEMENTAL_STONE.get())
           output.accept(ELEMENTAL_STONE_BRICKS.get())
 

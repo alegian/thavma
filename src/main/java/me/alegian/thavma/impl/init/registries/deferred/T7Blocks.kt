@@ -60,6 +60,7 @@ object T7Blocks {
   ) { ResearchTableBlock() }
 
   val ELEMENTAL_STONE = register("elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)) }
+  val ELEMENTAL_CORE = register("elemental_core") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)) }
   val CRACKED_ELEMENTAL_STONE = register("cracked_elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRACKED_STONE_BRICKS)) }
   val ELEMENTAL_STONE_BRICKS = register("elemental_stone_bricks") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)) }
 

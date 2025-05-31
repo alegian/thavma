@@ -1,9 +1,11 @@
 package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.PillarBE
+import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties.MASTER
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.LivingEntity
@@ -40,7 +42,8 @@ class PillarBlock : Block(
     val pos = context.clickedPos
 
     if (
-      multiblockPositions(pos, facing)
+      multiblockRequiredLayout(pos, facing)
+        .map { mrs -> mrs.blockPos }
         .map(context.level::getBlockState)
         .any { state -> !state.canBeReplaced() }
     ) return null
@@ -53,17 +56,7 @@ class PillarBlock : Block(
    */
   override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
     super.setPlacedBy(level, pos, state, placer, stack)
-    if (level.isClientSide) return
-
-    val newState = defaultBlockState().setValue(MASTER, false)
-    val facing = state.getValue(HORIZONTAL_FACING)
-    for (slavePos in multiblockPositions(pos, facing)) {
-      if (slavePos == pos) continue
-      level.setBlock(slavePos, newState, UPDATE_ALL)
-      level.getBE(slavePos, PILLAR.get())?.run {
-        masterPos = pos
-      }
-    }
+    level.getBE(pos, PILLAR.get())?.placeMultiblockSlaves()
   }
 
   override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
@@ -82,11 +75,11 @@ class PillarBlock : Block(
   override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos) = true
 
   companion object {
-    fun multiblockPositions(masterPos: BlockPos, direction: Direction) =
+    fun multiblockRequiredLayout(masterPos: BlockPos, direction: Direction) =
       listOf(
-        masterPos,
-        masterPos.relative(direction),
-        masterPos.relative(direction).above(),
+        MultiblockRequiredState(masterPos, T7Blocks.ELEMENTAL_CORE.get().defaultBlockState()),
+        MultiblockRequiredState(masterPos.relative(direction), T7Blocks.GREATWOOD_PLANKS.get().defaultBlockState()),
+        MultiblockRequiredState(masterPos.relative(direction).above(), T7Blocks.ELEMENTAL_STONE.get().defaultBlockState()),
       )
   }
 }

@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.block.entity
 
-import me.alegian.thavma.impl.common.block.PillarBlock.Companion.multiblockPositions
+import me.alegian.thavma.impl.common.block.PillarBlock.Companion.multiblockRequiredLayout
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties.MASTER
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
+import net.minecraft.world.level.block.Block.UPDATE_ALL
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
@@ -30,7 +31,9 @@ class PillarBE(
 ) : BlockEntity(PILLAR.get(), pos, blockState), GeoBlockEntity {
   val renderAABB = AABB(blockPos).expandTowards(blockState.getValue(HORIZONTAL_FACING).normal.toVec3()).expandTowards(0.0, 1.0, 0.0)
   private val cache = GeckoLibUtil.createInstanceCache(this)
-  var masterPos: BlockPos? = null
+  var masterPos: BlockPos? = null // master should have null here
+  var isBreaking = false
+  val cachedRequiredLayout = multiblockRequiredLayout(blockPos, blockState.getValue(HORIZONTAL_FACING))
 
   override fun registerControllers(controllers: ControllerRegistrar) {
   }
@@ -42,11 +45,28 @@ class PillarBE(
    * masters break everything (including themselves)
    */
   fun breakMultiblock() {
+    if (level?.isClientSide ?: true || isBreaking) return
+
     if (!blockState.getValue(MASTER)) {
       level?.getBE(masterPos, PILLAR.get())?.breakMultiblock()
     } else {
-      for (pos in multiblockPositions(blockPos, blockState.getValue(HORIZONTAL_FACING))) {
+      isBreaking = true
+      for (pos in cachedRequiredLayout.map { mrs -> mrs.blockPos }) {
         level?.destroyBlock(pos, true)
+      }
+    }
+  }
+
+  fun placeMultiblockSlaves() {
+    if (level?.isClientSide ?: true) return
+
+    val newState = blockState.setValue(MASTER, false)
+    val placerPos = blockPos
+    for (slavePos in cachedRequiredLayout.map { mrs -> mrs.blockPos }) {
+      if (slavePos == placerPos) continue
+      level?.setBlock(slavePos, newState, UPDATE_ALL)
+      level?.getBE(slavePos, PILLAR.get())?.run {
+        masterPos = placerPos
       }
     }
   }

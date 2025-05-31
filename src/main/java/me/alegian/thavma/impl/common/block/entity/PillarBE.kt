@@ -10,6 +10,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.level.block.Block.UPDATE_ALL
+import net.minecraft.world.level.block.Block.getId
+import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
@@ -32,8 +34,9 @@ class PillarBE(
   val renderAABB = AABB(blockPos).expandTowards(blockState.getValue(HORIZONTAL_FACING).normal.toVec3()).expandTowards(0.0, 1.0, 0.0)
   private val cache = GeckoLibUtil.createInstanceCache(this)
   var masterPos: BlockPos? = null // master should have null here
-  var isBreaking = false
+  private var isBreaking = false
   val cachedRequiredLayout = multiblockRequiredLayout(blockPos, blockState.getValue(HORIZONTAL_FACING))
+  private val matrixPos = blockPos.relative(blockState.getValue(HORIZONTAL_FACING), 2).above(2)
 
   override fun registerControllers(controllers: ControllerRegistrar) {
   }
@@ -51,22 +54,29 @@ class PillarBE(
       level?.getBE(masterPos, PILLAR.get())?.breakMultiblock()
     } else {
       isBreaking = true
-      for (pos in cachedRequiredLayout.map { mrs -> mrs.blockPos }) {
-        level?.destroyBlock(pos, true)
+      level?.run {
+        for (pos in cachedRequiredLayout.map { mrs -> mrs.blockPos }) {
+          val anythingDestroyed = destroyBlock(pos, true)
+          if (anythingDestroyed) levelEvent(null, LevelEvent.PARTICLES_DESTROY_BLOCK, pos, getId(getBlockState(pos)))
+        }
+        scheduleTick(matrixPos, T7Blocks.MATRIX.get(), 1)
       }
     }
   }
 
-  fun placeMultiblockSlaves() {
+  fun placeMultiblockSlaves(spawnParticles: Boolean = false) {
     if (level?.isClientSide ?: true) return
 
     val newState = blockState.setValue(MASTER, false)
     val placerPos = blockPos
     for (slavePos in cachedRequiredLayout.map { mrs -> mrs.blockPos }) {
       if (slavePos == placerPos) continue
-      level?.setBlock(slavePos, newState, UPDATE_ALL)
-      level?.getBE(slavePos, PILLAR.get())?.run {
-        masterPos = placerPos
+      level?.run {
+        setBlock(slavePos, newState, UPDATE_ALL)
+        getBE(slavePos, PILLAR.get())?.run {
+          masterPos = placerPos
+        }
+        if (spawnParticles) levelEvent(null, LevelEvent.PARTICLES_DESTROY_BLOCK, slavePos, getId(getBlockState(slavePos)))
       }
     }
   }

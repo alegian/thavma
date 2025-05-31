@@ -21,4 +21,6 @@ class PillarBER : GeoBlockRenderer<PillarBE>(DefaultedBlockGeoModel(rl("infusion
     if(!be.blockState.getValue(MASTER)) return
     super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
   }
+
+  override fun getRenderBoundingBox(be: PillarBE) = be.renderAABB
 }

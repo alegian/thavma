@@ -12,9 +12,11 @@ import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
+import net.minecraft.world.phys.AABB
 import software.bernie.geckolib.animatable.GeoBlockEntity
 import software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar
 import software.bernie.geckolib.util.GeckoLibUtil
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 import kotlin.jvm.optionals.getOrNull
 
 private val MASTER_POS_NBT_KEY = "masterPos"
@@ -26,6 +28,7 @@ class PillarBE(
   pos: BlockPos = BlockPos(0, 0, 0),
   blockState: BlockState = T7Blocks.PILLAR.get().defaultBlockState()
 ) : BlockEntity(PILLAR.get(), pos, blockState), GeoBlockEntity {
+  val renderAABB = AABB(blockPos).expandTowards(blockState.getValue(HORIZONTAL_FACING).normal.toVec3()).expandTowards(0.0, 1.0, 0.0)
   private val cache = GeckoLibUtil.createInstanceCache(this)
   var masterPos: BlockPos? = null
 
@@ -45,7 +48,6 @@ class PillarBE(
       for (pos in multiblockPositions(blockPos, blockState.getValue(HORIZONTAL_FACING))) {
         level?.destroyBlock(pos, true)
       }
-      level?.destroyBlock(blockPos, true)
     }
   }
 

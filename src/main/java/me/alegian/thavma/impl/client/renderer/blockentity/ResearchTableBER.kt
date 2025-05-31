@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BedPart
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.client.model.data.ModelData
 
 class ResearchTableBER : BlockEntityRenderer<ResearchTableBE> {
@@ -48,7 +47,5 @@ class ResearchTableBER : BlockEntityRenderer<ResearchTableBE> {
     return true
   }
 
-  override fun getRenderBoundingBox(be: ResearchTableBE): AABB {
-    return be.renderAABB
-  }
+  override fun getRenderBoundingBox(be: ResearchTableBE) = be.renderAABB
 }

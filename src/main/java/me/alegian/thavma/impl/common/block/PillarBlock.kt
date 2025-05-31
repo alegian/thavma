@@ -58,8 +58,9 @@ class PillarBlock : Block(
     val newState = defaultBlockState().setValue(MASTER, false)
     val facing = state.getValue(HORIZONTAL_FACING)
     for (slavePos in multiblockPositions(pos, facing)) {
+      if (slavePos == pos) continue
       level.setBlock(slavePos, newState, UPDATE_ALL)
-      level.getBE(slavePos, PILLAR.get())?.run{
+      level.getBE(slavePos, PILLAR.get())?.run {
         masterPos = pos
       }
     }
@@ -83,6 +84,7 @@ class PillarBlock : Block(
   companion object {
     fun multiblockPositions(masterPos: BlockPos, direction: Direction) =
       listOf(
+        masterPos,
         masterPos.relative(direction),
         masterPos.relative(direction).above(),
       )

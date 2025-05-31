@@ -8,12 +8,13 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 
 fun ServerLevel.updateBlockEntityS2C(blockPos: BlockPos) {
-    getBlockEntity(blockPos)?.let { be ->
-        be.setChanged()
-        sendBlockUpdated(blockPos, be.blockState, be.blockState, Block.UPDATE_CLIENTS)
-    }
+  getBlockEntity(blockPos)?.let { be ->
+    be.setChanged()
+    sendBlockUpdated(blockPos, be.blockState, be.blockState, Block.UPDATE_CLIENTS)
+  }
 }
 
-fun <T : BlockEntity> Level.getBE(blockPos: BlockPos, type: BlockEntityType<T>): T? {
-    return getBlockEntity(blockPos, type).orElse(null)
+fun <T : BlockEntity> Level.getBE(blockPos: BlockPos?, type: BlockEntityType<T>): T? {
+  if (blockPos == null) return null
+  return getBlockEntity(blockPos, type).orElse(null)
 }

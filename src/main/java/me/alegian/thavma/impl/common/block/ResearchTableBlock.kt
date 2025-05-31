@@ -76,12 +76,10 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
    */
   override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
     super.setPlacedBy(level, pos, state, placer, stack)
-    if (!level.isClientSide) {
-      val secondPos = pos.relative(state.getValue(FACING))
-      level.setBlock(secondPos, state.setValue(PART, BedPart.HEAD), UPDATE_ALL)
-      level.blockUpdated(pos, Blocks.AIR)
-      state.updateNeighbourShapes(level, pos, UPDATE_ALL)
-    }
+    if (level.isClientSide) return
+
+    val secondPos = pos.relative(state.getValue(FACING))
+    level.setBlock(secondPos, state.setValue(PART, BedPart.HEAD), UPDATE_ALL)
   }
 
   /**
@@ -126,9 +124,7 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
     return RenderShape.ENTITYBLOCK_ANIMATED
   }
 
-  override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean {
-    return true
-  }
+  override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos) = true
 }
 
 fun getNeighbourDirection(state: BlockState): Direction {

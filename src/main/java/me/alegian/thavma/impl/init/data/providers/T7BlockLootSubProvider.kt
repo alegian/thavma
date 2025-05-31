@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.common.item.ShardItem
+import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
@@ -34,12 +35,19 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLI
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
+import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.level.block.BedBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BedPart
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 
@@ -59,11 +67,11 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     dropSelf(AURA_NODE.get()) // TODO: replace
     dropSelf(ARCANE_WORKBENCH.get())
     dropSelf(MATRIX.get())
-    dropSelf(PILLAR.get())
     dropSelf(PEDESTAL.get())
     dropSelf(TABLE.get())
     dropSelf(ITEM_HATCH.get())
     add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
+    add(PILLAR.get()) { b -> createBooleanPropertyTable(b, T7BlockStateProperties.MASTER, true) }
     dropSelf(ELEMENTAL_STONE.get())
     dropSelf(ELEMENTAL_CORE.get())
     dropSelf(CRACKED_ELEMENTAL_STONE.get())
@@ -95,5 +103,28 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
   private fun infusedBlock(block: DeferredBlock<InfusedBlock>?, item: DeferredItem<ShardItem>?) {
     if (block == null || item == null) throw IllegalStateException("Thavma Exception: Null block or item when creating loot table for infused ore")
     this.add(block.get()) { b -> this.createOreDrop(b, item.get()) }
+  }
+
+  /**
+   * modified createSinglePropConditionTable, allows for normal booleans...
+   */
+  private fun createBooleanPropertyTable(
+    block: Block, property: BooleanProperty, value: Boolean
+  ): LootTable.Builder {
+    return LootTable.lootTable()
+      .withPool(
+        applyExplosionCondition(
+          block,
+          LootPool.lootPool()
+            .setRolls(ConstantValue.exactly(1.0f))
+            .add(
+              LootItem.lootTableItem(block)
+                .`when`(
+                  LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(property, value))
+                )
+            )
+        )
+      )
   }
 }

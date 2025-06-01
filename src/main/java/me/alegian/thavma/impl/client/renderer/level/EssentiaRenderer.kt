@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.client.T7RenderTypes
 import me.alegian.thavma.impl.client.util.addVertex
+import me.alegian.thavma.impl.common.infusion.MAIN_AXIS_RESOLUTION
+import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.util.cross
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.util.Mth.smoothstep
@@ -12,10 +14,10 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.div
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.minus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.times
-import kotlin.math.*
-
-// number of trajectory points per block length
-const val MAIN_AXIS_RESOLUTION = 16
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.sin
 
 // number of "corners" of every 3d cylinder slice
 const val CR0SS_AXIS_RESOLUTION = 16
@@ -29,7 +31,7 @@ const val ENDPOINT_RANGE = 0.3
 fun trajectory(start: Vec3, end: Vec3): List<Vec3> {
   val diff = end - start
   val dl = diff.normalize() / MAIN_AXIS_RESOLUTION.toDouble()
-  val trajectoryLength = (diff.length() * MAIN_AXIS_RESOLUTION).roundToInt()
+  val trajectoryLength = trajectoryLength(start, end)
   return (0..trajectoryLength).map {
     val t = it.toDouble() / trajectoryLength // t ranges from 0 to 1
     val quadraticYOffset = Vec3(0.0, 1.0, 0.0) * t * (1 - t) * 4.0 * TRAJECTORY_HEIGHT

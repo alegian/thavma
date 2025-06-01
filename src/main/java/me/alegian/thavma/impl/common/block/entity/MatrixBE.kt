@@ -1,6 +1,9 @@
 package me.alegian.thavma.impl.common.block.entity
 
+import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
+import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
+import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
@@ -29,6 +32,8 @@ class MatrixBE(
   val hasRing: Boolean = false
 ) : BlockEntity(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
+  private val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
+  private var currSourcePos: BlockPos? = null
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
   ) { _ -> PlayState.CONTINUE }
@@ -40,6 +45,37 @@ class MatrixBE(
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
+  }
+
+  fun tick() {
+    val level = level ?: return
+    if (level.isClientSide) return
+
+    if(!isSourceValid(currSourcePos)) currSourcePos = findNewSource()
+
+    currSourcePos?.let{
+      if(flyingAspects.size < trajectoryLength(it.center, blockPos.center))
+        flyingAspects.addLast(null)
+
+      flyingAspects.addLast(ArrivingAspectStack(it, extractAspect(it)))
+      absorb(flyingAspects.removeFirst())
+    }
+  }
+
+  private fun extractAspect(blockPos: BlockPos): AspectStack {
+    TODO("Not yet implemented")
+  }
+
+  private fun isSourceValid(sourcePos: BlockPos?): Boolean {
+    if(sourcePos == null) return false
+    TODO("Not yet implemented")
+  }
+
+  private fun findNewSource(): BlockPos {
+    TODO("Not yet implemented")
+  }
+
+  private fun absorb(arrivingStack : ArrivingAspectStack?){
   }
 
   override fun registerControllers(controllers: ControllerRegistrar) {

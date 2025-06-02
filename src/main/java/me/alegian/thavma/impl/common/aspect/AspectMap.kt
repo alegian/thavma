@@ -123,6 +123,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     fun subtract(aspect: Aspect, amount: Int): Builder {
       val oldAmount = map.getOrDefault(aspect, 0)
       map[aspect] = oldAmount - amount
+      if (map[aspect] == 0) map.remove(aspect)
       return this
     }
 

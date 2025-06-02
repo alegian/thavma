@@ -10,10 +10,10 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.EntityBlock
-import net.minecraft.world.level.block.RenderShape
+import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.phys.BlockHitResult
@@ -36,6 +36,10 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
   override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
     super.tick(state, level, pos, random)
     level.getBE(pos, MATRIX.get())?.checkActivation()
+  }
+
+  override fun <T : BlockEntity?> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
+    return BaseEntityBlock.createTickerHelper(type, MATRIX.get(), MatrixBE::tick)
   }
 
   override fun getRenderShape(state: BlockState) = RenderShape.ENTITYBLOCK_ANIMATED

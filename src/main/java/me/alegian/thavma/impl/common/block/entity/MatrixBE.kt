@@ -10,15 +10,20 @@ import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
 import software.bernie.geckolib.animatable.GeoBlockEntity
@@ -29,6 +34,7 @@ import software.bernie.geckolib.animation.PlayState
 import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 import kotlin.jvm.optionals.getOrNull
+import kotlin.math.min
 
 private const val ABSORB_SPEED = 1
 
@@ -39,13 +45,14 @@ class MatrixBE(
   pos: BlockPos = BlockPos(0, 0, 0),
   blockState: BlockState = T7Blocks.MATRIX.get().defaultBlockState(),
   val hasRing: Boolean = false
-) : BlockEntity(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
+) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
   private val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
   private var currSourcePos: BlockPos? = null
   private var currSource: IAspectContainer? = null
   private var currRequiredAspect: Aspect? = null
-  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 20).add(TERRA.get(), 20).build()
+  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 2).add(TERRA.get(), 3).build()
+  private var active = false
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
   ) { _ -> PlayState.CONTINUE }
@@ -54,28 +61,11 @@ class MatrixBE(
     .triggerableAnim("spin_closed", RawAnimation.begin().thenLoop("spin_closed"))
     .triggerableAnim("spin_closed_fast", RawAnimation.begin().thenLoop("spin_closed_fast"))
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
+  override val componentTypes: Array<DataComponentType<*>>
+    get() = arrayOf(FLYING_ASPECTS.get())
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
-  }
-
-  fun tick() {
-    val level = level ?: return
-    if (level.isClientSide) return
-
-    absorb(flyingAspects.removeFirstOrNull())
-
-    if (requiredAspects.isEmpty) return
-    updateCurrAspect()
-    // this line is expected to update currSource && currSourcePos as a side effect
-    if (!validateAndUpdateSource()) findNewSource()
-
-    currSourcePos?.let {
-      if (flyingAspects.size < trajectoryLength(it.center, blockPos.center))
-        flyingAspects.addLast(null)
-
-      flyingAspects.addLast(ArrivingAspectStack(it, extractAspect()))
-    }
   }
 
   /**
@@ -83,43 +73,52 @@ class MatrixBE(
    * tries to continue with the same aspect if possible
    */
   private fun updateCurrAspect() {
-    val lastAspect = flyingAspects.getOrNull(flyingAspects.size - 1)
-    currRequiredAspect =
-      lastAspect?.aspectStack?.aspect ?: requiredAspects.firstOrNull()?.aspect
+    val default = requiredAspects.firstOrNull()?.aspect
+    val oldAspect = currRequiredAspect
+
+    if (oldAspect == null || requiredAspects[oldAspect] == 0) {
+      currRequiredAspect = default
+      return
+    }
   }
 
-  private fun extractAspect(): AspectStack? {
+  private fun extractFromSource(): AspectStack? {
     val aspect = currRequiredAspect ?: return null
     val source = currSource ?: return null
 
-    val amount = source.extract(aspect, ABSORB_SPEED, false)
-    return AspectStack(aspect, amount)
+    val neededAmount = requiredAspects[aspect]
+    val actualAmount = source.extract(aspect, min(neededAmount, ABSORB_SPEED), false)
+
+    requiredAspects = requiredAspects.subtract(aspect, actualAmount)
+
+    return AspectStack(aspect, actualAmount)
   }
 
   /**
    * returns false if the source is no longer valid
    */
-  private fun validateAndUpdateSource(): Boolean {
-    val aspect = currRequiredAspect ?: return false
+  private fun oldSourceValid(): Boolean {
     val sourcePos = currSourcePos ?: return false
 
-    currSource = AspectContainer.at(level, sourcePos)?.also { source ->
-      return source.aspects[aspect] > 0
-    }
-    return false
+    return attemptSetSource(sourcePos)
   }
 
+  /**
+   * returns false if the source is not valid
+   */
+  private fun attemptSetSource(pos: BlockPos): Boolean {
+    val aspect = currRequiredAspect ?: return false
+
+    val source = AspectContainer.at(level, pos) ?: return false
+    val valid = source.aspects[aspect] > 0
+    if (valid) currSource = source
+
+    return valid
+  }
+
+  // todo: optimize this running every tick when no sources are nearby
   private fun findNewSource() {
-    val level = level ?: return
-    val sourcePos = BlockPos.findClosestMatch(blockPos, 7, 7) {
-      level.getBlockState(it) === T7Blocks.SEALING_JAR.get().defaultBlockState()
-    }.getOrNull()
-    TODO("Not yet implemented")
-  }
-
-  private fun absorb(arriving: ArrivingAspectStack?) {
-    if (arriving == null) return
-    requiredAspects.subtract(arriving.aspectStack.aspect, arriving.aspectStack.amount)
+    currSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3, ::attemptSetSource).getOrNull()
   }
 
   override fun registerControllers(controllers: ControllerRegistrar) {
@@ -146,8 +145,10 @@ class MatrixBE(
 
     if (requiredPillars().any { level?.getBlockState(it.blockPos) !== it.blockState }) {
       triggerAnim("cycle", "closed")
+      active = false
     } else {
       triggerAnim("cycle", "spin_closed")
+      active = true
     }
   }
 
@@ -158,6 +159,42 @@ class MatrixBE(
         down2.relative(it, 2),
         T7Blocks.PILLAR.get().defaultBlockState().setValue(HORIZONTAL_FACING, it.opposite)
       )
+    }
+  }
+
+  companion object {
+    val FLYING_ASPECTS_CODEC = ArrivingAspectStack.CODEC.listOf().xmap(
+      { list -> ArrayDeque(list) },
+      { deque -> deque.toList() }
+    )
+    val FLYING_ASPECTS_STREAM_CODEC = ArrivingAspectStack.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
+      { list -> ArrayDeque(list) },
+      { deque -> deque.toList() }
+    )
+
+    fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
+      if (level.isClientSide || level !is ServerLevel) return
+      be.run {
+        flyingAspects.removeFirstOrNull()
+
+        if (!active || requiredAspects.isEmpty) return@run
+        updateCurrAspect()
+        // this line is expected to update currSource && currSourcePos as a side effect
+        if (!oldSourceValid()) findNewSource()
+
+        val sourcePos = currSourcePos ?: return@run
+        val extracted = extractFromSource() ?: return@run
+
+        val length = trajectoryLength(sourcePos.center, pos.center)
+        while (flyingAspects.size < length)
+          flyingAspects.addLast(null)
+
+        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
+
+        level.updateBlockEntityS2C(sourcePos)
+      }
+      // todo: optimize, we dont need to sync every tick
+      level.updateBlockEntityS2C(pos)
     }
   }
 }

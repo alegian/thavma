@@ -1,11 +1,17 @@
 package me.alegian.thavma.impl.common.block.entity
 
+import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
+import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.data.capability.IAspectContainer
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -23,6 +29,8 @@ import software.bernie.geckolib.animation.PlayState
 import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 
+private const val ABSORB_SPEED = 1
+
 /**
  * Default values used for rendering Item form
  */
@@ -34,6 +42,9 @@ class MatrixBE(
   private val cache = GeckoLibUtil.createInstanceCache(this)
   private val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
   private var currSourcePos: BlockPos? = null
+  private var currSource: IAspectContainer? = null
+  private var currRequiredAspect: Aspect? = null
+  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 20).add(TERRA.get(), 20).build()
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
   ) { _ -> PlayState.CONTINUE }
@@ -51,31 +62,61 @@ class MatrixBE(
     val level = level ?: return
     if (level.isClientSide) return
 
-    if(!isSourceValid(currSourcePos)) currSourcePos = findNewSource()
+    absorb(flyingAspects.removeFirstOrNull())
 
-    currSourcePos?.let{
-      if(flyingAspects.size < trajectoryLength(it.center, blockPos.center))
+    if (requiredAspects.isEmpty) return
+    updateCurrAspect()
+    // this line is expected to update currSource && currSourcePos as a side effect
+    if (!validateAndUpdateSource()) findNewSource()
+
+    currSourcePos?.let {
+      if (flyingAspects.size < trajectoryLength(it.center, blockPos.center))
         flyingAspects.addLast(null)
 
-      flyingAspects.addLast(ArrivingAspectStack(it, extractAspect(it)))
-      absorb(flyingAspects.removeFirst())
+      flyingAspects.addLast(ArrivingAspectStack(it, extractAspect()))
     }
   }
 
-  private fun extractAspect(blockPos: BlockPos): AspectStack {
-    TODO("Not yet implemented")
+  /**
+   * calculate the aspect that the next infusion tick wants to absorb.
+   * tries to continue with the same aspect if possible
+   */
+  private fun updateCurrAspect() {
+    val lastAspect = flyingAspects.getOrNull(flyingAspects.size - 1)
+    currRequiredAspect =
+      lastAspect?.aspectStack?.aspect ?: requiredAspects.firstOrNull()?.aspect
   }
 
-  private fun isSourceValid(sourcePos: BlockPos?): Boolean {
-    if(sourcePos == null) return false
-    TODO("Not yet implemented")
+  private fun extractAspect(): AspectStack? {
+    currRequiredAspect?.let{aspect->
+      currSource?.extract(aspect, ABSORB_SPEED, false)?.also{
+        return AspectStack(aspect, it)
+      }
+    }
+    return null
+  }
+
+  /**
+   * returns false if the source is no longer valid
+   */
+  private fun validateAndUpdateSource(): Boolean {
+    currRequiredAspect?.let { aspect ->
+      currSourcePos?.let { sourcePos ->
+        currSource = AspectContainer.at(level, sourcePos)?.also { source ->
+          return source.aspects[aspect] > 0
+        }
+      }
+    }
+    return false
   }
 
   private fun findNewSource(): BlockPos {
     TODO("Not yet implemented")
   }
 
-  private fun absorb(arrivingStack : ArrivingAspectStack?){
+  private fun absorb(arriving: ArrivingAspectStack?) {
+    if (arriving == null) return
+    requiredAspects.subtract(arriving.aspectStack.aspect, arriving.aspectStack.amount)
   }
 
   override fun registerControllers(controllers: ControllerRegistrar) {

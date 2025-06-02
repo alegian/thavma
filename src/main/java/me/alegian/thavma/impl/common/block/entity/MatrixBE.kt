@@ -28,6 +28,7 @@ import software.bernie.geckolib.animation.AnimationController
 import software.bernie.geckolib.animation.PlayState
 import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
+import kotlin.jvm.optionals.getOrNull
 
 private const val ABSORB_SPEED = 1
 
@@ -88,29 +89,31 @@ class MatrixBE(
   }
 
   private fun extractAspect(): AspectStack? {
-    currRequiredAspect?.let{aspect->
-      currSource?.extract(aspect, ABSORB_SPEED, false)?.also{
-        return AspectStack(aspect, it)
-      }
-    }
-    return null
+    val aspect = currRequiredAspect ?: return null
+    val source = currSource ?: return null
+
+    val amount = source.extract(aspect, ABSORB_SPEED, false)
+    return AspectStack(aspect, amount)
   }
 
   /**
    * returns false if the source is no longer valid
    */
   private fun validateAndUpdateSource(): Boolean {
-    currRequiredAspect?.let { aspect ->
-      currSourcePos?.let { sourcePos ->
-        currSource = AspectContainer.at(level, sourcePos)?.also { source ->
-          return source.aspects[aspect] > 0
-        }
-      }
+    val aspect = currRequiredAspect ?: return false
+    val sourcePos = currSourcePos ?: return false
+
+    currSource = AspectContainer.at(level, sourcePos)?.also { source ->
+      return source.aspects[aspect] > 0
     }
     return false
   }
 
-  private fun findNewSource(): BlockPos {
+  private fun findNewSource() {
+    val level = level ?: return
+    val sourcePos = BlockPos.findClosestMatch(blockPos, 7, 7) {
+      level.getBlockState(it) === T7Blocks.SEALING_JAR.get().defaultBlockState()
+    }.getOrNull()
     TODO("Not yet implemented")
   }
 

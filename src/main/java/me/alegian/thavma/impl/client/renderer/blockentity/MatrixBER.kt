@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.renderer.level.renderEssentia
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
@@ -29,9 +30,11 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
 
   override fun actuallyRender(poseStack: PoseStack, be: MatrixBE, model: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, isReRender: Boolean, partialTick: Float, packedLight: Int, packedOverlay: Int, colour: Int) {
     super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
-    if (be.flyingAspects.isEmpty()) return
 
-    val flyingStream = be.flyingAspects.filterNotNull().associate {
+    val flyingAspects = be.get(FLYING_ASPECTS.get())
+    if (flyingAspects?.isEmpty() ?: true) return
+
+    val flyingStream = flyingAspects.filterNotNull().associate {
       Pair(
         it.blockPos.center,
         trajectoryLength(it.blockPos.center, be.blockPos.center)
@@ -39,9 +42,9 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
     }
     val ticks = Minecraft.getInstance().levelRenderer.ticks + partialTick
     for (f in flyingStream) {
-      val firstIndex = be.flyingAspects.indexOfFirst { f.key == it?.blockPos?.center }
+      val firstIndex = flyingAspects.indexOfFirst { f.key == it?.blockPos?.center }
       val head = f.value - 1 - firstIndex
-      val length = 1 + firstIndex - be.flyingAspects.indexOfLast { f.key == it?.blockPos?.center }
+      val length = 1 + firstIndex - flyingAspects.indexOfLast { f.key == it?.blockPos?.center }
       renderEssentia(f.key, be.blockPos.center, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
     }
   }

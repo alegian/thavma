@@ -1,5 +1,8 @@
 package me.alegian.thavma.impl.common.block.entity
 
+import com.mojang.datafixers.util.Either
+import com.mojang.datafixers.util.Unit
+import com.mojang.serialization.Codec
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.AspectStack
@@ -21,6 +24,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
@@ -47,7 +51,6 @@ class MatrixBE(
   val hasRing: Boolean = false
 ) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
-  val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
   private var currSourcePos: BlockPos? = null
   private var currSource: IAspectContainer? = null
   private var currRequiredAspect: Aspect? = null
@@ -163,17 +166,29 @@ class MatrixBE(
   }
 
   companion object {
-    val FLYING_ASPECTS_CODEC = ArrivingAspectStack.CODEC.listOf().xmap(
-      { list -> ArrayDeque(list) },
-      { deque -> deque.toList() }
+    val FLYING_ASPECTS_CODEC = Codec.either(ArrivingAspectStack.CODEC, Codec.EMPTY.codec()).listOf().xmap(
+      { list -> ArrayDeque(list.map { e -> e.map({ it }, { r -> null }) }) },
+      { deque ->
+        deque.toList().map {
+          if (it == null) Either.right(Unit.INSTANCE)
+          else Either.left(it)
+        }
+      }
     )
-    val FLYING_ASPECTS_STREAM_CODEC = ArrivingAspectStack.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-      { list -> ArrayDeque(list) },
-      { deque -> deque.toList() }
+    val FLYING_ASPECTS_STREAM_CODEC = ByteBufCodecs.either(ArrivingAspectStack.STREAM_CODEC, StreamCodec.unit(Unit.INSTANCE)).apply(ByteBufCodecs.list()).map(
+      { list -> ArrayDeque(list.map { e -> e.map({ it }, { r -> null }) }) },
+      { deque ->
+        deque.toList().map {
+          if (it == null) Either.right(Unit.INSTANCE)
+          else Either.left(it)
+        }
+      }
     )
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
       if (level.isClientSide || level !is ServerLevel) return
+
+      val flyingAspects = be.getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
       be.run {
         flyingAspects.removeFirstOrNull()
 
@@ -194,6 +209,7 @@ class MatrixBE(
         level.updateBlockEntityS2C(sourcePos)
       }
       // todo: optimize, we dont need to sync every tick
+      be.set(FLYING_ASPECTS, flyingAspects)
       level.updateBlockEntityS2C(pos)
     }
   }

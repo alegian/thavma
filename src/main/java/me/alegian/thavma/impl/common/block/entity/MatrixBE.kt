@@ -47,7 +47,7 @@ class MatrixBE(
   val hasRing: Boolean = false
 ) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
-  private val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
+  val flyingAspects = ArrayDeque<ArrivingAspectStack?>()
   private var currSourcePos: BlockPos? = null
   private var currSource: IAspectContainer? = null
   private var currRequiredAspect: Aspect? = null

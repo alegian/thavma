@@ -14,10 +14,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.div
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.minus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.times
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.min
-import kotlin.math.sin
+import kotlin.math.*
 
 // number of "corners" of every 3d cylinder slice
 const val CR0SS_AXIS_RESOLUTION = 16
@@ -28,7 +25,7 @@ const val TRAJECTORY_HEIGHT = 1.2
 // the range at which a trajectory point is considered an endpoint
 const val ENDPOINT_RANGE = 0.3
 
-fun trajectory(start: Vec3, end: Vec3): List<Vec3> {
+private fun trajectory(start: Vec3, end: Vec3): List<Vec3> {
   val diff = end - start
   val dl = diff.normalize() / MAIN_AXIS_RESOLUTION.toDouble()
   val trajectoryLength = trajectoryLength(start, end)
@@ -39,10 +36,11 @@ fun trajectory(start: Vec3, end: Vec3): List<Vec3> {
   }
 }
 
-fun renderEssentia(traj: List<Vec3>, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int) {
+fun renderEssentia(start: Vec3, end: Vec3, headIndex: Int, length: Int, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int) {
   val vc = multiBufferSource.getBuffer(T7RenderTypes.TRANSLUCENT_TRIANGLES)
+  val traj = trajectory(start, end)
 
-  renderVariableRadiusCylinder(traj, vc, poseStack, ticks, color)
+  renderVariableRadiusCylinder(traj.subList(max(0, headIndex - length), headIndex + 1), vc, poseStack, ticks, color)
 }
 
 private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsumer, poseStack: PoseStack, ticks: Float, color: Int) {

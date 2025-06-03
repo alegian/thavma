@@ -54,7 +54,7 @@ class MatrixBE(
   private var currSourcePos: BlockPos? = null
   private var currSource: IAspectContainer? = null
   private var currRequiredAspect: Aspect? = null
-  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 2).add(TERRA.get(), 3).build()
+  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 40).add(TERRA.get(), 50).build()
   private var active = false
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20

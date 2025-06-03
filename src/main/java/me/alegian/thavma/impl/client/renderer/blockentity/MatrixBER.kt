@@ -44,7 +44,7 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
     for (f in flyingStream) {
       val firstIndex = flyingAspects.indexOfFirst { f.key == it?.blockPos?.center }
       val head = f.value - 1 - firstIndex
-      val length = 1 + firstIndex - flyingAspects.indexOfLast { f.key == it?.blockPos?.center }
+      val length = 1 + flyingAspects.indexOfLast { f.key == it?.blockPos?.center } - firstIndex
       renderEssentia(f.key, be.blockPos.center, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
     }
   }

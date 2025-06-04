@@ -38,9 +38,8 @@ import software.bernie.geckolib.animation.PlayState
 import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 import kotlin.jvm.optionals.getOrNull
-import kotlin.math.min
 
-private const val ABSORB_SPEED = 1
+private const val ABSORB_DELAY = 4
 
 /**
  * Default values used for rendering Item form
@@ -89,13 +88,16 @@ class MatrixBE(
   private fun extractFromSource(): AspectStack? {
     val aspect = currRequiredAspect ?: return null
     val source = currSource ?: return null
+    val level = level ?: return null
 
-    val neededAmount = requiredAspects[aspect]
-    val actualAmount = source.extract(aspect, min(neededAmount, ABSORB_SPEED), false)
+    // some ticks extract 0 aspects, because otherwise the animation is too fast
+    val waiting = level.gameTime % ABSORB_DELAY != (ABSORB_DELAY - 1).toLong()
+    val amount =
+      if (!waiting) source.extract(aspect, 1, false)
+      else 0
 
-    requiredAspects = requiredAspects.subtract(aspect, actualAmount)
-
-    return AspectStack(aspect, actualAmount)
+    requiredAspects = requiredAspects.subtract(aspect, amount)
+    return AspectStack(aspect, amount)
   }
 
   /**
@@ -205,9 +207,6 @@ class MatrixBE(
         while (flyingAspects.size < length)
           flyingAspects.addLast(null)
 
-        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
-        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
-        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
         flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
 
         level.updateBlockEntityS2C(sourcePos)

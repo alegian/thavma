@@ -82,7 +82,7 @@ private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsu
  */
 private fun oscillatingRadius(i: Int, trajectory: List<Vec3>, ticks: Float): Double {
   val timePhase = -1.5 * 2 * PI * ticks / 20 // minus makes it look like start is being sucked into end
-  val default = 0.14 + 0.02 * sin(i * 2 * PI / MAIN_AXIS_RESOLUTION + timePhase)
+  val default = 0.12 + 0.02 * sin(i * 2 * PI / MAIN_AXIS_RESOLUTION + timePhase)
 
   val x = trajectory[i]
   val distanceToEndpoint = min(x.distanceTo(trajectory.first()), x.distanceTo(trajectory.last()))

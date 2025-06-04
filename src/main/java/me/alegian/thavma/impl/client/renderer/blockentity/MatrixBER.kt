@@ -13,6 +13,7 @@ import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
+import net.minecraft.world.phys.AABB
 import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedBlockGeoModel
@@ -23,6 +24,8 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
   init {
     addRenderLayer(EmissiveGeoLayer<MatrixBE>(this))
   }
+
+  override fun getRenderBoundingBox(blockEntity: MatrixBE) = AABB.INFINITE
 
   override fun renderCubesOfBone(poseStack: PoseStack, bone: GeoBone, buffer: VertexConsumer, packedLight: Int, packedOverlay: Int, colour: Int) {
     if (!animatable.hasRing && bone.parent?.parent?.name == "bone") return
@@ -50,8 +53,9 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
         val head = f.value - 1 - firstIndex
         val length = 1 + flyingAspects.indexOfLast { f.key == it?.blockPos?.center } - firstIndex
         val aspect = flyingAspects[firstIndex]?.aspectStack?.aspect ?: continue
+        val colorWithAlpha = 0x44000000 or (aspect.color and 0xffffff)
         if(head < 0) continue
-        renderEssentia(f.key, be.drainPos, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, aspect.color)
+        renderEssentia(f.key, be.drainPos, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha)
       }
     }
   }

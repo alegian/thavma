@@ -4,9 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.client.renderer.geo.layer.EmissiveGeoLayer
 import me.alegian.thavma.impl.client.renderer.level.renderEssentia
+import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
@@ -16,6 +17,7 @@ import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedBlockGeoModel
 import software.bernie.geckolib.renderer.GeoBlockRenderer
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 
 class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion_matrix"))) {
   init {
@@ -34,18 +36,23 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
     val flyingAspects = be.get(FLYING_ASPECTS.get())
     if (flyingAspects?.isEmpty() ?: true) return
 
-    val flyingStream = flyingAspects.filterNotNull().associate {
-      Pair(
-        it.blockPos.center,
-        trajectoryLength(it.blockPos.center, be.blockPos.center)
-      )
-    }
-    val ticks = Minecraft.getInstance().levelRenderer.ticks + partialTick
-    for (f in flyingStream) {
-      val firstIndex = flyingAspects.indexOfFirst { f.key == it?.blockPos?.center }
-      val head = f.value - 1 - firstIndex
-      val length = 1 + flyingAspects.indexOfLast { f.key == it?.blockPos?.center } - firstIndex
-      renderEssentia(f.key, be.blockPos.center, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
+    poseStack.use {
+      translate(-be.blockPos.center)
+      val flyingStream = flyingAspects.filterNotNull().associate {
+        Pair(
+          it.blockPos.center,
+          trajectoryLength(it.blockPos.center, be.drainPos)
+        )
+      }
+      val ticks = Minecraft.getInstance().levelRenderer.ticks + partialTick
+      for (f in flyingStream) {
+        val firstIndex = flyingAspects.indexOfFirst { f.key == it?.blockPos?.center }
+        val head = f.value - 1 - firstIndex
+        val length = 1 + flyingAspects.indexOfLast { f.key == it?.blockPos?.center } - firstIndex
+        val aspect = flyingAspects[firstIndex]?.aspectStack?.aspect ?: continue
+        if(head < 0) continue
+        renderEssentia(f.key, be.drainPos, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, aspect.color)
+      }
     }
   }
 }

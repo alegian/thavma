@@ -66,6 +66,7 @@ class MatrixBE(
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
   override val componentTypes: Array<DataComponentType<*>>
     get() = arrayOf(FLYING_ASPECTS.get())
+  val drainPos = blockPos.center.add(0.0, 0.5, 0.0)
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
@@ -200,10 +201,13 @@ class MatrixBE(
         val sourcePos = currSourcePos ?: return@run
         val extracted = extractFromSource() ?: return@run
 
-        val length = trajectoryLength(sourcePos.center, pos.center)
+        val length = trajectoryLength(sourcePos.center, drainPos)
         while (flyingAspects.size < length)
           flyingAspects.addLast(null)
 
+        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
+        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
+        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted.withAmount(0)))
         flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
 
         level.updateBlockEntityS2C(sourcePos)

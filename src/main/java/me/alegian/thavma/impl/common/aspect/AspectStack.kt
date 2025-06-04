@@ -10,6 +10,8 @@ import net.minecraft.network.codec.StreamCodec
  * The element of these lists is the AspectStack.
  */
 data class AspectStack(val aspect: Aspect, val amount: Int) {
+  fun withAmount(a: Int) = AspectStack(aspect, a)
+
   companion object {
     fun of(aspect: Aspect, amount: Int): AspectStack {
       return AspectStack(aspect, amount)

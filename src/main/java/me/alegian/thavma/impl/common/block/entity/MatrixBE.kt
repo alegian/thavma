@@ -17,15 +17,19 @@ import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
+import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.particles.ItemParticleOption
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
 import net.minecraft.world.level.block.state.BlockState
@@ -127,6 +131,14 @@ class MatrixBE(
     currSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3, ::attemptSetSource).getOrNull()
   }
 
+  private fun findPedestal(): PedestalBE? {
+    val level = level ?: return null
+    for (pos in BlockPos.withinManhattan(blockPos, 7, 3, 7)) {
+      return level.getBE(pos, PEDESTAL.get()) ?: continue
+    }
+    return null
+  }
+
   override fun registerControllers(controllers: ControllerRegistrar) {
     controllers.add(ANIM_CONTROLLER)
   }
@@ -168,6 +180,23 @@ class MatrixBE(
     }
   }
 
+  private fun sendItemParticles(pedestalPos: BlockPos, stack: ItemStack) {
+    val level = level ?: return
+    if (level.isClientSide || stack.isEmpty || level !is ServerLevel) return
+
+    val randScale = 0.2
+    val rand = (level.random.nextDouble() * randScale - randScale / 2)
+    val x = pedestalPos.x + rand + 0.5
+    val y = pedestalPos.y + rand + 1.1
+    val z = pedestalPos.z + rand + 0.5
+
+    val velX = blockPos.x - pedestalPos.x
+    val velY = blockPos.y - pedestalPos.y
+    val velZ = blockPos.z - pedestalPos.z
+
+    level.sendParticles(ItemParticleOption(ParticleTypes.ITEM, stack), x, y, z, 0, velX.toDouble(), velY.toDouble(), velZ.toDouble(), 0.18)
+  }
+
   companion object {
     val FLYING_ASPECTS_CODEC = Codec.either(ArrivingAspectStack.CODEC, Codec.EMPTY.codec()).listOf().xmap(
       { list -> ArrayDeque(list.map { e -> e.map({ it }, { r -> null }) }) },
@@ -190,6 +219,10 @@ class MatrixBE(
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
       if (level.isClientSide || level !is ServerLevel) return
+
+      be.findPedestal()?.let {
+        be.sendItemParticles(it.blockPos, it.getItem())
+      }
 
       val flyingAspects = be.getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
       be.run {

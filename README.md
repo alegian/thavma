@@ -39,6 +39,7 @@ Good pick azanor ;-)
 - Nic Barker for his amazing [UI video](https://youtu.be/by9lQvpvMIc), that helped me make a flexible GUI system
 - Screaming Brain Studios, for their awesome free space backgrounds, used in the book: https://opengameart.org/content/seamless-space-backgrounds
 - RedBlobGames, for their brilliant guide to hexagonal grids, used in research: https://www.redblobgames.com/grids/hexagons/
+- BlakeBr0 of Mystical Agriculture, I learnt the Item Particle effects for Infusion from their codebase
 
 ## License
 

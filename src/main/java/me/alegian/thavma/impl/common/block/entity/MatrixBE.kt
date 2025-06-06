@@ -56,7 +56,6 @@ class MatrixBE(
 ) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
   private var currSourcePos: BlockPos? = null
-  private var currSource: IAspectContainer? = null
   private var active = false
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
@@ -68,7 +67,7 @@ class MatrixBE(
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
   override val componentTypes: Array<DataComponentType<*>>
     get() = arrayOf(FLYING_ASPECTS.get(), REMAINING_INPUTS.get())
-  val drainPos = blockPos.center.add(0.0, 0.5, 0.0)
+  val drainPos = blockPos.center.add(0.0, 0.5, 0.0) // where the flying aspects go to visually
   var remainingAspects
     get() = get(REMAINING_INPUTS.get())?.aspects
     set(aspects) {
@@ -84,8 +83,7 @@ class MatrixBE(
     set(REMAINING_INPUTS.get(), RemainingInputs(listOf(Ingredient.of(Items.DIAMOND))))
   }
 
-  private fun extractFromSource(aspect: Aspect): AspectStack? {
-    val source = currSource ?: return null
+  private fun extractFromSource(aspect: Aspect, source: IAspectContainer): AspectStack? {
     val level = level ?: return null
 
     // some ticks extract 0 aspects, because otherwise the animation is too fast
@@ -98,29 +96,23 @@ class MatrixBE(
     return AspectStack(aspect, amount)
   }
 
-  /**
-   * returns false if the source is no longer valid
-   */
-  private fun oldSourceValid(aspect: Aspect): Boolean {
-    val sourcePos = currSourcePos ?: return false
-
-    return attemptSetSource(sourcePos, aspect)
-  }
-
-  /**
-   * returns false if the source is not valid
-   */
-  private fun attemptSetSource(pos: BlockPos, aspect: Aspect): Boolean {
-    val source = AspectContainer.at(level, pos) ?: return false
+  private fun sourceOrNull(pos: BlockPos?, aspect: Aspect): IAspectContainer? {
+    if(pos == null) return null
+    val source = AspectContainer.at(level, pos) ?: return null
     val valid = source.aspects[aspect] > 0
-    if (valid) currSource = source
-
-    return valid
+    return if (valid) source else null
   }
 
   // todo: optimize this running every tick when no sources are nearby
-  private fun findNewSource(aspect: Aspect) {
-    currSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3, {attemptSetSource(it, aspect)}).getOrNull()
+  private fun pickSource(aspect: Aspect): IAspectContainer? {
+    var source = sourceOrNull(currSourcePos, aspect)
+    if (source != null) return source
+
+    currSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
+      source = sourceOrNull(it, aspect)
+      source != null
+    }.getOrNull()
+    return source
   }
 
   private fun findPedestal(): PedestalBE? {
@@ -223,11 +215,10 @@ class MatrixBE(
         if (!active || remainingAspects?.isEmpty ?: true) return@run
         val currAspect = remainingAspects?.firstOrNull()?.aspect ?: return@run
 
-        // this line is expected to update currSource && currSourcePos as a side effect
-        if (!oldSourceValid(currAspect)) findNewSource(currAspect)
-
+        // this line is expected to update currSourcePos as a side effect
+        val source = pickSource(currAspect) ?: return@run
         val sourcePos = currSourcePos ?: return@run
-        val extracted = extractFromSource(currAspect) ?: return@run
+        val extracted = extractFromSource(currAspect, source) ?: return@run
 
         val length = trajectoryLength(sourcePos.center, drainPos)
         while (flyingAspects.size < length)

@@ -20,11 +20,11 @@ import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.REMAINING_INPUTS
+import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.particles.ItemParticleOption
-import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
@@ -174,11 +174,11 @@ class MatrixBE(
     val y = pedestalPos.y + rand + 1.1
     val z = pedestalPos.z + rand + 0.5
 
-    val velX = blockPos.x - pedestalPos.x
-    val velY = blockPos.y - pedestalPos.y
-    val velZ = blockPos.z - pedestalPos.z
+    val velX = blockPos.center.x - x
+    val velY = blockPos.center.y - y
+    val velZ = blockPos.center.z - z
 
-    level.sendParticles(ItemParticleOption(ParticleTypes.ITEM, stack), x, y, z, 0, velX.toDouble(), velY.toDouble(), velZ.toDouble(), 0.18)
+    level.sendParticles(ItemParticleOption(T7ParticleTypes.INFUSION_ITEM.get(), stack), x, y, z, 0, velX.toDouble(), velY.toDouble(), velZ.toDouble(), 0.16)
   }
 
   companion object {

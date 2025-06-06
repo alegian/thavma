@@ -16,6 +16,7 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.client.particle.CrucibleBubbleParticle
 import me.alegian.thavma.impl.client.particle.EternalFlameParticle
+import me.alegian.thavma.impl.client.particle.InfusionItemParticle
 import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
@@ -73,6 +74,10 @@ private fun registerParticleProviders(event: RegisterParticleProvidersEvent) {
   event.registerSpriteSet(
     T7ParticleTypes.ETERNAL_FLAME.get(),
     EternalFlameParticle::Provider
+  )
+  event.registerSpriteSet(
+    T7ParticleTypes.INFUSION_ITEM.get(),
+    InfusionItemParticle::Provider
   )
 }
 

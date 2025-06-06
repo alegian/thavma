@@ -4,23 +4,22 @@ import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Unit
 import com.mojang.serialization.Codec
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.data.capability.IAspectContainer
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
+import me.alegian.thavma.impl.common.infusion.RemainingInputs
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.REMAINING_INPUTS
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
@@ -30,6 +29,8 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
 import net.minecraft.world.level.block.state.BlockState
@@ -57,7 +58,6 @@ class MatrixBE(
   private var currSourcePos: BlockPos? = null
   private var currSource: IAspectContainer? = null
   private var currRequiredAspect: Aspect? = null
-  private var requiredAspects = AspectMap.builder().add(IGNIS.get(), 40).add(TERRA.get(), 50).build()
   private var active = false
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
@@ -68,25 +68,21 @@ class MatrixBE(
     .triggerableAnim("spin_closed_fast", RawAnimation.begin().thenLoop("spin_closed_fast"))
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
   override val componentTypes: Array<DataComponentType<*>>
-    get() = arrayOf(FLYING_ASPECTS.get())
+    get() = arrayOf(FLYING_ASPECTS.get(), REMAINING_INPUTS.get())
   val drainPos = blockPos.center.add(0.0, 0.5, 0.0)
+  var remainingAspects
+    get() = get(REMAINING_INPUTS.get())?.aspects
+    set(aspects) {
+      if (aspects == null) return
+      val oldRemaining = get(REMAINING_INPUTS.get()) ?: return
+      set(REMAINING_INPUTS.get(), RemainingInputs(oldRemaining.ingredients, aspects))
+    }
+
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
-  }
-
-  /**
-   * calculate the aspect that the next infusion tick wants to absorb.
-   * tries to continue with the same aspect if possible
-   */
-  private fun updateCurrAspect() {
-    val default = requiredAspects.firstOrNull()?.aspect
-    val oldAspect = currRequiredAspect
-
-    if (oldAspect == null || requiredAspects[oldAspect] == 0) {
-      currRequiredAspect = default
-      return
-    }
+    // todo: remove after testing
+    set(REMAINING_INPUTS.get(), RemainingInputs(listOf(Ingredient.of(Items.DIAMOND))))
   }
 
   private fun extractFromSource(): AspectStack? {
@@ -100,7 +96,7 @@ class MatrixBE(
       if (!waiting) source.extract(aspect, 1, false)
       else 0
 
-    requiredAspects = requiredAspects.subtract(aspect, amount)
+    remainingAspects = remainingAspects?.subtract(aspect, amount)
     return AspectStack(aspect, amount)
   }
 
@@ -228,8 +224,9 @@ class MatrixBE(
       be.run {
         flyingAspects.removeFirstOrNull()
 
-        if (!active || requiredAspects.isEmpty) return@run
-        updateCurrAspect()
+        if (!active || remainingAspects?.isEmpty ?: true) return@run
+        currRequiredAspect = remainingAspects?.firstOrNull()?.aspect
+
         // this line is expected to update currSource && currSourcePos as a side effect
         if (!oldSourceValid()) findNewSource()
 

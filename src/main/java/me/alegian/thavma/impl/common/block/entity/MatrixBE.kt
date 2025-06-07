@@ -28,8 +28,9 @@ import net.minecraft.core.particles.ItemParticleOption
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
@@ -44,7 +45,8 @@ import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 import kotlin.jvm.optionals.getOrNull
 
-private const val ABSORB_DELAY = 4L
+private const val MAX_ASPECT_DELAY = 4
+private const val MAX_ITEM_DELAY = 40
 
 /**
  * Default values used for rendering Item form
@@ -57,6 +59,8 @@ class MatrixBE(
   private val cache = GeckoLibUtil.createInstanceCache(this)
   private var currSourcePos: BlockPos? = null
   private var active = false
+  private var itemDelay = MAX_ITEM_DELAY
+  private var aspectDelay = MAX_ASPECT_DELAY
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
   ) { _ -> PlayState.CONTINUE }
@@ -83,20 +87,19 @@ class MatrixBE(
       set(REMAINING_INPUTS.get(), RemainingInputs(ingredients, oldRemaining.aspects))
     }
 
-
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
     // todo: remove after testing
-    set(REMAINING_INPUTS.get(), RemainingInputs(listOf(Ingredient.of(Items.DIAMOND))))
+    set(REMAINING_INPUTS.get(), RemainingInputs())
   }
 
   private fun extractFromSource(aspect: Aspect, source: IAspectContainer): AspectStack? {
-    val level = level ?: return null
-
     // some ticks extract 0 aspects, because otherwise the animation is too fast
-    val waiting = level.gameTime % ABSORB_DELAY != (ABSORB_DELAY - 1)
     val amount =
-      if (!waiting) source.extract(aspect, 1, false)
+      if (aspectDelay-- == 0) {
+        aspectDelay = MAX_ASPECT_DELAY
+        source.extract(aspect, 1, false)
+      }
       else 0
 
     remainingAspects = remainingAspects?.subtract(aspect, amount)
@@ -122,10 +125,11 @@ class MatrixBE(
     return source
   }
 
-  private fun findPedestal(): PedestalBE? {
-    val level = level ?: return null
+  private fun findPedestal(level: ServerLevel, ingredient: Ingredient): PedestalBE? {
     for (pos in BlockPos.withinManhattan(blockPos, 7, 3, 7)) {
-      return level.getBE(pos, PEDESTAL.get()) ?: continue
+      val pedestal = level.getBE(pos, PEDESTAL.get())
+      if (ingredient.test(pedestal?.getItem()))
+        return pedestal
     }
     return null
   }
@@ -184,7 +188,7 @@ class MatrixBE(
     val velY = blockPos.center.y - y
     val velZ = blockPos.center.z - z
 
-    level.sendParticles(ItemParticleOption(T7ParticleTypes.INFUSION_ITEM.get(), stack), x, y, z, 0, velX.toDouble(), velY.toDouble(), velZ.toDouble(), 0.16)
+    level.sendParticles(ItemParticleOption(T7ParticleTypes.INFUSION_ITEM.get(), stack), x, y, z, 0, velX, velY, velZ, 0.16)
   }
 
   /**
@@ -217,9 +221,23 @@ class MatrixBE(
     return false
   }
 
-  fun itemPhaseTick(level: ServerLevel) {
-    val pedestalBE = findPedestal() ?: return
+  /**
+   * true -> finish infusion
+   * false -> dont
+   */
+  fun itemPhaseTick(level: ServerLevel): Boolean {
+    if (remainingIngredients?.isEmpty() ?: false) return true
+
+    val currIngredient = remainingIngredients?.first() ?: return false
+    val pedestalBE = findPedestal(level, currIngredient) ?: return false
+
     sendItemParticles(level, pedestalBE.blockPos, pedestalBE.getItem())
+    if (itemDelay-- == 0) {
+      pedestalBE.inventory.extractItem(0, 1, false)
+      itemDelay = MAX_ITEM_DELAY
+      remainingIngredients = remainingIngredients?.drop(1)
+    }
+    return false
   }
 
   companion object {
@@ -246,8 +264,12 @@ class MatrixBE(
       if (level.isClientSide || level !is ServerLevel) return
       if (!be.active) return // todo: reset
 
-      val proceed = be.aspectPhaseTick(level)
-      if (proceed) be.itemPhaseTick(level)
+      var proceed = be.aspectPhaseTick(level)
+      if (!proceed) return
+      proceed = be.itemPhaseTick(level)
+      if (!proceed) return
+      level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS)
+      be.active = false
     }
   }
 }

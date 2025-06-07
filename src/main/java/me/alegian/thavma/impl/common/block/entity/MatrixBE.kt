@@ -75,6 +75,13 @@ class MatrixBE(
       val oldRemaining = get(REMAINING_INPUTS.get()) ?: return
       set(REMAINING_INPUTS.get(), RemainingInputs(oldRemaining.ingredients, aspects))
     }
+  var remainingIngredients
+    get() = get(REMAINING_INPUTS.get())?.ingredients
+    set(ingredients) {
+      if (ingredients == null) return
+      val oldRemaining = get(REMAINING_INPUTS.get()) ?: return
+      set(REMAINING_INPUTS.get(), RemainingInputs(ingredients, oldRemaining.aspects))
+    }
 
 
   init {
@@ -97,7 +104,7 @@ class MatrixBE(
   }
 
   private fun sourceOrNull(pos: BlockPos?, aspect: Aspect): IAspectContainer? {
-    if(pos == null) return null
+    if (pos == null) return null
     val source = AspectContainer.at(level, pos) ?: return null
     val valid = source.aspects[aspect] > 0
     return if (valid) source else null
@@ -164,9 +171,8 @@ class MatrixBE(
     }
   }
 
-  private fun sendItemParticles(pedestalPos: BlockPos, stack: ItemStack) {
-    val level = level ?: return
-    if (level.isClientSide || stack.isEmpty || level !is ServerLevel) return
+  private fun sendItemParticles(level: ServerLevel, pedestalPos: BlockPos, stack: ItemStack) {
+    if (stack.isEmpty) return
 
     val randScale = 0.2
     val rand = (level.random.nextDouble() * randScale - randScale / 2)
@@ -179,6 +185,41 @@ class MatrixBE(
     val velZ = blockPos.center.z - z
 
     level.sendParticles(ItemParticleOption(T7ParticleTypes.INFUSION_ITEM.get(), stack), x, y, z, 0, velX.toDouble(), velY.toDouble(), velZ.toDouble(), 0.16)
+  }
+
+  /**
+   * true -> continue to item phase
+   * false -> dont
+   */
+  fun aspectPhaseTick(level: ServerLevel): Boolean {
+    val remainingAspects = remainingAspects ?: return false
+    val flyingAspects = getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
+    if (remainingAspects.isEmpty && flyingAspects.isEmpty()) return true
+
+    flyingAspects.removeFirstOrNull()
+    set(FLYING_ASPECTS, flyingAspects)
+    level.updateBlockEntityS2C(blockPos)
+
+    val currAspect = remainingAspects.firstOrNull()?.aspect ?: return false
+
+    // this line is expected to update currSourcePos as a side effect
+    val source = pickSource(currAspect) ?: return false
+    val sourcePos = currSourcePos ?: return false
+    val extracted = extractFromSource(currAspect, source) ?: return false
+    level.updateBlockEntityS2C(sourcePos)
+
+    val length = trajectoryLength(sourcePos.center, drainPos)
+    while (flyingAspects.size < length)
+      flyingAspects.addLast(null)
+
+    flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
+    set(FLYING_ASPECTS, flyingAspects)
+    return false
+  }
+
+  fun itemPhaseTick(level: ServerLevel) {
+    val pedestalBE = findPedestal() ?: return
+    sendItemParticles(level, pedestalBE.blockPos, pedestalBE.getItem())
   }
 
   companion object {
@@ -203,34 +244,10 @@ class MatrixBE(
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
       if (level.isClientSide || level !is ServerLevel) return
+      if (!be.active) return // todo: reset
 
-      be.findPedestal()?.let {
-        be.sendItemParticles(it.blockPos, it.getItem())
-      }
-
-      val flyingAspects = be.getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
-      be.run {
-        flyingAspects.removeFirstOrNull()
-
-        if (!active || remainingAspects?.isEmpty ?: true) return@run
-        val currAspect = remainingAspects?.firstOrNull()?.aspect ?: return@run
-
-        // this line is expected to update currSourcePos as a side effect
-        val source = pickSource(currAspect) ?: return@run
-        val sourcePos = currSourcePos ?: return@run
-        val extracted = extractFromSource(currAspect, source) ?: return@run
-
-        val length = trajectoryLength(sourcePos.center, drainPos)
-        while (flyingAspects.size < length)
-          flyingAspects.addLast(null)
-
-        flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
-
-        level.updateBlockEntityS2C(sourcePos)
-      }
-      // todo: optimize, we dont need to sync every tick
-      be.set(FLYING_ASPECTS, flyingAspects)
-      level.updateBlockEntityS2C(pos)
+      val proceed = be.aspectPhaseTick(level)
+      if (proceed) be.itemPhaseTick(level)
     }
   }
 }

@@ -28,7 +28,15 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
   ): InteractionResult {
     level.getBE(pos, MATRIX.get())?.run {
       attemptConvertPillars()
-      checkActivation()
+      if (!active) {
+        checkActivation()
+        return InteractionResult.SUCCESS
+      }
+      if (!isOpen) {
+        open()
+        return InteractionResult.SUCCESS
+      }
+      attemptInfusion()
     }
     return InteractionResult.SUCCESS
   }

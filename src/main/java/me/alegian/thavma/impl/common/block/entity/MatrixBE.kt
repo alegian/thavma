@@ -53,7 +53,9 @@ class MatrixBE(
 ) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
   private var currSourcePos: BlockPos? = null
-  private var active = false
+  private var currPedestalPos: BlockPos? = null
+  var active = false
+  var isOpen = false
   private var itemDelay = MAX_ITEM_DELAY
   private var aspectDelay = MAX_ASPECT_DELAY
   private val ANIM_CONTROLLER = AnimationController(
@@ -82,8 +84,6 @@ class MatrixBE(
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
-    // todo: remove after testing
-    set(REMAINING_INPUTS.get(), RemainingInputs())
   }
 
   private fun extractFromSource(aspect: Aspect, source: IAspectContainer): AspectStack? {
@@ -117,13 +117,21 @@ class MatrixBE(
     return source
   }
 
-  private fun findPedestal(level: ServerLevel, ingredient: Ingredient): PedestalBE? {
-    for (pos in BlockPos.withinManhattan(blockPos, 7, 3, 7)) {
-      val pedestal = level.getBE(pos, PEDESTAL.get())
-      if (ingredient.test(pedestal?.getItem()))
-        return pedestal
-    }
-    return null
+  private fun pedestalOrNull(pos: BlockPos?, ingredient: Ingredient): PedestalBE? {
+    if (pos == null) return null
+    val pedestalBE = level?.getBE(pos, PEDESTAL.get())
+    return if (ingredient.test(pedestalBE?.getItem())) pedestalBE else null
+  }
+
+  private fun pickPedestal(ingredient: Ingredient): PedestalBE? {
+    var pedestal = pedestalOrNull(currPedestalPos, ingredient)
+    if (pedestal != null) return pedestal
+
+    currPedestalPos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
+      pedestal = pedestalOrNull(it, ingredient)
+      pedestal != null
+    }.getOrNull()
+    return pedestal
   }
 
   override fun registerControllers(controllers: ControllerRegistrar) {
@@ -151,10 +159,24 @@ class MatrixBE(
     if (requiredPillars().any { level?.getBlockState(it.blockPos) !== it.blockState }) {
       triggerAnim("cycle", "closed")
       active = false
+      isOpen = false
     } else {
       triggerAnim("cycle", "spin_closed")
       active = true
     }
+  }
+
+  fun open() {
+    if (level?.isClientSide ?: true) return
+
+    triggerAnim("cycle", "open")
+    isOpen = true
+  }
+
+  fun attemptInfusion() {
+    set(REMAINING_INPUTS.get(), RemainingInputs())
+
+    triggerAnim("cycle", "spin_closed")
   }
 
   private fun requiredPillars(): List<MultiblockRequiredState> {
@@ -221,7 +243,8 @@ class MatrixBE(
     if (remainingIngredients?.isEmpty() ?: false) return true
 
     val currIngredient = remainingIngredients?.first() ?: return false
-    val pedestalBE = findPedestal(level, currIngredient) ?: return false
+    // this line is expected to update currPedestalPos as a side effect
+    val pedestalBE = pickPedestal(currIngredient) ?: return false
 
     sendItemParticles(level, pedestalBE.blockPos, pedestalBE.getItem())
     if (itemDelay-- == 0) {
@@ -242,12 +265,11 @@ class MatrixBE(
       if (level.isClientSide || level !is ServerLevel) return
       if (!be.active) return // todo: reset
 
-      var proceed = be.aspectPhaseTick(level)
-      if (!proceed) return
-      proceed = be.itemPhaseTick(level)
-      if (!proceed) return
+      var nextPhase = be.aspectPhaseTick(level)
+      if (!nextPhase) return
+      nextPhase = be.itemPhaseTick(level)
+      if (!nextPhase) return
       level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS)
-      be.active = false
     }
   }
 }

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.block
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.MATRIX
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
@@ -27,12 +28,14 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
     hitResult: BlockHitResult
   ): InteractionResult {
     level.getBE(pos, MATRIX.get())?.run {
+      val infusionState = get(INFUSION_STATE) ?: return InteractionResult.PASS
+
       attemptConvertPillars()
-      if (!active) {
+      if (!infusionState.active) {
         checkActivation()
         return InteractionResult.SUCCESS
       }
-      if (!isOpen) {
+      if (!infusionState.isOpen) {
         open()
         return InteractionResult.SUCCESS
       }

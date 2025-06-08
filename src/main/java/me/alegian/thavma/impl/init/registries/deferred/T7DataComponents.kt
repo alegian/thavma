@@ -2,8 +2,7 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.block.entity.MatrixBE
-import me.alegian.thavma.impl.common.infusion.RemainingInputs
+import me.alegian.thavma.impl.common.infusion.InfusionState
 import me.alegian.thavma.impl.common.research.ResearchState
 import net.minecraft.core.registries.Registries
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -23,13 +22,8 @@ object T7DataComponents {
       .networkSynchronized(ResearchState.STREAM_CODEC)
   }
 
-  val FLYING_ASPECTS = REGISTRAR.registerComponentType("flying_aspects") { builder ->
+  val INFUSION_STATE = REGISTRAR.registerComponentType("infusion_state") { builder ->
     builder
-      .persistent(MatrixBE.FLYING_ASPECTS_CODEC)
-  }
-
-  val REMAINING_INPUTS = REGISTRAR.registerComponentType("remaining_inputs") { builder ->
-    builder
-      .persistent(RemainingInputs.CODEC)
+      .persistent(InfusionState.CODEC)
   }
 }

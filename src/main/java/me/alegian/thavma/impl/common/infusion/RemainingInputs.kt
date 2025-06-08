@@ -16,7 +16,7 @@ data class RemainingInputs(
   companion object {
     val CODEC = RecordCodecBuilder.create {
       it.group(
-        Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredients").forGetter(RemainingInputs::ingredients),
+        Ingredient.LIST_CODEC.fieldOf("ingredients").forGetter(RemainingInputs::ingredients),
         AspectMap.CODEC.fieldOf("aspects").forGetter(RemainingInputs::aspects),
       ).apply(it, ::RemainingInputs)
     }

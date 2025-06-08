@@ -8,7 +8,7 @@ import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.util.use
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
@@ -36,7 +36,7 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
   override fun actuallyRender(poseStack: PoseStack, be: MatrixBE, model: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, isReRender: Boolean, partialTick: Float, packedLight: Int, packedOverlay: Int, colour: Int) {
     super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
 
-    val flyingAspects = be.get(FLYING_ASPECTS.get())
+    val flyingAspects = be.get(INFUSION_STATE)?.flyingAspects
     if (flyingAspects?.isEmpty() ?: true) return
 
     poseStack.use {

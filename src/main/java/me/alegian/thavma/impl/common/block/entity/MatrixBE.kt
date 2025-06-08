@@ -3,10 +3,11 @@ package me.alegian.thavma.impl.common.block.entity
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
-import me.alegian.thavma.impl.common.codec.listOfNullable
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.data.capability.IAspectContainer
+import me.alegian.thavma.impl.common.data.update
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
+import me.alegian.thavma.impl.common.infusion.InfusionState
 import me.alegian.thavma.impl.common.infusion.RemainingInputs
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
@@ -16,8 +17,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.FLYING_ASPECTS
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.REMAINING_INPUTS
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
@@ -40,8 +41,6 @@ import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 import kotlin.jvm.optionals.getOrNull
 
-private const val MAX_ASPECT_DELAY = 4
-private const val MAX_ITEM_DELAY = 40
 
 /**
  * Default values used for rendering Item form
@@ -52,12 +51,6 @@ class MatrixBE(
   val hasRing: Boolean = false
 ) : DataComponentBE(T7BlockEntities.MATRIX.get(), pos, blockState), GeoBlockEntity {
   private val cache = GeckoLibUtil.createInstanceCache(this)
-  private var currSourcePos: BlockPos? = null
-  private var currPedestalPos: BlockPos? = null
-  var active = false
-  var isOpen = false
-  private var itemDelay = MAX_ITEM_DELAY
-  private var aspectDelay = MAX_ASPECT_DELAY
   private val ANIM_CONTROLLER = AnimationController(
     this, "cycle", 20
   ) { _ -> PlayState.CONTINUE }
@@ -67,24 +60,32 @@ class MatrixBE(
     .triggerableAnim("spin_closed_fast", RawAnimation.begin().thenLoop("spin_closed_fast"))
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
   val drainPos = blockPos.center.add(0.0, 0.5, 0.0) // where the flying aspects go to visually
-  val remainingInputs
-    get() = get(REMAINING_INPUTS.get())
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
+    set(INFUSION_STATE, InfusionState())
   }
 
-  private fun extractFromSource(aspect: Aspect, source: IAspectContainer, remainingInputs: RemainingInputs): AspectStack? {
+  private fun extractFromSource(aspect: Aspect, source: IAspectContainer, infusionState: InfusionState): AspectStack? {
+    val remainingInputs = infusionState.remainingInputs
+    val aspectDelay = infusionState.aspectDelay
     // some ticks extract 0 aspects, because otherwise the animation is too fast
-    val amount =
-      if (aspectDelay-- == 0) {
-        aspectDelay = MAX_ASPECT_DELAY
-        source.extract(aspect, 1, false)
-      } else 0
-
-    val newAspects = remainingInputs.aspects.subtract(aspect, amount)
-    set(REMAINING_INPUTS.get(), remainingInputs.copy(aspects = newAspects))
-    return AspectStack(aspect, amount)
+    if (aspectDelay == 0) {
+      val amount = source.extract(aspect, 1, false)
+      val newAspects = remainingInputs.aspects.subtract(aspect, amount)
+      update(INFUSION_STATE) {
+        it.copy(
+          aspectDelay = MAX_ASPECT_DELAY,
+          remainingInputs = it.remainingInputs.copy(
+            aspects = newAspects
+          )
+        )
+      }
+      return AspectStack(aspect, amount)
+    } else {
+      update(INFUSION_STATE) { it.copy(aspectDelay = aspectDelay - 1) }
+      return AspectStack(aspect, 0)
+    }
   }
 
   private fun sourceOrNull(pos: BlockPos?, aspect: Aspect): IAspectContainer? {
@@ -95,14 +96,16 @@ class MatrixBE(
   }
 
   // todo: optimize this running every tick when no sources are nearby
-  private fun pickSource(aspect: Aspect): IAspectContainer? {
-    var source = sourceOrNull(currSourcePos, aspect)
+  private fun pickSource(aspect: Aspect, infusionState: InfusionState): IAspectContainer? {
+    var source = sourceOrNull(infusionState.prevSourcePos, aspect)
     if (source != null) return source
 
-    currSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
+    val newSourcePos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
       source = sourceOrNull(it, aspect)
       source != null
     }.getOrNull()
+    update(INFUSION_STATE) { it.copy(prevSourcePos = newSourcePos) }
+
     return source
   }
 
@@ -112,14 +115,17 @@ class MatrixBE(
     return if (ingredient.test(pedestalBE?.getItem())) pedestalBE else null
   }
 
-  private fun pickPedestal(ingredient: Ingredient): PedestalBE? {
-    var pedestal = pedestalOrNull(currPedestalPos, ingredient)
+  // todo: optimize this running every tick when no sources are nearby
+  private fun pickPedestal(ingredient: Ingredient, infusionState: InfusionState): PedestalBE? {
+    var pedestal = pedestalOrNull(infusionState.prevPedestalPos, ingredient)
     if (pedestal != null) return pedestal
 
-    currPedestalPos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
+    val newPedestalPos = BlockPos.findClosestMatch(blockPos.below(), 7, 3) {
       pedestal = pedestalOrNull(it, ingredient)
       pedestal != null
     }.getOrNull()
+    update(INFUSION_STATE) { it.copy(prevPedestalPos = newPedestalPos) }
+
     return pedestal
   }
 
@@ -147,11 +153,10 @@ class MatrixBE(
 
     if (requiredPillars().any { level?.getBlockState(it.blockPos) !== it.blockState }) {
       triggerAnim("cycle", "closed")
-      active = false
-      isOpen = false
+      update(INFUSION_STATE) { it.copy(active = false, isOpen = false) }
     } else {
       triggerAnim("cycle", "spin_closed")
-      active = true
+      update(INFUSION_STATE) { it.copy(active = true) }
     }
   }
 
@@ -159,11 +164,11 @@ class MatrixBE(
     if (level?.isClientSide ?: true) return
 
     triggerAnim("cycle", "open")
-    isOpen = true
+    update(INFUSION_STATE) { it.copy(isOpen = true) }
   }
 
   fun attemptInfusion() {
-    set(REMAINING_INPUTS.get(), RemainingInputs())
+    update(INFUSION_STATE) { it.copy(remainingInputs = RemainingInputs(), result = Items.DIAMOND.defaultInstance) }
 
     triggerAnim("cycle", "spin_closed")
   }
@@ -199,21 +204,21 @@ class MatrixBE(
    * false -> dont
    */
   fun aspectPhaseTick(level: ServerLevel): Boolean {
-    val remainingInputs = remainingInputs ?: return false
-    val remainingAspects = remainingInputs.aspects
-    val flyingAspects = getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
+    val infusionState = get(INFUSION_STATE.get()) ?: return false
+    val remainingAspects = infusionState.remainingInputs.aspects
+    val flyingAspects = infusionState.flyingAspects
     if (remainingAspects.isEmpty && flyingAspects.isEmpty()) return true
 
     flyingAspects.removeFirstOrNull()
-    set(FLYING_ASPECTS, flyingAspects)
+    update(INFUSION_STATE) { it.copy(flyingAspects = flyingAspects) }
     level.updateBlockEntityS2C(blockPos)
 
     val currAspect = remainingAspects.firstOrNull()?.aspect ?: return false
 
     // this line is expected to update currSourcePos as a side effect
-    val source = pickSource(currAspect) ?: return false
-    val sourcePos = currSourcePos ?: return false
-    val extracted = extractFromSource(currAspect, source, remainingInputs) ?: return false
+    val source = pickSource(currAspect, infusionState) ?: return false
+    val sourcePos = infusionState.prevSourcePos ?: return false
+    val extracted = extractFromSource(currAspect, source, infusionState) ?: return false
     level.updateBlockEntityS2C(sourcePos)
 
     val length = trajectoryLength(sourcePos.center, drainPos)
@@ -221,7 +226,7 @@ class MatrixBE(
       flyingAspects.addLast(null)
 
     flyingAspects.addLast(ArrivingAspectStack(sourcePos, extracted))
-    set(FLYING_ASPECTS, flyingAspects)
+    update(INFUSION_STATE) { it.copy(flyingAspects = flyingAspects) }
     return false
   }
 
@@ -230,38 +235,47 @@ class MatrixBE(
    * false -> dont
    */
   fun itemPhaseTick(level: ServerLevel): Boolean {
-    val remainingInputs = remainingInputs ?: return false
-    val remainingIngredients = remainingInputs.ingredients
+    val infusionState = get(INFUSION_STATE.get()) ?: return false
+    val remainingIngredients = infusionState.remainingInputs.ingredients
     if (remainingIngredients.isEmpty()) return true
 
     val currIngredient = remainingIngredients.first()
     // this line is expected to update currPedestalPos as a side effect
-    val pedestalBE = pickPedestal(currIngredient) ?: return false
+    val pedestalBE = pickPedestal(currIngredient, infusionState) ?: return false
 
+    val itemDelay = infusionState.itemDelay
     sendItemParticles(level, pedestalBE.blockPos, pedestalBE.getItem())
-    if (itemDelay-- == 0) {
+    if (itemDelay == 0) {
       pedestalBE.inventory.extractItem(0, 1, false)
-      itemDelay = MAX_ITEM_DELAY
-      set(REMAINING_INPUTS.get(), remainingInputs.copy(ingredients = remainingIngredients.drop(1)))
+      update(INFUSION_STATE) {
+        it.copy(
+          itemDelay = MAX_ITEM_DELAY,
+          remainingInputs = it.remainingInputs.copy(
+            ingredients = remainingIngredients.drop(1)
+          )
+        )
+      }
+    } else {
+      update(INFUSION_STATE) { it.copy(itemDelay = itemDelay - 1) }
     }
     return false
   }
 
   companion object {
-    val FLYING_ASPECTS_CODEC = ArrivingAspectStack.CODEC.listOfNullable("arrivingAspectStack").xmap(
-      ::ArrayDeque,
-      { deque -> deque.toList() }
-    )
+    val MAX_ASPECT_DELAY = 4
+    val MAX_ITEM_DELAY = 40
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
       if (level.isClientSide || level !is ServerLevel) return
-      if (!be.active) return // todo: reset
+      val infusionState = be.get(INFUSION_STATE.get()) ?: return
+      if (!infusionState.active || infusionState.result.isEmpty) return // todo: reset
 
       var nextPhase = be.aspectPhaseTick(level)
       if (!nextPhase) return
       nextPhase = be.itemPhaseTick(level)
       if (!nextPhase) return
       level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS)
+      be.update(INFUSION_STATE) { it.copy(result = ItemStack.EMPTY) }
     }
   }
 }

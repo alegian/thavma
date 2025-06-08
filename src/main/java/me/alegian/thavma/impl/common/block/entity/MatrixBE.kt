@@ -67,26 +67,14 @@ class MatrixBE(
     .triggerableAnim("spin_closed_fast", RawAnimation.begin().thenLoop("spin_closed_fast"))
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
   val drainPos = blockPos.center.add(0.0, 0.5, 0.0) // where the flying aspects go to visually
-  var remainingAspects
-    get() = get(REMAINING_INPUTS.get())?.aspects
-    set(aspects) {
-      if (aspects == null) return
-      val oldRemaining = get(REMAINING_INPUTS.get()) ?: return
-      set(REMAINING_INPUTS.get(), RemainingInputs(oldRemaining.ingredients, aspects))
-    }
-  var remainingIngredients
-    get() = get(REMAINING_INPUTS.get())?.ingredients
-    set(ingredients) {
-      if (ingredients == null) return
-      val oldRemaining = get(REMAINING_INPUTS.get()) ?: return
-      set(REMAINING_INPUTS.get(), RemainingInputs(ingredients, oldRemaining.aspects))
-    }
+  val remainingInputs
+    get() = get(REMAINING_INPUTS.get())
 
   init {
     SingletonGeoAnimatable.registerSyncedAnimatable(this)
   }
 
-  private fun extractFromSource(aspect: Aspect, source: IAspectContainer): AspectStack? {
+  private fun extractFromSource(aspect: Aspect, source: IAspectContainer, remainingInputs: RemainingInputs): AspectStack? {
     // some ticks extract 0 aspects, because otherwise the animation is too fast
     val amount =
       if (aspectDelay-- == 0) {
@@ -94,7 +82,8 @@ class MatrixBE(
         source.extract(aspect, 1, false)
       } else 0
 
-    remainingAspects = remainingAspects?.subtract(aspect, amount)
+    val newAspects = remainingInputs.aspects.subtract(aspect, amount)
+    set(REMAINING_INPUTS.get(), remainingInputs.copy(aspects = newAspects))
     return AspectStack(aspect, amount)
   }
 
@@ -210,7 +199,8 @@ class MatrixBE(
    * false -> dont
    */
   fun aspectPhaseTick(level: ServerLevel): Boolean {
-    val remainingAspects = remainingAspects ?: return false
+    val remainingInputs = remainingInputs ?: return false
+    val remainingAspects = remainingInputs.aspects
     val flyingAspects = getOrDefault(FLYING_ASPECTS.get(), ArrayDeque())
     if (remainingAspects.isEmpty && flyingAspects.isEmpty()) return true
 
@@ -223,7 +213,7 @@ class MatrixBE(
     // this line is expected to update currSourcePos as a side effect
     val source = pickSource(currAspect) ?: return false
     val sourcePos = currSourcePos ?: return false
-    val extracted = extractFromSource(currAspect, source) ?: return false
+    val extracted = extractFromSource(currAspect, source, remainingInputs) ?: return false
     level.updateBlockEntityS2C(sourcePos)
 
     val length = trajectoryLength(sourcePos.center, drainPos)
@@ -240,9 +230,11 @@ class MatrixBE(
    * false -> dont
    */
   fun itemPhaseTick(level: ServerLevel): Boolean {
-    if (remainingIngredients?.isEmpty() ?: false) return true
+    val remainingInputs = remainingInputs ?: return false
+    val remainingIngredients = remainingInputs.ingredients
+    if (remainingIngredients.isEmpty()) return true
 
-    val currIngredient = remainingIngredients?.first() ?: return false
+    val currIngredient = remainingIngredients.first()
     // this line is expected to update currPedestalPos as a side effect
     val pedestalBE = pickPedestal(currIngredient) ?: return false
 
@@ -250,7 +242,7 @@ class MatrixBE(
     if (itemDelay-- == 0) {
       pedestalBE.inventory.extractItem(0, 1, false)
       itemDelay = MAX_ITEM_DELAY
-      remainingIngredients = remainingIngredients?.drop(1)
+      set(REMAINING_INPUTS.get(), remainingInputs.copy(ingredients = remainingIngredients.drop(1)))
     }
     return false
   }

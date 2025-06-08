@@ -1,11 +1,11 @@
 package me.alegian.thavma.impl.common.block.entity
 
-import com.mojang.datafixers.util.Either
-import com.mojang.datafixers.util.Unit
-import com.mojang.serialization.Codec
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
+import me.alegian.thavma.impl.common.codec.listOf
+import me.alegian.thavma.impl.common.codec.listOfNullable
+import me.alegian.thavma.impl.common.codec.nullable
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.data.capability.IAspectContainer
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
@@ -25,8 +25,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.particles.ItemParticleOption
-import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -99,8 +97,7 @@ class MatrixBE(
       if (aspectDelay-- == 0) {
         aspectDelay = MAX_ASPECT_DELAY
         source.extract(aspect, 1, false)
-      }
-      else 0
+      } else 0
 
     remainingAspects = remainingAspects?.subtract(aspect, amount)
     return AspectStack(aspect, amount)
@@ -241,23 +238,13 @@ class MatrixBE(
   }
 
   companion object {
-    val FLYING_ASPECTS_CODEC = Codec.either(ArrivingAspectStack.CODEC, Codec.EMPTY.codec()).listOf().xmap(
-      { list -> ArrayDeque(list.map { e -> e.map({ it }, { r -> null }) }) },
-      { deque ->
-        deque.toList().map {
-          if (it == null) Either.right(Unit.INSTANCE)
-          else Either.left(it)
-        }
-      }
+    val FLYING_ASPECTS_CODEC = ArrivingAspectStack.CODEC.listOfNullable("arrivingAspectStack").xmap(
+      ::ArrayDeque,
+      { deque -> deque.toList() }
     )
-    val FLYING_ASPECTS_STREAM_CODEC = ByteBufCodecs.either(ArrivingAspectStack.STREAM_CODEC, StreamCodec.unit(Unit.INSTANCE)).apply(ByteBufCodecs.list()).map(
-      { list -> ArrayDeque(list.map { e -> e.map({ it }, { r -> null }) }) },
-      { deque ->
-        deque.toList().map {
-          if (it == null) Either.right(Unit.INSTANCE)
-          else Either.left(it)
-        }
-      }
+    val FLYING_ASPECTS_STREAM_CODEC = ArrivingAspectStack.STREAM_CODEC.nullable().listOf().map(
+      ::ArrayDeque,
+      { deque -> deque.toList() }
     )
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {

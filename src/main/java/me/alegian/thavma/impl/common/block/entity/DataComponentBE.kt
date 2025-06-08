@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.MutableDataComponentHolder
 
-private const val NBT_KEY = "components"
+private const val NBT_KEY = "componentMap"
 
 abstract class DataComponentBE(pType: BlockEntityType<*>, pPos: BlockPos, pBlockState: BlockState) : BlockEntity(pType, pPos, pBlockState), MutableDataComponentHolder {
   var componentMap: PatchedDataComponentMap = PatchedDataComponentMap(DataComponentMap.EMPTY)

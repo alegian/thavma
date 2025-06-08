@@ -6,10 +6,8 @@ import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.Containers
@@ -27,8 +25,6 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
   DataComponentBE(T7BlockEntities.AURA_NODE.get(), pos, blockState) {
   private val glassPositions = ArrayList<BlockPos>()
   private val slabPositions = ArrayList<BlockPos>()
-  override val componentTypes: Array<DataComponentType<*>>
-    get() = arrayOf(ASPECTS.get())
 
   /**
    * The countdown in ticks after which a node will break

@@ -21,7 +21,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.REMAININ
 import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.particles.ItemParticleOption
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -65,8 +64,6 @@ class MatrixBE(
     .triggerableAnim("spin_closed", RawAnimation.begin().thenLoop("spin_closed"))
     .triggerableAnim("spin_closed_fast", RawAnimation.begin().thenLoop("spin_closed_fast"))
     .triggerableAnim("spin_open", RawAnimation.begin().thenLoop("spin_open"))
-  override val componentTypes: Array<DataComponentType<*>>
-    get() = arrayOf(FLYING_ASPECTS.get(), REMAINING_INPUTS.get())
   val drainPos = blockPos.center.add(0.0, 0.5, 0.0) // where the flying aspects go to visually
   var remainingAspects
     get() = get(REMAINING_INPUTS.get())?.aspects

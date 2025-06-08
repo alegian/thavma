@@ -3,9 +3,7 @@ package me.alegian.thavma.impl.common.block.entity
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
-import me.alegian.thavma.impl.common.codec.listOf
 import me.alegian.thavma.impl.common.codec.listOfNullable
-import me.alegian.thavma.impl.common.codec.nullable
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.data.capability.IAspectContainer
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
@@ -239,10 +237,6 @@ class MatrixBE(
 
   companion object {
     val FLYING_ASPECTS_CODEC = ArrivingAspectStack.CODEC.listOfNullable("arrivingAspectStack").xmap(
-      ::ArrayDeque,
-      { deque -> deque.toList() }
-    )
-    val FLYING_ASPECTS_STREAM_CODEC = ArrivingAspectStack.STREAM_CODEC.nullable().listOf().map(
       ::ArrayDeque,
       { deque -> deque.toList() }
     )

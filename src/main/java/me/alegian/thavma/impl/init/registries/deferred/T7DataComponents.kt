@@ -26,7 +26,6 @@ object T7DataComponents {
   val FLYING_ASPECTS = REGISTRAR.registerComponentType("flying_aspects") { builder ->
     builder
       .persistent(MatrixBE.FLYING_ASPECTS_CODEC)
-      .networkSynchronized(MatrixBE.FLYING_ASPECTS_STREAM_CODEC)
   }
 
   val REMAINING_INPUTS = REGISTRAR.registerComponentType("remaining_inputs") { builder ->

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:diamond"
+        "recipe": "minecraft:netherite_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:diamond"
+      "minecraft:netherite_ingot"
     ]
   }
 }

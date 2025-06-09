@@ -1,0 +1,25 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:ignis": 30,
+    "thavma:ordo": 20
+  },
+  "base": {
+    "item": "thavma:thavmite_ingot"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:netherite_ingot"
+  }
+}

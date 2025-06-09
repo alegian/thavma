@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.init.data.providers
 
-import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.AspectMap.Companion.builder
 import me.alegian.thavma.impl.init.data.providers.builders.CrucibleRecipeBuilder
+import me.alegian.thavma.impl.init.data.providers.builders.InfusionRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.WorkbenchRecipeBuilder.Companion.shaped
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.ORDO
@@ -172,15 +172,24 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
       .save(pRecipeOutput)
 
-    inCrucible(
-      pRecipeOutput,
+    CrucibleRecipeBuilder(
       ItemStack(Items.DIAMOND),
       builder()
         .add(TERRA.get(), 6)
         .add(PERDITIO.get(), 2)
         .build(),
       Ingredient.of(Items.DRAGON_EGG)
-    )
+    ).save(pRecipeOutput)
+
+    InfusionRecipeBuilder(
+      ItemStack(Items.NETHERITE_INGOT),
+      Ingredient.of(THAVMITE_INGOT),
+      listOf(Ingredient.of(Items.DIAMOND), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.IRON_INGOT)),
+      builder()
+        .add(ORDO.get(), 20)
+        .add(IGNIS.get(), 30)
+        .build(),
+    ).save(pRecipeOutput)
 
     shaped(Items.DIAMOND, 2)
       .requireAspects(
@@ -250,13 +259,6 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .group("planks")
         .unlockedBy("has_logs", has(pLog))
         .save(pRecipeOutput)
-    }
-
-    protected fun inCrucible(output: RecipeOutput, result: ItemStack, aspects: AspectMap, catalyst: Ingredient) {
-      val catalystItem = catalyst.getItems()[0].item
-      CrucibleRecipeBuilder(result, aspects, catalyst)
-        .unlockedBy(getHasName(catalystItem), has(catalystItem))
-        .save(output)
     }
 
     protected fun itemLoc(itemLike: ItemLike): String {

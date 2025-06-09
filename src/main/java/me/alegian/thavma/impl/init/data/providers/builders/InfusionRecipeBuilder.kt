@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers.builders
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.recipe.CrucibleRecipe
+import me.alegian.thavma.impl.common.recipe.InfusionRecipe
 import me.alegian.thavma.impl.rl
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import javax.naming.OperationNotSupportedException
 
-class CrucibleRecipeBuilder(private val result: ItemStack, private val aspects: AspectMap, private val catalyst: Ingredient) : RecipeBuilder {
+class InfusionRecipeBuilder(private val result: ItemStack, private val base: Ingredient, private val ingredients: List<Ingredient>, private val aspects: AspectMap) : RecipeBuilder {
   override fun unlockedBy(name: String, criterion: Criterion<*>) =
     throw OperationNotSupportedException()
 
@@ -32,9 +32,9 @@ class CrucibleRecipeBuilder(private val result: ItemStack, private val aspects: 
       .rewards(AdvancementRewards.Builder.recipe(id))
       .requirements(AdvancementRequirements.Strategy.OR)
 
-    val recipe = CrucibleRecipe(this.aspects, this.catalyst, this.result)
+    val recipe = InfusionRecipe(base, result, ingredients, aspects)
 
-    val t7id = rl(id.path).withSuffix("_crucible")
+    val t7id = rl(id.path).withSuffix("_infusion")
     output.accept(t7id, recipe, advancement.build(t7id.withPrefix("recipes/")))
   }
 }

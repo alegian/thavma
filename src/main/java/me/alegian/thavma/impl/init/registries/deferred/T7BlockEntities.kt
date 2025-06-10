@@ -4,10 +4,12 @@ import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.block.entity.*
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.T7Capabilities
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.items.ComponentItemHandler
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object T7BlockEntities {
@@ -26,6 +28,9 @@ object T7BlockEntities {
     event.registerBlockEntity(
       T7Capabilities.AspectContainer.BLOCK, AURA_NODE.get()
     ) { be, _ -> AspectContainer(be) }
+    event.registerBlockEntity(
+      Capabilities.ItemHandler.BLOCK, MATRIX.get()
+    ) { be, _ -> ComponentItemHandler(be, DataComponents.CONTAINER, 1) }
   }
 
   val PEDESTAL = REGISTRAR.register("infusion_pedestal") { ->

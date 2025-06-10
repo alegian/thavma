@@ -168,7 +168,7 @@ class MatrixBE(
   }
 
   fun attemptInfusion() {
-    update(INFUSION_STATE) { it.copy(remainingInputs = RemainingInputs(), result = Items.DIAMOND.defaultInstance) }
+    update(INFUSION_STATE) { it.copy(remainingInputs = RemainingInputs(), result = Items.DIAMOND.defaultInstance, isOpen = false) }
 
     triggerAnim("cycle", "spin_closed")
   }

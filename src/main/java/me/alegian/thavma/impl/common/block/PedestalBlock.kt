@@ -46,10 +46,10 @@ class PedestalBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().pu
     stack: ItemStack, state: BlockState, level: Level, pos: BlockPos,
     player: Player, hand: InteractionHand, hitResult: BlockHitResult
   ): ItemInteractionResult {
+    // TODO: do like matrix
     level.getBE(pos, PEDESTAL.get())?.let {
       if (!it.inventory.getStackInSlot(0).isEmpty) {
         val stackFromPedestal = it.inventory.extractItem(0, 1, false)
-        it.inventory.setStackInSlot(0, ItemStack.EMPTY)
         giveItemToPlayer(player, stackFromPedestal)
         level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1f, 1f)
       } else if (it.inventory.getStackInSlot(0).isEmpty && !stack.isEmpty) {

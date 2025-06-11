@@ -68,6 +68,15 @@ class MatrixBE(
     set(INFUSION_STATE, InfusionState())
   }
 
+  override fun onLoad() {
+    super.onLoad()
+    val state = get(INFUSION_STATE) ?: return
+    if (state.isOpen)
+      triggerAnim("cycle", "open")
+    else if (state.active)
+      triggerAnim("cycle", "spin_closed")
+  }
+
   private fun extractFromSource(aspect: Aspect, source: IAspectContainer, infusionState: InfusionState): AspectStack? {
     val remainingInputs = infusionState.remainingInputs
     val aspectDelay = infusionState.aspectDelay
@@ -303,7 +312,7 @@ class MatrixBE(
       if (!nextPhase) return
       level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS)
       be.update(INFUSION_STATE) {
-        be.itemHandler?.run{
+        be.itemHandler?.run {
           extractItem(0, 1, false)
           insertItem(0, it.result, false)
         }

@@ -7,20 +7,14 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
-import me.alegian.thavma.impl.client.renderer.level.renderEssentia
-import me.alegian.thavma.impl.client.renderer.level.trajectory
-import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.setKnowledge
 import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
-import me.alegian.thavma.impl.common.util.use
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
-import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
@@ -31,7 +25,6 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import net.neoforged.neoforge.client.event.RenderTooltipEvent.GatherComponents
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
 
 
@@ -77,19 +70,6 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
       event.camera,
       blockPos
     )
-  }
-}
-
-private fun renderLevelAfterBEs(event: RenderLevelStageEvent) {
-  if (event.stage !== RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) return
-  event.poseStack.use {
-    val ticks = event.partialTick.getGameTimeDeltaPartialTick(true) + event.renderTick
-    val progress = (ticks / 80) % 1
-    translate(-event.camera.position)
-    val traj1 = trajectory(BlockPos.ZERO.offset(0, -59, 0).center, BlockPos.ZERO.offset(0, -59, 4).center)
-    val traj2 = trajectory(BlockPos.ZERO.offset(0, -59, 0).center, BlockPos.ZERO.offset(0, -57, -4).center)
-    renderEssentia(traj1.subList((progress * traj1.size).toInt(), traj1.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
-    renderEssentia(traj2.subList((progress * traj2.size).toInt(), traj2.size), this, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, Aspects.PRAECANTATIO.get().color)
   }
 }
 
@@ -139,6 +119,5 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::renderLevelAfterWeather)
   KFF_GAME_BUS.addListener(::gatherTooltipComponents)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
-  KFF_GAME_BUS.addListener(::renderLevelAfterBEs)
   KFF_GAME_BUS.addListener(::playerClone)
 }

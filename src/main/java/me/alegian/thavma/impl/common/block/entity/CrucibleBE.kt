@@ -4,11 +4,9 @@ import me.alegian.thavma.impl.client.particle.CrucibleBubbleParticle
 import me.alegian.thavma.impl.common.data.capability.CrucibleFluidHandler
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.CRUCIBLE
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes.CRUCIBLE_BUBBLE
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.Connection
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -22,8 +20,6 @@ open class CrucibleBE(pos: BlockPos, blockState: BlockState) :
   DataComponentBE(CRUCIBLE.get(), pos, blockState) {
   val fluidHandler by lazy { CrucibleFluidHandler(this) }
   private val particles = ArrayList<CrucibleBubbleParticle>()
-  override val componentTypes: Array<DataComponentType<*>>
-    get() = arrayOf(ASPECTS.get())
 
   val waterHeight: Double
     get() {

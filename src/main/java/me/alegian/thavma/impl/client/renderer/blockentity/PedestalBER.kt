@@ -19,9 +19,9 @@ import software.bernie.geckolib.renderer.GeoBlockRenderer
 // item rotation speed
 private const val DEGREES_PER_TICK = 5
 
-class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel<PedestalBE>(rl("infusion_pedestal"))) {
+class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel(rl("infusion_pedestal"))) {
   init {
-    this.addRenderLayer(EmissiveGeoLayer<PedestalBE>(this))
+    addRenderLayer(EmissiveGeoLayer<PedestalBE>(this))
   }
 
   override fun actuallyRender(

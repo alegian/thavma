@@ -24,7 +24,7 @@ object T7BlockEntities {
     ) { be, _ -> AspectContainer(be) }
     event.registerBlockEntity(
       T7Capabilities.AspectContainer.BLOCK, SEALING_JAR.get()
-    ) { be, _ -> AspectContainer(be, 64) }
+    ) { be, _ -> AspectContainer(be, 64, 1) }
     event.registerBlockEntity(
       T7Capabilities.AspectContainer.BLOCK, AURA_NODE.get()
     ) { be, _ -> AspectContainer(be) }

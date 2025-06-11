@@ -76,6 +76,10 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return map.getOrDefault(aspect, 0)
   }
 
+  fun has(aspect:Aspect): Boolean {
+    return map.containsKey(aspect)
+  }
+
   val isEmpty: Boolean
     get() = map.values.stream().noneMatch { i -> i > 0 }
 

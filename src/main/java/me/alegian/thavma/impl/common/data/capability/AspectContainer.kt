@@ -20,11 +20,10 @@ import kotlin.math.min
 open class AspectContainer(
   private val holder: MutableDataComponentHolder,
   override val capacity: Int = Int.MAX_VALUE,
-  override val isVisSource: Boolean = false,
-  override val isEssentiaSource: Boolean = false
+  val slots: Int = Int.MAX_VALUE
 ) : IAspectContainer {
   override var aspects = holder.get(ASPECTS) ?: AspectMap()
-    set(a){
+    set(a) {
       holder.set(ASPECTS, a)
     }
 
@@ -34,6 +33,7 @@ open class AspectContainer(
 
   override fun insert(aspect: Aspect, amount: Int, simulate: Boolean): Int {
     if (amount == 0) return 0
+    if (aspects.size >= slots && !aspects.has(aspect)) return 0
 
     val current = this.aspects
     val maxInsert = this.capacity - current[aspect]

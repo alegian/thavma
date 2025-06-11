@@ -72,8 +72,4 @@ interface IAspectContainer {
    * Returns: the maximum amount that can be held, per Aspect
    */
   val capacity: Int
-
-  val isVisSource: Boolean
-
-  val isEssentiaSource: Boolean
 }

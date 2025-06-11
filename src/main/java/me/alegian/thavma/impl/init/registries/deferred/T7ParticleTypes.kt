@@ -12,6 +12,7 @@ object T7ParticleTypes {
 
   val CRUCIBLE_BUBBLE = REGISTRAR.register("crucible_bubble") { -> SimpleParticleType(true) }
   val ETERNAL_FLAME = REGISTRAR.register("eternal_flame") { -> SimpleParticleType(true) }
+  val INFUSION_RUNE = REGISTRAR.register("infusion_rune") { -> SimpleParticleType(true) }
   val INFUSION_ITEM = REGISTRAR.register("infusion_item") { ->
     object : ParticleType<ItemParticleOption>(false) {
       override fun codec() = ItemParticleOption.codec(this)

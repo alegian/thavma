@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.block.entity.itemHandler
+import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.MATRIX
@@ -47,29 +48,34 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
         open()
         return InteractionResult.SUCCESS
       }
-      if (itemHandler?.getStackInSlot(0)?.isEmpty ?: true) return InteractionResult.PASS
-      attemptInfusion()
     }
-    return InteractionResult.SUCCESS
+    return InteractionResult.PASS
   }
 
-  override fun useItemOn(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hitResult: BlockHitResult): ItemInteractionResult {
+  override fun useItemOn(handStack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hitResult: BlockHitResult): ItemInteractionResult {
     val be = level.getBE(pos, MATRIX.get())
     val itemHandler = be?.itemHandler
     val infusionState = be?.get(INFUSION_STATE)
-    if (itemHandler == null || infusionState?.isOpen != true) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    if (itemHandler == null || infusionState == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    val matrixStack = itemHandler.getStackInSlot(0)
 
-
-    if (itemHandler.getStackInSlot(0).isEmpty && !stack.isEmpty) {
-      stack.shrink(1)
-      itemHandler.insertItem(0, stack.copyWithCount(1), false)
-      level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1f, 1f)
-    } else {
-      val stackFromPedestal = itemHandler.extractItem(0, 1, false)
-      giveItemToPlayer(player, stackFromPedestal)
-      level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1f, 1f)
+    if (handStack.item is WandItem && infusionState.isOpen && !matrixStack.isEmpty) {
+      be.attemptInfusion()
+      return ItemInteractionResult.SUCCESS
     }
-    if(!level.isClientSide && level is ServerLevel) level.updateBlockEntityS2C(pos)
+
+    if (!infusionState.isOpen) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+
+    if (matrixStack.isEmpty && !handStack.isEmpty) {
+      itemHandler.insertItem(0, handStack.copyWithCount(1), false)
+      handStack.shrink(1)
+      level.playSound(player, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1f, 1f)
+    } else if (!matrixStack.isEmpty) {
+      val stackFromMatrix = itemHandler.extractItem(0, 1, false)
+      giveItemToPlayer(player, stackFromMatrix)
+      level.playSound(player, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1f, 1f)
+    } else return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    if (!level.isClientSide && level is ServerLevel) level.updateBlockEntityS2C(pos)
 
     return ItemInteractionResult.SUCCESS
   }

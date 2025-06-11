@@ -199,6 +199,19 @@ class MatrixBE(
     level.sendParticles(ItemParticleOption(T7ParticleTypes.INFUSION_ITEM.get(), stack), x, y, z, 0, velX, velY, velZ, 0.16)
   }
 
+  private fun sendRuneParticles(level: ServerLevel) {
+    if(level.gameTime % 2 == 0L)return
+    // random between 0.5 and 0.6, with random sign
+    fun rand(): Double {
+      val randScale = 2
+      return (level.random.nextDouble() * randScale - randScale/2)
+    }
+    val x = blockPos.center.x + rand()
+    val y = blockPos.center.y + rand()
+    val z = blockPos.center.z + rand()
+    level.sendParticles(T7ParticleTypes.INFUSION_RUNE.get(), x, y, z, 0, .0, .0, .0, 0.16)
+  }
+
   /**
    * true -> continue to item phase
    * false -> dont
@@ -267,6 +280,7 @@ class MatrixBE(
 
     fun tick(level: Level, pos: BlockPos, state: BlockState, be: MatrixBE) {
       if (level.isClientSide || level !is ServerLevel) return
+      be.sendRuneParticles(level)
       val infusionState = be.get(INFUSION_STATE.get()) ?: return
       if (!infusionState.active || infusionState.result.isEmpty) return // todo: reset
 

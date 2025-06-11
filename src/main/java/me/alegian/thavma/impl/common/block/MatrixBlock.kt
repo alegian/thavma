@@ -60,8 +60,8 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
     val matrixStack = itemHandler.getStackInSlot(0)
 
     if (handStack.item is WandItem && infusionState.isOpen && !matrixStack.isEmpty) {
-      be.attemptInfusion()
-      return ItemInteractionResult.SUCCESS
+      return if (be.attemptInfusion()) ItemInteractionResult.SUCCESS
+      else ItemInteractionResult.FAIL
     }
 
     if (!infusionState.isOpen) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION

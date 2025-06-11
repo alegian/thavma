@@ -12,6 +12,7 @@ import me.alegian.thavma.impl.common.infusion.RemainingInputs
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.multiblock.MultiblockRequiredState
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.common.util.getRecipe
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PEDESTAL
@@ -19,6 +20,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import me.alegian.thavma.impl.init.registries.deferred.T7ParticleTypes
+import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ItemParticleOption
@@ -26,8 +28,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
 import net.minecraft.world.level.block.state.BlockState
@@ -167,10 +169,20 @@ class MatrixBE(
     update(INFUSION_STATE) { it.copy(isOpen = true) }
   }
 
-  fun attemptInfusion() {
-    update(INFUSION_STATE) { it.copy(remainingInputs = RemainingInputs(), result = Items.DIAMOND.defaultInstance, isOpen = false) }
+  fun attemptInfusion(): Boolean {
+    val baseStack = itemHandler?.getStackInSlot(0) ?: return false
+    val recipe = level?.getRecipe(T7RecipeTypes.INFUSION, SingleRecipeInput(baseStack)) ?: return false
+
+    update(INFUSION_STATE) {
+      it.copy(
+        remainingInputs = RemainingInputs.of(recipe),
+        result = recipe.result,
+        isOpen = false
+      )
+    }
 
     triggerAnim("cycle", "spin_closed")
+    return true
   }
 
   private fun requiredPillars(): List<MultiblockRequiredState> {
@@ -200,12 +212,13 @@ class MatrixBE(
   }
 
   private fun sendRuneParticles(level: ServerLevel) {
-    if(level.gameTime % 2 == 0L)return
+    if (level.gameTime % 2 == 0L) return
     // random between 0.5 and 0.6, with random sign
     fun rand(): Double {
       val randScale = 2
-      return (level.random.nextDouble() * randScale - randScale/2)
+      return (level.random.nextDouble() * randScale - randScale / 2)
     }
+
     val x = blockPos.center.x + rand()
     val y = blockPos.center.y + rand()
     val z = blockPos.center.z + rand()
@@ -289,7 +302,15 @@ class MatrixBE(
       nextPhase = be.itemPhaseTick(level)
       if (!nextPhase) return
       level.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS)
-      be.update(INFUSION_STATE) { it.copy(result = ItemStack.EMPTY) }
+      be.update(INFUSION_STATE) {
+        be.itemHandler?.run{
+          extractItem(0, 1, false)
+          insertItem(0, it.result, false)
+        }
+        it.copy(result = ItemStack.EMPTY)
+      }
+      be.open()
+      level.updateBlockEntityS2C(be.blockPos)
     }
   }
 }

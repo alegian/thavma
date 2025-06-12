@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.block.PillarBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.data.capability.IAspectContainer
+import me.alegian.thavma.impl.common.data.capability.firstStack
 import me.alegian.thavma.impl.common.data.update
 import me.alegian.thavma.impl.common.infusion.ArrivingAspectStack
 import me.alegian.thavma.impl.common.infusion.InfusionState
@@ -123,7 +124,7 @@ class MatrixBE(
   private fun pedestalOrNull(pos: BlockPos?, ingredient: Ingredient): PedestalBE? {
     if (pos == null) return null
     val pedestalBE = level?.getBE(pos, PEDESTAL.get())
-    return if (ingredient.test(pedestalBE?.getItem())) pedestalBE else null
+    return if (ingredient.test(pedestalBE?.itemHandler?.firstStack)) pedestalBE else null
   }
 
   // todo: optimize this running every tick when no sources are nearby
@@ -179,7 +180,7 @@ class MatrixBE(
   }
 
   fun attemptInfusion(): Boolean {
-    val baseStack = itemHandler?.getStackInSlot(0) ?: return false
+    val baseStack = itemHandler?.firstStack ?: return false
     val recipe = level?.getRecipe(T7RecipeTypes.INFUSION, SingleRecipeInput(baseStack)) ?: return false
 
     update(INFUSION_STATE) {
@@ -277,11 +278,12 @@ class MatrixBE(
     val currIngredient = remainingIngredients.first()
     // this line is expected to update currPedestalPos as a side effect
     val pedestalBE = pickPedestal(currIngredient, infusionState) ?: return false
+    val pedestalItemHandler = pedestalBE.itemHandler ?: return false
 
     val itemDelay = infusionState.itemDelay
-    sendItemParticles(level, pedestalBE.blockPos, pedestalBE.getItem())
+    sendItemParticles(level, pedestalBE.blockPos, pedestalItemHandler.firstStack)
     if (itemDelay == 0) {
-      pedestalBE.inventory.extractItem(0, 1, false)
+      pedestalItemHandler.extractItem(0, 1, false)
       update(INFUSION_STATE) {
         it.copy(
           itemDelay = MAX_ITEM_DELAY,

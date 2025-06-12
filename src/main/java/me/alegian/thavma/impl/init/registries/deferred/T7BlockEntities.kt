@@ -31,6 +31,9 @@ object T7BlockEntities {
     event.registerBlockEntity(
       Capabilities.ItemHandler.BLOCK, MATRIX.get()
     ) { be, _ -> ComponentItemHandler(be, DataComponents.CONTAINER, 1) }
+    event.registerBlockEntity(
+      Capabilities.ItemHandler.BLOCK, PEDESTAL.get()
+    ) { be, _ -> ComponentItemHandler(be, DataComponents.CONTAINER, 1) }
   }
 
   val PEDESTAL = REGISTRAR.register("infusion_pedestal") { ->

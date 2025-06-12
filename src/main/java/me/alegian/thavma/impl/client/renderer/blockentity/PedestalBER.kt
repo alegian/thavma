@@ -6,6 +6,8 @@ import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.renderer.geo.layer.EmissiveGeoLayer
 import me.alegian.thavma.impl.client.util.scale
 import me.alegian.thavma.impl.common.block.entity.PedestalBE
+import me.alegian.thavma.impl.common.block.entity.itemHandler
+import me.alegian.thavma.impl.common.data.capability.firstStack
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
@@ -30,7 +32,8 @@ class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel(rl("infu
     packedOverlay: Int, colour: Int
   ) {
     super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
-    if(be.getItem().isEmpty) return
+    val stack = be.itemHandler?.firstStack ?: return
+    if(stack.isEmpty) return
 
     val itemRenderer = Minecraft.getInstance().itemRenderer
     val level = be.level ?: return
@@ -41,7 +44,7 @@ class PedestalBER : GeoBlockRenderer<PedestalBE>(DefaultedBlockGeoModel(rl("infu
       translate(0.0, 1.0, 0.0)
       scale(0.8f)
       mulPose(Axis.YP.rotationDegrees(((level.gameTime + partialTick) * DEGREES_PER_TICK) % 360))
-      itemRenderer.renderStatic(be.getItem(), ItemDisplayContext.GROUND, packedLight, packedOverlay, poseStack, bufferSource, level, randSeed)
+      itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, packedLight, packedOverlay, poseStack, bufferSource, level, randSeed)
     }
   }
 }

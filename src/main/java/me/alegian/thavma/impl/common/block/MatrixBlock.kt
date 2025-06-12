@@ -2,16 +2,19 @@ package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.block.entity.itemHandler
+import me.alegian.thavma.impl.common.data.capability.firstStack
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.MATRIX
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import net.minecraft.core.BlockPos
+import net.minecraft.core.NonNullList
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
+import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
@@ -57,7 +60,7 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
     val itemHandler = be?.itemHandler
     val infusionState = be?.get(INFUSION_STATE)
     if (itemHandler == null || infusionState == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-    val matrixStack = itemHandler.getStackInSlot(0)
+    val matrixStack = itemHandler.firstStack
 
     if (handStack.item is WandItem && infusionState.isOpen && !matrixStack.isEmpty) {
       return if (be.attemptInfusion()) ItemInteractionResult.SUCCESS
@@ -87,6 +90,16 @@ class MatrixBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion().push
 
   override fun <T : BlockEntity?> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
     return BaseEntityBlock.createTickerHelper(type, MATRIX.get(), MatrixBE::tick)
+  }
+
+  override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
+    val be = level.getBE(pos, MATRIX.get())
+    if (state != newState.block && be != null) {
+      val stack = be.itemHandler?.firstStack ?: return
+      Containers.dropContents(level, pos, NonNullList.copyOf(listOf(stack)))
+    }
+
+    super.onRemove(state, level, pos, newState, isMoving)
   }
 
   override fun getRenderShape(state: BlockState) = RenderShape.ENTITYBLOCK_ANIMATED

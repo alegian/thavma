@@ -6,6 +6,10 @@
 - [Modrinth](https://modrinth.com/mod/thavma)
 - [Github](https://github.com/alegian/thavma/releases)
 
+## Development Teasers & Tutorials
+
+https://www.youtube.com/playlist?list=PL9KsxgFMvbpHESdU8d1WztLXnuKDGvBVh
+
 ## Description
 
 A complete rewrite & re-imagination of azanor's Thaumcraft for modern versions of Minecraft.

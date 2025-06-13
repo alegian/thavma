@@ -9,11 +9,15 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
@@ -67,6 +71,8 @@ object T7CreativeModeTabs {
           output.accept(PEDESTAL.get())
 
           output.accept(ELEMENTAL_STONE.get())
+          output.accept(ELEMENTAL_STONE_STAIRS.get())
+          output.accept(ELEMENTAL_STONE_SLAB.get())
           output.accept(ELEMENTAL_CORE.get())
           output.accept(CRACKED_ELEMENTAL_STONE.get())
           output.accept(ELEMENTAL_STONE_BRICKS.get())
@@ -82,6 +88,8 @@ object T7CreativeModeTabs {
           output.accept(GREATWOOD_LEAVES.get())
           output.accept(GREATWOOD_LOG.get())
           output.accept(GREATWOOD_PLANKS.get())
+          output.accept(GREATWOOD_STAIRS.get())
+          output.accept(GREATWOOD_SLAB.get())
           output.accept(GREATWOOD_SAPLING.get())
 
           output.accept(SILVERWOOD_LEAVES.get())

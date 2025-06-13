@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "thavma:block/greatwood_planks",
+    "side": "thavma:block/greatwood_planks",
+    "top": "thavma:block/greatwood_planks"
+  }
+}

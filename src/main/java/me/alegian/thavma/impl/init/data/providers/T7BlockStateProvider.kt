@@ -11,11 +11,15 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
@@ -37,10 +41,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.LeavesBlock
-import net.minecraft.world.level.block.RotatedPillarBlock
-import net.minecraft.world.level.block.SaplingBlock
+import net.minecraft.world.level.block.*
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
@@ -114,16 +115,31 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
 
     itemModels().basicItem(AURA_NODE.get().asItem()).renderType(RenderType.translucent().name)
     itemModels().basicItem(ETERNAL_FLAME.get().asItem())
+
+    simpleStairsWithItem(ELEMENTAL_STONE_STAIRS.get(), blockTexture(ELEMENTAL_STONE.get()))
+    simpleSlabWithItem(ELEMENTAL_STONE_SLAB.get(), blockTexture(ELEMENTAL_STONE.get()))
+    simpleStairsWithItem(GREATWOOD_STAIRS.get(), blockTexture(GREATWOOD_PLANKS.get()))
+    simpleSlabWithItem(GREATWOOD_SLAB.get(), blockTexture(GREATWOOD_PLANKS.get()))
+  }
+
+  fun simpleStairsWithItem(block: StairBlock, parentLocation: ResourceLocation){
+    stairsBlock(block, parentLocation)
+    itemModels().withExistingParent(name(block), blockTexture(block))
+  }
+
+  fun simpleSlabWithItem(block: SlabBlock, parentLocation: ResourceLocation){
+    slabBlock(block, parentLocation, parentLocation)
+    itemModels().withExistingParent(name(block), blockTexture(block))
   }
 
   private fun simpleBlockWithItem(block: Block) {
-    this.simpleBlockWithItem(block, this.cubeAll(block))
+    simpleBlockWithItem(block, this.cubeAll(block))
   }
 
   private fun logBlockWithItem(block: RotatedPillarBlock) {
     val blockRL = this.blockTexture(block)
-    this.logBlock(block)
-    this.itemModels().withExistingParent(this.name(block), blockRL)
+    logBlock(block)
+    itemModels().withExistingParent(this.name(block), blockRL)
   }
 
   private fun infusedBlockWithItem(infusedBlock: InfusedBlock) {

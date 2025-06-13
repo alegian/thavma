@@ -22,11 +22,15 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.LEVITATOR_COLUMN
@@ -185,6 +189,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(TABLE.get(), "Table")
     add(ITEM_HATCH.get(), "Item Hatch")
     add(ELEMENTAL_STONE.get(), "Elemental Stone")
+    add(ELEMENTAL_STONE_STAIRS.get(), "Elemental Stone Stairs")
+    add(ELEMENTAL_STONE_SLAB.get(), "Elemental Stone Slab")
     add(ELEMENTAL_CORE.get(), "Elemental Core")
     add(CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
     add(ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
@@ -203,6 +209,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(GREATWOOD_LOG.get(), "Greatwood Log")
     add(GREATWOOD_LEAVES.get(), "Greatwood Leaves")
     add(GREATWOOD_PLANKS.get(), "Greatwood Planks")
+    add(GREATWOOD_STAIRS.get(), "Greatwood Stairs")
+    add(GREATWOOD_SLAB.get(), "Greatwood Slab")
     add(GREATWOOD_SAPLING.get(), "Greatwood Sapling")
     add(SILVERWOOD_LOG.get(), "Silverwood Log")
     add(SILVERWOOD_LEAVES.get(), "Silverwood Leaves")

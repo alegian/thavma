@@ -13,11 +13,15 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
@@ -91,6 +95,10 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
 
     dropSelf(ETERNAL_FLAME.get())
     dropSelf(HUNGRY_CHEST.get())
+    dropSelf(ELEMENTAL_STONE_STAIRS.get())
+    add(ELEMENTAL_STONE_SLAB.get()) { b -> createSlabItemTable(b) }
+    dropSelf(GREATWOOD_STAIRS.get())
+    add(GREATWOOD_SLAB.get()) { b -> createSlabItemTable(b) }
   }
 
   override fun getKnownBlocks(): Iterable<Block> {

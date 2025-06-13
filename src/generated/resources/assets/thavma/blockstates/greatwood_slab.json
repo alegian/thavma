@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "thavma:block/greatwood_slab"
+    },
+    "type=double": {
+      "model": "thavma:block/greatwood_planks"
+    },
+    "type=top": {
+      "model": "thavma:block/greatwood_slab_top"
+    }
+  }
+}

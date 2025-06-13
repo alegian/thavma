@@ -60,7 +60,9 @@ object T7Blocks {
   ) { ResearchTableBlock() }
 
   val ELEMENTAL_STONE = register("elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)) }
-  val ELEMENTAL_CORE = register("elemental_core") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)) }
+  val ELEMENTAL_STONE_SLAB = register("elemental_stone_slab") { SlabBlock(BlockBehaviour.Properties.ofFullCopy(ELEMENTAL_STONE.get())) }
+  val ELEMENTAL_STONE_STAIRS = register("elemental_stone_stairs") { StairBlock(ELEMENTAL_STONE.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ELEMENTAL_STONE.get())) }
+  val ELEMENTAL_CORE = register("elemental_core") { Block(BlockBehaviour.Properties.ofFullCopy(ELEMENTAL_STONE.get())) }
   val CRACKED_ELEMENTAL_STONE = register("cracked_elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRACKED_STONE_BRICKS)) }
   val ELEMENTAL_STONE_BRICKS = register("elemental_stone_bricks") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)) }
 
@@ -84,10 +86,9 @@ object T7Blocks {
     "greatwood_log"
   ) { log(MapColor.WOOD, MapColor.PODZOL) }
 
-  val GREATWOOD_PLANKS = register(
-    "greatwood_planks",
-    ::plank
-  )
+  val GREATWOOD_PLANKS = register("greatwood_planks", ::plank)
+  val GREATWOOD_SLAB = register("greatwood_slab") { SlabBlock(BlockBehaviour.Properties.ofFullCopy(GREATWOOD_PLANKS.get())) }
+  val GREATWOOD_STAIRS = register("greatwood_stairs") { StairBlock(GREATWOOD_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(GREATWOOD_PLANKS.get())) }
 
   val GREATWOOD_SAPLING = register(
     "greatwood_sapling"

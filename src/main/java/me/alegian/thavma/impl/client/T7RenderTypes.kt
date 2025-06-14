@@ -40,7 +40,7 @@ object T7RenderTypes {
   val EYES_WITH_DEPTH: Function<ResourceLocation, RenderType> = Util.memoize { textureLoc ->
     val textureStateShard = TextureStateShard(textureLoc, false, false)
     RenderType.create(
-      "eyes",
+      Thavma.MODID + "_eyes_with_depth",
       DefaultVertexFormat.NEW_ENTITY,
       VertexFormat.Mode.QUADS,
       1536,

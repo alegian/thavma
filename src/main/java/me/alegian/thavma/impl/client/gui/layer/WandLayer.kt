@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layer
 
+import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
@@ -9,8 +10,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 
-private val STAR = Texture("gui/overlay/star", 130, 130)
-private val BAR_FRAME = Texture("gui/overlay/bar_frame", 96, 96)
+private val CIRCLE = Texture("gui/overlay/circle", 147, 147)
+private val BAR_FRAME = Texture("gui/overlay/bar_frame", 45, 103)
 private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
 
 object WandLayer : LayeredDraw.Layer {
@@ -22,20 +23,19 @@ object WandLayer : LayeredDraw.Layer {
     val maxAmount = aspectContainer.capacity
 
     graphics.usePose {
-      // draw the star
+      RenderSystem.enableBlend()
+      RenderSystem.defaultBlendFunc()
+
+      // draw the circle
       scaleXY(0.5f)
-      translateXY(32.0, 16.0)
-      graphics.resetColor()
-      graphics.blit(STAR)
+      graphics.blit(CIRCLE)
 
+      rotateZ(-8f)
       // draw the bars
-      translateXY(STAR.width / 2.0, STAR.height / 2.0)
-      rotateZ(15f)
-
       for (deferredAspect in Aspects.PRIMAL_ASPECTS) {
         val a = deferredAspect.get()
         graphics.usePose {
-          translateXY(0.0, STAR.height / 2.0)
+          translateXY(0.0, CIRCLE.height)
           graphics.setColor(a.color)
           graphics.blit(
             BAR_CONTENT.location,
@@ -50,7 +50,7 @@ object WandLayer : LayeredDraw.Layer {
           graphics.resetColor()
           graphics.blit(BAR_FRAME.location, -BAR_FRAME.width / 2, 0, 0f, 0f, BAR_FRAME.width, BAR_FRAME.height, BAR_FRAME.width, BAR_FRAME.height)
         }
-        rotateZ(-24f)
+        rotateZ(-16f)
       }
     }
   }

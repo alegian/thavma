@@ -2,13 +2,11 @@ package me.alegian.thavma.impl.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
-import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.renderer.geo.layer.EmissiveGeoLayer
+import me.alegian.thavma.impl.client.renderer.geo.layer.ItemRenderLayer
 import me.alegian.thavma.impl.client.renderer.level.renderEssentia
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
-import me.alegian.thavma.impl.common.block.entity.itemHandler
-import me.alegian.thavma.impl.common.data.capability.firstStack
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
@@ -16,31 +14,32 @@ import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.phys.AABB
 import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedBlockGeoModel
 import software.bernie.geckolib.renderer.GeoBlockRenderer
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer
 import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 
 class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion_matrix"))) {
   init {
-    addRenderLayer(EmissiveGeoLayer<MatrixBE>(this))
+    addRenderLayer(EmissiveGeoLayer(this))
+    addRenderLayer(ItemRenderLayer(this, 0.375f))
+    addRenderLayer(FlyingAspectsRenderLayer(this))
   }
 
   override fun getRenderBoundingBox(blockEntity: MatrixBE) = AABB.INFINITE
 
   override fun renderRecursively(poseStack: PoseStack, animatable: MatrixBE, bone: GeoBone, renderType: RenderType, bufferSource: MultiBufferSource, buffer: VertexConsumer, isReRender: Boolean, partialTick: Float, packedLight: Int, packedOverlay: Int, colour: Int) {
-    if (bone.name == "bone" && !animatable.hasRing ) return
+    if (bone.name == "bone" && !animatable.hasRing) return
     super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
   }
+}
 
-  override fun actuallyRender(poseStack: PoseStack, be: MatrixBE, model: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, isReRender: Boolean, partialTick: Float, packedLight: Int, packedOverlay: Int, colour: Int) {
-    super.actuallyRender(poseStack, be, model, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour)
 
-    renderItem(be, poseStack, bufferSource, partialTick, packedLight, packedOverlay)
-
+private class FlyingAspectsRenderLayer(renderer: MatrixBER) : GeoRenderLayer<MatrixBE>(renderer) {
+  override fun render(poseStack: PoseStack, be: MatrixBE, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val flyingAspects = be.get(INFUSION_STATE)?.flyingAspects
     if (flyingAspects?.isEmpty() ?: true) return
 
@@ -63,23 +62,5 @@ class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion
         renderEssentia(f.key, be.drainPos, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha)
       }
     }
-  }
-}
-
-// item rotation speed
-private const val DEGREES_PER_TICK = 5
-
-private fun renderItem(be: MatrixBE, poseStack: PoseStack, bufferSource: MultiBufferSource, partialTick: Float, packedLight: Int, packedOverlay: Int) {
-  val stack = be.itemHandler?.firstStack ?: return
-  if (stack.isEmpty) return
-
-  val itemRenderer = Minecraft.getInstance().itemRenderer
-  val level = be.level ?: return
-
-  val randSeed = be.blockPos.asLong().toInt()
-  poseStack.use {
-    translate(0f, 0.5f, 0f)
-    mulPose(Axis.YP.rotationDegrees(((level.gameTime + partialTick) * DEGREES_PER_TICK) % 360))
-    itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, packedLight, packedOverlay, poseStack, bufferSource, level, randSeed)
   }
 }

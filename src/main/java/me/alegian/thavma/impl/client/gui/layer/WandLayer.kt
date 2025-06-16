@@ -10,9 +10,9 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 
-private val CIRCLE = Texture("gui/overlay/circle", 147, 147)
-private val BAR_FRAME = Texture("gui/overlay/bar_frame", 45, 103)
-private val BAR_CONTENT = Texture("gui/overlay/bar_content", 18, 64)
+private val CIRCLE = Texture("gui/layer/circle", 147, 147)
+private val BAR_FRAME = Texture("gui/layer/bar_frame", 45, 103)
+private val BAR_CONTENT = Texture("gui/layer/bar_content", 45, 66)
 
 object WandLayer : LayeredDraw.Layer {
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
@@ -25,13 +25,12 @@ object WandLayer : LayeredDraw.Layer {
     graphics.usePose {
       RenderSystem.enableBlend()
       RenderSystem.defaultBlendFunc()
+      scaleXY(0.4f)
 
-      // draw the circle
-      scaleXY(0.5f)
       graphics.blit(CIRCLE)
 
       rotateZ(-8f)
-      // draw the bars
+      // draw the bars with stacking rotations
       for (deferredAspect in Aspects.PRIMAL_ASPECTS) {
         val a = deferredAspect.get()
         graphics.usePose {
@@ -40,7 +39,7 @@ object WandLayer : LayeredDraw.Layer {
           graphics.blit(
             BAR_CONTENT.location,
             -BAR_CONTENT.width / 2,
-            (BAR_FRAME.height - BAR_CONTENT.height) / 2,
+            0,
             0f, 0f,
             BAR_CONTENT.width,
             BAR_CONTENT.height * aspectMap[a] / maxAmount,

@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "thavma:block/cube_all_emissive_overlay",
   "textures": {
-    "all": "thavma:block/elemental_core"
+    "layer0": "thavma:block/elemental_stone",
+    "layer1": "thavma:block/elemental_core"
   }
 }

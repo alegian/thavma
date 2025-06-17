@@ -75,6 +75,8 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
 
     for (infusedDeepslate in INFUSED_DEEPSLATES.values) infusedBlockWithItem(infusedDeepslate.get())
 
+    cubeAllEmissiveOverlayWithItem(ELEMENTAL_STONE.get(), ELEMENTAL_CORE.get(), blockTexture(ELEMENTAL_CORE.get()))
+
     logBlockWithItem(GREATWOOD_LOG.get())
     simpleBlockWithItem(GREATWOOD_PLANKS.get())
     leavesBlockWithItem(GREATWOOD_LEAVES.get())
@@ -89,7 +91,6 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     simpleBlockWithItem(ORICHALCUM_BLOCK.get())
 
     simpleBlockWithItem(ELEMENTAL_STONE.get())
-    simpleBlockWithItem(ELEMENTAL_CORE.get())
     simpleBlockWithItem(CRACKED_ELEMENTAL_STONE.get())
     simpleBlockWithItem(ELEMENTAL_STONE_BRICKS.get())
 
@@ -143,10 +144,14 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
   }
 
   private fun infusedBlockWithItem(infusedBlock: InfusedBlock) {
-    val infusedOreBlockModel = this.models().withExistingParent(this.name(infusedBlock), rl("block/infused_stone"))
-      .texture("layer0", this.blockTexture(infusedBlock.getBaseBlock()))
-      .texture("layer1", rl("block/infused_stone"))
-    this.simpleBlockWithItem(infusedBlock, infusedOreBlockModel)
+    cubeAllEmissiveOverlayWithItem(infusedBlock.getBaseBlock(), infusedBlock, rl("block/infused_stone"))
+  }
+
+  private fun cubeAllEmissiveOverlayWithItem(baseBlock:Block, block: Block, overlayLoc: ResourceLocation){
+    val blockModel = models().withExistingParent(name(block), rl("block/cube_all_emissive_overlay"))
+      .texture("layer0", blockTexture(baseBlock))
+      .texture("layer1", overlayLoc)
+    simpleBlockWithItem(block, blockModel)
   }
 
   fun leavesBlockWithItem(block: LeavesBlock) {

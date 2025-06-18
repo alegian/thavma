@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeType
@@ -13,7 +14,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.RecipeHolder
 
 private const val WIDTH: Int = 116
-private const val HEIGHT: Int = 54
+private const val HEIGHT: Int = 3 * 18 + 4 + 16
 
 internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>>(
   WORKBENCH,
@@ -38,6 +39,11 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
           slot.addIngredients(ingredients[i++])
       }
     }
+  }
+
+  override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<WorkbenchRecipe>, focuses: IFocusGroup) {
+    for ((i, stack) in recipe.value().aspects.withIndex())
+      builder.addWidget(AspectWidget(stack, i * 16, 3 * 18 + 4))
   }
 
   companion object {

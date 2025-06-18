@@ -4,9 +4,8 @@ import me.alegian.thavma.impl.common.aspect.AspectMap.Companion.builder
 import me.alegian.thavma.impl.init.data.providers.builders.CrucibleRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.InfusionRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.WorkbenchRecipeBuilder.Companion.shaped
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.ORDO
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PERDITIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
@@ -176,7 +175,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       ItemStack(Items.DIAMOND),
       builder()
         .add(TERRA.get(), 6)
-        .add(PERDITIO.get(), 2)
+        .add(IGNIS.get(), 2)
         .build(),
       Ingredient.of(Items.DRAGON_EGG)
     ).save(pRecipeOutput)
@@ -186,7 +185,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(THAVMITE_INGOT),
       listOf(Ingredient.of(Items.DIAMOND), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.IRON_INGOT)),
       builder()
-        .add(ORDO.get(), 20)
+        .add(AETHER.get(), 20)
         .add(IGNIS.get(), 30)
         .build(),
     ).save(pRecipeOutput)
@@ -195,7 +194,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .requireAspects(
         builder()
           .add(IGNIS.get(), 6)
-          .add(ORDO.get(), 2)
+          .add(AETHER.get(), 2)
           .build()
       )
       .define('d', Blocks.COBBLED_DEEPSLATE)

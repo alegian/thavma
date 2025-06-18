@@ -112,7 +112,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.ORDO), lockedAspect(2, 4, Aspects.PRAECANTATIO))
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.PRAECANTATIO))
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
@@ -120,23 +120,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.TERRA), lockedAspect(2, 4, Aspects.ORDO))
+          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.LUX), lockedAspect(2, 4, Aspects.PRAECANTATIO), broken(2, 2))
+          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.PRAECANTATIO), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -144,23 +144,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
-          .research(lockedAspect(2,0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
+          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.TERRA), lockedAspect(2, 4, Aspects.PRAECANTATIO))
+          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.PRAECANTATIO))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.HUMANUS))
+          .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.HUMANUS))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
-          .research(lockedAspect(2,0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
       }
   }
@@ -215,5 +215,5 @@ private fun simpleTitle(pageIndex: Int, baseId: String) =
 
 private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
 
-private fun lockedAspect(row:Int, col:Int, a: DeferredAspect<Aspect>) = SocketState(Indices(row, col), a.get(), false, true)
-private fun broken(row:Int, col:Int) = SocketState(Indices(row, col), null, true, true)
+private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) = SocketState(Indices(row, col), a.get(), false, true)
+private fun broken(row: Int, col: Int) = SocketState(Indices(row, col), null, true, true)

@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "thavma:perditio_infused_deepslate"
+              "name": "thavma:aether_infused_stone"
             },
             {
               "type": "minecraft:item",
@@ -40,7 +40,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "thavma:perditio_shard"
+              "name": "thavma:aether_shard"
             }
           ]
         }
@@ -48,5 +48,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "thavma:blocks/perditio_infused_deepslate"
+  "random_sequence": "thavma:blocks/aether_infused_stone"
 }

@@ -1,8 +1,8 @@
 {
   "type": "thavma:arcane_workbench",
   "aspects": {
-    "thavma:ignis": 6,
-    "thavma:ordo": 2
+    "thavma:aether": 2,
+    "thavma:ignis": 6
   },
   "key": {
     "d": {

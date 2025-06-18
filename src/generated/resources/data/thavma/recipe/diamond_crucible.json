@@ -1,7 +1,7 @@
 {
   "type": "thavma:crucible",
   "aspects": {
-    "thavma:perditio": 2,
+    "thavma:ignis": 2,
     "thavma:terra": 6
   },
   "catalyst": {

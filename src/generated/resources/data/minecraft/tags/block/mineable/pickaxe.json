@@ -4,13 +4,11 @@
     "thavma:aer_infused_stone",
     "thavma:terra_infused_stone",
     "thavma:aqua_infused_stone",
-    "thavma:ordo_infused_stone",
-    "thavma:perditio_infused_stone",
+    "thavma:aether_infused_stone",
     "thavma:ignis_infused_deepslate",
     "thavma:aer_infused_deepslate",
     "thavma:terra_infused_deepslate",
     "thavma:aqua_infused_deepslate",
-    "thavma:ordo_infused_deepslate",
-    "thavma:perditio_infused_deepslate"
+    "thavma:aether_infused_deepslate"
   ]
 }

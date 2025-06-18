@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "thavma:ordo_infused_stone"
+              "name": "thavma:aether_infused_deepslate"
             },
             {
               "type": "minecraft:item",
@@ -40,7 +40,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "thavma:ordo_shard"
+              "name": "thavma:aether_shard"
             }
           ]
         }
@@ -48,5 +48,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "thavma:blocks/ordo_infused_stone"
+  "random_sequence": "thavma:blocks/aether_infused_deepslate"
 }

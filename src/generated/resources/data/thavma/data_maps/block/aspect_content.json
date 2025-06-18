@@ -1,13 +1,11 @@
 {
   "values": {
     "#c:cobblestones": {
-      "thavma:perditio": 1,
       "thavma:terra": 5
     },
     "#c:concretes": {
+      "thavma:aether": 1,
       "thavma:aqua": 1,
-      "thavma:ordo": 1,
-      "thavma:perditio": 2,
       "thavma:terra": 3
     },
     "#c:glass_blocks/cheap": {
@@ -17,14 +15,12 @@
       "thavma:vitreus": 1
     },
     "#c:sands": {
-      "thavma:perditio": 5,
       "thavma:terra": 5
     },
     "#c:stones": {
       "thavma:terra": 5
     },
     "#minecraft:concrete_powder": {
-      "thavma:perditio": 2,
       "thavma:terra": 3
     },
     "#minecraft:logs": {
@@ -51,7 +47,6 @@
       "thavma:sensus": 3
     },
     "minecraft:bedrock": {
-      "thavma:perditio": 25,
       "thavma:tenebrae": 25,
       "thavma:terra": 25,
       "thavma:vacuos": 25

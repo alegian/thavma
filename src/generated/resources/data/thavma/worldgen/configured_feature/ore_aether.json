@@ -6,7 +6,7 @@
     "targets": [
       {
         "state": {
-          "Name": "thavma:perditio_infused_stone"
+          "Name": "thavma:aether_infused_stone"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
@@ -15,7 +15,7 @@
       },
       {
         "state": {
-          "Name": "thavma:perditio_infused_deepslate"
+          "Name": "thavma:aether_infused_deepslate"
         },
         "target": {
           "predicate_type": "minecraft:tag_match",

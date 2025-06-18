@@ -1,8 +1,8 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:ignis": 30,
-    "thavma:ordo": 20
+    "thavma:aether": 20,
+    "thavma:ignis": 30
   },
   "base": {
     "item": "thavma:thavmite_ingot"

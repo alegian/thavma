@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.integration.jei
 
 import me.alegian.thavma.impl.common.recipe.WorkbenchRecipe
+import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -16,7 +17,7 @@ private const val HEIGHT: Int = 54
 
 internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>>(
   WORKBENCH,
-  Component.translatable("gui.thavma.category.arcane_workbench"),
+  Component.translatable(T7RecipeTypes.WORKBENCH.get().translationId),
   guiHelper.createDrawableItemLike(ARCANE_WORKBENCH),
   WIDTH,
   HEIGHT

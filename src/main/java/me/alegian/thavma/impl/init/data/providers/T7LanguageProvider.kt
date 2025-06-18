@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
@@ -284,6 +285,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
+
+    add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")
+    add(T7RecipeTypes.INFUSION.get().translationId, "Infusion")
+    add(T7RecipeTypes.CRUCIBLE.get().translationId, "Crucible")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

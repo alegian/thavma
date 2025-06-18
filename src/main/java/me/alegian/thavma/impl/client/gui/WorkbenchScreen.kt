@@ -15,8 +15,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
-import kotlin.math.abs
-import kotlin.math.cos
 
 private val WORKBENCH_BG = Texture("gui/container/arcane_workbench/bg", 214, 132, 256, 256)
 private val RESULT_SLOT = Texture("gui/container/arcane_workbench/result_slot", 34, 34)
@@ -75,22 +73,21 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
 
   // TODO: cleanup
   protected open val renderAspects = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-    val BASE_RADIUS = 56
+    val BASE_RADIUS = 50
     val ANGLE = 360f / Aspects.PRIMAL_ASPECTS.size
     val middleSlot = menu.craftingContainer.range.slots[4]
     if (middleSlot !is DynamicSlot<*>) return@Renderable
 
     guiGraphics.usePose {
-      translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble())
+      translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble() + 5)
 
-      // draw aspects at hexagon points (or N-gon if more primals are added by addons)
+      // draw aspects at pentagon points (or N-gon if more primals are added by addons)
       for ((i, a) in Aspects.PRIMAL_ASPECTS.withIndex()) {
         val requiredAmount = menu.requiredAspects[a.get()]
         val requiredStack = AspectStack(a.get(), requiredAmount)
         guiGraphics.usePose {
           rotateZ(ANGLE * i)
-          val fac = abs(cos(2 * Math.PI / Aspects.PRIMAL_ASPECTS.size * i))
-          translateXY((BASE_RADIUS * (1 - 0.16 * fac * fac)), 0.0)
+          translateXY(0.0, -BASE_RADIUS)
           rotateZ(-ANGLE * i)
           guiGraphics.usePose {
             translateXY((SLOTS[0].width - ASPECT_SOCKET.width) / 2.0, (SLOTS[0].height - ASPECT_SOCKET.height) / 2.0)

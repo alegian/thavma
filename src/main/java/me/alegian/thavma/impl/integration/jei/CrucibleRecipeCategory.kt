@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.common.recipe.CrucibleRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.rl
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -16,13 +17,15 @@ import net.minecraft.world.item.crafting.RecipeHolder
 private const val WIDTH: Int = 116
 private const val HEIGHT: Int = 18 + 4 + 16
 
-internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<CrucibleRecipe>>(
+internal class CrucibleRecipeCategory(private val guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<CrucibleRecipe>>(
   CRUCIBLE,
   Component.translatable(T7RecipeTypes.CRUCIBLE.get().translationId),
   guiHelper.createDrawableItemLike(T7Blocks.CRUCIBLE),
   WIDTH,
   HEIGHT
 ) {
+  val arrowsDrawable = guiHelper.drawableBuilder(rl("textures/gui/jei/crucible_arrows.png"), 0, 0, 41, 21).setTextureSize(42, 21).build()
+
   override fun setRecipe(builder: IRecipeLayoutBuilder, recipeHolder: RecipeHolder<CrucibleRecipe>, focuses: IFocusGroup) {
     val recipe = recipeHolder.value()
     val resultItem = recipe.result
@@ -34,8 +37,8 @@ internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
   }
 
   override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<CrucibleRecipe>, focuses: IFocusGroup) {
-    val arrow = builder.addRecipeArrow()
-    arrow.setPosition(61, (18 - arrow.height) / 2)
+    val arrow = builder.addDrawable(arrowsDrawable)
+    arrow.setPosition(34, 4)
 
     for ((i, stack) in recipe.value().aspects.withIndex())
       builder.addWidget(AspectWidget(stack, i * 16, 18 + 4))

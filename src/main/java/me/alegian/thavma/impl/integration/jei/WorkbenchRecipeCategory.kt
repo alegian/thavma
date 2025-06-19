@@ -42,6 +42,9 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
   }
 
   override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<WorkbenchRecipe>, focuses: IFocusGroup) {
+    val arrow = builder.addRecipeArrow()
+    arrow.setPosition(61, (3 * 18 - arrow.height) / 2)
+
     for ((i, stack) in recipe.value().aspects.withIndex())
       builder.addWidget(AspectWidget(stack, i * 16, 3 * 18 + 4))
   }

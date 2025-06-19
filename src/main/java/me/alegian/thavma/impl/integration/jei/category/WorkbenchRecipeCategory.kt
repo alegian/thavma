@@ -1,10 +1,10 @@
-package me.alegian.thavma.impl.integration.jei
+package me.alegian.thavma.impl.integration.jei.category
 
 import me.alegian.thavma.impl.common.recipe.WorkbenchRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.integration.jei.category.T7Categories
+import me.alegian.thavma.impl.integration.jei.AspectWidget
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -13,8 +13,11 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.RecipeHolder
 
-private const val WIDTH: Int = 116
-private const val HEIGHT: Int = 3 * 18 + 4 + 16
+private const val SLOT = 18
+private const val ASPECT = 16
+private const val PADDING = 4
+private const val WIDTH = 116
+private const val HEIGHT = 3 * 18 + 4 + 16
 
 internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>>(
   T7Categories.WORKBENCH,
@@ -28,12 +31,12 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
     val resultItem = recipe.result
     val ingredients = recipe.ingredients
 
-    builder.addOutputSlot(95, 19).addItemStack(resultItem).setOutputSlotBackground()
+    builder.addOutputSlot(95, SLOT + 1).addItemStack(resultItem).setOutputSlotBackground()
 
     var i = 0 // index of ingredient
     for (y in 0..2) {
       for (x in 0..2) {
-        val slot = builder.addInputSlot(x * 18 + 1, y * 18 + 1).setStandardSlotBackground()
+        val slot = builder.addInputSlot(x * SLOT + 1, y * SLOT + 1).setStandardSlotBackground()
 
         if (y < recipe.pattern.height() && x < recipe.pattern.width())
           slot.addIngredients(ingredients[i++])
@@ -43,9 +46,9 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
 
   override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<WorkbenchRecipe>, focuses: IFocusGroup) {
     val arrow = builder.addRecipeArrow()
-    arrow.setPosition(61, (3 * 18 - arrow.height) / 2)
+    arrow.setPosition(61, (3 * SLOT - arrow.height) / 2)
 
     for ((i, stack) in recipe.value().aspects.withIndex())
-      builder.addWidget(AspectWidget(stack, i * 16, 3 * 18 + 4))
+      builder.addWidget(AspectWidget(stack, i * ASPECT, 3 * SLOT + PADDING))
   }
 }

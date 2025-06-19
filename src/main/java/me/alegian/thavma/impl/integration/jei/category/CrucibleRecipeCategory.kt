@@ -1,10 +1,9 @@
-package me.alegian.thavma.impl.integration.jei
+package me.alegian.thavma.impl.integration.jei.category
 
 import me.alegian.thavma.impl.common.recipe.CrucibleRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.integration.jei.category.T7Categories
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -47,6 +46,6 @@ internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
     // offset centers aspects
     val offsetX = (width + SLOT - RESULT_SLOT - recipe.value.aspects.size * ASPECT) / 2
     for ((i, stack) in recipe.value.aspects.withIndex())
-      builder.addWidget(AspectWidget(stack, offsetX + i * 16, RESULT_SLOT + PADDING))
+      builder.addWidget(_root_ide_package_.me.alegian.thavma.impl.integration.jei.AspectWidget(stack, offsetX + i * ASPECT, RESULT_SLOT + PADDING))
   }
 }

@@ -16,7 +16,7 @@ class AspectWidget(private val aspectStack: AspectStack, private val x: Int, pri
   }
 
   override fun getTooltip(tooltip: ITooltipBuilder, mouseX: Double, mouseY: Double) {
-    if (mouseX >= 0 && mouseY >= 0 && mouseX <= 16 && mouseY <= 16)
+    if (mouseX >= 0 && mouseY >= 0 && mouseX < 16 && mouseY < 16)
       tooltip.add(Component.translatable(aspectStack.aspect.translationId))
   }
 }

@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.integration.jei
 
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.jei.category.T7Categories
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
@@ -21,12 +22,12 @@ internal class T7JEIPlugin : IModPlugin {
 
   override fun registerRecipes(registration: IRecipeRegistration) {
     val level = Minecraft.getInstance().level ?: return
-    registration.addRecipes(WorkbenchRecipeCategory.WORKBENCH, level.recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
-    registration.addRecipes(CrucibleRecipeCategory.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
+    registration.addRecipes(T7Categories.WORKBENCH, level.recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
+    registration.addRecipes(T7Categories.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
   }
 
   override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-    registration.addRecipeCatalyst(T7Blocks.ARCANE_WORKBENCH, WorkbenchRecipeCategory.WORKBENCH)
-    registration.addRecipeCatalyst(T7Blocks.CRUCIBLE, CrucibleRecipeCategory.CRUCIBLE)
+    registration.addRecipeCatalyst(T7Blocks.ARCANE_WORKBENCH, T7Categories.WORKBENCH)
+    registration.addRecipeCatalyst(T7Blocks.CRUCIBLE, T7Categories.CRUCIBLE)
   }
 }

@@ -40,6 +40,7 @@ import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -112,6 +113,15 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     )
 
     tag(CATALYST).add(Items.GLOWSTONE_DUST)
+
+    copy(BlockTags.LEAVES, ItemTags.LEAVES)
+    copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
+    copy(BlockTags.PLANKS, ItemTags.PLANKS)
+    copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS)
+    copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS)
+    copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS)
+    copy(BlockTags.SLABS, ItemTags.SLABS)
+    copy(BlockTags.STAIRS, ItemTags.STAIRS)
 
     CuriosIntegration.get().addTags(this, lookupProvider)
   }

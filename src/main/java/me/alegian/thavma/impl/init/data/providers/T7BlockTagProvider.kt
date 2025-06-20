@@ -3,10 +3,14 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
@@ -51,6 +55,11 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
         tag(BlockTags.LOGS_THAT_BURN).add(GREATWOOD_LOG.get(), SILVERWOOD_LOG.get())
         tag(BlockTags.SAPLINGS).add(GREATWOOD_SAPLING.get(), SILVERWOOD_SAPLING.get())
         tag(BlockTags.PLANKS).add(GREATWOOD_PLANKS.get(), SILVERWOOD_PLANKS.get())
+
+        tag(BlockTags.WOODEN_SLABS).add(GREATWOOD_SLAB.get())
+        tag(BlockTags.WOODEN_STAIRS).add(GREATWOOD_STAIRS.get())
+        tag(BlockTags.SLABS).add(ELEMENTAL_STONE_SLAB.get())
+        tag(BlockTags.STAIRS).add(ELEMENTAL_STONE_STAIRS.get())
 
         tag(Tags.Blocks.STORAGE_BLOCKS).add(
             THAVMITE_BLOCK.get(),

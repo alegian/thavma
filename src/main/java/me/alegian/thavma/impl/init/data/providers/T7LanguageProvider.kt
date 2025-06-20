@@ -94,6 +94,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
+import me.alegian.thavma.impl.integration.jei.JEIDescriptions
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -287,6 +288,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")
     add(T7RecipeTypes.INFUSION.get().translationId, "Infusion")
     add(T7RecipeTypes.CRUCIBLE.get().translationId, "Crucible")
+
+    add(JEIDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

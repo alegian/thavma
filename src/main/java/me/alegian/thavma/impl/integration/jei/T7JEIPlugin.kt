@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.integration.jei
 
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import me.alegian.thavma.impl.integration.jei.category.CrucibleRecipeCategory
 import me.alegian.thavma.impl.integration.jei.category.InfusionRecipeCategory
@@ -13,6 +14,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 
 @JeiPlugin
 internal class T7JEIPlugin : IModPlugin {
@@ -29,6 +31,7 @@ internal class T7JEIPlugin : IModPlugin {
     registration.addRecipes(T7Categories.WORKBENCH, level.recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
     registration.addRecipes(T7Categories.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
     registration.addRecipes(T7Categories.INFUSION, level.recipeManager.getAllRecipesFor(T7RecipeTypes.INFUSION.get()))
+    registration.addIngredientInfo(T7Items.ROTTEN_BRAIN.get(), Component.translatable(JEIDescriptions.ROTTEN_BRAIN))
   }
 
   override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

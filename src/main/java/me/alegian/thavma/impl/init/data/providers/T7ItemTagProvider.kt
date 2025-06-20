@@ -111,7 +111,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       THAVMITE_VANGUARD_HELMET.get()
     )
 
-    tag(CATALYST).add(Items.DRAGON_EGG)
+    tag(CATALYST).add(Items.GLOWSTONE_DUST)
 
     CuriosIntegration.get().addTags(this, lookupProvider)
   }

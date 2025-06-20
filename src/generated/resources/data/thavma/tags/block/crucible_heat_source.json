@@ -1,6 +1,7 @@
 {
   "values": [
     "#minecraft:fire",
-    "#minecraft:campfires"
+    "#minecraft:campfires",
+    "thavma:eternal_flame"
   ]
 }

@@ -174,5 +174,13 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     fun builder(): Builder {
       return Builder()
     }
+
+    fun ofPrimals(amount: Int): AspectMap {
+      val builder = Builder()
+      for(a in PRIMAL_ASPECTS){
+        builder.add(a.get(), amount)
+      }
+      return builder.build()
+    }
   }
 }

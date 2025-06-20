@@ -29,7 +29,7 @@ object WandLayer : LayeredDraw.Layer {
 
       graphics.blit(CIRCLE)
 
-      rotateZ(-8f)
+      rotateZ(-16f)
       // draw the bars with stacking rotations
       for (deferredAspect in Aspects.PRIMAL_ASPECTS) {
         val a = deferredAspect.get()

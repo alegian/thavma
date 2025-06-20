@@ -1,14 +1,17 @@
 package me.alegian.thavma.impl.init.data.providers
 
-import me.alegian.thavma.impl.common.aspect.AspectMap.Companion.builder
+import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.init.data.providers.builders.CrucibleRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.InfusionRecipeBuilder
-import me.alegian.thavma.impl.init.data.providers.builders.WorkbenchRecipeBuilder.Companion.shaped
+import me.alegian.thavma.impl.init.data.providers.builders.WorkbenchRecipeBuilder
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
@@ -23,7 +26,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
@@ -49,7 +51,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -150,16 +151,6 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(getHasName(THAVMITE_INGOT.get()), has(THAVMITE_INGOT.get()))
       .save(pRecipeOutput)
 
-    ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ARCANE_WORKBENCH)
-      .define('s', ELEMENTAL_STONE)
-      .define('l', GREATWOOD_LOG)
-      .define('#', SIGIL)
-      .pattern("sls")
-      .pattern("s#s")
-      .pattern("sls")
-      .unlockedBy(getHasName(SIGIL), has(SIGIL))
-      .save(pRecipeOutput)
-
     ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ELEMENTAL_STONE_BRICKS)
       .define('s', ELEMENTAL_STONE)
       .pattern("ss ")
@@ -172,36 +163,45 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .save(pRecipeOutput)
 
     CrucibleRecipeBuilder(
-      ItemStack(Items.DIAMOND),
-      builder()
-        .add(TERRA.get(), 6)
-        .add(IGNIS.get(), 2)
+      ItemStack(T7Blocks.ETERNAL_FLAME),
+      AspectMap.builder()
+        .add(IGNIS.get(), 8)
+        .add(LUX.get(), 8)
+        .add(POTENTIA.get(), 8)
         .build(),
-      Ingredient.of(Items.DRAGON_EGG)
+      Ingredient.of(Items.GLOWSTONE_DUST)
     ).save(pRecipeOutput)
 
     InfusionRecipeBuilder(
       ItemStack(Items.NETHERITE_INGOT),
       Ingredient.of(THAVMITE_INGOT),
       listOf(Ingredient.of(Items.DIAMOND), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.IRON_INGOT)),
-      builder()
+      AspectMap.builder()
         .add(AETHER.get(), 20)
         .add(IGNIS.get(), 30)
         .build(),
     ).save(pRecipeOutput)
 
-    shaped(Items.DIAMOND, 2)
-      .requireAspects(
-        builder()
-          .add(IGNIS.get(), 6)
-          .add(AETHER.get(), 2)
-          .build()
-      )
-      .define('d', Blocks.COBBLED_DEEPSLATE)
-      .define('g', Items.GOLD_INGOT)
-      .pattern("gd ")
-      .pattern(" g ")
-      .unlockedBy(getHasName(Items.GOLD_INGOT), has(Items.GOLD_INGOT))
+    WorkbenchRecipeBuilder.shaped(ELEMENTAL_STONE, 8)
+      .requireAspects(AspectMap.ofPrimals(16))
+      .define('s', Tags.Items.STONES)
+      .define('o', T7Tags.SHARD)
+      .pattern("sss")
+      .pattern("sos")
+      .pattern("sss")
+      .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
+      .unlockedBy("has_shards", has(T7Tags.SHARD))
+      .save(pRecipeOutput)
+
+    WorkbenchRecipeBuilder.shaped(ELEMENTAL_CORE, 1)
+      .requireAspects(AspectMap.ofPrimals(8))
+      .define('s', ELEMENTAL_STONE)
+      .define('o', T7Tags.SHARD)
+      .pattern(" o ")
+      .pattern("oso")
+      .pattern(" o ")
+      .unlockedBy("has_stones", has(Tags.Items.STONES))
+      .unlockedBy("has_shards", has(T7Tags.SHARD))
       .save(pRecipeOutput)
   }
 

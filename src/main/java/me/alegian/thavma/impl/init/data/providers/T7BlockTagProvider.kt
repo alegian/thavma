@@ -1,7 +1,8 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.BLOCK
+import me.alegian.thavma.impl.init.registries.T7Tags
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -31,8 +32,10 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
             tag(BlockTags.NEEDS_STONE_TOOL).add(infusedBlock.get())
         }
 
-        // TODO: add nitor
-        tag(BLOCK).addTag(BlockTags.FIRE).addTag(BlockTags.CAMPFIRES)
+        tag(T7Tags.CrucibleHeatSourceTag.BLOCK)
+            .addTag(BlockTags.FIRE)
+            .addTag(BlockTags.CAMPFIRES)
+            .add(T7Blocks.ETERNAL_FLAME.get())
         tag(BlockTags.NEEDS_IRON_TOOL).add(
             THAVMITE_BLOCK.get(),
             ORICHALCUM_BLOCK.get()

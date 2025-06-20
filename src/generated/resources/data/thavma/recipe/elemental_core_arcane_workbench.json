@@ -1,0 +1,27 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 8,
+    "thavma:aether": 8,
+    "thavma:aqua": 8,
+    "thavma:ignis": 8,
+    "thavma:terra": 8
+  },
+  "key": {
+    "o": {
+      "tag": "thavma:shard"
+    },
+    "s": {
+      "item": "thavma:elemental_stone"
+    }
+  },
+  "pattern": [
+    " o ",
+    "oso",
+    " o "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:elemental_core"
+  }
+}

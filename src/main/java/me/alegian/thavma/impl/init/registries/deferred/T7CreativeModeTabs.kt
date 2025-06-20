@@ -107,7 +107,6 @@ object T7CreativeModeTabs {
 
           output.accept(T7Items.EYE_OF_WARDEN)
           output.accept(T7Items.ROTTEN_BRAIN)
-          output.accept(T7Items.SIGIL)
           output.accept(T7Items.FABRIC)
 
           output.accept(T7Items.GREATWOOD_CORE)

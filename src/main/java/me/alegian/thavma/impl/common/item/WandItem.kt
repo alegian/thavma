@@ -85,6 +85,11 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
       level.playSound(context.player, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0f, 1.0f)
       return InteractionResult.SUCCESS
     }
+    if (blockState.`is`(Blocks.CRAFTING_TABLE)) {
+      if (!level.isClientSide()) level.setBlockAndUpdate(blockPos, T7Blocks.ARCANE_WORKBENCH.get().defaultBlockState())
+      level.playSound(context.player, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0f, 1.0f)
+      return InteractionResult.SUCCESS
+    }
     if (
       block is TableBlock &&
       !level.isClientSide() &&

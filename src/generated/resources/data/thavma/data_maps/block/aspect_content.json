@@ -54,8 +54,16 @@
     "minecraft:coarse_dirt": {
       "thavma:terra": 3
     },
+    "minecraft:crafting_table": {
+      "thavma:fabrico": 8,
+      "thavma:herba": 4
+    },
     "minecraft:dirt": {
       "thavma:terra": 5
+    },
+    "minecraft:glowstone": {
+      "thavma:lux": 16,
+      "thavma:terra": 4
     },
     "minecraft:grass_block": {
       "thavma:herba": 2,
@@ -81,6 +89,27 @@
     "minecraft:tall_grass": {
       "thavma:aer": 1,
       "thavma:herba": 5
+    },
+    "minecraft:torch": {
+      "thavma:lux": 4
+    },
+    "thavma:arcane_workbench": {
+      "thavma:fabrico": 12,
+      "thavma:praecantatio": 2,
+      "thavma:terra": 4
+    },
+    "thavma:elemental_core": {
+      "thavma:praecantatio": 2,
+      "thavma:terra": 6
+    },
+    "thavma:elemental_stone": {
+      "thavma:praecantatio": 1,
+      "thavma:terra": 4
+    },
+    "thavma:eternal_flame": {
+      "thavma:ignis": 8,
+      "thavma:lux": 12,
+      "thavma:potentia": 8
     }
   }
 }

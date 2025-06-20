@@ -66,7 +66,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
@@ -120,7 +119,6 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(EYE_OF_WARDEN.get(), "Eye of Warden")
     add(ROTTEN_BRAIN.get(), "Rotten Brain")
-    add(SIGIL.get(), "Sigil")
     add(FABRIC.get(), "Infused Fabric")
 
     add(GREATWOOD_CORE.get(), "Greatwood Wand Core")

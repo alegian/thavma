@@ -1,11 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sigil": {
+    "has_shards": {
       "conditions": {
         "items": [
           {
-            "items": "thavma:sigil"
+            "items": "#thavma:shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_stones": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:stones"
           }
         ]
       },
@@ -13,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:arcane_workbench"
+        "recipe": "thavma:elemental_core"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_sigil"
+      "has_stones",
+      "has_shards"
     ]
   ],
   "rewards": {
     "recipes": [
-      "thavma:arcane_workbench"
+      "thavma:elemental_core"
     ]
   }
 }

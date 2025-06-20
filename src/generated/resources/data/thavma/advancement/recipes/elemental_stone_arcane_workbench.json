@@ -1,11 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gold_ingot": {
+    "has_elemental_stone": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:gold_ingot"
+            "items": "thavma:elemental_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_shards": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#thavma:shard"
           }
         ]
       },
@@ -13,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:diamond"
+        "recipe": "thavma:elemental_stone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_gold_ingot"
+      "has_elemental_stone",
+      "has_shards"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:diamond"
+      "thavma:elemental_stone"
     ]
   }
 }

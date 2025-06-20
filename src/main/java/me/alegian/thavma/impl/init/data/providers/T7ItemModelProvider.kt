@@ -21,7 +21,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.SIGIL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
@@ -58,7 +57,6 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     basicItem(EYE_OF_WARDEN.get())
     basicItem(ROTTEN_BRAIN.get())
-    basicItem(SIGIL.get())
     basicItem(FABRIC.get())
 
     basicItem(GREATWOOD_CORE.get())

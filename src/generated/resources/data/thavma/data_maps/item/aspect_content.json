@@ -1,8 +1,16 @@
 {
   "values": {
+    "minecraft:coal": {
+      "thavma:ignis": 8,
+      "thavma:potentia": 8
+    },
     "minecraft:diamond": {
-      "thavma:desiderium": 15,
-      "thavma:vitreus": 15
+      "thavma:desiderium": 16,
+      "thavma:vitreus": 16
+    },
+    "minecraft:glowstone_dust": {
+      "thavma:lux": 4,
+      "thavma:terra": 1
     }
   }
 }

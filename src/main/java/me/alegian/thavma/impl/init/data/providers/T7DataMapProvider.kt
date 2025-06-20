@@ -14,7 +14,10 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HUMANUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.SENSUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
@@ -22,6 +25,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.VACUOS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VINCULUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -101,15 +105,51 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     block(b, Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS.get(), 5) }
     block(b, Tags.Blocks.GLASS_PANES) { it.add(VITREUS.get(), 1) }
 
+    block(b, Blocks.TORCH) { it.add(LUX.get(), 4) }
+
     block(b, Blocks.BEDROCK) {
       it.add(VACUOS.get(), 25)
         .add(TERRA.get(), 25)
         .add(TENEBRAE.get(), 25)
     }
+    block(b, Blocks.GLOWSTONE) {
+      it.add(LUX.get(), 16)
+        .add(TERRA.get(), 4)
+    }
+    block(b, T7Blocks.ETERNAL_FLAME.get()) {
+      it.add(LUX.get(), 12)
+        .add(POTENTIA.get(), 8)
+        .add(IGNIS.get(), 8)
+    }
+    block(b, T7Blocks.ELEMENTAL_STONE.get()) {
+      it.add(TERRA.get(), 4)
+        .add(PRAECANTATIO.get(), 1)
+    }
+    block(b, T7Blocks.ELEMENTAL_CORE.get()) {
+      it.add(TERRA.get(), 6)
+        .add(PRAECANTATIO.get(), 2)
+    }
+    block(b, Blocks.CRAFTING_TABLE) {
+      it.add(FABRICO.get(), 8)
+        .add(HERBA.get(), 4)
+    }
+    block(b, T7Blocks.ARCANE_WORKBENCH.get()) {
+      it.add(FABRICO.get(), 12)
+        .add(TERRA.get(), 4)
+        .add(PRAECANTATIO.get(), 2)
+    }
 
     item(i, Items.DIAMOND) {
-      it.add(VITREUS.get(), 15)
-        .add(DESIDERIUM.get(), 15)
+      it.add(VITREUS.get(), 16)
+        .add(DESIDERIUM.get(), 16)
+    }
+    item(i, Items.COAL) {
+      it.add(IGNIS.get(), 8)
+        .add(POTENTIA.get(), 8)
+    }
+    item(i, Items.GLOWSTONE_DUST) {
+      it.add(LUX.get(), 4)
+        .add(TERRA.get(), 1)
     }
 
     entity(e, EntityType.PIG) {

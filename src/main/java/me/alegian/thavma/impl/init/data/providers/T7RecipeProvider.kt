@@ -62,6 +62,10 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     wand(pRecipeOutput, wandOrThrow(IRON.get(), WOOD.get()), IRON_HANDLE.get(), Tags.Items.RODS_WOODEN)
     ingot(pRecipeOutput, THAVMITE_INGOT.get(), THAVMITE_NUGGET.get(), THAVMITE_BLOCK.get())
     ingot(pRecipeOutput, ORICHALCUM_INGOT.get(), ORICHALCUM_NUGGET.get(), ORICHALCUM_BLOCK.get())
+    slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.GREATWOOD_SLAB.get(), GREATWOOD_PLANKS.get())
+    slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_SLAB.get(), ELEMENTAL_STONE.get())
+    stairs(pRecipeOutput, T7Blocks.GREATWOOD_STAIRS.get(), GREATWOOD_PLANKS.get())
+    stairs(pRecipeOutput, T7Blocks.ELEMENTAL_STONE_STAIRS.get(), ELEMENTAL_STONE.get())
 
     ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, THAVMITE_SWORD.get())
       .define('a', THAVMITE_INGOT.get())
@@ -259,6 +263,11 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .unlockedBy("has_logs", has(pLog))
         .save(pRecipeOutput)
     }
+
+    protected fun stairs(recipeOutput: RecipeOutput, stairs: ItemLike, material: ItemLike) =
+      stairBuilder(stairs, Ingredient.of(material))
+        .unlockedBy(getHasName(material), has(material))
+        .save(recipeOutput)
 
     protected fun itemLoc(itemLike: ItemLike): String {
       return BuiltInRegistries.ITEM.getKey(itemLike.asItem()).toString()

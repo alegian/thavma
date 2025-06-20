@@ -18,16 +18,16 @@
       "thavma:terra": 5
     },
     "#c:stones": {
-      "thavma:terra": 5
+      "thavma:terra": 4
     },
     "#minecraft:concrete_powder": {
       "thavma:terra": 3
     },
     "#minecraft:logs": {
-      "thavma:herba": 20
+      "thavma:herba": 16
     },
     "#minecraft:planks": {
-      "thavma:herba": 3
+      "thavma:herba": 4
     },
     "#minecraft:terracotta": {
       "thavma:aqua": 15,
@@ -36,10 +36,10 @@
       "thavma:terra": 15
     },
     "#minecraft:wooden_slabs": {
-      "thavma:herba": 1
+      "thavma:herba": 2
     },
     "#minecraft:wooden_stairs": {
-      "thavma:herba": 3
+      "thavma:herba": 6
     },
     "#minecraft:wool": {
       "thavma:bestia": 11,
@@ -59,7 +59,7 @@
       "thavma:herba": 4
     },
     "minecraft:dirt": {
-      "thavma:terra": 5
+      "thavma:terra": 4
     },
     "minecraft:glowstone": {
       "thavma:lux": 16,
@@ -86,6 +86,12 @@
       "thavma:aer": 1,
       "thavma:herba": 5
     },
+    "minecraft:stone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:stone_stairs": {
+      "thavma:terra": 6
+    },
     "minecraft:tall_grass": {
       "thavma:aer": 1,
       "thavma:herba": 5
@@ -105,6 +111,17 @@
     "thavma:elemental_stone": {
       "thavma:praecantatio": 1,
       "thavma:terra": 4
+    },
+    "thavma:elemental_stone_bricks": {
+      "thavma:praecantatio": 1,
+      "thavma:terra": 4
+    },
+    "thavma:elemental_stone_slab": {
+      "thavma:terra": 2
+    },
+    "thavma:elemental_stone_stairs": {
+      "thavma:praecantatio": 1,
+      "thavma:terra": 6
     },
     "thavma:eternal_flame": {
       "thavma:ignis": 8,

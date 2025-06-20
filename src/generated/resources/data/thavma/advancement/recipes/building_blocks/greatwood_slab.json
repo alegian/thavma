@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_greatwood_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:greatwood_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:greatwood_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_greatwood_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:greatwood_slab"
+    ]
+  }
+}

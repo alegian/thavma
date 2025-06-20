@@ -50,8 +50,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     val b = builder(T7DataMaps.AspectContent.BLOCK)
     val e = builder(T7DataMaps.AspectContent.ENTITY)
 
-    block(b, Tags.Blocks.STONES) { it.add(TERRA.get(), 5) }
-    block(b, Blocks.DIRT) { it.add(TERRA.get(), 5) }
+    block(b, Tags.Blocks.STONES) { it.add(TERRA.get(), 4) }
+    block(b, Blocks.STONE_STAIRS) { it.add(TERRA.get(), 6) }
+    block(b, Blocks.STONE_SLAB) { it.add(TERRA.get(), 2) }
+    block(b, Blocks.DIRT) { it.add(TERRA.get(), 4) }
 
     block(b, Blocks.POLISHED_GRANITE) { it.add(TERRA.get(), 3) }
     block(b, Blocks.POLISHED_DIORITE) { it.add(TERRA.get(), 3) }
@@ -93,10 +95,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(AETHER.get(), 1)
     }
 
-    block(b, BlockTags.PLANKS) { it.add(HERBA.get(), 3) }
-    block(b, BlockTags.WOODEN_STAIRS) { it.add(HERBA.get(), 3) }
-    block(b, BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 1) }
-    block(b, BlockTags.LOGS) { it.add(HERBA.get(), 20) }
+    block(b, BlockTags.PLANKS) { it.add(HERBA.get(), 4) }
+    block(b, BlockTags.WOODEN_STAIRS) { it.add(HERBA.get(), 6) }
+    block(b, BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 2) }
+    block(b, BlockTags.LOGS) { it.add(HERBA.get(), 16) }
 
     block(b, BlockTags.WOOL) {
       it.add(BESTIA.get(), 11).add(SENSUS.get(), 3).add(FABRICO.get(), 3)
@@ -122,6 +124,17 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(IGNIS.get(), 8)
     }
     block(b, T7Blocks.ELEMENTAL_STONE.get()) {
+      it.add(TERRA.get(), 4)
+        .add(PRAECANTATIO.get(), 1)
+    }
+    block(b, T7Blocks.ELEMENTAL_STONE_STAIRS.get()) {
+      it.add(TERRA.get(), 6)
+        .add(PRAECANTATIO.get(), 1)
+    }
+    block(b, T7Blocks.ELEMENTAL_STONE_SLAB.get()) {
+      it.add(TERRA.get(), 2)
+    }
+    block(b, T7Blocks.ELEMENTAL_STONE_BRICKS.get()) {
       it.add(TERRA.get(), 4)
         .add(PRAECANTATIO.get(), 1)
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:aer_shard"
+        "recipe": "thavma:ignis_shard_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:aer_shard"
+      "thavma:ignis_shard_blasting"
     ]
   }
 }

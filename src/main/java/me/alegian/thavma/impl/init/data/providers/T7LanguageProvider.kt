@@ -94,6 +94,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
+import me.alegian.thavma.impl.integration.jei.JEIAliases
 import me.alegian.thavma.impl.integration.jei.JEIDescriptions
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
@@ -290,6 +291,16 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7RecipeTypes.CRUCIBLE.get().translationId, "Crucible")
 
     add(JEIDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
+    add(JEIDescriptions.BOOK, "Right click a bookcase with a wand to obtain!")
+    add(JEIDescriptions.ARCANE_WORKBENCH, "Right click a crafting table with a wand to convert it to an arcane workbench.")
+    add(JEIDescriptions.CRUCIBLE, "Right click a cauldron with a wand to convert it to a crucible.")
+    add(JEIDescriptions.RESEARCH_TABLE, "Can be formed by placing 2 tables next to each other, and right clicking one with a wand.")
+    add(JEIDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
+    add(JEIDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
+    add(JEIDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
+
+    add(JEIAliases.BOOK, "Book")
+    add(JEIAliases.ORE, "Ore")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

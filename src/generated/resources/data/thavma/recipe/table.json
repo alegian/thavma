@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": {
+      "item": "thavma:greatwood_planks"
+    },
+    "s": {
+      "item": "thavma:greatwood_slab"
+    }
+  },
+  "pattern": [
+    "sss",
+    "p p",
+    "p p"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:table"
+  }
+}

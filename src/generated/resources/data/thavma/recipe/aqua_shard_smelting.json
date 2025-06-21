@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": [
+    {
+      "item": "thavma:aqua_infused_stone"
+    },
+    {
+      "item": "thavma:aqua_infused_deepslate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:aqua_shard"
+  }
+}

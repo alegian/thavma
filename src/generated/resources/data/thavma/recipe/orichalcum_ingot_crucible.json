@@ -1,0 +1,13 @@
+{
+  "type": "thavma:crucible",
+  "aspects": {
+    "thavma:instrumentum": 4
+  },
+  "catalyst": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "thavma:orichalcum_ingot"
+  }
+}

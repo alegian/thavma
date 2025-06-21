@@ -95,6 +95,12 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 2) }
     b.block(BlockTags.LOGS) { it.add(HERBA.get(), 16) }
 
+    b.block(T7Blocks.TABLE.get()){it.add(HERBA.get(), 12)}
+    b.block(T7Blocks.RESEARCH_TABLE.get()){
+      it.add(HERBA.get(), 12)
+        .add(PRAECANTATIO.get(), 2)
+    }
+
     b.block(BlockTags.WOOL) {
       it.add(BESTIA.get(), 11).add(SENSUS.get(), 3).add(FABRICO.get(), 3)
     }
@@ -139,7 +145,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     }
     b.block(T7Blocks.ARCANE_WORKBENCH.get()) {
       it.add(FABRICO.get(), 12)
-        .add(TERRA.get(), 4)
+        .add(HERBA.get(), 4)
         .add(PRAECANTATIO.get(), 2)
     }
   }

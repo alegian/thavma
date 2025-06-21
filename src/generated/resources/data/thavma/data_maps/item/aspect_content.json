@@ -84,7 +84,8 @@
     },
     "thavma:orichalcum_ingot": {
       "thavma:instrumentum": 4,
-      "thavma:metallum": 4
+      "thavma:metallum": 4,
+      "thavma:permutatio": 4
     },
     "thavma:terra_shard": {
       "thavma:terra": 4

@@ -1,5 +1,7 @@
 {
   "values": [
-    "minecraft:glowstone_dust"
+    "minecraft:glowstone_dust",
+    "minecraft:iron_ingot",
+    "minecraft:copper_ingot"
   ]
 }

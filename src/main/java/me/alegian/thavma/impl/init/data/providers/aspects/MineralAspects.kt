@@ -70,6 +70,7 @@ object MineralAspects {
       }
       block(T7Blocks.ORICHALCUM_BLOCK.get()) {
         it.add(METALLUM.get(), 36)
+          .add(PERMUTATIO.get(), 36)
           .add(PRAECANTATIO.get(), 36)
       }
       block(Tags.Blocks.ORES_GOLD) {
@@ -183,6 +184,7 @@ object MineralAspects {
       }
       item(T7Items.ORICHALCUM_INGOT.get()) {
         it.add(METALLUM.get(), 4)
+          .add(PERMUTATIO.get(), 4)
           .add(INSTRUMENTUM.get(), 4)
       }
       item(Tags.Items.RAW_MATERIALS_GOLD) {

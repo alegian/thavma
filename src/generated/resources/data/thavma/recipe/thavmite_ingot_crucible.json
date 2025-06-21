@@ -1,0 +1,13 @@
+{
+  "type": "thavma:crucible",
+  "aspects": {
+    "thavma:praecantatio": 4
+  },
+  "catalyst": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_ingot"
+  }
+}

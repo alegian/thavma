@@ -225,8 +225,8 @@
     },
     "thavma:arcane_workbench": {
       "thavma:fabrico": 12,
-      "thavma:praecantatio": 2,
-      "thavma:terra": 4
+      "thavma:herba": 4,
+      "thavma:praecantatio": 2
     },
     "thavma:elemental_core": {
       "thavma:praecantatio": 2,
@@ -260,7 +260,15 @@
     },
     "thavma:orichalcum_block": {
       "thavma:metallum": 36,
+      "thavma:permutatio": 36,
       "thavma:praecantatio": 36
+    },
+    "thavma:research_table": {
+      "thavma:herba": 12,
+      "thavma:praecantatio": 2
+    },
+    "thavma:table": {
+      "thavma:herba": 12
     },
     "thavma:terra_infused_deepslate": {
       "thavma:terra": 4

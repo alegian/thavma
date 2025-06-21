@@ -63,10 +63,10 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
         SILVERWOOD_CORE.get()
       )
 
-    for (shard in SHARDS.values) {
+    for (shard in SHARDS.values)
       tag(T7Tags.Items.SHARD).add(shard.get())
-      tag(Tags.Items.GEMS).add(shard.get())
-    }
+
+    tag(Tags.Items.GEMS).addTag(T7Tags.Items.SHARD)
 
     tag(Tags.Items.INGOTS).add(
       THAVMITE_INGOT.get(),
@@ -112,7 +112,11 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       THAVMITE_VANGUARD_HELMET.get()
     )
 
-    tag(T7Tags.Items.CATALYST).add(Items.GLOWSTONE_DUST)
+    tag(T7Tags.Items.CATALYST).add(
+      Items.GLOWSTONE_DUST,
+      Items.IRON_INGOT,
+      Items.COPPER_INGOT,
+    )
 
     copy(BlockTags.LEAVES, ItemTags.LEAVES)
     copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)

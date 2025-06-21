@@ -8,15 +8,16 @@ import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.INSTRUMENTUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
@@ -60,15 +61,15 @@ import java.util.concurrent.CompletableFuture
 
 open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<HolderLookup.Provider?>) : RecipeProvider(pOutput, pRegistries) {
   override fun buildRecipes(pRecipeOutput: RecipeOutput) {
-    planksFromLog(pRecipeOutput, GREATWOOD_PLANKS, GREATWOOD_LOG)
+    planksFromLog(pRecipeOutput, T7Blocks.GREATWOOD_PLANKS, GREATWOOD_LOG)
     planksFromLog(pRecipeOutput, SILVERWOOD_PLANKS, SILVERWOOD_LOG)
     wandHandle(pRecipeOutput, IRON_HANDLE.get(), Items.IRON_INGOT, Items.IRON_NUGGET)
     wand(pRecipeOutput, wandOrThrow(IRON.get(), WOOD.get()), IRON_HANDLE.get(), Tags.Items.RODS_WOODEN)
     ingot(pRecipeOutput, THAVMITE_INGOT.get(), THAVMITE_NUGGET.get(), THAVMITE_BLOCK.get())
     ingot(pRecipeOutput, ORICHALCUM_INGOT.get(), ORICHALCUM_NUGGET.get(), ORICHALCUM_BLOCK.get())
-    slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.GREATWOOD_SLAB.get(), GREATWOOD_PLANKS.get())
+    slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.GREATWOOD_SLAB.get(), T7Blocks.GREATWOOD_PLANKS.get())
     slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_SLAB.get(), ELEMENTAL_STONE.get())
-    stairs(pRecipeOutput, T7Blocks.GREATWOOD_STAIRS.get(), GREATWOOD_PLANKS.get())
+    stairs(pRecipeOutput, T7Blocks.GREATWOOD_STAIRS.get(), T7Blocks.GREATWOOD_PLANKS.get())
     stairs(pRecipeOutput, T7Blocks.ELEMENTAL_STONE_STAIRS.get(), ELEMENTAL_STONE.get())
 
     ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, THAVMITE_SWORD.get())
@@ -166,14 +167,43 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
       .save(pRecipeOutput)
 
+    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, T7Blocks.TABLE)
+      .define('p', T7Blocks.GREATWOOD_PLANKS)
+      .define('s', T7Blocks.GREATWOOD_SLAB)
+      .pattern("sss")
+      .pattern("p p")
+      .pattern("p p")
+      .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
+      .save(pRecipeOutput)
+
     SimpleCookingRecipeBuilder.smelting(Ingredient.of(ELEMENTAL_STONE), RecipeCategory.BUILDING_BLOCKS, CRACKED_ELEMENTAL_STONE, 0.1f, 200)
       .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
       .save(pRecipeOutput)
 
-    for (a in Aspects.PRIMAL_ASPECTS)
+    for (a in Aspects.PRIMAL_ASPECTS){
       SimpleCookingRecipeBuilder.blasting(Ingredient.of(INFUSED_STONES[a], INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, SHARDS[a]!!, 1f, 100)
         .unlockedBy("has_infused_stones", has(T7Tags.Items.INFUSED_STONES))
-        .save(pRecipeOutput)
+        .save(pRecipeOutput, SHARDS[a]!!.id.withSuffix("_blasting"))
+      SimpleCookingRecipeBuilder.smelting(Ingredient.of(INFUSED_STONES[a], INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, SHARDS[a]!!, 1f, 200)
+        .unlockedBy("has_infused_stones", has(T7Tags.Items.INFUSED_STONES))
+        .save(pRecipeOutput, SHARDS[a]!!.id.withSuffix("_smelting"))
+    }
+
+    CrucibleRecipeBuilder(
+      THAVMITE_INGOT.get().defaultInstance,
+      AspectMap.builder()
+        .add(PRAECANTATIO.get(), 4)
+        .build(),
+      Ingredient.of(Items.IRON_INGOT)
+    ).save(pRecipeOutput)
+
+    CrucibleRecipeBuilder(
+      ORICHALCUM_INGOT.get().defaultInstance,
+      AspectMap.builder()
+        .add(INSTRUMENTUM.get(), 4)
+        .build(),
+      Ingredient.of(Items.COPPER_INGOT)
+    ).save(pRecipeOutput)
 
     CrucibleRecipeBuilder(
       ItemStack(T7Blocks.ETERNAL_FLAME),

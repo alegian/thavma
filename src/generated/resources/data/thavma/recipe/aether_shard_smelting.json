@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": [
+    {
+      "item": "thavma:aether_infused_stone"
+    },
+    {
+      "item": "thavma:aether_infused_deepslate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:aether_shard"
+  }
+}

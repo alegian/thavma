@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:aqua_shard"
+        "recipe": "thavma:aer_shard_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:aqua_shard"
+      "thavma:aer_shard_blasting"
     ]
   }
 }

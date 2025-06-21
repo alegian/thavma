@@ -20,6 +20,43 @@
     "#c:stones": {
       "thavma:terra": 4
     },
+    "#c:storage_blocks/coal": {
+      "thavma:desiderium": 72,
+      "thavma:metallum": 144,
+      "thavma:tenebrae": 36
+    },
+    "#c:storage_blocks/copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "#c:storage_blocks/diamond": {
+      "thavma:desiderium": 72,
+      "thavma:vitreus": 72
+    },
+    "#c:storage_blocks/emerald": {
+      "thavma:desiderium": 36,
+      "thavma:vitreus": 72
+    },
+    "#c:storage_blocks/gold": {
+      "thavma:desiderium": 72,
+      "thavma:metallum": 36
+    },
+    "#c:storage_blocks/iron": {
+      "thavma:metallum": 72
+    },
+    "#c:storage_blocks/lapis": {
+      "thavma:sensus": 18,
+      "thavma:vitreus": 36
+    },
+    "#c:storage_blocks/netherite": {
+      "thavma:desiderium": 72,
+      "thavma:metallum": 144,
+      "thavma:tenebrae": 36
+    },
+    "#c:storage_blocks/redstone": {
+      "thavma:potentia": 36,
+      "thavma:terra": 9
+    },
     "#minecraft:concrete_powder": {
       "thavma:terra": 3
     },
@@ -45,6 +82,10 @@
       "thavma:bestia": 11,
       "thavma:fabrico": 3,
       "thavma:sensus": 3
+    },
+    "minecraft:amethyst_block": {
+      "thavma:sensus": 4,
+      "thavma:vitreus": 16
     },
     "minecraft:bedrock": {
       "thavma:tenebrae": 25,
@@ -81,6 +122,10 @@
     },
     "minecraft:polished_granite": {
       "thavma:terra": 3
+    },
+    "minecraft:quartz_block": {
+      "thavma:ignis": 4,
+      "thavma:vitreus": 16
     },
     "minecraft:short_grass": {
       "thavma:aer": 1,
@@ -127,6 +172,14 @@
       "thavma:ignis": 8,
       "thavma:lux": 12,
       "thavma:potentia": 8
+    },
+    "thavma:orichalcum_block": {
+      "thavma:metallum": 36,
+      "thavma:praecantatio": 36
+    },
+    "thavma:thavmite_block": {
+      "thavma:metallum": 72,
+      "thavma:praecantatio": 36
     }
   }
 }

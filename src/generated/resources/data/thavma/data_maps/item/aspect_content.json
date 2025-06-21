@@ -1,16 +1,65 @@
 {
   "values": {
-    "minecraft:coal": {
+    "#c:dusts/glowstone": {
+      "thavma:lux": 4,
+      "thavma:terra": 1
+    },
+    "#c:dusts/redstone": {
+      "thavma:potentia": 4,
+      "thavma:terra": 1
+    },
+    "#c:gems/amethyst": {
+      "thavma:sensus": 1,
+      "thavma:vitreus": 4
+    },
+    "#c:gems/diamond": {
+      "thavma:desiderium": 8,
+      "thavma:vitreus": 8
+    },
+    "#c:gems/emerald": {
+      "thavma:desiderium": 4,
+      "thavma:vitreus": 8
+    },
+    "#c:gems/lapis": {
+      "thavma:sensus": 2,
+      "thavma:vitreus": 4
+    },
+    "#c:gems/quartz": {
+      "thavma:ignis": 1,
+      "thavma:vitreus": 4
+    },
+    "#c:ingots/copper": {
+      "thavma:metallum": 4,
+      "thavma:permutatio": 4
+    },
+    "#c:ingots/gold": {
+      "thavma:desiderium": 8,
+      "thavma:metallum": 4
+    },
+    "#c:ingots/iron": {
+      "thavma:metallum": 8
+    },
+    "#c:ingots/netherite": {
+      "thavma:desiderium": 8,
+      "thavma:metallum": 16,
+      "thavma:tenebrae": 4
+    },
+    "#minecraft:coals": {
       "thavma:ignis": 8,
       "thavma:potentia": 8
     },
-    "minecraft:diamond": {
-      "thavma:desiderium": 16,
-      "thavma:vitreus": 16
+    "minecraft:netherite_scrap": {
+      "thavma:metallum": 2,
+      "thavma:tenebrae": 1,
+      "thavma:terra": 2
     },
-    "minecraft:glowstone_dust": {
-      "thavma:lux": 4,
-      "thavma:terra": 1
+    "thavma:orichalcum_ingot": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 4
+    },
+    "thavma:thavmite_ingot": {
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
     }
   }
 }

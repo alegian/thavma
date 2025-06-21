@@ -44,15 +44,14 @@ object Aspects {
   val FABRICO = register("fabrico", 0xff809d80.toInt(), listOf(PERMUTATIO, INSTRUMENTUM))
   val MACHINA = register("machina", 0xff8080a0.toInt(), listOf(MOTUS, INSTRUMENTUM))
   val VINCULUM = register("vinculum", 0xff9a8080.toInt(), listOf(MOTUS, IGNIS))
-  val SPIRITUS = register("spiritus", 0xffebebfb.toInt(), listOf(VICTUS, MORTUUS))
-  val COGNITIO = register("cognitio", 0xfff9967f.toInt(), listOf(IGNIS, SPIRITUS))
-  val SENSUS = register("sensus", 0xffc0ffc0.toInt(), listOf(AER, SPIRITUS))
+  val EXANIMIS = register("exanimis", 0xffebebfb.toInt(), listOf(VICTUS, MORTUUS))
+  val COGNITIO = register("cognitio", 0xfff9967f.toInt(), listOf(IGNIS, VICTUS))
+  val SENSUS = register("sensus", 0xffc0ffc0.toInt(), listOf(AER, COGNITIO))
   val AVERSIO = register("aversio", 0xffc05050.toInt(), listOf(INSTRUMENTUM, METALLUM))
-  val PRAEMUNIO = register("praemunio", 0xff00c0c0.toInt(), listOf(SPIRITUS, TERRA))
-  val DESIDERIUM = register("desiderium", 0xffe6be44.toInt(), listOf(SPIRITUS, VACUOS))
-  val EXANIMIS = register("exanimis", 0xff3a4000.toInt(), listOf(MOTUS, MORTUUS))
+  val DESIDERIUM = register("desiderium", 0xffe6be44.toInt(), listOf(COGNITIO, VACUOS))
   val BESTIA = register("bestia", 0xff9f6409.toInt(), listOf(MOTUS, VICTUS))
-  val HUMANUS = register("humanus", 0xffffd7c0.toInt(), listOf(SPIRITUS, VICTUS))
+  val PRAEMUNIO = register("praemunio", 0xff00c0c0.toInt(), listOf(BESTIA, METALLUM))
+  val HUMANUS = register("humanus", 0xffffd7c0.toInt(), listOf(BESTIA, COGNITIO))
 
   private fun register(id: String, color: Int, components: List<Supplier<Aspect>>): DeferredAspect<Aspect> {
     return REGISTRAR.registerAspect(id) { Aspect(id, color, components) }

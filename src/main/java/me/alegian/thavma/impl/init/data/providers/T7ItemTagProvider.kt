@@ -1,10 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
-import me.alegian.thavma.impl.init.registries.T7Tags.SHARD
-import me.alegian.thavma.impl.init.registries.T7Tags.WAND_CORE
-import me.alegian.thavma.impl.init.registries.T7Tags.WAND_HANDLE
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
@@ -52,21 +49,24 @@ import java.util.concurrent.CompletableFuture
 
 class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<HolderLookup.Provider?>, pBlockTags: CompletableFuture<TagLookup<Block?>?>, pExistingFileHelper: ExistingFileHelper?) : ItemTagsProvider(pOutput, pLookupProvider, pBlockTags, Thavma.MODID, pExistingFileHelper) {
   override fun addTags(lookupProvider: HolderLookup.Provider) {
-    tag(WAND_HANDLE).add(
+    tag(T7Tags.Items.WAND_HANDLE).add(
       IRON_HANDLE.get(),
       GOLD_HANDLE.get(),
       ORICHALCUM_HANDLE.get(),
       THAVMITE_HANDLE.get()
     )
 
-    tag(WAND_CORE)
+    tag(T7Tags.Items.WAND_CORE)
       .addTag(Tags.Items.RODS_WOODEN)
       .add(
         GREATWOOD_CORE.get(),
         SILVERWOOD_CORE.get()
       )
 
-    for (shard in SHARDS.values) tag(SHARD).add(shard.get())
+    for (shard in SHARDS.values) {
+      tag(T7Tags.Items.SHARD).add(shard.get())
+      tag(Tags.Items.GEMS).add(shard.get())
+    }
 
     tag(Tags.Items.INGOTS).add(
       THAVMITE_INGOT.get(),
@@ -112,7 +112,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       THAVMITE_VANGUARD_HELMET.get()
     )
 
-    tag(CATALYST).add(Items.GLOWSTONE_DUST)
+    tag(T7Tags.Items.CATALYST).add(Items.GLOWSTONE_DUST)
 
     copy(BlockTags.LEAVES, ItemTags.LEAVES)
     copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN)
@@ -122,6 +122,12 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS)
     copy(BlockTags.SLABS, ItemTags.SLABS)
     copy(BlockTags.STAIRS, ItemTags.STAIRS)
+    copy(Tags.Blocks.ORES, Tags.Items.ORES)
+    copy(Tags.Blocks.ORE_RATES_SINGULAR, Tags.Items.ORE_RATES_SINGULAR)
+    copy(Tags.Blocks.STORAGE_BLOCKS, Tags.Items.STORAGE_BLOCKS)
+    copy(Tags.Blocks.ORES_IN_GROUND_STONE, Tags.Items.ORES_IN_GROUND_STONE)
+    copy(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE, Tags.Items.ORES_IN_GROUND_DEEPSLATE)
+    copy(T7Tags.Blocks.INFUSED_STONES, T7Tags.Items.INFUSED_STONES)
 
     CuriosIntegration.get().addTags(this, lookupProvider)
   }

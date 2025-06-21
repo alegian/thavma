@@ -4,9 +4,7 @@ import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.block.entity.CrucibleBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
-import me.alegian.thavma.impl.init.registries.T7Tags.CATALYST
-import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.BLOCK
-import me.alegian.thavma.impl.init.registries.T7Tags.CrucibleHeatSourceTag.FLUID
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import net.minecraft.core.BlockPos
@@ -163,7 +161,7 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
       val thrownStack = itemEntity.item
 
       // try to use as catalyst
-      if (thrownStack.`is`(CATALYST)) {
+      if (thrownStack.`is`(T7Tags.Items.CATALYST)) {
         val crucibleAspects = AspectContainer.at(level, pPos)?.aspects ?: return
 
         val input = SingleRecipeInput(thrownStack)
@@ -226,9 +224,9 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
 
     protected fun isHeatSource(level: LevelAccessor, pos: BlockPos): Boolean {
       val bs = level.getBlockState(pos)
-      val bsHeat = bs.`is`(BLOCK)
+      val bsHeat = bs.`is`(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCE)
       val fs = level.getFluidState(pos)
-      val fsHeat = fs.`is`(FLUID)
+      val fsHeat = fs.`is`(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCE)
       return bsHeat || fsHeat
     }
   }

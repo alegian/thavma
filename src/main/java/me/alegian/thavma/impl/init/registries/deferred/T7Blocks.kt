@@ -18,46 +18,21 @@ import java.util.function.Supplier
 object T7Blocks {
   val REGISTRAR = DeferredRegister.createBlocks(Thavma.MODID)
 
-  val AURA_NODE = register(
-    "aura_node"
-  ) { AuraNodeBlock() }
+  val AURA_NODE = register("aura_node") { AuraNodeBlock() }
 
-  val SEALING_JAR = register(
-    "sealing_jar",
-    ::SealingJarBlock
-  )
+  val SEALING_JAR = register("sealing_jar", ::SealingJarBlock)
 
-  val CRUCIBLE = register(
-    "crucible"
-  ) { CrucibleBlock() }
+  val CRUCIBLE = register("crucible") { CrucibleBlock() }
+  val ARCANE_WORKBENCH = register("arcane_workbench") { WorkbenchBlock() }
 
-  val ARCANE_WORKBENCH = register(
-    "arcane_workbench"
-  ) { WorkbenchBlock() }
+  val MATRIX = register("infusion_matrix") { MatrixBlock() }
+  val PILLAR = register("infusion_pillar") { PillarBlock() }
+  val PEDESTAL = register("infusion_pedestal") { PedestalBlock() }
 
-  val MATRIX = register(
-    "infusion_matrix"
-  ) { MatrixBlock() }
+  val ITEM_HATCH = register("item_hatch") { ItemHatch() }
 
-  val PILLAR = register(
-    "infusion_pillar"
-  ) { PillarBlock() }
-
-  val PEDESTAL = register(
-    "infusion_pedestal"
-  ) { PedestalBlock() }
-
-  val ITEM_HATCH = register(
-    "item_hatch"
-  ) { ItemHatch() }
-
-  val TABLE = register(
-    "table"
-  ) { TableBlock() }
-
-  val RESEARCH_TABLE = register(
-    "research_table"
-  ) { ResearchTableBlock() }
+  val TABLE = register("table") { TableBlock() }
+  val RESEARCH_TABLE = register("research_table") { ResearchTableBlock() }
 
   val ELEMENTAL_STONE = register("elemental_stone") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)) }
   val ELEMENTAL_STONE_SLAB = register("elemental_stone_slab") { SlabBlock(BlockBehaviour.Properties.ofFullCopy(ELEMENTAL_STONE.get())) }

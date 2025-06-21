@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.init.data.providers.builders.CrucibleRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.InfusionRecipeBuilder
 import me.alegian.thavma.impl.init.data.providers.builders.WorkbenchRecipeBuilder
 import me.alegian.thavma.impl.init.registries.T7Tags
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
@@ -16,6 +17,8 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -26,6 +29,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
@@ -166,6 +170,11 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
       .save(pRecipeOutput)
 
+    for (a in Aspects.PRIMAL_ASPECTS)
+      SimpleCookingRecipeBuilder.blasting(Ingredient.of(INFUSED_STONES[a], INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, SHARDS[a]!!, 1f, 100)
+        .unlockedBy("has_infused_stones", has(T7Tags.Items.INFUSED_STONES))
+        .save(pRecipeOutput)
+
     CrucibleRecipeBuilder(
       ItemStack(T7Blocks.ETERNAL_FLAME),
       AspectMap.builder()
@@ -189,23 +198,23 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     WorkbenchRecipeBuilder.shaped(ELEMENTAL_STONE, 8)
       .requireAspects(AspectMap.ofPrimals(16))
       .define('s', Tags.Items.STONES)
-      .define('o', T7Tags.SHARD)
+      .define('o', T7Tags.Items.SHARD)
       .pattern("sss")
       .pattern("sos")
       .pattern("sss")
       .unlockedBy(getHasName(ELEMENTAL_STONE), has(ELEMENTAL_STONE))
-      .unlockedBy("has_shards", has(T7Tags.SHARD))
+      .unlockedBy("has_shards", has(T7Tags.Items.SHARD))
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(ELEMENTAL_CORE, 1)
       .requireAspects(AspectMap.ofPrimals(8))
       .define('s', ELEMENTAL_STONE)
-      .define('o', T7Tags.SHARD)
+      .define('o', T7Tags.Items.SHARD)
       .pattern(" o ")
       .pattern("oso")
       .pattern(" o ")
       .unlockedBy("has_stones", has(Tags.Items.STONES))
-      .unlockedBy("has_shards", has(T7Tags.SHARD))
+      .unlockedBy("has_shards", has(T7Tags.Items.SHARD))
       .save(pRecipeOutput)
   }
 

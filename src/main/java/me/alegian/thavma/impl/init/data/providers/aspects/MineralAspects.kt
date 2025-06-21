@@ -238,6 +238,10 @@ object MineralAspects {
           it.add(shard.get().aspect.get(), 4)
         }
       }
+
+      item(Tags.Items.NUGGETS) {
+        it.add(TERRA.get(), 1)
+      }
     }
   }
 }

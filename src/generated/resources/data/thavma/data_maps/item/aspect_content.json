@@ -44,6 +44,9 @@
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
+    "#c:nuggets": {
+      "thavma:terra": 1
+    },
     "#c:raw_materials/copper": {
       "thavma:metallum": 2,
       "thavma:permutatio": 2,

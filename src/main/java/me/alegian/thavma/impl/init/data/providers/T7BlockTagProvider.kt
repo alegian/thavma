@@ -34,10 +34,15 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
       tag(Tags.Blocks.ORE_RATES_SINGULAR).add(infusedBlock.get())
       tag(BlockTags.MINEABLE_WITH_PICKAXE).add(infusedBlock.get())
       tag(BlockTags.NEEDS_STONE_TOOL).add(infusedBlock.get())
-      tag(T7Tags.INFUSED_STONES).add(infusedBlock.get())
+      tag(T7Tags.Blocks.INFUSED_STONES).add(infusedBlock.get())
     }
+    for (infusedDeepslate in INFUSED_DEEPSLATES.values)
+      tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(infusedDeepslate.get())
 
-    tag(T7Tags.CrucibleHeatSourceTag.BLOCK)
+    for (infusedStone in INFUSED_STONES.values)
+      tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(infusedStone.get())
+
+    tag(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCE)
       .addTag(BlockTags.FIRE)
       .addTag(BlockTags.CAMPFIRES)
       .add(T7Blocks.ETERNAL_FLAME.get())

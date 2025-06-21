@@ -15,7 +15,7 @@ import me.alegian.thavma.impl.init.data.worldgen.spawn.AngryZombieSpawn
 import me.alegian.thavma.impl.init.data.worldgen.tree.GreatwoodTree
 import me.alegian.thavma.impl.init.data.worldgen.tree.SilverwoodTree
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
-import me.alegian.thavma.impl.init.registries.T7Tags.SONIC
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.util.DeferredAspect
 import net.minecraft.ChatFormatting
@@ -97,7 +97,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
                     AddValue(LevelBasedValue.perLevel(2.0f)),
                     Optional.of(
                       DamageSourceCondition.hasDamageSource(
-                        DamageSourcePredicate.Builder.damageType().tag(TagPredicate.`is`(SONIC))
+                        DamageSourcePredicate.Builder.damageType().tag(TagPredicate.`is`(T7Tags.DamageTypes.SONIC))
                       ).build()
                     )
                   )

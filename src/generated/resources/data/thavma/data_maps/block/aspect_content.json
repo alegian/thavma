@@ -14,6 +14,54 @@
     "#c:glass_panes": {
       "thavma:vitreus": 1
     },
+    "#c:ores/coal": {
+      "thavma:ignis": 8,
+      "thavma:potentia": 8,
+      "thavma:terra": 4
+    },
+    "#c:ores/copper": {
+      "thavma:metallum": 4,
+      "thavma:permutatio": 4,
+      "thavma:terra": 4
+    },
+    "#c:ores/diamond": {
+      "thavma:desiderium": 8,
+      "thavma:terra": 4,
+      "thavma:vitreus": 8
+    },
+    "#c:ores/emerald": {
+      "thavma:desiderium": 4,
+      "thavma:terra": 4,
+      "thavma:vitreus": 8
+    },
+    "#c:ores/gold": {
+      "thavma:desiderium": 8,
+      "thavma:metallum": 4,
+      "thavma:terra": 4
+    },
+    "#c:ores/iron": {
+      "thavma:metallum": 8,
+      "thavma:terra": 4
+    },
+    "#c:ores/lapis": {
+      "thavma:sensus": 2,
+      "thavma:terra": 4,
+      "thavma:vitreus": 4
+    },
+    "#c:ores/netherite_scrap": {
+      "thavma:metallum": 2,
+      "thavma:tenebrae": 1,
+      "thavma:terra": 6
+    },
+    "#c:ores/quartz": {
+      "thavma:ignis": 1,
+      "thavma:terra": 4,
+      "thavma:vitreus": 4
+    },
+    "#c:ores/redstone": {
+      "thavma:potentia": 4,
+      "thavma:terra": 4
+    },
     "#c:sands": {
       "thavma:terra": 5
     },
@@ -21,9 +69,8 @@
       "thavma:terra": 4
     },
     "#c:storage_blocks/coal": {
-      "thavma:desiderium": 72,
-      "thavma:metallum": 144,
-      "thavma:tenebrae": 36
+      "thavma:ignis": 72,
+      "thavma:potentia": 72
     },
     "#c:storage_blocks/copper": {
       "thavma:metallum": 36,
@@ -52,6 +99,20 @@
       "thavma:desiderium": 72,
       "thavma:metallum": 144,
       "thavma:tenebrae": 36
+    },
+    "#c:storage_blocks/raw_copper": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18,
+      "thavma:terra": 18
+    },
+    "#c:storage_blocks/raw_gold": {
+      "thavma:desiderium": 36,
+      "thavma:metallum": 18,
+      "thavma:terra": 18
+    },
+    "#c:storage_blocks/raw_iron": {
+      "thavma:metallum": 36,
+      "thavma:terra": 18
     },
     "#c:storage_blocks/redstone": {
       "thavma:potentia": 36,
@@ -144,6 +205,24 @@
     "minecraft:torch": {
       "thavma:lux": 4
     },
+    "thavma:aer_infused_deepslate": {
+      "thavma:aer": 4
+    },
+    "thavma:aer_infused_stone": {
+      "thavma:aer": 4
+    },
+    "thavma:aether_infused_deepslate": {
+      "thavma:aether": 4
+    },
+    "thavma:aether_infused_stone": {
+      "thavma:aether": 4
+    },
+    "thavma:aqua_infused_deepslate": {
+      "thavma:aqua": 4
+    },
+    "thavma:aqua_infused_stone": {
+      "thavma:aqua": 4
+    },
     "thavma:arcane_workbench": {
       "thavma:fabrico": 12,
       "thavma:praecantatio": 2,
@@ -173,9 +252,21 @@
       "thavma:lux": 12,
       "thavma:potentia": 8
     },
+    "thavma:ignis_infused_deepslate": {
+      "thavma:ignis": 4
+    },
+    "thavma:ignis_infused_stone": {
+      "thavma:ignis": 4
+    },
     "thavma:orichalcum_block": {
       "thavma:metallum": 36,
       "thavma:praecantatio": 36
+    },
+    "thavma:terra_infused_deepslate": {
+      "thavma:terra": 4
+    },
+    "thavma:terra_infused_stone": {
+      "thavma:terra": 4
     },
     "thavma:thavmite_block": {
       "thavma:metallum": 72,

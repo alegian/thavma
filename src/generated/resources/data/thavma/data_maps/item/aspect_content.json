@@ -44,6 +44,20 @@
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
+    "#c:raw_materials/copper": {
+      "thavma:metallum": 2,
+      "thavma:permutatio": 2,
+      "thavma:terra": 2
+    },
+    "#c:raw_materials/gold": {
+      "thavma:desiderium": 4,
+      "thavma:metallum": 2,
+      "thavma:terra": 2
+    },
+    "#c:raw_materials/iron": {
+      "thavma:metallum": 4,
+      "thavma:terra": 2
+    },
     "#minecraft:coals": {
       "thavma:ignis": 8,
       "thavma:potentia": 8
@@ -53,9 +67,24 @@
       "thavma:tenebrae": 1,
       "thavma:terra": 2
     },
+    "thavma:aer_shard": {
+      "thavma:aer": 4
+    },
+    "thavma:aether_shard": {
+      "thavma:aether": 4
+    },
+    "thavma:aqua_shard": {
+      "thavma:aqua": 4
+    },
+    "thavma:ignis_shard": {
+      "thavma:ignis": 4
+    },
     "thavma:orichalcum_ingot": {
       "thavma:instrumentum": 4,
       "thavma:metallum": 4
+    },
+    "thavma:terra_shard": {
+      "thavma:terra": 4
     },
     "thavma:thavmite_ingot": {
       "thavma:metallum": 8,

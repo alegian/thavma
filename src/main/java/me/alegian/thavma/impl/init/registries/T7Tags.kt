@@ -12,6 +12,8 @@ object T7Tags {
 
   val SONIC = TagKey.create(Registries.DAMAGE_TYPE, rl("sonic"))
 
+  val INFUSED_STONES = TagKey.create(Registries.BLOCK, rl("infused_stones"))
+
   object CrucibleHeatSourceTag {
     val BLOCK = TagKey.create(Registries.BLOCK, rl("crucible_heat_source"))
 

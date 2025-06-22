@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
+import me.alegian.thavma.impl.init.data.worldgen.Node
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
 import me.alegian.thavma.impl.init.data.worldgen.spawn.AngryZombieSpawn
@@ -51,24 +52,26 @@ import java.util.concurrent.CompletableFuture
 class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : DatapackBuiltinEntriesProvider(output, registries, builder, setOf(Thavma.MODID)) {
   companion object {
     private val builder: RegistrySetBuilder = RegistrySetBuilder()
-      .add(Registries.CONFIGURED_FEATURE) { bootstrap ->
-        GreatwoodTree.registerConfigured(bootstrap)
-        SilverwoodTree.registerConfigured(bootstrap)
-
-        InfusedOre.registerConfigured(bootstrap)
-        InfusedStoneOre.registerConfigured(bootstrap)
+      .add(Registries.CONFIGURED_FEATURE) { ctx ->
+        GreatwoodTree.registerConfigured(ctx)
+        SilverwoodTree.registerConfigured(ctx)
+        InfusedOre.registerConfigured(ctx)
+        InfusedStoneOre.registerConfigured(ctx)
+        Node.registerConfigured(ctx)
       }
       .add(Registries.PLACED_FEATURE) { ctx ->
         GreatwoodTree.registerPlaced(ctx)
         SilverwoodTree.registerPlaced(ctx)
         InfusedOre.registerPlaced(ctx)
         InfusedStoneOre.registerPlaced(ctx)
+        Node.registerPlaced(ctx)
       }
       .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS) { ctx ->
         GreatwoodTree.registerBiomeModifier(ctx)
         SilverwoodTree.registerBiomeModifier(ctx)
         InfusedStoneOre.registerBiomeModifier(ctx)
         AngryZombieSpawn.registerBiomeModifier(ctx)
+        Node.registerBiomeModifier(ctx)
       }
       .add(Registries.ENCHANTMENT) { bootstrap ->
         val itemRegistry = bootstrap.lookup(Registries.ITEM)

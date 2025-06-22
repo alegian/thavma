@@ -19,31 +19,30 @@ import kotlin.math.*
 // number of "corners" of every 3d cylinder slice
 const val CR0SS_AXIS_RESOLUTION = 16
 
-// how high the "inverse gravity" parabola will rise
-const val TRAJECTORY_HEIGHT = 1.2
 
 // the range at which a trajectory point is considered an endpoint
 const val ENDPOINT_RANGE = 0.3
 
-private fun trajectory(start: Vec3, end: Vec3): List<Vec3> {
+// height is how high the "inverse gravity" parabola will rise
+private fun trajectory(start: Vec3, end: Vec3, height: Double): List<Vec3> {
   val diff = end - start
   val dl = diff.normalize() / MAIN_AXIS_RESOLUTION.toDouble()
   val trajectoryLength = trajectoryLength(start, end)
   return (0..trajectoryLength).map {
     val t = it.toDouble() / trajectoryLength // t ranges from 0 to 1
-    val quadraticYOffset = Vec3(0.0, 1.0, 0.0) * t * (1 - t) * 4.0 * TRAJECTORY_HEIGHT
+    val quadraticYOffset = Vec3(0.0, 1.0, 0.0) * t * (1 - t) * 4.0 * height
     start + dl * it.toDouble() + quadraticYOffset
   }
 }
 
-fun renderEssentia(start: Vec3, end: Vec3, headIndex: Int, length: Int, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int) {
+fun renderEssentia(start: Vec3, end: Vec3, trajectoryHeight: Double, headIndex: Int, length: Int, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int, radius: Double) {
   val vc = multiBufferSource.getBuffer(T7RenderTypes.TRANSLUCENT_TRIANGLES)
-  val traj = trajectory(start, end)
+  val traj = trajectory(start, end, trajectoryHeight)
 
-  renderVariableRadiusCylinder(traj.subList(max(0, headIndex - length), headIndex + 1), vc, poseStack, ticks, color)
+  renderVariableRadiusCylinder(traj.subList(max(0, headIndex - length), headIndex + 1), vc, poseStack, ticks, color, radius)
 }
 
-private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsumer, poseStack: PoseStack, ticks: Float, color: Int) {
+private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsumer, poseStack: PoseStack, ticks: Float, color: Int, radius: Double) {
   // we keep track of the previous normals to fix open ends in the cylinder, in non-linear trajectories
   var prevNormal1 = Vec3(0.0, 1.0, 0.0)
   var prevNormal2 = Vec3(1.0, 0.0, 0.0)
@@ -57,8 +56,8 @@ private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsu
     val normal1 = (direction cross randomOtherDirection).normalize()
     val normal2 = (direction cross normal1).normalize()
 
-    val radius1 = oscillatingRadius(i, trajectory, ticks)
-    val radius2 = oscillatingRadius(i + 1, trajectory, ticks)
+    val radius1 = oscillatingRadius(i, trajectory, ticks, radius)
+    val radius2 = oscillatingRadius(i + 1, trajectory, ticks, radius)
 
     for (j in 0..CR0SS_AXIS_RESOLUTION) {
       val angle = 2 * PI * j / CR0SS_AXIS_RESOLUTION
@@ -80,9 +79,9 @@ private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsu
  * Calculates the radius of the cylinder at the current point in the trajectory.
  * Endpoint radii are multiplied with an extra term to avoid open ends.
  */
-private fun oscillatingRadius(i: Int, trajectory: List<Vec3>, ticks: Float): Double {
+private fun oscillatingRadius(i: Int, trajectory: List<Vec3>, ticks: Float, scale: Double): Double {
   val timePhase = -1.5 * 2 * PI * ticks / 20 // minus makes it look like start is being sucked into end
-  val default = 0.12 + 0.02 * sin(i * 2 * PI / MAIN_AXIS_RESOLUTION + timePhase)
+  val default = scale + 0.02 * sin(i * 2 * PI / MAIN_AXIS_RESOLUTION + timePhase)
 
   val x = trajectory[i]
   val distanceToEndpoint = min(x.distanceTo(trajectory.first()), x.distanceTo(trajectory.last()))

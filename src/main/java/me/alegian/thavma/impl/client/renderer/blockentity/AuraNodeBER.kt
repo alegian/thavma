@@ -50,9 +50,6 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
     poseStack.scale(scale)
   }
 
-  /**
-   * TODO: dont forget to handle scale when using custom shader
-   */
   private fun renderNode(be: AuraNodeBE, poseStack: PoseStack, bufferSource: MultiBufferSource) {
     poseStack.use {
       // follows the camera like a particle
@@ -60,15 +57,17 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       poseStack.mulPose(rotation)
 
       // empty nodes look like small black circles
-      AspectContainer.from(be)?.aspects?.toSortedList().run {
-        if (this != null) for (stack in this) renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, 0.4f, stack.amount / 32f)
-        else renderAuraNodeLayer(poseStack, bufferSource, 0, 1f, 0.5f / 32f)
+      AspectContainer.from(be)?.aspects?.toSortedList()?.run {
+        if (this.isNotEmpty())
+          for (stack in this)
+            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, 0.4f, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
+        else renderAuraNodeLayer(poseStack, bufferSource, 0, 1f, 1f / AuraNodeBE.MAX_ASPECTS)
       }
     }
   }
 
   companion object {
-    const val MIN_SCALE: Float = 1f / 3 // containment animation minimum allowed scale
+    private const val MIN_SCALE = 1f / 3 // for lerping containment animation
 
     /**
      * Renders a 3x3x3 container jar around the node.
@@ -77,7 +76,7 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       if (containingCountdown < 0) return
 
       poseStack.pushPose()
-      poseStack.scale(3f, 3f, 3f)
+      poseStack.scale(3f)
       poseStack.translate(-0.5, -0.5, -0.5)
       Minecraft.getInstance().blockRenderer.renderSingleBlock(SEALING_JAR.get().defaultBlockState(), poseStack, bufferSource, combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.translucent())
       poseStack.popPose()

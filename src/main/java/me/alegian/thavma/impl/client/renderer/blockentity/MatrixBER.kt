@@ -59,7 +59,7 @@ private class FlyingAspectsRenderLayer(renderer: MatrixBER) : GeoRenderLayer<Mat
         val aspect = flyingAspects[firstIndex]?.aspectStack?.aspect ?: continue
         val colorWithAlpha = 0x44000000 or (aspect.color and 0xffffff)
         if (head < 0) continue
-        renderEssentia(f.key, be.drainPos, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha)
+        renderEssentia(f.key, be.drainPos, 1.2, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha, 0.12)
       }
     }
   }

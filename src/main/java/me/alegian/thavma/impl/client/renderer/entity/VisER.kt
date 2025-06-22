@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.culling.Frustum
 import net.minecraft.client.renderer.entity.EntityRenderer
 import net.minecraft.client.renderer.entity.EntityRendererProvider
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.InventoryMenu
@@ -29,22 +28,20 @@ class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity
       translate(-visEntity.position()) // we are inside an entity renderer
       val playerHandPos = preparePlayerHandPosition(pPartialTick, player)
       val length = trajectoryLength(visEntity.position(), playerHandPos)
-      renderEssentia(visEntity.position(), playerHandPos, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, Aspects.PRAECANTATIO.get().color)
+      val colorWithAlpha = 0x44000000 or (Aspects.PRAECANTATIO.get().color and 0xffffff)
+      renderEssentia(visEntity.position(), playerHandPos, 0.2, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, colorWithAlpha, 0.06)
     }
   }
 
-  override fun getTextureLocation(pEntity: VisEntity): ResourceLocation {
-    return InventoryMenu.BLOCK_ATLAS
-  }
+  override fun getTextureLocation(pEntity: VisEntity) =
+    InventoryMenu.BLOCK_ATLAS
 
   /**
    * The Vis Entity does not have a strict bounding box,
    * so we never cull it to avoid rendering bugs at the edge
    * of the screen.
    */
-  override fun shouldRender(pLivingEntity: VisEntity, pCamera: Frustum, pCamX: Double, pCamY: Double, pCamZ: Double): Boolean {
-    return true
-  }
+  override fun shouldRender(pLivingEntity: VisEntity, pCamera: Frustum, pCamX: Double, pCamY: Double, pCamZ: Double) = true
 }
 
 /**

@@ -161,13 +161,13 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     val STREAM_CODEC = StreamCodec.composite(MAP_STREAM_CODEC, AspectMap::map, ::AspectMap)
 
-    fun randomPrimals(): AspectMap {
+    fun randomPrimals(scale: Int): AspectMap {
       val random = Random()
       val map = LinkedHashMap<Aspect, Int>()
       val primals = ArrayList(PRIMAL_ASPECTS)
       primals.shuffle()
       val randomPrimals = primals.subList(0, random.nextInt(primals.size) + 1)
-      for (a in randomPrimals) map[a.get()] = random.nextInt(16) + 1
+      for (a in randomPrimals) map[a.get()] = random.nextInt(scale) + 1
       return AspectMap(map)
     }
 

@@ -15,6 +15,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import java.util.*
 
+private const val PLAYER_TAG: String = "player"
+private const val PERIOD_TICKS = 4
 /**
  * Entity that renders as a spiral beam between the Player and an Aura Node.
  * Transfers vis from the target block to the held wand by ticking.
@@ -32,11 +34,11 @@ class VisEntity(pLevel: Level, player: Player?, blockPos: BlockPos = BlockPos(0,
    * Interrupts item use when the aspect container is full.
    */
   override fun tick() {
-    if (this.tickCount % PERIOD_TICKS != 0) return
+    if (tickCount % PERIOD_TICKS != 0) return
 
     var transferPair: AspectContainer.Pair? = null
     player?.let {
-      transferPair = AspectContainer.blockSourceItemSink(this.level(), this.blockPosition(), it.useItem)
+      transferPair = AspectContainer.blockSourceItemSink(level(), blockPosition(), it.useItem)
       val canTransfer = transferPair?.canTransferPrimals() ?: false
       if (!canTransfer) it.stopUsingItem()
     }
@@ -45,18 +47,18 @@ class VisEntity(pLevel: Level, player: Player?, blockPos: BlockPos = BlockPos(0,
   }
 
   private fun serverTick(pair: AspectContainer.Pair?) {
-    if (level().isClientSide()) return
+    val level = level()?: return
+    if (level.isClientSide() || level !is ServerLevel) return
     val currPlayer = player
     if (currPlayer == null || !currPlayer.isUsingItem || pair == null) {
-      this.kill()
+      kill()
       return
     }
-    val transferred = pair.transferPrimal((this.tickCount / PERIOD_TICKS) % PRIMAL_ASPECTS.size, 5)
-    val currLevel = level()
-    if (transferred != null && transferred.amount > 0 && currLevel is ServerLevel) currLevel.updateBlockEntityS2C(this.blockPosition())
+    val transferred = pair.transferPrimal((this.tickCount / PERIOD_TICKS) % PRIMAL_ASPECTS.size, 1)
+    if (transferred != null && transferred.amount > 0) level.updateBlockEntityS2C(blockPosition())
   }
 
-  val player: Player?
+  val player
     get() = playerUUID?.let { level().getPlayerByUUID(it) }
 
   override fun readAdditionalSaveData(pCompound: CompoundTag) {
@@ -73,7 +75,7 @@ class VisEntity(pLevel: Level, player: Player?, blockPos: BlockPos = BlockPos(0,
   }
 
   override fun getAddEntityPacket(pEntity: ServerEntity): Packet<ClientGamePacketListener> {
-    val player: Entity? = this.player
+    val player = this.player
     return ClientboundAddEntityPacket(this, pEntity, player?.id ?: 0)
   }
 
@@ -81,10 +83,5 @@ class VisEntity(pLevel: Level, player: Player?, blockPos: BlockPos = BlockPos(0,
     super.recreateFromPacket(pPacket)
     val entity = level().getEntity(pPacket.data)
     if (entity is Player) this.playerUUID = entity.getUUID()
-  }
-
-  companion object {
-    const val PLAYER_TAG: String = "player"
-    private const val PERIOD_TICKS = 5
   }
 }

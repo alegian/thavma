@@ -42,7 +42,7 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
     level?.run {
       if (!isClientSide() && this is ServerLevel) {
         AspectContainer.at(this, blockPos)?.run {
-          if (areAspectsNull()) aspects = AspectMap.randomPrimals()
+          if (areAspectsNull()) aspects = AspectMap.randomPrimals(MAX_ASPECTS)
         }
         updateBlockEntityS2C(blockPos)
       }
@@ -133,7 +133,8 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
   }
 
   companion object {
-    const val MAX_COUNTDOWN: Int = 60
+    const val MAX_ASPECTS = 32
+    const val MAX_COUNTDOWN = 60
     fun tick(level: Level?, pos: BlockPos?, state: BlockState?, blockEntity: AuraNodeBE) {
       val countdown = blockEntity.containingCountdown
       if (countdown == 0) blockEntity.contain()

@@ -49,6 +49,9 @@
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
+    "#c:leathers": {
+      "thavma:bestia": 8
+    },
     "#c:nuggets": {
       "thavma:terra": 1
     },
@@ -80,6 +83,12 @@
     "#minecraft:coals": {
       "thavma:ignis": 8,
       "thavma:potentia": 8
+    },
+    "#thavma:goggles": {
+      "thavma:desiderium": 32,
+      "thavma:metallum": 32,
+      "thavma:praecantatio": 4,
+      "thavma:vitreus": 4
     },
     "minecraft:blaze_powder": {
       "thavma:alkimia": 2,
@@ -161,10 +170,44 @@
       "thavma:aversio": 3,
       "thavma:metallum": 16
     },
+    "minecraft:netherite_axe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 6,
+      "thavma:metallum": 48,
+      "thavma:tenebrae": 12
+    },
+    "minecraft:netherite_hoe": {
+      "thavma:desiderium": 16,
+      "thavma:instrumentum": 6,
+      "thavma:metallum": 32,
+      "thavma:tenebrae": 8
+    },
+    "minecraft:netherite_pickaxe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 6,
+      "thavma:metallum": 48,
+      "thavma:tenebrae": 12
+    },
     "minecraft:netherite_scrap": {
       "thavma:metallum": 2,
       "thavma:tenebrae": 1,
       "thavma:terra": 2
+    },
+    "minecraft:netherite_shovel": {
+      "thavma:desiderium": 8,
+      "thavma:instrumentum": 6,
+      "thavma:metallum": 16,
+      "thavma:tenebrae": 4
+    },
+    "minecraft:netherite_sword": {
+      "thavma:aversio": 6,
+      "thavma:desiderium": 16,
+      "thavma:metallum": 32,
+      "thavma:tenebrae": 8
+    },
+    "minecraft:rotten_flesh": {
+      "thavma:exanimis": 2,
+      "thavma:humanus": 2
     },
     "minecraft:stone_axe": {
       "thavma:instrumentum": 2,
@@ -219,20 +262,75 @@
     "thavma:aqua_shard": {
       "thavma:aqua": 4
     },
+    "thavma:arcane_lens": {
+      "thavma:desiderium": 32,
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 2,
+      "thavma:vitreus": 2
+    },
+    "thavma:fabric": {
+      "thavma:fabrico": 4,
+      "thavma:praecantatio": 1
+    },
+    "thavma:gold_handle": {
+      "thavma:desiderium": 16,
+      "thavma:metallum": 8
+    },
     "thavma:ignis_shard": {
       "thavma:ignis": 4
+    },
+    "thavma:iron_handle": {
+      "thavma:metallum": 16
+    },
+    "thavma:orichalcum_handle": {
+      "thavma:instrumentum": 8,
+      "thavma:metallum": 8,
+      "thavma:permutatio": 8
     },
     "thavma:orichalcum_ingot": {
       "thavma:instrumentum": 4,
       "thavma:metallum": 4,
       "thavma:permutatio": 4
     },
+    "thavma:rotten_brain": {
+      "thavma:cognitio": 16,
+      "thavma:exanimis": 8
+    },
     "thavma:terra_shard": {
       "thavma:terra": 4
+    },
+    "thavma:thavmite_axe": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
+    },
+    "thavma:thavmite_handle": {
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
+    },
+    "thavma:thavmite_hoe": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     },
     "thavma:thavmite_ingot": {
       "thavma:metallum": 8,
       "thavma:praecantatio": 4
+    },
+    "thavma:thavmite_pickaxe": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
+    },
+    "thavma:thavmite_shovel": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
+    },
+    "thavma:thavmite_sword": {
+      "thavma:aversio": 4,
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     }
   }
 }

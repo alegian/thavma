@@ -13,9 +13,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import javax.naming.OperationNotSupportedException
 
 class InfusionRecipeBuilder(private val result: ItemStack, private val base: Ingredient, private val ingredients: List<Ingredient>, private val aspects: AspectMap) : RecipeBuilder {
+  constructor(result: ItemLike, base: Ingredient, ingredients: List<Ingredient>, aspects: AspectMap) :
+      this(result.asItem().defaultInstance, base, ingredients, aspects)
+
   override fun unlockedBy(name: String, criterion: Criterion<*>) =
     throw OperationNotSupportedException()
 

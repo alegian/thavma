@@ -9,7 +9,7 @@
       "thavma:terra": 3
     },
     "#c:glass_blocks/cheap": {
-      "thavma:vitreus": 5
+      "thavma:vitreus": 4
     },
     "#c:glass_panes": {
       "thavma:vitreus": 1
@@ -121,11 +121,22 @@
     "#minecraft:concrete_powder": {
       "thavma:terra": 3
     },
+    "#minecraft:flowers": {
+      "thavma:herba": 4,
+      "thavma:victus": 1
+    },
+    "#minecraft:leaves": {
+      "thavma:herba": 4
+    },
     "#minecraft:logs": {
       "thavma:herba": 16
     },
     "#minecraft:planks": {
       "thavma:herba": 4
+    },
+    "#minecraft:saplings": {
+      "thavma:herba": 8,
+      "thavma:victus": 4
     },
     "#minecraft:terracotta": {
       "thavma:aqua": 15,
@@ -140,9 +151,8 @@
       "thavma:herba": 6
     },
     "#minecraft:wool": {
-      "thavma:bestia": 11,
-      "thavma:fabrico": 3,
-      "thavma:sensus": 3
+      "thavma:bestia": 8,
+      "thavma:fabrico": 4
     },
     "minecraft:amethyst_block": {
       "thavma:sensus": 4,
@@ -152,6 +162,10 @@
       "thavma:tenebrae": 25,
       "thavma:terra": 25,
       "thavma:vacuos": 25
+    },
+    "minecraft:cauldron": {
+      "thavma:alkimia": 8,
+      "thavma:metallum": 56
     },
     "minecraft:coarse_dirt": {
       "thavma:terra": 3
@@ -228,6 +242,15 @@
       "thavma:herba": 4,
       "thavma:praecantatio": 2
     },
+    "thavma:cracked_elemental_stone": {
+      "thavma:praecantatio": 1,
+      "thavma:terra": 4
+    },
+    "thavma:crucible": {
+      "thavma:alkimia": 8,
+      "thavma:metallum": 56,
+      "thavma:praecantatio": 2
+    },
     "thavma:elemental_core": {
       "thavma:praecantatio": 2,
       "thavma:terra": 6
@@ -266,6 +289,11 @@
     "thavma:research_table": {
       "thavma:herba": 12,
       "thavma:praecantatio": 2
+    },
+    "thavma:sealing_jar": {
+      "thavma:praecantatio": 2,
+      "thavma:vacuos": 2,
+      "thavma:vitreus": 4
     },
     "thavma:table": {
       "thavma:herba": 12

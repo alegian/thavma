@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "g": {
+      "tag": "c:ingots/gold"
+    },
+    "p": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "s": {
+      "tag": "thavma:shard"
+    }
+  },
+  "pattern": [
+    "sgs",
+    "gpg",
+    "sgs"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:arcane_lens"
+  }
+}

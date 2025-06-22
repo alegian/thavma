@@ -2,10 +2,10 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7Tags
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
@@ -107,7 +107,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       APPRENTICE_CHESTPLATE.get()
     )
     tag(ItemTags.HEAD_ARMOR).add(
-      GOGGLES.get(),
+      T7Items.GOGGLES.get(),
       THAVMITE_HELMET.get(),
       THAVMITE_VANGUARD_HELMET.get()
     )
@@ -116,6 +116,11 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       Items.GLOWSTONE_DUST,
       Items.IRON_INGOT,
       Items.COPPER_INGOT,
+    )
+
+    tag(T7Tags.Items.GOGGLES).add(
+      T7Items.GOGGLES.get(),
+      T7Items.GOGGLES_CURIO.get(),
     )
 
     copy(BlockTags.LEAVES, ItemTags.LEAVES)

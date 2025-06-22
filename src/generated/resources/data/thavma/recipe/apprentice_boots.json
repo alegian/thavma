@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "item": "thavma:fabric"
+    }
+  },
+  "pattern": [
+    "a a",
+    "a a"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:apprentice_boots"
+  }
+}

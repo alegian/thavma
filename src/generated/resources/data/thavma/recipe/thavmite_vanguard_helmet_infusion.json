@@ -1,0 +1,25 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:praecantatio": 16,
+    "thavma:praemunio": 32
+  },
+  "base": {
+    "item": "thavma:thavmite_helmet"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_vanguard_helmet"
+  }
+}

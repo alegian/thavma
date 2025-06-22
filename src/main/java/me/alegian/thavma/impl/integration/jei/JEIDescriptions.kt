@@ -11,4 +11,5 @@ object JEIDescriptions {
   val INFUSED_STONES = PREFIX + "infused_stones"
   val GREATWOOD = PREFIX + "greatwood"
   val SILVERWOOD = PREFIX + "silverwood"
+  val PILLAR = PREFIX + "pillar"
 }

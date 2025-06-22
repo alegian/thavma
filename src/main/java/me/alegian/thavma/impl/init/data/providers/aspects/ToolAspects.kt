@@ -8,8 +8,12 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.INSTRUMENTUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PERMUTATIO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.Items
 
@@ -79,6 +83,32 @@ object ToolAspects {
           .add(INSTRUMENTUM.get(), 3)
       }
 
+      item(T7Items.THAVMITE_SWORD.get()) {
+        it.add(METALLUM.get(), 16)
+          .add(PRAECANTATIO.get(), 8)
+          .add(AVERSIO.get(), 4)
+      }
+      item(T7Items.THAVMITE_PICKAXE.get()) {
+        it.add(METALLUM.get(), 24)
+          .add(PRAECANTATIO.get(), 12)
+          .add(INSTRUMENTUM.get(), 4)
+      }
+      item(T7Items.THAVMITE_AXE.get()) {
+        it.add(METALLUM.get(), 24)
+          .add(PRAECANTATIO.get(), 12)
+          .add(INSTRUMENTUM.get(), 4)
+      }
+      item(T7Items.THAVMITE_SHOVEL.get()) {
+        it.add(METALLUM.get(), 8)
+          .add(PRAECANTATIO.get(), 4)
+          .add(INSTRUMENTUM.get(), 4)
+      }
+      item(T7Items.THAVMITE_HOE.get()) {
+        it.add(METALLUM.get(), 16)
+          .add(PRAECANTATIO.get(), 8)
+          .add(INSTRUMENTUM.get(), 4)
+      }
+
       item(Items.GOLDEN_SWORD) {
         it.add(METALLUM.get(), 8)
           .add(DESIDERIUM.get(), 16)
@@ -129,6 +159,54 @@ object ToolAspects {
         it.add(VITREUS.get(), 16)
           .add(DESIDERIUM.get(), 16)
           .add(INSTRUMENTUM.get(), 4)
+      }
+
+      item(Items.NETHERITE_SWORD) {
+        it.add(METALLUM.get(), 32)
+          .add(DESIDERIUM.get(), 16)
+          .add(AVERSIO.get(), 6)
+          .add(TENEBRAE.get(), 8)
+      }
+      item(Items.NETHERITE_PICKAXE) {
+        it.add(METALLUM.get(), 48)
+          .add(DESIDERIUM.get(), 24)
+          .add(INSTRUMENTUM.get(), 6)
+          .add(TENEBRAE.get(), 12)
+      }
+      item(Items.NETHERITE_AXE) {
+        it.add(METALLUM.get(), 48)
+          .add(DESIDERIUM.get(), 24)
+          .add(INSTRUMENTUM.get(), 6)
+          .add(TENEBRAE.get(), 12)
+      }
+      item(Items.NETHERITE_SHOVEL) {
+        it.add(METALLUM.get(), 16)
+          .add(DESIDERIUM.get(), 8)
+          .add(INSTRUMENTUM.get(), 6)
+          .add(TENEBRAE.get(), 4)
+      }
+      item(Items.NETHERITE_HOE) {
+        it.add(METALLUM.get(), 32)
+          .add(DESIDERIUM.get(), 16)
+          .add(INSTRUMENTUM.get(), 6)
+          .add(TENEBRAE.get(), 8)
+      }
+
+      item(T7Items.IRON_HANDLE.get()) {
+        it.add(METALLUM.get(), 16)
+      }
+      item(T7Items.GOLD_HANDLE.get()) {
+        it.add(METALLUM.get(), 8)
+          .add(DESIDERIUM.get(), 16)
+      }
+      item(T7Items.ORICHALCUM_HANDLE.get()) {
+        it.add(METALLUM.get(), 8)
+          .add(PERMUTATIO.get(), 8)
+          .add(INSTRUMENTUM.get(), 8)
+      }
+      item(T7Items.THAVMITE_HANDLE.get()) {
+        it.add(METALLUM.get(), 16)
+          .add(PRAECANTATIO.get(), 8)
       }
     }
   }

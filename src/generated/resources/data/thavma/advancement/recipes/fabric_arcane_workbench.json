@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shards": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#thavma:shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:fabric"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wools": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:wool"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_wools",
+      "has_shards"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:fabric"
+    ]
+  }
+}

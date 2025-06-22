@@ -15,6 +15,7 @@ object T7Tags {
     val WAND_CORE = TagKey.create(Registries.ITEM, rl("wand_core"))
     val SHARD = TagKey.create(Registries.ITEM, rl("shard"))
     val CATALYST = TagKey.create(Registries.ITEM, rl("catalyst"))
+    val GOGGLES = TagKey.create(Registries.ITEM, rl("goggles"))
   }
 
   object Blocks {

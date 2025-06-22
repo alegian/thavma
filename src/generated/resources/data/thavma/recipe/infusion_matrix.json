@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": {
+      "item": "thavma:elemental_core"
+    }
+  },
+  "pattern": [
+    "ccc",
+    "c c",
+    "ccc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:infusion_matrix"
+  }
+}

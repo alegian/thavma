@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:netherite_ingot"
+        "recipe": "thavma:thavmite_vanguard_chestplate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:netherite_ingot"
+      "thavma:thavmite_vanguard_chestplate"
     ]
   }
 }

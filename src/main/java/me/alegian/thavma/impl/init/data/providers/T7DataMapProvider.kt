@@ -5,16 +5,22 @@ import me.alegian.thavma.impl.init.data.providers.aspects.EntityAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.ToolAspects
 import me.alegian.thavma.impl.init.registries.T7DataMaps
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALKIMIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AVERSIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.BESTIA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.COGNITIO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.EXANIMIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.HUMANUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
@@ -22,8 +28,10 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.SENSUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VACUOS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -79,6 +87,32 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(IGNIS.get(), 4)
         .add(AVERSIO.get(), 2)
     }
+    i.item(Tags.Items.LEATHERS) {
+      it.add(BESTIA.get(), 8)
+    }
+    i.item(T7Items.FABRIC.get()){
+      it.add(FABRICO.get(), 4).add(PRAECANTATIO.get(), 1)
+    }
+    i.item(T7Items.ARCANE_LENS.get()){
+      it.add(METALLUM.get(), 16)
+        .add(DESIDERIUM.get(), 32)
+        .add(PRAECANTATIO.get(), 2)
+        .add(VITREUS.get(), 2)
+    }
+    i.item(T7Tags.Items.GOGGLES){
+      it.add(METALLUM.get(), 32)
+        .add(DESIDERIUM.get(), 32)
+        .add(PRAECANTATIO.get(), 4)
+        .add(VITREUS.get(), 4)
+    }
+    i.item(T7Items.ROTTEN_BRAIN.get()){
+      it.add(COGNITIO.get(), 16)
+        .add(EXANIMIS.get(), 8)
+    }
+    i.item(Items.ROTTEN_FLESH){
+      it.add(HUMANUS.get(), 2)
+        .add(EXANIMIS.get(), 2)
+    }
 
     b.block(Tags.Blocks.STONES) { it.add(TERRA.get(), 4) }
     b.block(Blocks.STONE_STAIRS) { it.add(TERRA.get(), 6) }
@@ -127,9 +161,12 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
 
     i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA.get(), 2) }
     b.block(BlockTags.PLANKS) { it.add(HERBA.get(), 4) }
+    b.block(BlockTags.LEAVES) { it.add(HERBA.get(), 4) }
+    b.block(BlockTags.SAPLINGS) { it.add(HERBA.get(), 8).add(VICTUS.get(), 4) }
     b.block(BlockTags.WOODEN_STAIRS) { it.add(HERBA.get(), 6) }
     b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 2) }
     b.block(BlockTags.LOGS) { it.add(HERBA.get(), 16) }
+    b.block(BlockTags.FLOWERS) { it.add(HERBA.get(), 4).add(VICTUS.get(), 1) }
 
     b.block(T7Blocks.TABLE.get()) { it.add(HERBA.get(), 12) }
     b.block(T7Blocks.RESEARCH_TABLE.get()) {
@@ -141,8 +178,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
       it.add(BESTIA.get(), 11).add(SENSUS.get(), 3).add(FABRICO.get(), 3)
     }
 
-    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS.get(), 5) }
+    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS.get(), 4) }
     b.block(Tags.Blocks.GLASS_PANES) { it.add(VITREUS.get(), 1) }
+
+    b.block(BlockTags.WOOL) { it.add(BESTIA.get(), 8).add(FABRICO.get(), 4) }
 
     b.block(Blocks.TORCH) { it.add(LUX.get(), 4) }
 
@@ -157,6 +196,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(IGNIS.get(), 8)
     }
     b.block(T7Blocks.ELEMENTAL_STONE.get()) {
+      it.add(TERRA.get(), 4)
+        .add(PRAECANTATIO.get(), 1)
+    }
+    b.block(T7Blocks.CRACKED_ELEMENTAL_STONE.get()) {
       it.add(TERRA.get(), 4)
         .add(PRAECANTATIO.get(), 1)
     }
@@ -182,6 +225,20 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     b.block(T7Blocks.ARCANE_WORKBENCH.get()) {
       it.add(FABRICO.get(), 12)
         .add(HERBA.get(), 4)
+        .add(PRAECANTATIO.get(), 2)
+    }
+    b.block(Blocks.CAULDRON) {
+      it.add(METALLUM.get(), 56)
+        .add(ALKIMIA.get(), 8)
+    }
+    b.block(T7Blocks.CRUCIBLE.get()) {
+      it.add(METALLUM.get(), 56)
+        .add(ALKIMIA.get(), 8)
+        .add(PRAECANTATIO.get(), 2)
+    }
+    b.block(T7Blocks.SEALING_JAR.get()) {
+      it.add(VITREUS.get(), 4)
+        .add(VACUOS.get(), 2)
         .add(PRAECANTATIO.get(), 2)
     }
   }

@@ -1,9 +1,15 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 4,
+    "thavma:aether": 4,
+    "thavma:aqua": 4,
+    "thavma:ignis": 4,
+    "thavma:terra": 4
+  },
   "key": {
     "g": {
-      "item": "minecraft:gold_ingot"
+      "item": "thavma:orichalcum_ingot"
     },
     "l": {
       "item": "minecraft:leather"

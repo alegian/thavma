@@ -6,6 +6,7 @@ import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
 import java.util.function.Consumer
+import java.util.function.Supplier
 
 /**
  * Immutable.
@@ -119,6 +120,8 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
       map[aspect] = oldAmount + amount
       return this
     }
+
+    fun add(aspect: Supplier<Aspect>, amount: Int) = add(aspect.get(), amount)
 
     fun add(aspectStack: AspectStack): Builder {
       return this.add(aspectStack.aspect, aspectStack.amount)

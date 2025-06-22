@@ -41,6 +41,7 @@ internal class T7JEIPlugin : IModPlugin {
     registration.addIngredientInfo(T7Blocks.CRUCIBLE.get(), Component.translatable(JEIDescriptions.CRUCIBLE))
     registration.addIngredientInfo(T7Blocks.GREATWOOD_LOG.get(), Component.translatable(JEIDescriptions.GREATWOOD))
     registration.addIngredientInfo(T7Blocks.SILVERWOOD_LOG.get(), Component.translatable(JEIDescriptions.SILVERWOOD))
+    registration.addIngredientInfo(T7Blocks.PILLAR.get(), Component.translatable(JEIDescriptions.PILLAR))
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
       registration.addIngredientInfo(infusedBlock.get(), Component.translatable(JEIDescriptions.INFUSED_STONES))
   }

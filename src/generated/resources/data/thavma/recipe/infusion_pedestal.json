@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "thavma:elemental_stone_slab"
+    },
+    "c": {
+      "item": "thavma:elemental_core"
+    },
+    "s": {
+      "item": "thavma:elemental_stone"
+    }
+  },
+  "pattern": [
+    " c ",
+    " s ",
+    "-s-"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:infusion_pedestal"
+  }
+}

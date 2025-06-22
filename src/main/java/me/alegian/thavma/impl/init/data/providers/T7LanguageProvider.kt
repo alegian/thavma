@@ -298,6 +298,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(JEIDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
     add(JEIDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
     add(JEIDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
+    add(JEIDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
 
     add(JEIAliases.BOOK, "Book")
     add(JEIAliases.ORE, "Ore")

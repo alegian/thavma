@@ -6,12 +6,15 @@ import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALKIMIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.AVERSIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.BESTIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.SENSUS
@@ -29,6 +32,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
@@ -44,6 +48,35 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     MineralAspects.gather(this, lookupProvider)
 
     val b = builder(T7DataMaps.AspectContent.BLOCK)
+    val i = builder(T7DataMaps.AspectContent.ITEM)
+
+    i.item(Items.BLAZE_POWDER) {
+      it.add(IGNIS.get(), 4)
+        .add(POTENTIA.get(), 2)
+        .add(ALKIMIA.get(), 2)
+    }
+    i.item(Tags.Items.GUNPOWDERS) {
+      it.add(POTENTIA.get(), 4)
+        .add(ALKIMIA.get(), 2)
+        .add(TERRA.get(), 1)
+    }
+    i.item(Tags.Items.RODS_BLAZE) {
+      it.add(IGNIS.get(), 12)
+        .add(POTENTIA.get(), 8)
+    }
+    i.item(Tags.Items.RODS_BREEZE) {
+      it.add(AER.get(), 16)
+        .add(MOTUS.get(), 4)
+    }
+    i.item(Items.WIND_CHARGE) {
+      it.add(AER.get(), 4)
+        .add(MOTUS.get(), 1)
+    }
+    i.item(Items.FIRE_CHARGE) {
+      it.add(POTENTIA.get(), 4)
+        .add(IGNIS.get(), 4)
+        .add(AVERSIO.get(), 2)
+    }
 
     b.block(Tags.Blocks.STONES) { it.add(TERRA.get(), 4) }
     b.block(Blocks.STONE_STAIRS) { it.add(TERRA.get(), 6) }
@@ -69,10 +102,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     }
 
     b.block(Tags.Blocks.COBBLESTONES) {
-      it.add(TERRA.get(), 5)
+      it.add(TERRA.get(), 4)
     }
     b.block(Tags.Blocks.SANDS) {
-      it.add(TERRA.get(), 5)
+      it.add(TERRA.get(), 4)
     }
 
     b.block(BlockTags.TERRACOTTA) {
@@ -90,13 +123,14 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(AETHER.get(), 1)
     }
 
+    i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA.get(), 2) }
     b.block(BlockTags.PLANKS) { it.add(HERBA.get(), 4) }
     b.block(BlockTags.WOODEN_STAIRS) { it.add(HERBA.get(), 6) }
     b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 2) }
     b.block(BlockTags.LOGS) { it.add(HERBA.get(), 16) }
 
-    b.block(T7Blocks.TABLE.get()){it.add(HERBA.get(), 12)}
-    b.block(T7Blocks.RESEARCH_TABLE.get()){
+    b.block(T7Blocks.TABLE.get()) { it.add(HERBA.get(), 12) }
+    b.block(T7Blocks.RESEARCH_TABLE.get()) {
       it.add(HERBA.get(), 12)
         .add(PRAECANTATIO.get(), 2)
     }

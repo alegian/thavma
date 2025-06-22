@@ -1,7 +1,7 @@
 {
   "values": {
     "#c:cobblestones": {
-      "thavma:terra": 5
+      "thavma:terra": 4
     },
     "#c:concretes": {
       "thavma:aether": 1,
@@ -63,7 +63,7 @@
       "thavma:terra": 4
     },
     "#c:sands": {
-      "thavma:terra": 5
+      "thavma:terra": 4
     },
     "#c:stones": {
       "thavma:terra": 4

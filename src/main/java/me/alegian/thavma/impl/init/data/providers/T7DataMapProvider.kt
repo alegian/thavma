@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.init.data.providers.aspects.EntityAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
+import me.alegian.thavma.impl.init.data.providers.aspects.ToolAspects
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
@@ -46,6 +47,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
   override fun gather(lookupProvider: HolderLookup.Provider) {
     EntityAspects.gather(this, lookupProvider)
     MineralAspects.gather(this, lookupProvider)
+    ToolAspects.gather(this, lookupProvider)
 
     val b = builder(T7DataMaps.AspectContent.BLOCK)
     val i = builder(T7DataMaps.AspectContent.ITEM)

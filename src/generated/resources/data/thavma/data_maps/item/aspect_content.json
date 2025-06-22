@@ -28,6 +28,11 @@
       "thavma:ignis": 1,
       "thavma:vitreus": 4
     },
+    "#c:gunpowders": {
+      "thavma:alkimia": 2,
+      "thavma:potentia": 4,
+      "thavma:terra": 1
+    },
     "#c:ingots/copper": {
       "thavma:metallum": 4,
       "thavma:permutatio": 4
@@ -61,14 +66,149 @@
       "thavma:metallum": 4,
       "thavma:terra": 2
     },
+    "#c:rods/blaze": {
+      "thavma:ignis": 12,
+      "thavma:potentia": 8
+    },
+    "#c:rods/breeze": {
+      "thavma:aer": 16,
+      "thavma:motus": 4
+    },
+    "#c:rods/wooden": {
+      "thavma:herba": 2
+    },
     "#minecraft:coals": {
       "thavma:ignis": 8,
       "thavma:potentia": 8
+    },
+    "minecraft:blaze_powder": {
+      "thavma:alkimia": 2,
+      "thavma:ignis": 4,
+      "thavma:potentia": 2
+    },
+    "minecraft:diamond_axe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 4,
+      "thavma:vitreus": 24
+    },
+    "minecraft:diamond_hoe": {
+      "thavma:desiderium": 16,
+      "thavma:instrumentum": 4,
+      "thavma:vitreus": 16
+    },
+    "minecraft:diamond_pickaxe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 4,
+      "thavma:vitreus": 24
+    },
+    "minecraft:diamond_shovel": {
+      "thavma:desiderium": 8,
+      "thavma:instrumentum": 4,
+      "thavma:vitreus": 8
+    },
+    "minecraft:diamond_sword": {
+      "thavma:aversio": 4,
+      "thavma:desiderium": 16,
+      "thavma:vitreus": 16
+    },
+    "minecraft:fire_charge": {
+      "thavma:aversio": 2,
+      "thavma:ignis": 4,
+      "thavma:potentia": 4
+    },
+    "minecraft:golden_axe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 2,
+      "thavma:metallum": 12
+    },
+    "minecraft:golden_hoe": {
+      "thavma:desiderium": 16,
+      "thavma:instrumentum": 2,
+      "thavma:metallum": 8
+    },
+    "minecraft:golden_pickaxe": {
+      "thavma:desiderium": 24,
+      "thavma:instrumentum": 2,
+      "thavma:metallum": 12
+    },
+    "minecraft:golden_shovel": {
+      "thavma:desiderium": 8,
+      "thavma:instrumentum": 2,
+      "thavma:metallum": 4
+    },
+    "minecraft:golden_sword": {
+      "thavma:aversio": 2,
+      "thavma:desiderium": 16,
+      "thavma:metallum": 8
+    },
+    "minecraft:iron_axe": {
+      "thavma:instrumentum": 3,
+      "thavma:metallum": 24
+    },
+    "minecraft:iron_hoe": {
+      "thavma:instrumentum": 3,
+      "thavma:metallum": 16
+    },
+    "minecraft:iron_pickaxe": {
+      "thavma:instrumentum": 3,
+      "thavma:metallum": 24
+    },
+    "minecraft:iron_shovel": {
+      "thavma:instrumentum": 3,
+      "thavma:metallum": 8
+    },
+    "minecraft:iron_sword": {
+      "thavma:aversio": 3,
+      "thavma:metallum": 16
     },
     "minecraft:netherite_scrap": {
       "thavma:metallum": 2,
       "thavma:tenebrae": 1,
       "thavma:terra": 2
+    },
+    "minecraft:stone_axe": {
+      "thavma:instrumentum": 2,
+      "thavma:terra": 12
+    },
+    "minecraft:stone_hoe": {
+      "thavma:instrumentum": 2,
+      "thavma:terra": 8
+    },
+    "minecraft:stone_pickaxe": {
+      "thavma:instrumentum": 2,
+      "thavma:terra": 12
+    },
+    "minecraft:stone_shovel": {
+      "thavma:instrumentum": 2,
+      "thavma:terra": 4
+    },
+    "minecraft:stone_sword": {
+      "thavma:aversio": 2,
+      "thavma:terra": 8
+    },
+    "minecraft:wind_charge": {
+      "thavma:aer": 4,
+      "thavma:motus": 1
+    },
+    "minecraft:wooden_axe": {
+      "thavma:herba": 12,
+      "thavma:instrumentum": 1
+    },
+    "minecraft:wooden_hoe": {
+      "thavma:herba": 8,
+      "thavma:instrumentum": 1
+    },
+    "minecraft:wooden_pickaxe": {
+      "thavma:herba": 12,
+      "thavma:instrumentum": 1
+    },
+    "minecraft:wooden_shovel": {
+      "thavma:herba": 4,
+      "thavma:instrumentum": 1
+    },
+    "minecraft:wooden_sword": {
+      "thavma:aversio": 1,
+      "thavma:herba": 8
     },
     "thavma:aer_shard": {
       "thavma:aer": 4

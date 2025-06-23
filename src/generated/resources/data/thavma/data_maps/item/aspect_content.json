@@ -8,6 +8,10 @@
       "thavma:potentia": 4,
       "thavma:terra": 1
     },
+    "#c:feathers": {
+      "thavma:aer": 4,
+      "thavma:volatus": 4
+    },
     "#c:gems/amethyst": {
       "thavma:sensus": 1,
       "thavma:vitreus": 4
@@ -80,6 +84,10 @@
     "#c:rods/wooden": {
       "thavma:herba": 2
     },
+    "#minecraft:arrows": {
+      "thavma:aversio": 2,
+      "thavma:motus": 1
+    },
     "#minecraft:coals": {
       "thavma:ignis": 8,
       "thavma:potentia": 8
@@ -90,20 +98,66 @@
       "thavma:praecantatio": 4,
       "thavma:vitreus": 4
     },
+    "minecraft:armadillo_scute": {
+      "thavma:bestia": 2,
+      "thavma:praemunio": 1
+    },
     "minecraft:blaze_powder": {
       "thavma:alkimia": 2,
       "thavma:ignis": 4,
       "thavma:potentia": 2
+    },
+    "minecraft:chainmail_boots": {
+      "thavma:metallum": 16,
+      "thavma:praemunio": 4
+    },
+    "minecraft:chainmail_chestplate": {
+      "thavma:metallum": 32,
+      "thavma:praemunio": 20
+    },
+    "minecraft:chainmail_helmet": {
+      "thavma:metallum": 20,
+      "thavma:praemunio": 8
+    },
+    "minecraft:chainmail_leggings": {
+      "thavma:metallum": 28,
+      "thavma:praemunio": 16
     },
     "minecraft:diamond_axe": {
       "thavma:desiderium": 24,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 24
     },
+    "minecraft:diamond_boots": {
+      "thavma:desiderium": 32,
+      "thavma:praemunio": 16,
+      "thavma:vitreus": 32
+    },
+    "minecraft:diamond_chestplate": {
+      "thavma:desiderium": 64,
+      "thavma:praemunio": 36,
+      "thavma:vitreus": 64
+    },
+    "minecraft:diamond_helmet": {
+      "thavma:desiderium": 40,
+      "thavma:praemunio": 16,
+      "thavma:vitreus": 40
+    },
     "minecraft:diamond_hoe": {
       "thavma:desiderium": 16,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 16
+    },
+    "minecraft:diamond_horse_armor": {
+      "thavma:bestia": 8,
+      "thavma:desiderium": 16,
+      "thavma:praemunio": 12,
+      "thavma:vitreus": 16
+    },
+    "minecraft:diamond_leggings": {
+      "thavma:desiderium": 56,
+      "thavma:praemunio": 28,
+      "thavma:vitreus": 56
     },
     "minecraft:diamond_pickaxe": {
       "thavma:desiderium": 24,
@@ -125,15 +179,45 @@
       "thavma:ignis": 4,
       "thavma:potentia": 4
     },
+    "minecraft:flint": {
+      "thavma:instrumentum": 2,
+      "thavma:terra": 4
+    },
     "minecraft:golden_axe": {
       "thavma:desiderium": 24,
       "thavma:instrumentum": 2,
       "thavma:metallum": 12
     },
+    "minecraft:golden_boots": {
+      "thavma:desiderium": 32,
+      "thavma:metallum": 16,
+      "thavma:praemunio": 4
+    },
+    "minecraft:golden_chestplate": {
+      "thavma:desiderium": 64,
+      "thavma:metallum": 32,
+      "thavma:praemunio": 20
+    },
+    "minecraft:golden_helmet": {
+      "thavma:desiderium": 40,
+      "thavma:metallum": 20,
+      "thavma:praemunio": 8
+    },
     "minecraft:golden_hoe": {
       "thavma:desiderium": 16,
       "thavma:instrumentum": 2,
       "thavma:metallum": 8
+    },
+    "minecraft:golden_horse_armor": {
+      "thavma:bestia": 8,
+      "thavma:desiderium": 16,
+      "thavma:metallum": 8,
+      "thavma:praemunio": 8
+    },
+    "minecraft:golden_leggings": {
+      "thavma:desiderium": 56,
+      "thavma:metallum": 28,
+      "thavma:praemunio": 12
     },
     "minecraft:golden_pickaxe": {
       "thavma:desiderium": 24,
@@ -154,9 +238,30 @@
       "thavma:instrumentum": 3,
       "thavma:metallum": 24
     },
+    "minecraft:iron_boots": {
+      "thavma:metallum": 32,
+      "thavma:praemunio": 8
+    },
+    "minecraft:iron_chestplate": {
+      "thavma:metallum": 64,
+      "thavma:praemunio": 24
+    },
+    "minecraft:iron_helmet": {
+      "thavma:metallum": 40,
+      "thavma:praemunio": 8
+    },
     "minecraft:iron_hoe": {
       "thavma:instrumentum": 3,
       "thavma:metallum": 16
+    },
+    "minecraft:iron_horse_armor": {
+      "thavma:bestia": 8,
+      "thavma:metallum": 16,
+      "thavma:praemunio": 6
+    },
+    "minecraft:iron_leggings": {
+      "thavma:metallum": 56,
+      "thavma:praemunio": 20
     },
     "minecraft:iron_pickaxe": {
       "thavma:instrumentum": 3,
@@ -170,17 +275,61 @@
       "thavma:aversio": 3,
       "thavma:metallum": 16
     },
+    "minecraft:leather_boots": {
+      "thavma:bestia": 32,
+      "thavma:praemunio": 4
+    },
+    "minecraft:leather_chestplate": {
+      "thavma:bestia": 64,
+      "thavma:praemunio": 12
+    },
+    "minecraft:leather_helmet": {
+      "thavma:bestia": 40,
+      "thavma:praemunio": 4
+    },
+    "minecraft:leather_horse_armor": {
+      "thavma:bestia": 16,
+      "thavma:praemunio": 4
+    },
+    "minecraft:leather_leggings": {
+      "thavma:bestia": 56,
+      "thavma:praemunio": 8
+    },
     "minecraft:netherite_axe": {
       "thavma:desiderium": 24,
       "thavma:instrumentum": 6,
       "thavma:metallum": 48,
       "thavma:tenebrae": 12
     },
+    "minecraft:netherite_boots": {
+      "thavma:desiderium": 32,
+      "thavma:metallum": 32,
+      "thavma:praemunio": 18,
+      "thavma:tenebrae": 4
+    },
+    "minecraft:netherite_chestplate": {
+      "thavma:desiderium": 64,
+      "thavma:metallum": 64,
+      "thavma:praemunio": 38,
+      "thavma:tenebrae": 4
+    },
+    "minecraft:netherite_helmet": {
+      "thavma:desiderium": 40,
+      "thavma:metallum": 40,
+      "thavma:praemunio": 18,
+      "thavma:tenebrae": 4
+    },
     "minecraft:netherite_hoe": {
       "thavma:desiderium": 16,
       "thavma:instrumentum": 6,
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
+    },
+    "minecraft:netherite_leggings": {
+      "thavma:desiderium": 56,
+      "thavma:metallum": 56,
+      "thavma:praemunio": 30,
+      "thavma:tenebrae": 4
     },
     "minecraft:netherite_pickaxe": {
       "thavma:desiderium": 24,
@@ -232,6 +381,10 @@
     "minecraft:wind_charge": {
       "thavma:aer": 4,
       "thavma:motus": 1
+    },
+    "minecraft:wolf_armor": {
+      "thavma:bestia": 8,
+      "thavma:praemunio": 6
     },
     "minecraft:wooden_axe": {
       "thavma:herba": 12,

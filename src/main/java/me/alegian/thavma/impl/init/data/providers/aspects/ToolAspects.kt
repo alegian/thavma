@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.INSTRUMENTUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PERMUTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
@@ -15,6 +16,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
 object ToolAspects {
@@ -207,6 +209,11 @@ object ToolAspects {
       item(T7Items.THAVMITE_HANDLE.get()) {
         it.add(METALLUM.get(), 16)
           .add(PRAECANTATIO.get(), 8)
+      }
+
+      item(ItemTags.ARROWS){
+        it.add(AVERSIO, 2)
+          .add(MOTUS, 1)
       }
     }
   }

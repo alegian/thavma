@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.init.data.providers.aspects.ArmorAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.EntityAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.ToolAspects
@@ -19,17 +20,20 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HUMANUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.INSTRUMENTUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.LUX
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.POTENTIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAEMUNIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.SENSUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VACUOS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.VOLATUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
@@ -56,6 +60,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     EntityAspects.gather(this, lookupProvider)
     MineralAspects.gather(this, lookupProvider)
     ToolAspects.gather(this, lookupProvider)
+    ArmorAspects.gather(this, lookupProvider)
 
     val b = builder(T7DataMaps.AspectContent.BLOCK)
     val i = builder(T7DataMaps.AspectContent.ITEM)
@@ -112,6 +117,18 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     i.item(Items.ROTTEN_FLESH){
       it.add(HUMANUS.get(), 2)
         .add(EXANIMIS.get(), 2)
+    }
+    i.item(Items.ARMADILLO_SCUTE){
+      it.add(BESTIA, 2)
+        .add(PRAEMUNIO, 1)
+    }
+    i.item(Items.FLINT){
+      it.add(TERRA, 4)
+        .add(INSTRUMENTUM, 2)
+    }
+    i.item(Tags.Items.FEATHERS){
+      it.add(VOLATUS, 4)
+        .add(AER, 4)
     }
 
     b.block(Tags.Blocks.STONES) { it.add(TERRA.get(), 4) }

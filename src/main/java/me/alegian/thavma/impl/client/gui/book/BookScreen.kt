@@ -67,7 +67,7 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
       if (!this.isScrolling) {
         this.isScrolling = true
       } else {
-        currentTab?.drag(dragX.toDouble(), dragY.toDouble())
+        currentTab?.drag(dragX, dragY)
       }
 
       return true

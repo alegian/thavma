@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.event
 
 import me.alegian.thavma.impl.client.T7Colors
+import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.T7RenderStateShards
 import me.alegian.thavma.impl.client.T7VertexFormats
 import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
@@ -194,6 +195,10 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.TEXT.get(), TextPageRenderer)
 }
 
+private fun registerKeyMappings(event: RegisterKeyMappingsEvent){
+  event.register(T7KeyMappings.FOCI)
+}
+
 fun registerClientModEvents() {
   if (DIST != Dist.CLIENT) return
 
@@ -210,4 +215,5 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
   KFF_MOD_BUS.addListener(::registerPageRenderers)
+  KFF_MOD_BUS.addListener(::registerKeyMappings)
 }

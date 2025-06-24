@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
@@ -302,6 +303,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(JEIAliases.BOOK, "Book")
     add(JEIAliases.ORE, "Ore")
+
+    add(T7KeyMappings.FOCI.name, "Wand Foci Wheel")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

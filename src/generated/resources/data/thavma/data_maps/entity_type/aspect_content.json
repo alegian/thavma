@@ -1,5 +1,21 @@
 {
   "values": {
+    "#c:boats": {},
+    "#c:minecarts": {},
+    "minecraft:allay": {},
+    "minecraft:armadillo": {},
+    "minecraft:arrow": {},
+    "minecraft:axolotl": {},
+    "minecraft:bat": {},
+    "minecraft:bee": {},
+    "minecraft:blaze": {},
+    "minecraft:bogged": {},
+    "minecraft:breeze": {},
+    "minecraft:camel": {},
+    "minecraft:cat": {},
+    "minecraft:cave_spider": {},
+    "minecraft:chicken": {},
+    "minecraft:cod": {},
     "minecraft:cow": {
       "thavma:bestia": 15,
       "thavma:terra": 15
@@ -8,41 +24,100 @@
       "thavma:herba": 15,
       "thavma:ignis": 15
     },
+    "minecraft:dolphin": {},
+    "minecraft:donkey": {},
+    "minecraft:drowned": {},
+    "minecraft:elder_guardian": {},
+    "minecraft:ender_dragon": {},
     "minecraft:enderman": {
       "thavma:alienis": 15,
       "thavma:desiderium": 5,
       "thavma:motus": 15
     },
+    "minecraft:endermite": {},
+    "minecraft:evoker": {},
+    "minecraft:fox": {},
+    "minecraft:frog": {},
+    "minecraft:ghast": {},
+    "minecraft:glow_squid": {},
+    "minecraft:goat": {},
+    "minecraft:guardian": {},
+    "minecraft:hoglin": {},
+    "minecraft:horse": {},
+    "minecraft:husk": {},
+    "minecraft:iron_golem": {},
+    "minecraft:llama": {},
+    "minecraft:magma_cube": {},
+    "minecraft:mooshroom": {},
+    "minecraft:mule": {},
+    "minecraft:ocelot": {},
+    "minecraft:panda": {},
+    "minecraft:parrot": {},
+    "minecraft:phantom": {},
     "minecraft:pig": {
       "thavma:bestia": 10,
       "thavma:desiderium": 5,
       "thavma:terra": 10
     },
+    "minecraft:piglin": {},
+    "minecraft:piglin_brute": {},
+    "minecraft:pillager": {},
+    "minecraft:polar_bear": {},
+    "minecraft:pufferfish": {},
+    "minecraft:rabbit": {},
+    "minecraft:ravager": {},
+    "minecraft:salmon": {},
     "minecraft:sheep": {
       "thavma:bestia": 10,
       "thavma:terra": 10
     },
+    "minecraft:shulker": {},
+    "minecraft:silverfish": {},
     "minecraft:skeleton": {
       "thavma:exanimis": 20,
       "thavma:humanus": 5,
       "thavma:terra": 5
     },
+    "minecraft:skeleton_horse": {},
     "minecraft:slime": {
       "thavma:alkimia": 5,
       "thavma:aqua": 10,
       "thavma:victus": 10
     },
+    "minecraft:sniffer": {},
+    "minecraft:snow_golem": {},
+    "minecraft:spectral_arrow": {},
     "minecraft:spider": {
       "thavma:bestia": 10,
       "thavma:vinculum": 10
     },
+    "minecraft:squid": {},
+    "minecraft:stray": {},
+    "minecraft:strider": {},
+    "minecraft:tadpole": {},
+    "minecraft:trader_llama": {},
+    "minecraft:tropical_fish": {},
+    "minecraft:turtle": {},
+    "minecraft:vex": {},
     "minecraft:villager": {
       "thavma:humanus": 15
     },
+    "minecraft:vindicator": {},
+    "minecraft:wandering_trader": {},
+    "minecraft:warden": {},
+    "minecraft:witch": {},
+    "minecraft:wither": {},
+    "minecraft:wither_skeleton": {},
+    "minecraft:wolf": {},
+    "minecraft:zoglin": {},
     "minecraft:zombie": {
       "thavma:exanimis": 20,
       "thavma:humanus": 10,
       "thavma:terra": 5
-    }
+    },
+    "minecraft:zombie_horse": {},
+    "minecraft:zombie_villager": {},
+    "minecraft:zombified_piglin": {},
+    "thavma:angry_zombie": {}
   }
 }

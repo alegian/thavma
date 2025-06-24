@@ -1,8 +1,10 @@
 package me.alegian.thavma.impl.client.event
 
 import com.mojang.datafixers.util.Either
+import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
+import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
@@ -19,10 +21,7 @@ import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.api.distmarker.Dist
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent
-import net.neoforged.neoforge.client.event.RenderHighlightEvent
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent
-import net.neoforged.neoforge.client.event.RenderPlayerEvent
+import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.event.RenderTooltipEvent.GatherComponents
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
@@ -112,6 +111,12 @@ private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
   event.newPlayer.setKnowledge(oldKnowledge)
 }
 
+private fun clientTick(event: ClientTickEvent.Post){
+  val mc = Minecraft.getInstance()
+  if(T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null)
+    mc.setScreen(FociScreen())
+}
+
 fun registerClientGameEvents() {
   if (DIST != Dist.CLIENT) return
 
@@ -120,4 +125,5 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::gatherTooltipComponents)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
   KFF_GAME_BUS.addListener(::playerClone)
+  KFF_GAME_BUS.addListener(::clientTick)
 }

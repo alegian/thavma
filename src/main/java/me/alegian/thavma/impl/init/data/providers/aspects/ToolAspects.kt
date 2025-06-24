@@ -23,195 +23,195 @@ object ToolAspects {
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
       item(Items.WOODEN_SWORD) {
-        it.add(HERBA.get(), 8)
-          .add(AVERSIO.get(), 1)
+        it.add(HERBA, 8)
+          .add(AVERSIO, 1)
       }
       item(Items.WOODEN_PICKAXE) {
-        it.add(HERBA.get(), 12)
-          .add(INSTRUMENTUM.get(), 1)
+        it.add(HERBA, 12)
+          .add(INSTRUMENTUM, 1)
       }
       item(Items.WOODEN_AXE) {
-        it.add(HERBA.get(), 12)
-          .add(INSTRUMENTUM.get(), 1)
+        it.add(HERBA, 12)
+          .add(INSTRUMENTUM, 1)
       }
       item(Items.WOODEN_SHOVEL) {
-        it.add(HERBA.get(), 4)
-          .add(INSTRUMENTUM.get(), 1)
+        it.add(HERBA, 4)
+          .add(INSTRUMENTUM, 1)
       }
       item(Items.WOODEN_HOE) {
-        it.add(HERBA.get(), 8)
-          .add(INSTRUMENTUM.get(), 1)
+        it.add(HERBA, 8)
+          .add(INSTRUMENTUM, 1)
       }
 
       item(Items.STONE_SWORD) {
-        it.add(TERRA.get(), 8)
-          .add(AVERSIO.get(), 2)
+        it.add(TERRA, 8)
+          .add(AVERSIO, 2)
       }
       item(Items.STONE_PICKAXE) {
-        it.add(TERRA.get(), 12)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(TERRA, 12)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.STONE_AXE) {
-        it.add(TERRA.get(), 12)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(TERRA, 12)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.STONE_SHOVEL) {
-        it.add(TERRA.get(), 4)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(TERRA, 4)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.STONE_HOE) {
-        it.add(TERRA.get(), 8)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(TERRA, 8)
+          .add(INSTRUMENTUM, 2)
       }
 
       item(Items.IRON_SWORD) {
-        it.add(METALLUM.get(), 16)
-          .add(AVERSIO.get(), 3)
+        it.add(METALLUM, 16)
+          .add(AVERSIO, 3)
       }
       item(Items.IRON_PICKAXE) {
-        it.add(METALLUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 3)
+        it.add(METALLUM, 24)
+          .add(INSTRUMENTUM, 3)
       }
       item(Items.IRON_AXE) {
-        it.add(METALLUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 3)
+        it.add(METALLUM, 24)
+          .add(INSTRUMENTUM, 3)
       }
       item(Items.IRON_SHOVEL) {
-        it.add(METALLUM.get(), 8)
-          .add(INSTRUMENTUM.get(), 3)
+        it.add(METALLUM, 8)
+          .add(INSTRUMENTUM, 3)
       }
       item(Items.IRON_HOE) {
-        it.add(METALLUM.get(), 16)
-          .add(INSTRUMENTUM.get(), 3)
+        it.add(METALLUM, 16)
+          .add(INSTRUMENTUM, 3)
       }
 
-      item(T7Items.THAVMITE_SWORD.get()) {
-        it.add(METALLUM.get(), 16)
-          .add(PRAECANTATIO.get(), 8)
-          .add(AVERSIO.get(), 4)
+      item(T7Items.THAVMITE_SWORD) {
+        it.add(METALLUM, 16)
+          .add(PRAECANTATIO, 8)
+          .add(AVERSIO, 4)
       }
-      item(T7Items.THAVMITE_PICKAXE.get()) {
-        it.add(METALLUM.get(), 24)
-          .add(PRAECANTATIO.get(), 12)
-          .add(INSTRUMENTUM.get(), 4)
+      item(T7Items.THAVMITE_PICKAXE) {
+        it.add(METALLUM, 24)
+          .add(PRAECANTATIO, 12)
+          .add(INSTRUMENTUM, 4)
       }
-      item(T7Items.THAVMITE_AXE.get()) {
-        it.add(METALLUM.get(), 24)
-          .add(PRAECANTATIO.get(), 12)
-          .add(INSTRUMENTUM.get(), 4)
+      item(T7Items.THAVMITE_AXE) {
+        it.add(METALLUM, 24)
+          .add(PRAECANTATIO, 12)
+          .add(INSTRUMENTUM, 4)
       }
-      item(T7Items.THAVMITE_SHOVEL.get()) {
-        it.add(METALLUM.get(), 8)
-          .add(PRAECANTATIO.get(), 4)
-          .add(INSTRUMENTUM.get(), 4)
+      item(T7Items.THAVMITE_SHOVEL) {
+        it.add(METALLUM, 8)
+          .add(PRAECANTATIO, 4)
+          .add(INSTRUMENTUM, 4)
       }
-      item(T7Items.THAVMITE_HOE.get()) {
-        it.add(METALLUM.get(), 16)
-          .add(PRAECANTATIO.get(), 8)
-          .add(INSTRUMENTUM.get(), 4)
+      item(T7Items.THAVMITE_HOE) {
+        it.add(METALLUM, 16)
+          .add(PRAECANTATIO, 8)
+          .add(INSTRUMENTUM, 4)
       }
 
       item(Items.GOLDEN_SWORD) {
-        it.add(METALLUM.get(), 8)
-          .add(DESIDERIUM.get(), 16)
-          .add(AVERSIO.get(), 2)
+        it.add(METALLUM, 8)
+          .add(DESIDERIUM, 16)
+          .add(AVERSIO, 2)
       }
       item(Items.GOLDEN_PICKAXE) {
-        it.add(METALLUM.get(), 12)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(METALLUM, 12)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.GOLDEN_AXE) {
-        it.add(METALLUM.get(), 12)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(METALLUM, 12)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.GOLDEN_SHOVEL) {
-        it.add(METALLUM.get(), 4)
-          .add(DESIDERIUM.get(), 8)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(METALLUM, 4)
+          .add(DESIDERIUM, 8)
+          .add(INSTRUMENTUM, 2)
       }
       item(Items.GOLDEN_HOE) {
-        it.add(METALLUM.get(), 8)
-          .add(DESIDERIUM.get(), 16)
-          .add(INSTRUMENTUM.get(), 2)
+        it.add(METALLUM, 8)
+          .add(DESIDERIUM, 16)
+          .add(INSTRUMENTUM, 2)
       }
 
       item(Items.DIAMOND_SWORD) {
-        it.add(VITREUS.get(), 16)
-          .add(DESIDERIUM.get(), 16)
-          .add(AVERSIO.get(), 4)
+        it.add(VITREUS, 16)
+          .add(DESIDERIUM, 16)
+          .add(AVERSIO, 4)
       }
       item(Items.DIAMOND_PICKAXE) {
-        it.add(VITREUS.get(), 24)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 4)
+        it.add(VITREUS, 24)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 4)
       }
       item(Items.DIAMOND_AXE) {
-        it.add(VITREUS.get(), 24)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 4)
+        it.add(VITREUS, 24)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 4)
       }
       item(Items.DIAMOND_SHOVEL) {
-        it.add(VITREUS.get(), 8)
-          .add(DESIDERIUM.get(), 8)
-          .add(INSTRUMENTUM.get(), 4)
+        it.add(VITREUS, 8)
+          .add(DESIDERIUM, 8)
+          .add(INSTRUMENTUM, 4)
       }
       item(Items.DIAMOND_HOE) {
-        it.add(VITREUS.get(), 16)
-          .add(DESIDERIUM.get(), 16)
-          .add(INSTRUMENTUM.get(), 4)
+        it.add(VITREUS, 16)
+          .add(DESIDERIUM, 16)
+          .add(INSTRUMENTUM, 4)
       }
 
       item(Items.NETHERITE_SWORD) {
-        it.add(METALLUM.get(), 32)
-          .add(DESIDERIUM.get(), 16)
-          .add(AVERSIO.get(), 6)
-          .add(TENEBRAE.get(), 8)
+        it.add(METALLUM, 32)
+          .add(DESIDERIUM, 16)
+          .add(AVERSIO, 6)
+          .add(TENEBRAE, 8)
       }
       item(Items.NETHERITE_PICKAXE) {
-        it.add(METALLUM.get(), 48)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 6)
-          .add(TENEBRAE.get(), 12)
+        it.add(METALLUM, 48)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 6)
+          .add(TENEBRAE, 12)
       }
       item(Items.NETHERITE_AXE) {
-        it.add(METALLUM.get(), 48)
-          .add(DESIDERIUM.get(), 24)
-          .add(INSTRUMENTUM.get(), 6)
-          .add(TENEBRAE.get(), 12)
+        it.add(METALLUM, 48)
+          .add(DESIDERIUM, 24)
+          .add(INSTRUMENTUM, 6)
+          .add(TENEBRAE, 12)
       }
       item(Items.NETHERITE_SHOVEL) {
-        it.add(METALLUM.get(), 16)
-          .add(DESIDERIUM.get(), 8)
-          .add(INSTRUMENTUM.get(), 6)
-          .add(TENEBRAE.get(), 4)
+        it.add(METALLUM, 16)
+          .add(DESIDERIUM, 8)
+          .add(INSTRUMENTUM, 6)
+          .add(TENEBRAE, 4)
       }
       item(Items.NETHERITE_HOE) {
-        it.add(METALLUM.get(), 32)
-          .add(DESIDERIUM.get(), 16)
-          .add(INSTRUMENTUM.get(), 6)
-          .add(TENEBRAE.get(), 8)
+        it.add(METALLUM, 32)
+          .add(DESIDERIUM, 16)
+          .add(INSTRUMENTUM, 6)
+          .add(TENEBRAE, 8)
       }
 
-      item(T7Items.IRON_HANDLE.get()) {
-        it.add(METALLUM.get(), 16)
+      item(T7Items.IRON_HANDLE) {
+        it.add(METALLUM, 16)
       }
-      item(T7Items.GOLD_HANDLE.get()) {
-        it.add(METALLUM.get(), 8)
-          .add(DESIDERIUM.get(), 16)
+      item(T7Items.GOLD_HANDLE) {
+        it.add(METALLUM, 8)
+          .add(DESIDERIUM, 16)
       }
-      item(T7Items.ORICHALCUM_HANDLE.get()) {
-        it.add(METALLUM.get(), 8)
-          .add(PERMUTATIO.get(), 8)
-          .add(INSTRUMENTUM.get(), 8)
+      item(T7Items.ORICHALCUM_HANDLE) {
+        it.add(METALLUM, 8)
+          .add(PERMUTATIO, 8)
+          .add(INSTRUMENTUM, 8)
       }
-      item(T7Items.THAVMITE_HANDLE.get()) {
-        it.add(METALLUM.get(), 16)
-          .add(PRAECANTATIO.get(), 8)
+      item(T7Items.THAVMITE_HANDLE) {
+        it.add(METALLUM, 16)
+          .add(PRAECANTATIO, 8)
       }
 
-      item(ItemTags.ARROWS){
+      item(ItemTags.ARROWS) {
         it.add(AVERSIO, 2)
           .add(MOTUS, 1)
       }

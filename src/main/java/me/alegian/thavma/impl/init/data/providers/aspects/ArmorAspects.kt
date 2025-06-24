@@ -112,25 +112,25 @@ object ArmorAspects {
         it.add(METALLUM, 40)
           .add(DESIDERIUM, 40)
           .add(PRAEMUNIO, 18)
-          .add(TENEBRAE.get(), 4)
+          .add(TENEBRAE, 4)
       }
       item(Items.NETHERITE_CHESTPLATE) {
         it.add(METALLUM, 64)
           .add(DESIDERIUM, 64)
           .add(PRAEMUNIO, 38)
-          .add(TENEBRAE.get(), 4)
+          .add(TENEBRAE, 4)
       }
       item(Items.NETHERITE_LEGGINGS) {
         it.add(METALLUM, 56)
           .add(DESIDERIUM, 56)
           .add(PRAEMUNIO, 30)
-          .add(TENEBRAE.get(), 4)
+          .add(TENEBRAE, 4)
       }
       item(Items.NETHERITE_BOOTS) {
         it.add(METALLUM, 32)
           .add(DESIDERIUM, 32)
           .add(PRAEMUNIO, 18)
-          .add(TENEBRAE.get(), 4)
+          .add(TENEBRAE, 4)
       }
 
       item(Items.WOLF_ARMOR) {

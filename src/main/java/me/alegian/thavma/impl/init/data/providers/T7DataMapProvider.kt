@@ -53,6 +53,7 @@ import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.common.data.DataMapProvider.Builder
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
+import java.util.function.Supplier
 
 class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
   DataMapProvider(packOutput, lookupProvider) {
@@ -66,197 +67,197 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     val i = builder(T7DataMaps.AspectContent.ITEM)
 
     i.item(Items.BLAZE_POWDER) {
-      it.add(IGNIS.get(), 4)
-        .add(POTENTIA.get(), 2)
-        .add(ALKIMIA.get(), 2)
+      it.add(IGNIS, 4)
+        .add(POTENTIA, 2)
+        .add(ALKIMIA, 2)
     }
     i.item(Tags.Items.GUNPOWDERS) {
-      it.add(POTENTIA.get(), 4)
-        .add(ALKIMIA.get(), 2)
-        .add(TERRA.get(), 1)
+      it.add(POTENTIA, 4)
+        .add(ALKIMIA, 2)
+        .add(TERRA, 1)
     }
     i.item(Tags.Items.RODS_BLAZE) {
-      it.add(IGNIS.get(), 12)
-        .add(POTENTIA.get(), 8)
+      it.add(IGNIS, 12)
+        .add(POTENTIA, 8)
     }
     i.item(Tags.Items.RODS_BREEZE) {
-      it.add(AER.get(), 16)
-        .add(MOTUS.get(), 4)
+      it.add(AER, 16)
+        .add(MOTUS, 4)
     }
     i.item(Items.WIND_CHARGE) {
-      it.add(AER.get(), 4)
-        .add(MOTUS.get(), 1)
+      it.add(AER, 4)
+        .add(MOTUS, 1)
     }
     i.item(Items.FIRE_CHARGE) {
-      it.add(POTENTIA.get(), 4)
-        .add(IGNIS.get(), 4)
-        .add(AVERSIO.get(), 2)
+      it.add(POTENTIA, 4)
+        .add(IGNIS, 4)
+        .add(AVERSIO, 2)
     }
     i.item(Tags.Items.LEATHERS) {
-      it.add(BESTIA.get(), 8)
+      it.add(BESTIA, 8)
     }
-    i.item(T7Items.FABRIC.get()){
-      it.add(FABRICO.get(), 4).add(PRAECANTATIO.get(), 1)
+    i.item(T7Items.FABRIC) {
+      it.add(FABRICO, 4).add(PRAECANTATIO, 1)
     }
-    i.item(T7Items.ARCANE_LENS.get()){
-      it.add(METALLUM.get(), 16)
-        .add(DESIDERIUM.get(), 32)
-        .add(PRAECANTATIO.get(), 2)
-        .add(VITREUS.get(), 2)
+    i.item(T7Items.ARCANE_LENS) {
+      it.add(METALLUM, 16)
+        .add(DESIDERIUM, 32)
+        .add(PRAECANTATIO, 2)
+        .add(VITREUS, 2)
     }
-    i.item(T7Tags.Items.GOGGLES){
-      it.add(METALLUM.get(), 32)
-        .add(DESIDERIUM.get(), 32)
-        .add(PRAECANTATIO.get(), 4)
-        .add(VITREUS.get(), 4)
+    i.item(T7Tags.Items.GOGGLES) {
+      it.add(METALLUM, 32)
+        .add(DESIDERIUM, 32)
+        .add(PRAECANTATIO, 4)
+        .add(VITREUS, 4)
     }
-    i.item(T7Items.ROTTEN_BRAIN.get()){
-      it.add(COGNITIO.get(), 16)
-        .add(EXANIMIS.get(), 8)
+    i.item(T7Items.ROTTEN_BRAIN) {
+      it.add(COGNITIO, 16)
+        .add(EXANIMIS, 8)
     }
-    i.item(Items.ROTTEN_FLESH){
-      it.add(HUMANUS.get(), 2)
-        .add(EXANIMIS.get(), 2)
+    i.item(Items.ROTTEN_FLESH) {
+      it.add(HUMANUS, 2)
+        .add(EXANIMIS, 2)
     }
-    i.item(Items.ARMADILLO_SCUTE){
+    i.item(Items.ARMADILLO_SCUTE) {
       it.add(BESTIA, 2)
         .add(PRAEMUNIO, 1)
     }
-    i.item(Items.FLINT){
+    i.item(Items.FLINT) {
       it.add(TERRA, 4)
         .add(INSTRUMENTUM, 2)
     }
-    i.item(Tags.Items.FEATHERS){
+    i.item(Tags.Items.FEATHERS) {
       it.add(VOLATUS, 4)
         .add(AER, 4)
     }
 
-    b.block(Tags.Blocks.STONES) { it.add(TERRA.get(), 4) }
-    b.block(Blocks.STONE_STAIRS) { it.add(TERRA.get(), 6) }
-    b.block(Blocks.STONE_SLAB) { it.add(TERRA.get(), 2) }
-    b.block(Blocks.DIRT) { it.add(TERRA.get(), 4) }
+    b.block(Tags.Blocks.STONES) { it.add(TERRA, 4) }
+    b.block(Blocks.STONE_STAIRS) { it.add(TERRA, 6) }
+    b.block(Blocks.STONE_SLAB) { it.add(TERRA, 2) }
+    b.block(Blocks.DIRT) { it.add(TERRA, 4) }
 
-    b.block(Blocks.POLISHED_GRANITE) { it.add(TERRA.get(), 3) }
-    b.block(Blocks.POLISHED_DIORITE) { it.add(TERRA.get(), 3) }
-    b.block(Blocks.POLISHED_ANDESITE) { it.add(TERRA.get(), 3) }
-    b.block(Blocks.COARSE_DIRT) { it.add(TERRA.get(), 3) }
+    b.block(Blocks.POLISHED_GRANITE) { it.add(TERRA, 3) }
+    b.block(Blocks.POLISHED_DIORITE) { it.add(TERRA, 3) }
+    b.block(Blocks.POLISHED_ANDESITE) { it.add(TERRA, 3) }
+    b.block(Blocks.COARSE_DIRT) { it.add(TERRA, 3) }
 
     b.block(Blocks.GRASS_BLOCK) {
-      it.add(TERRA.get(), 5).add(HERBA.get(), 2)
+      it.add(TERRA, 5).add(HERBA, 2)
     }
     b.block(Blocks.PODZOL) {
-      it.add(TERRA.get(), 5).add(HERBA.get(), 1)
+      it.add(TERRA, 5).add(HERBA, 1)
     }
     b.block(Blocks.SHORT_GRASS) {
-      it.add(HERBA.get(), 5).add(AER.get(), 1)
+      it.add(HERBA, 5).add(AER, 1)
     }
     b.block(Blocks.TALL_GRASS) {
-      it.add(HERBA.get(), 5).add(AER.get(), 1)
+      it.add(HERBA, 5).add(AER, 1)
     }
 
     b.block(Tags.Blocks.COBBLESTONES) {
-      it.add(TERRA.get(), 4)
+      it.add(TERRA, 4)
     }
     b.block(Tags.Blocks.SANDS) {
-      it.add(TERRA.get(), 4)
+      it.add(TERRA, 4)
     }
 
     b.block(BlockTags.TERRACOTTA) {
-      it.add(AQUA.get(), 15)
-        .add(TERRA.get(), 15)
-        .add(IGNIS.get(), 1)
-        .add(SENSUS.get(), 1)
+      it.add(AQUA, 15)
+        .add(TERRA, 15)
+        .add(IGNIS, 1)
+        .add(SENSUS, 1)
     }
     b.block(BlockTags.CONCRETE_POWDER) {
-      it.add(TERRA.get(), 3)
+      it.add(TERRA, 3)
     }
     b.block(Tags.Blocks.CONCRETES) {
-      it.add(TERRA.get(), 3)
-        .add(AQUA.get(), 1)
-        .add(AETHER.get(), 1)
+      it.add(TERRA, 3)
+        .add(AQUA, 1)
+        .add(AETHER, 1)
     }
 
-    i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA.get(), 2) }
-    b.block(BlockTags.PLANKS) { it.add(HERBA.get(), 4) }
-    b.block(BlockTags.LEAVES) { it.add(HERBA.get(), 4) }
-    b.block(BlockTags.SAPLINGS) { it.add(HERBA.get(), 8).add(VICTUS.get(), 4) }
-    b.block(BlockTags.WOODEN_STAIRS) { it.add(HERBA.get(), 6) }
-    b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA.get(), 2) }
-    b.block(BlockTags.LOGS) { it.add(HERBA.get(), 16) }
-    b.block(BlockTags.FLOWERS) { it.add(HERBA.get(), 4).add(VICTUS.get(), 1) }
+    i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA, 2) }
+    b.block(BlockTags.PLANKS) { it.add(HERBA, 4) }
+    b.block(BlockTags.LEAVES) { it.add(HERBA, 4) }
+    b.block(BlockTags.SAPLINGS) { it.add(HERBA, 8).add(VICTUS, 4) }
+    b.block(BlockTags.WOODEN_STAIRS) { it.add(HERBA, 6) }
+    b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA, 2) }
+    b.block(BlockTags.LOGS) { it.add(HERBA, 16) }
+    b.block(BlockTags.FLOWERS) { it.add(HERBA, 4).add(VICTUS, 1) }
 
-    b.block(T7Blocks.TABLE.get()) { it.add(HERBA.get(), 12) }
-    b.block(T7Blocks.RESEARCH_TABLE.get()) {
-      it.add(HERBA.get(), 12)
-        .add(PRAECANTATIO.get(), 2)
+    b.block(T7Blocks.TABLE) { it.add(HERBA, 12) }
+    b.block(T7Blocks.RESEARCH_TABLE) {
+      it.add(HERBA, 12)
+        .add(PRAECANTATIO, 2)
     }
 
     b.block(BlockTags.WOOL) {
-      it.add(BESTIA.get(), 11).add(SENSUS.get(), 3).add(FABRICO.get(), 3)
+      it.add(BESTIA, 11).add(SENSUS, 3).add(FABRICO, 3)
     }
 
-    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS.get(), 4) }
-    b.block(Tags.Blocks.GLASS_PANES) { it.add(VITREUS.get(), 1) }
+    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 4) }
+    b.block(Tags.Blocks.GLASS_PANES) { it.add(VITREUS, 1) }
 
-    b.block(BlockTags.WOOL) { it.add(BESTIA.get(), 8).add(FABRICO.get(), 4) }
+    b.block(BlockTags.WOOL) { it.add(BESTIA, 8).add(FABRICO, 4) }
 
-    b.block(Blocks.TORCH) { it.add(LUX.get(), 4) }
+    b.block(Blocks.TORCH) { it.add(LUX, 4) }
 
     b.block(Blocks.BEDROCK) {
-      it.add(VACUOS.get(), 25)
-        .add(TERRA.get(), 25)
-        .add(TENEBRAE.get(), 25)
+      it.add(VACUOS, 25)
+        .add(TERRA, 25)
+        .add(TENEBRAE, 25)
     }
-    b.block(T7Blocks.ETERNAL_FLAME.get()) {
-      it.add(LUX.get(), 12)
-        .add(POTENTIA.get(), 8)
-        .add(IGNIS.get(), 8)
+    b.block(T7Blocks.ETERNAL_FLAME) {
+      it.add(LUX, 12)
+        .add(POTENTIA, 8)
+        .add(IGNIS, 8)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE.get()) {
-      it.add(TERRA.get(), 4)
-        .add(PRAECANTATIO.get(), 1)
+    b.block(T7Blocks.ELEMENTAL_STONE) {
+      it.add(TERRA, 4)
+        .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.CRACKED_ELEMENTAL_STONE.get()) {
-      it.add(TERRA.get(), 4)
-        .add(PRAECANTATIO.get(), 1)
+    b.block(T7Blocks.CRACKED_ELEMENTAL_STONE) {
+      it.add(TERRA, 4)
+        .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE_STAIRS.get()) {
-      it.add(TERRA.get(), 6)
-        .add(PRAECANTATIO.get(), 1)
+    b.block(T7Blocks.ELEMENTAL_STONE_STAIRS) {
+      it.add(TERRA, 6)
+        .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE_SLAB.get()) {
-      it.add(TERRA.get(), 2)
+    b.block(T7Blocks.ELEMENTAL_STONE_SLAB) {
+      it.add(TERRA, 2)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE_BRICKS.get()) {
-      it.add(TERRA.get(), 4)
-        .add(PRAECANTATIO.get(), 1)
+    b.block(T7Blocks.ELEMENTAL_STONE_BRICKS) {
+      it.add(TERRA, 4)
+        .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.ELEMENTAL_CORE.get()) {
-      it.add(TERRA.get(), 6)
-        .add(PRAECANTATIO.get(), 2)
+    b.block(T7Blocks.ELEMENTAL_CORE) {
+      it.add(TERRA, 6)
+        .add(PRAECANTATIO, 2)
     }
     b.block(Blocks.CRAFTING_TABLE) {
-      it.add(FABRICO.get(), 8)
-        .add(HERBA.get(), 4)
+      it.add(FABRICO, 8)
+        .add(HERBA, 4)
     }
-    b.block(T7Blocks.ARCANE_WORKBENCH.get()) {
-      it.add(FABRICO.get(), 12)
-        .add(HERBA.get(), 4)
-        .add(PRAECANTATIO.get(), 2)
+    b.block(T7Blocks.ARCANE_WORKBENCH) {
+      it.add(FABRICO, 12)
+        .add(HERBA, 4)
+        .add(PRAECANTATIO, 2)
     }
     b.block(Blocks.CAULDRON) {
-      it.add(METALLUM.get(), 56)
-        .add(ALKIMIA.get(), 8)
+      it.add(METALLUM, 56)
+        .add(ALKIMIA, 8)
     }
-    b.block(T7Blocks.CRUCIBLE.get()) {
-      it.add(METALLUM.get(), 56)
-        .add(ALKIMIA.get(), 8)
-        .add(PRAECANTATIO.get(), 2)
+    b.block(T7Blocks.CRUCIBLE) {
+      it.add(METALLUM, 56)
+        .add(ALKIMIA, 8)
+        .add(PRAECANTATIO, 2)
     }
-    b.block(T7Blocks.SEALING_JAR.get()) {
-      it.add(VITREUS.get(), 4)
-        .add(VACUOS.get(), 2)
-        .add(PRAECANTATIO.get(), 2)
+    b.block(T7Blocks.SEALING_JAR) {
+      it.add(VITREUS, 4)
+        .add(VACUOS, 2)
+        .add(PRAECANTATIO, 2)
     }
   }
 }
@@ -273,6 +274,9 @@ fun Builder<AspectMap, Item>.item(item: Item, builderConsumer: Consumer<AspectMa
   add(key(item), aspectBuilder.build(), false)
 }
 
+fun <T : Item> Builder<AspectMap, Item>.item(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
+  item(sup.get(), builderConsumer)
+
 fun Builder<AspectMap, Item>.item(tag: TagKey<Item>, builderConsumer: Consumer<AspectMap.Builder>) {
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
@@ -284,6 +288,9 @@ fun Builder<AspectMap, Block>.block(block: Block, builderConsumer: Consumer<Aspe
   builderConsumer.accept(aspectBuilder)
   add(key(block), aspectBuilder.build(), false)
 }
+
+fun <T : Block> Builder<AspectMap, Block>.block(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
+  block(sup.get(), builderConsumer)
 
 fun Builder<AspectMap, Block>.block(
   tag: TagKey<Block>,
@@ -298,6 +305,15 @@ fun Builder<AspectMap, EntityType<*>>.entity(entityType: EntityType<*>, builderC
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
   add(key(entityType), aspectBuilder.build(), false)
+}
+
+fun <T : EntityType<*>> Builder<AspectMap, EntityType<*>>.entity(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
+  entity(sup.get(), builderConsumer)
+
+fun Builder<AspectMap, EntityType<*>>.entity(tag: TagKey<EntityType<*>>, builderConsumer: Consumer<AspectMap.Builder>) {
+  val aspectBuilder = AspectMap.builder()
+  builderConsumer.accept(aspectBuilder)
+  add(tag, aspectBuilder.build(), false)
 }
 
 private fun key(entityType: EntityType<*>): ResourceKey<EntityType<*>> {

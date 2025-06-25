@@ -121,6 +121,7 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
       T7Items.SHARDS[aspect]
     )
   }
+
   event.register(
     { _, tintIndex ->
       when (tintIndex) {
@@ -138,6 +139,16 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
       }
     },
     T7Blocks.SILVERWOOD_LEAVES.get()
+  )
+
+  event.register(
+    { _, tintIndex ->
+      when (tintIndex) {
+        0 -> T7Colors.GREEN
+        else -> 0xFFFFFFFF.toInt()
+      }
+    },
+    T7Blocks.ELEMENTAL_CORE.get()
   )
 }
 
@@ -154,6 +165,7 @@ private fun registerBlockColorHandlers(event: RegisterColorHandlersEvent.Block) 
       T7Blocks.INFUSED_STONES[aspect]!!.get()
     )
   }
+
   event.register(
     { _, _, _, tintIndex ->
       when (tintIndex) {
@@ -171,6 +183,16 @@ private fun registerBlockColorHandlers(event: RegisterColorHandlersEvent.Block) 
       }
     },
     T7Blocks.SILVERWOOD_LEAVES.get()
+  )
+
+  event.register(
+    { _, _, _, tintIndex ->
+      when (tintIndex) {
+        0 -> T7Colors.GREEN
+        else -> 0xFFFFFFFF.toInt()
+      }
+    },
+    T7Blocks.ELEMENTAL_CORE.get()
   )
 }
 

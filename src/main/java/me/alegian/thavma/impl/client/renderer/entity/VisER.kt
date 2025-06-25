@@ -1,12 +1,12 @@
 package me.alegian.thavma.impl.client.renderer.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
+import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.renderer.level.renderEssentia
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
 import me.alegian.thavma.impl.common.util.use
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.culling.Frustum
@@ -28,7 +28,7 @@ class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity
       translate(-visEntity.position()) // we are inside an entity renderer
       val playerHandPos = preparePlayerHandPosition(pPartialTick, player)
       val length = trajectoryLength(visEntity.position(), playerHandPos)
-      val colorWithAlpha = 0x44000000 or (Aspects.PRAECANTATIO.get().color and 0xffffff)
+      val colorWithAlpha = 0x44000000 or (T7Colors.PURPLE and 0xffffff)
       renderEssentia(visEntity.position(), playerHandPos, 0.2, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, colorWithAlpha, 0.06)
     }
   }

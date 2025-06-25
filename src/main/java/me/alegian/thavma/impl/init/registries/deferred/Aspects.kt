@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.init.registries.deferred.util.DeferredAspect
 import me.alegian.thavma.impl.init.registries.deferred.util.T7DeferredRegister
@@ -32,7 +33,7 @@ object Aspects {
   val PERMUTATIO = register("permutatio", 0xff578357.toInt(), listOf(AQUA, IGNIS))
 
   // TERTIARY
-  val PRAECANTATIO = register("praecantatio", 0xffcf00ff.toInt(), listOf(POTENTIA, AER))
+  val PRAECANTATIO = register("praecantatio", T7Colors.PURPLE, listOf(POTENTIA, AER))
   val AURAM = register("auram", 0xffffc0ff.toInt(), listOf(PRAECANTATIO, AER))
   val ALKIMIA = register("alkimia", 0xff23ac9d.toInt(), listOf(PRAECANTATIO, AQUA))
   val VITIUM = register("vitium", 0xff800080.toInt(), listOf(VICTUS, PRAECANTATIO))

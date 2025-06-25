@@ -20,6 +20,7 @@ class AuraNodeBlock : TransparentBlock(
     .noCollission()
     .noOcclusion()
     .lightLevel { 7 }
+    .noLootTable()
 ), EntityBlock {
   public override fun getRenderShape(blockState: BlockState): RenderShape {
     return RenderShape.ENTITYBLOCK_ANIMATED

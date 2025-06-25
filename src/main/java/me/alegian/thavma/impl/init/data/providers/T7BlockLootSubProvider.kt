@@ -7,7 +7,6 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
@@ -68,7 +67,6 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     dropSelf(SILVERWOOD_SAPLING.get())
 
     dropSelf(CRUCIBLE.get())
-    dropSelf(AURA_NODE.get()) // TODO: replace
     dropSelf(ARCANE_WORKBENCH.get())
     dropSelf(MATRIX.get())
     dropSelf(PEDESTAL.get())

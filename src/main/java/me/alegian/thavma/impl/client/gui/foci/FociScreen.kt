@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.payload.FocusPayload
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
@@ -66,6 +67,11 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
           translateXY(-8, -8)
           guiGraphics.renderItem(stack, 0, 0)
         }
+
+      val focus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+      if (focus == null) return@usePose
+      translateXY(-8, -8)
+      guiGraphics.renderItem(focus, 0, 0)
     }
   }
 

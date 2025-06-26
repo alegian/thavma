@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.infusion.InfusionState
 import me.alegian.thavma.impl.common.research.ResearchState
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.component.ItemContainerContents
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object T7DataComponents {
@@ -25,5 +26,11 @@ object T7DataComponents {
   val INFUSION_STATE = REGISTRAR.registerComponentType("infusion_state") { builder ->
     builder
       .persistent(InfusionState.CODEC)
+  }
+
+  val FOCUS = REGISTRAR.registerComponentType("focus") { builder ->
+    builder
+      .persistent(ItemContainerContents.CODEC)
+      .networkSynchronized(ItemContainerContents.STREAM_CODEC)
   }
 }

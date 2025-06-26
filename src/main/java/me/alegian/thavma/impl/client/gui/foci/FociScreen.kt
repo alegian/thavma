@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
+import net.minecraft.util.Mth.lerp
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.PickaxeItem
 import net.neoforged.neoforge.network.PacketDistributor
@@ -21,19 +22,40 @@ private const val TITLE_ID = "screen." + Thavma.MODID + ".title"
 private val BACKGROUND = Texture("gui/foci/circle", 236, 236)
 private const val SCALE = 0.5
 private const val DEGREES_PER_TICK = 0.5f
-private val RADIUS = SCALE * BACKGROUND.width / 2
-private val DEAD_RADIUS = RADIUS / 2
+private val MAX_RADIUS = SCALE * BACKGROUND.width / 2
+private val ANIMATION_DURATION = 5
 
 class FociScreen : Screen(Component.translatable(TITLE_ID)) {
   var ticks = 0
   var selectedIndex: Int? = null
   val foci = getFociFromLocalInventory()
+  var animationProgress = 0
+
+  override fun init() {
+    T7KeyMappings.FOCI.isDown = true
+  }
 
   override fun tick() {
     ticks++
+    animationProgress =
+      if (T7KeyMappings.FOCI.isDown)
+        min(animationProgress + 1, ANIMATION_DURATION)
+      else
+        max(0, animationProgress - 1)
+
+    if (animationProgress == 0) {
+      onClose()
+
+      val selectedIndex = selectedIndex ?: return
+      if (foci.isNotEmpty())
+        PacketDistributor.sendToServer(FocusPayload(foci[selectedIndex]))
+    }
   }
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    val radius = lerp(animationProgress / ANIMATION_DURATION.toDouble(), 0.toDouble(), MAX_RADIUS)
+    val deadRadius = radius / 2
+
     val centeredMouseX = mouseX - width / 2.0
     val centeredMouseY = mouseY - height / 2.0
     val mouseRadius = hypot(centeredMouseX, centeredMouseY)
@@ -41,14 +63,14 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     var mouseAngle = atan2(centeredMouseY, centeredMouseX) + anglePerItem / 2
     if (mouseAngle < 0) mouseAngle += 2 * PI
     selectedIndex = floor(mouseAngle / anglePerItem).toInt()
-    if (mouseRadius <= DEAD_RADIUS) selectedIndex = null
+    if (mouseRadius <= deadRadius) selectedIndex = null
 
     guiGraphics.usePose {
       translateXY(width / 2, height / 2)
       val renderTicks = ticks + partialTick
 
       guiGraphics.usePose {
-        scaleXY(SCALE)
+        scaleXY(SCALE * radius / MAX_RADIUS)
         rotateZ((renderTicks * DEGREES_PER_TICK) % 360)
         setRenderSystemColor(T7Colors.PURPLE)
         RenderSystem.enableBlend()
@@ -60,8 +82,8 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       for ((i, stack) in foci.withIndex())
         guiGraphics.usePose {
           translateXY(
-            (cos(anglePerItem * i) * RADIUS),
-            (sin(anglePerItem * i) * RADIUS)
+            (cos(anglePerItem * i) * radius),
+            (sin(anglePerItem * i) * radius)
           )
           if (i == selectedIndex) scaleXY(1.5f)
           translateXY(-8, -8)
@@ -73,19 +95,6 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       translateXY(-8, -8)
       guiGraphics.renderItem(focus, 0, 0)
     }
-  }
-
-  override fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-    if (keyCode == T7KeyMappings.FOCI.key.value) {
-      onClose()
-
-      val selectedIndex = selectedIndex ?: return true
-      if (foci.isNotEmpty())
-        PacketDistributor.sendToServer(FocusPayload(foci[selectedIndex]))
-
-      return true
-    }
-    return super.keyReleased(keyCode, scanCode, modifiers)
   }
 }
 

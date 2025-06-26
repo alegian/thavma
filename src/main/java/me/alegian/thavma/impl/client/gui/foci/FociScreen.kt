@@ -6,10 +6,12 @@ import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.Items
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.PickaxeItem
 import kotlin.math.*
 
 private const val TITLE_ID = "screen." + Thavma.MODID + ".title"
@@ -17,11 +19,12 @@ private val BACKGROUND = Texture("gui/foci/circle", 236, 236)
 private const val SCALE = 0.5
 private const val DEGREES_PER_TICK = 0.5f
 private val RADIUS = SCALE * BACKGROUND.width / 2
+private val DEAD_RADIUS = RADIUS / 2
 
 class FociScreen : Screen(Component.translatable(TITLE_ID)) {
   var ticks = 0
-  var selectedIndex = 0
-  val options = listOf(Items.DIAMOND.defaultInstance, Items.DIAMOND_PICKAXE.defaultInstance, Items.PUFFERFISH.defaultInstance, Items.TURTLE_HELMET.defaultInstance)
+  var selectedIndex: Int? = null
+  val options = getFociFromLocalInventory()
 
   override fun tick() {
     ticks++
@@ -30,10 +33,12 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     val centeredMouseX = mouseX - width / 2.0
     val centeredMouseY = mouseY - height / 2.0
+    val mouseRadius = hypot(centeredMouseX, centeredMouseY)
     val anglePerItem = 2 * PI / options.size
     var mouseAngle = atan2(centeredMouseY, centeredMouseX) + anglePerItem / 2
     if (mouseAngle < 0) mouseAngle += 2 * PI
     selectedIndex = floor(mouseAngle / anglePerItem).toInt()
+    if (mouseRadius <= DEAD_RADIUS) selectedIndex = null
 
     guiGraphics.usePose {
       translateXY(width / 2, height / 2)
@@ -69,4 +74,19 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     }
     return super.keyReleased(keyCode, scanCode, modifiers)
   }
+}
+
+fun getFociFromLocalInventory(): List<ItemStack> {
+  val foci = mutableListOf<ItemStack>()
+  val player = Minecraft.getInstance().player ?: return foci
+
+  player.inventory.run {
+    for (i in 0..<containerSize) {
+      val stack = getItem(i)
+      if (stack.item is PickaxeItem)
+        foci.add(stack)
+    }
+  }
+
+  return foci
 }

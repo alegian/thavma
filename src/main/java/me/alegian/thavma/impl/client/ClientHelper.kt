@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client
 
 import me.alegian.thavma.impl.client.gui.toast.ResearchToast
+import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import net.minecraft.client.Minecraft
@@ -13,6 +14,10 @@ import kotlin.jvm.optionals.getOrNull
 
 fun clientPlayerHasRevealing(): Boolean {
   return Minecraft.getInstance().player?.getAttribute(REVEALING)?.value == 1.0
+}
+
+fun clientPlayerHoldingWand(): Boolean {
+  return Minecraft.getInstance().player?.mainHandItem?.item is WandItem
 }
 
 fun getClientPlayerEquipmentItem(slot: EquipmentSlot): Item? {

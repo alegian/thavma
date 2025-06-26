@@ -1,10 +1,7 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
-import me.alegian.thavma.impl.common.payload.KnowledgePayload
-import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
-import me.alegian.thavma.impl.common.payload.ScanPayload
-import me.alegian.thavma.impl.common.payload.SocketStatePayload
+import me.alegian.thavma.impl.common.payload.*
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.data.providers.*
@@ -177,6 +174,11 @@ private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
     SocketStatePayload.TYPE,
     SocketStatePayload.STREAM_CODEC,
     SocketStatePayload::handle
+  )
+  registrar.playToServer(
+    FocusPayload.TYPE,
+    FocusPayload.STREAM_CODEC,
+    FocusPayload::handle
   )
 }
 

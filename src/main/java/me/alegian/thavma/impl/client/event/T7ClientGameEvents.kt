@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.client.event
 import com.mojang.datafixers.util.Either
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
+import me.alegian.thavma.impl.client.clientPlayerHoldingWand
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
@@ -113,7 +114,7 @@ private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
 
 private fun clientTick(event: ClientTickEvent.Post){
   val mc = Minecraft.getInstance()
-  if(T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null)
+  if(T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null && clientPlayerHoldingWand())
     mc.setScreen(FociScreen())
 }
 

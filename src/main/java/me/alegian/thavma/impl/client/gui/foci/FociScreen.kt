@@ -20,7 +20,7 @@ import kotlin.math.*
 
 private const val TITLE_ID = "screen." + Thavma.MODID + ".title"
 private val BACKGROUND = Texture("gui/foci/circle", 236, 236)
-private const val SCALE = 0.5
+private const val SCALE = 0.5f
 private const val DEGREES_PER_TICK = 0.5f
 private val MAX_RADIUS = SCALE * BACKGROUND.width / 2
 private val ANIMATION_DURATION = 5
@@ -30,6 +30,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
   var selectedIndex: Int? = null
   val foci = getFociFromLocalInventory()
   var animationProgress = 0
+  var prevAnimationProgress = 0
 
   override fun init() {
     T7KeyMappings.FOCI.isDown = true
@@ -37,11 +38,13 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
 
   override fun tick() {
     ticks++
+    prevAnimationProgress = animationProgress
     animationProgress =
-      if (T7KeyMappings.FOCI.isDown)
+      if (T7KeyMappings.FOCI.isDown) {
         min(animationProgress + 1, ANIMATION_DURATION)
-      else
+      } else {
         max(0, animationProgress - 1)
+      }
 
     if (animationProgress == 0) {
       onClose()
@@ -53,8 +56,9 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
   }
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    val radius = lerp(animationProgress / ANIMATION_DURATION.toDouble(), 0.toDouble(), MAX_RADIUS)
-    val deadRadius = radius / 2
+    val partialProgress = lerp(partialTick, prevAnimationProgress.toFloat(), animationProgress.toFloat())
+    val animatedRadius = lerp(partialProgress / ANIMATION_DURATION, 0f, MAX_RADIUS)
+    val deadRadius = animatedRadius / 2
 
     val centeredMouseX = mouseX - width / 2.0
     val centeredMouseY = mouseY - height / 2.0
@@ -70,7 +74,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       val renderTicks = ticks + partialTick
 
       guiGraphics.usePose {
-        scaleXY(SCALE * radius / MAX_RADIUS)
+        scaleXY(SCALE * animatedRadius / MAX_RADIUS)
         rotateZ((renderTicks * DEGREES_PER_TICK) % 360)
         setRenderSystemColor(T7Colors.PURPLE)
         RenderSystem.enableBlend()
@@ -82,8 +86,8 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       for ((i, stack) in foci.withIndex())
         guiGraphics.usePose {
           translateXY(
-            (cos(anglePerItem * i) * radius),
-            (sin(anglePerItem * i) * radius)
+            (cos(anglePerItem * i) * animatedRadius),
+            (sin(anglePerItem * i) * animatedRadius)
           )
           if (i == selectedIndex) scaleXY(1.5f)
           translateXY(-8, -8)
@@ -96,6 +100,10 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       guiGraphics.renderItem(focus, 0, 0)
     }
   }
+
+  override fun shouldCloseOnEsc() = false
+
+  override fun isPauseScreen() = false
 }
 
 fun getFociFromLocalInventory(): List<ItemStack> {

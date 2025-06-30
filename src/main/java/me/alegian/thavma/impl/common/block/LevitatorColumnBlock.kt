@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.LevitatorColumnBE
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.LEVITATOR_COLUMN
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import net.minecraft.core.BlockPos
@@ -36,7 +37,7 @@ class LevitatorColumnBlock : Block(
       max(0.4, oldSpeed.y + 0.04)
 
     entity.setDeltaMovement(oldSpeed.x, newSpeedY, oldSpeed.z)
-    entity.resetFallDistance()
+    entity.setData(T7Attachments.LEVITATES, true)
   }
 
   override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {

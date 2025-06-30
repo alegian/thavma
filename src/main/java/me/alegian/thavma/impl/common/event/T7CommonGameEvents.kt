@@ -19,6 +19,7 @@ import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
+import net.neoforged.neoforge.event.entity.living.LivingFallEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent
@@ -119,6 +120,14 @@ fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent){
   player.setKnowledge(oldKnowledge, true)
 }
 
+fun entityFall(event: LivingFallEvent){
+  val levitates = event.entity.getData(T7Attachments.LEVITATES)
+  if(!levitates)return
+
+  event.isCanceled = true
+  event.entity.setData(T7Attachments.LEVITATES, false)
+}
+
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
@@ -126,4 +135,5 @@ fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
   KFF_GAME_BUS.addListener(::playerLoggedIn)
+  KFF_GAME_BUS.addListener(::entityFall)
 }

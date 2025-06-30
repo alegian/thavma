@@ -36,6 +36,7 @@ repositories {
     maven { url 'https://maven.fabricmc.net' }
     maven { url 'https://thedarkcolour.github.io/KotlinForForge/' }
     maven { url 'https://maven.theillusivec4.top/' }
+    maven { url 'https://maven.terraformersmc.com/' }
 }
 
 base {
@@ -67,23 +68,23 @@ runs {
         // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
         systemProperty 'forge.logging.console.level', 'debug'
 
-        modSource project.sourceSets.main
+        modSource sourceSets.main
     }
 
     // multiple client runs to test multiplayer
     client1 {
         runType 'client'
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', mod_id
         getArguments().addAll '--username', 'alegian'
     }
     client2 {
         runType 'client'
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', mod_id
         getArguments().addAll '--username', 'azanor'
     }
 
     server {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', mod_id
         programArgument '--nogui'
     }
 
@@ -91,15 +92,15 @@ runs {
     // By default, the server will crash when no gametests are provided.
     // The gametest system is also enabled by default for other run configs under the /test command.
     gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', mod_id
     }
 
     data {
         // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-        // workingDirectory project.file('run-data')
+        // workingDirectory file('run-data')
 
         // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-        getArguments().addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        getArguments().addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
@@ -121,16 +122,20 @@ dependencies {
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
     compileOnly "mcjty.theoneprobe:theoneprobe:${top_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
 
-    if (project.use_runtime_optional_deps == "true") {
+    if (use_runtime_optional_deps == "true") {
         localRuntime "mcjty.theoneprobe:theoneprobe:${top_version}"
         localRuntime "mekanism:Mekanism:${mekanism_version}"
         localRuntime "mekanism:Mekanism:${mekanism_version}:additions"
         localRuntime "mekanism:Mekanism:${mekanism_version}:generators"
         localRuntime "mekanism:Mekanism:${mekanism_version}:tools"
-        localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+        if (recipe_viewer == "jei" || recipe_viewer == "both")
+            localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+        if (recipe_viewer == "emi" || recipe_viewer == "both")
+            localRuntime "dev.emi:emi-neoforge:${emi_version}"
         localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     }
 }
@@ -170,7 +175,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url "file://${projectDir}/repo"
         }
     }
 }

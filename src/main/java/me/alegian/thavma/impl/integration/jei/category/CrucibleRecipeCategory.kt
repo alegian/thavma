@@ -21,7 +21,7 @@ private const val PADDING = 8
 private const val HEIGHT = RESULT_SLOT + PADDING + ASPECT
 
 internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<CrucibleRecipe>>(
-  T7Categories.CRUCIBLE,
+  T7JEICategories.CRUCIBLE,
   Component.translatable(T7RecipeTypes.CRUCIBLE.get().translationId),
   guiHelper.createDrawableItemLike(T7Blocks.CRUCIBLE),
   WIDTH,

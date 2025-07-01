@@ -17,10 +17,10 @@ private const val SLOT = 18
 private const val ASPECT = 16
 private const val PADDING = 4
 private const val WIDTH = 116
-private const val HEIGHT = 3 * 18 + 4 + 16
+private const val HEIGHT = 3 * SLOT + PADDING + ASPECT
 
 internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>>(
-  T7Categories.WORKBENCH,
+  T7JEICategories.WORKBENCH,
   Component.translatable(T7RecipeTypes.WORKBENCH.get().translationId),
   guiHelper.createDrawableItemLike(ARCANE_WORKBENCH),
   WIDTH,

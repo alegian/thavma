@@ -26,7 +26,7 @@ private const val WIDTH = 2 * RADIUS + 2 * PADDING + ARROW + SLOT + RESULT_SLOT
 private const val HEIGHT = 2 * RADIUS + SLOT + PADDING + ASPECT
 
 internal class InfusionRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<InfusionRecipe>>(
-  T7Categories.INFUSION,
+  T7JEICategories.INFUSION,
   Component.translatable(T7RecipeTypes.INFUSION.get().translationId),
   guiHelper.createDrawableItemLike(T7Blocks.MATRIX),
   WIDTH,

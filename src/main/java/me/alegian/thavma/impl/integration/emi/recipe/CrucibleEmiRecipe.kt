@@ -17,7 +17,7 @@ private const val PADDING = 8
 private const val WIDTH = 118
 private const val HEIGHT = RESULT_SLOT + PADDING + ASPECT
 
-private val ARROWS = EmiTexture(rl("textures/gui/jei/crucible_arrows.png"), 0, 0, 46, 31, 46, 31, 46, 31)
+private val ARROWS = EmiTexture(rl("textures/gui/recipe_viewer/crucible_arrows.png"), 0, 0, 46, 31, 46, 31, 46, 31)
 
 class CrucibleEmiRecipe(private val recipe: RecipeHolder<CrucibleRecipe>) :
   BasicEmiRecipe(T7EmiCategories.CRUCIBLE, recipe.id, WIDTH, HEIGHT) {

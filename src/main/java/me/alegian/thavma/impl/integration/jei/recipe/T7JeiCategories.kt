@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration.jei.category
+package me.alegian.thavma.impl.integration.jei.recipe
 
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import mezz.jei.api.recipe.RecipeType

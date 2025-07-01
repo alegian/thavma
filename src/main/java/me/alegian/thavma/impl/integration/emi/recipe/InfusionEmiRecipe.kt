@@ -22,7 +22,7 @@ private const val ARROW = 24
 private const val WIDTH = 2 * RADIUS + 2 * PADDING + ARROW + SLOT + RESULT_SLOT
 private const val HEIGHT = 2 * RADIUS + SLOT + PADDING + ASPECT
 
-private val CIRCLE = EmiTexture(rl("textures/gui/jei/infusion_circles.png"), 0, 0, 64, 64, 64, 64, 64, 64)
+private val CIRCLE = EmiTexture(rl("textures/gui/recipe_viewer/infusion_circles.png"), 0, 0, 64, 64, 64, 64, 64, 64)
 
 class InfusionEmiRecipe(private val recipe: RecipeHolder<InfusionRecipe>) :
   BasicEmiRecipe(T7EmiCategories.INFUSION, recipe.id, WIDTH, HEIGHT) {

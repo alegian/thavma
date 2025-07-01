@@ -3,10 +3,10 @@ package me.alegian.thavma.impl.integration.jei
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.integration.jei.category.CrucibleRecipeCategory
-import me.alegian.thavma.impl.integration.jei.category.InfusionRecipeCategory
-import me.alegian.thavma.impl.integration.jei.category.T7JeiCategories
-import me.alegian.thavma.impl.integration.jei.category.WorkbenchRecipeCategory
+import me.alegian.thavma.impl.integration.jei.recipe.CrucibleRecipeCategory
+import me.alegian.thavma.impl.integration.jei.recipe.InfusionRecipeCategory
+import me.alegian.thavma.impl.integration.jei.recipe.T7JeiCategories
+import me.alegian.thavma.impl.integration.jei.recipe.WorkbenchRecipeCategory
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
@@ -19,7 +19,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 
 @JeiPlugin
-internal class T7JEIPlugin : IModPlugin {
+internal class T7JeiPlugin : IModPlugin {
   override fun getPluginUid() = rl("jei")
 
   override fun registerCategories(registration: IRecipeCategoryRegistration) {

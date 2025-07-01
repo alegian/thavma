@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration.jei.category
+package me.alegian.thavma.impl.integration.jei.recipe
 
 import me.alegian.thavma.impl.common.recipe.InfusionRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
@@ -33,7 +33,7 @@ internal class InfusionRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
   WIDTH,
   HEIGHT
 ) {
-  val circlesDrawable = guiHelper.drawableBuilder(rl("textures/gui/jei/infusion_circles.png"), 0, 0, 64, 64).setTextureSize(64, 64).build()
+  val circlesDrawable = guiHelper.drawableBuilder(rl("textures/gui/recipe_viewer/infusion_circles.png"), 0, 0, 64, 64).setTextureSize(64, 64).build()
 
   override fun setRecipe(builder: IRecipeLayoutBuilder, recipeHolder: RecipeHolder<InfusionRecipe>, focuses: IFocusGroup) {
     val recipe = recipeHolder.value()

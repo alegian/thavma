@@ -74,7 +74,7 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
 }
 
 private fun gatherTooltipComponents(event: GatherComponents) {
-  if (!clientPlayerHasRevealing()) return
+  if (!clientPlayerHasRevealing() || event.itemStack.isEmpty) return
 
   AspectContainer.from(event.itemStack)?.aspects?.let {
     event.tooltipElements.add(

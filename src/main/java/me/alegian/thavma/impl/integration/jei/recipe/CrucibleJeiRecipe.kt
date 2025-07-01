@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration.jei.category
+package me.alegian.thavma.impl.integration.jei.recipe
 
 import me.alegian.thavma.impl.common.recipe.CrucibleRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
@@ -28,7 +28,7 @@ internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
   WIDTH,
   HEIGHT
 ) {
-  val arrowsDrawable = guiHelper.drawableBuilder(rl("textures/gui/jei/crucible_arrows.png"), 0, 0, 46, 31).setTextureSize(46, 31).build()
+  val arrowsDrawable = guiHelper.drawableBuilder(rl("textures/gui/recipe_viewer/crucible_arrows.png"), 0, 0, 46, 31).setTextureSize(46, 31).build()
 
   override fun setRecipe(builder: IRecipeLayoutBuilder, recipeHolder: RecipeHolder<CrucibleRecipe>, focuses: IFocusGroup) {
     val recipe = recipeHolder.value()

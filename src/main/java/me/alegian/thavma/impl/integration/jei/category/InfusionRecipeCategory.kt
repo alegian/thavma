@@ -45,12 +45,12 @@ internal class InfusionRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
     val baseY = RADIUS + 1
     builder.addInputSlot(baseX, baseY).addIngredients(recipe.base)
 
-    val angle = PI * 2 / recipe.ingredients.size
-    for ((i, ingredient) in recipe.ingredients.withIndex())
+    val angle = PI * 2 / recipe.components.size
+    for ((i, component) in recipe.components.withIndex())
       builder.addInputSlot(
         (sin(i * angle) * -RADIUS + baseY).toInt(),
         (cos(i * angle) * -RADIUS + baseX).toInt()
-      ).addIngredients(ingredient)
+      ).addIngredients(component)
   }
 
   override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<InfusionRecipe>, focuses: IFocusGroup) {

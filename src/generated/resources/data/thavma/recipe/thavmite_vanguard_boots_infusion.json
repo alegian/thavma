@@ -7,7 +7,7 @@
   "base": {
     "item": "thavma:thavmite_boots"
   },
-  "ingredients": [
+  "components": [
     {
       "item": "minecraft:netherite_ingot"
     },

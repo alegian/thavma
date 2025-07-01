@@ -7,7 +7,7 @@
   "base": {
     "item": "thavma:thavmite_chestplate"
   },
-  "ingredients": [
+  "components": [
     {
       "item": "minecraft:netherite_ingot"
     },

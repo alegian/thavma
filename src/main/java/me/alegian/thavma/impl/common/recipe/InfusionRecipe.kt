@@ -9,10 +9,10 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 
-class InfusionRecipe(val base: Ingredient, result: ItemStack, val ingredients: List<Ingredient>, val aspects: AspectMap) : T7ItemRecipe<SingleRecipeInput>(result) {
+class InfusionRecipe(val base: Ingredient, result: ItemStack, val components: List<Ingredient>, val aspects: AspectMap) : T7ItemRecipe<SingleRecipeInput>(result) {
   override fun matches(input: SingleRecipeInput, level: Level) = base.test(input.getItem(0))
 
-  override fun getIngredients() = NonNullList.copyOf(ingredients + base)
+  override fun getIngredients() = NonNullList.copyOf(components + base)
 
   override fun getSerializer() = T7RecipeSerializers.INFUSION.get()
 

@@ -95,7 +95,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
-import me.alegian.thavma.impl.integration.jei.JEIAliases
+import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.jei.JEIDescriptions
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
@@ -301,8 +301,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(JEIDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
     add(JEIDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
 
-    add(JEIAliases.BOOK, "Book")
-    add(JEIAliases.ORE, "Ore")
+    add(RecipeViewerAliases.BOOK, "Book")
+    add(RecipeViewerAliases.ORE, "Ore")
 
     add(T7KeyMappings.FOCI.name, "Wand Foci Wheel")
   }

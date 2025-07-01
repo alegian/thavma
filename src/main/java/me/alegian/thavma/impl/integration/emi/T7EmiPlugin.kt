@@ -6,11 +6,14 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.stack.EmiStack
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.emi.recipe.CrucibleEmiRecipe
 import me.alegian.thavma.impl.integration.emi.recipe.InfusionEmiRecipe
 import me.alegian.thavma.impl.integration.emi.recipe.T7EmiCategories
 import me.alegian.thavma.impl.integration.emi.recipe.WorkbenchEmiRecipe
+import net.minecraft.network.chat.Component
 import net.minecraft.world.level.ItemLike
 
 @EmiEntrypoint
@@ -31,6 +34,10 @@ internal class T7EmiPlugin : EmiPlugin {
       registry.addRecipe(CrucibleEmiRecipe(crucibleRecipe))
     for (infusionRecipe in recipeManager.getAllRecipesFor(T7RecipeTypes.INFUSION.get()))
       registry.addRecipe(InfusionEmiRecipe(infusionRecipe))
+
+    registry.addAlias(EmiStack.of(T7Items.BOOK.get()), Component.translatable(RecipeViewerAliases.BOOK))
+    for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
+      registry.addAlias(EmiStack.of(infusedBlock.get()), Component.translatable(RecipeViewerAliases.ORE))
   }
 }
 

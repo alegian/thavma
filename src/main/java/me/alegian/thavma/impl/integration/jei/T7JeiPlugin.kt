@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.integration.jei
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.jei.recipe.CrucibleRecipeCategory
 import me.alegian.thavma.impl.integration.jei.recipe.InfusionRecipeCategory
 import me.alegian.thavma.impl.integration.jei.recipe.T7JeiCategories
@@ -53,8 +54,8 @@ internal class T7JeiPlugin : IModPlugin {
   }
 
   override fun registerIngredientAliases(registration: IIngredientAliasRegistration) {
-    registration.addAlias(VanillaTypes.ITEM_STACK, T7Items.BOOK.get().defaultInstance, JEIAliases.BOOK)
+    registration.addAlias(VanillaTypes.ITEM_STACK, T7Items.BOOK.get().defaultInstance, RecipeViewerAliases.BOOK)
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
-      registration.addAlias(VanillaTypes.ITEM_STACK, infusedBlock.get().asItem().defaultInstance, JEIAliases.ORE)
+      registration.addAlias(VanillaTypes.ITEM_STACK, infusedBlock.get().asItem().defaultInstance, RecipeViewerAliases.ORE)
   }
 }

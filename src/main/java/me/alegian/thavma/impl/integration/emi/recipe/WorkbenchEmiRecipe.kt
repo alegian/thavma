@@ -7,7 +7,6 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import me.alegian.thavma.impl.common.recipe.WorkbenchRecipe
 import me.alegian.thavma.impl.integration.emi.EmiAspectWidget
-import me.alegian.thavma.impl.integration.emi.T7EmiCategories
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 

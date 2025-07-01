@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import me.alegian.thavma.impl.integration.jei.category.CrucibleRecipeCategory
 import me.alegian.thavma.impl.integration.jei.category.InfusionRecipeCategory
-import me.alegian.thavma.impl.integration.jei.category.T7JEICategories
+import me.alegian.thavma.impl.integration.jei.category.T7JeiCategories
 import me.alegian.thavma.impl.integration.jei.category.WorkbenchRecipeCategory
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.IModPlugin
@@ -30,9 +30,9 @@ internal class T7JEIPlugin : IModPlugin {
 
   override fun registerRecipes(registration: IRecipeRegistration) {
     val level = Minecraft.getInstance().level ?: return
-    registration.addRecipes(T7JEICategories.WORKBENCH, level.recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
-    registration.addRecipes(T7JEICategories.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
-    registration.addRecipes(T7JEICategories.INFUSION, level.recipeManager.getAllRecipesFor(T7RecipeTypes.INFUSION.get()))
+    registration.addRecipes(T7JeiCategories.WORKBENCH, level.recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
+    registration.addRecipes(T7JeiCategories.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
+    registration.addRecipes(T7JeiCategories.INFUSION, level.recipeManager.getAllRecipesFor(T7RecipeTypes.INFUSION.get()))
 
     registration.addIngredientInfo(T7Items.ROTTEN_BRAIN.get(), Component.translatable(JEIDescriptions.ROTTEN_BRAIN))
     registration.addIngredientInfo(T7Items.BOOK.get(), Component.translatable(JEIDescriptions.BOOK))
@@ -47,9 +47,9 @@ internal class T7JEIPlugin : IModPlugin {
   }
 
   override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-    registration.addRecipeCatalyst(T7Blocks.ARCANE_WORKBENCH, T7JEICategories.WORKBENCH)
-    registration.addRecipeCatalyst(T7Blocks.CRUCIBLE, T7JEICategories.CRUCIBLE)
-    registration.addRecipeCatalyst(T7Blocks.MATRIX, T7JEICategories.INFUSION)
+    registration.addRecipeCatalyst(T7Blocks.ARCANE_WORKBENCH, T7JeiCategories.WORKBENCH)
+    registration.addRecipeCatalyst(T7Blocks.CRUCIBLE, T7JeiCategories.CRUCIBLE)
+    registration.addRecipeCatalyst(T7Blocks.MATRIX, T7JeiCategories.INFUSION)
   }
 
   override fun registerIngredientAliases(registration: IIngredientAliasRegistration) {

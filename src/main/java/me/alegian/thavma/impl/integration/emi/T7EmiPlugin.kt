@@ -7,6 +7,8 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.stack.EmiStack
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.emi.recipe.CrucibleEmiRecipe
+import me.alegian.thavma.impl.integration.emi.recipe.T7EmiCategories
 import me.alegian.thavma.impl.integration.emi.recipe.WorkbenchEmiRecipe
 import net.minecraft.world.level.ItemLike
 
@@ -24,6 +26,8 @@ internal class T7EmiPlugin : EmiPlugin {
     val recipeManager = registry.recipeManager
     for (workbenchRecipe in recipeManager.getAllRecipesFor(T7RecipeTypes.WORKBENCH.get()))
       registry.addRecipe(WorkbenchEmiRecipe(workbenchRecipe))
+    for (crucibleRecipe in recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
+      registry.addRecipe(CrucibleEmiRecipe(crucibleRecipe))
   }
 }
 

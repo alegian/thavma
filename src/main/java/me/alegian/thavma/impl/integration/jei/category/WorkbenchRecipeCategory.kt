@@ -4,7 +4,7 @@ import me.alegian.thavma.impl.common.recipe.WorkbenchRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.integration.jei.AspectWidget
+import me.alegian.thavma.impl.integration.jei.JeiAspectWidget
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -20,7 +20,7 @@ private const val WIDTH = 116
 private const val HEIGHT = 3 * SLOT + PADDING + ASPECT
 
 internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<WorkbenchRecipe>>(
-  T7JEICategories.WORKBENCH,
+  T7JeiCategories.WORKBENCH,
   Component.translatable(T7RecipeTypes.WORKBENCH.get().translationId),
   guiHelper.createDrawableItemLike(ARCANE_WORKBENCH),
   WIDTH,
@@ -49,6 +49,6 @@ internal class WorkbenchRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCa
     arrow.setPosition(61, (3 * SLOT - arrow.height) / 2)
 
     for ((i, stack) in recipe.value().aspects.withIndex())
-      builder.addWidget(AspectWidget(stack, i * ASPECT, 3 * SLOT + PADDING))
+      builder.addWidget(JeiAspectWidget(stack, i * ASPECT, 3 * SLOT + PADDING))
   }
 }

@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.common.recipe.InfusionRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.jei.JeiAspectWidget
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -26,7 +27,7 @@ private const val WIDTH = 2 * RADIUS + 2 * PADDING + ARROW + SLOT + RESULT_SLOT
 private const val HEIGHT = 2 * RADIUS + SLOT + PADDING + ASPECT
 
 internal class InfusionRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<InfusionRecipe>>(
-  T7JEICategories.INFUSION,
+  T7JeiCategories.INFUSION,
   Component.translatable(T7RecipeTypes.INFUSION.get().translationId),
   guiHelper.createDrawableItemLike(T7Blocks.MATRIX),
   WIDTH,
@@ -57,6 +58,6 @@ internal class InfusionRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
     builder.addRecipeArrow().setPosition(2 * RADIUS + SLOT + PADDING, RADIUS)
 
     for ((i, stack) in recipe.value.aspects.withIndex())
-      builder.addWidget(_root_ide_package_.me.alegian.thavma.impl.integration.jei.AspectWidget(stack, i * ASPECT, 2 * RADIUS + SLOT + PADDING))
+      builder.addWidget(JeiAspectWidget(stack, i * ASPECT, 2 * RADIUS + SLOT + PADDING))
   }
 }

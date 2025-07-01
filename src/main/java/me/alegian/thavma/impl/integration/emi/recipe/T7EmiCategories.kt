@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.integration.emi
+package me.alegian.thavma.impl.integration.emi.recipe
 
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.stack.EmiStack

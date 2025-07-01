@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.navigation.ScreenPosition
 import net.minecraft.network.chat.Component
 
-class AspectWidget(private val aspectStack: AspectStack, private val x: Int, private val y: Int) : IRecipeWidget {
+class JeiAspectWidget(private val aspectStack: AspectStack, private val x: Int, private val y: Int) : IRecipeWidget {
   override fun getPosition() = ScreenPosition(x, y)
 
   override fun drawWidget(guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double) {

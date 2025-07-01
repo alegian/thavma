@@ -18,7 +18,7 @@ class CrucibleRecipe(aspects: AspectMap, val catalyst: Ingredient, result: ItemS
 
   override fun matches(input: SingleRecipeInput, level: Level) = catalyst.test(input.getItem(0))
 
-  override fun getIngredients() = NonNullList.of(this.catalyst)
+  override fun getIngredients() = NonNullList.copyOf(listOf(catalyst))
 
   override fun getSerializer() = T7RecipeSerializers.CRUCIBLE.get()
 

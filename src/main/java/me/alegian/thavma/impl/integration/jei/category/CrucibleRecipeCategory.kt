@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.common.recipe.CrucibleRecipe
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.integration.jei.JeiAspectWidget
 import me.alegian.thavma.impl.rl
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -21,7 +22,7 @@ private const val PADDING = 8
 private const val HEIGHT = RESULT_SLOT + PADDING + ASPECT
 
 internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCategory<RecipeHolder<CrucibleRecipe>>(
-  T7JEICategories.CRUCIBLE,
+  T7JeiCategories.CRUCIBLE,
   Component.translatable(T7RecipeTypes.CRUCIBLE.get().translationId),
   guiHelper.createDrawableItemLike(T7Blocks.CRUCIBLE),
   WIDTH,
@@ -40,12 +41,12 @@ internal class CrucibleRecipeCategory(guiHelper: IGuiHelper) : AbstractRecipeCat
   }
 
   override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<CrucibleRecipe>, focuses: IFocusGroup) {
-    val arrow = builder.addDrawable(arrowsDrawable)
-    arrow.setPosition((width + SLOT - RESULT_SLOT - arrowsDrawable.width) / 2, (RESULT_SLOT - arrowsDrawable.height) / 2)
+    val arrows = builder.addDrawable(arrowsDrawable)
+    arrows.setPosition((width + SLOT - RESULT_SLOT - arrowsDrawable.width) / 2, (RESULT_SLOT - arrowsDrawable.height) / 2)
 
     // offset centers aspects
     val offsetX = (width + SLOT - RESULT_SLOT - recipe.value.aspects.size * ASPECT) / 2
     for ((i, stack) in recipe.value.aspects.withIndex())
-      builder.addWidget(_root_ide_package_.me.alegian.thavma.impl.integration.jei.AspectWidget(stack, offsetX + i * ASPECT, RESULT_SLOT + PADDING))
+      builder.addWidget(JeiAspectWidget(stack, offsetX + i * ASPECT, RESULT_SLOT + PADDING))
   }
 }

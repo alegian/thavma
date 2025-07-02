@@ -32,8 +32,15 @@ jobs:
         run: |
           FILE=$(find build/libs -name "*.jar" | head -n 1)
           echo "asset=$FILE" >> $GITHUB_OUTPUT
-      - name: Upload jar and create Release
+      - name: Upload jar to Github Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.find_file.outputs.asset }}
           make_latest: true
+      - name: Release on Curseforge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          files: ${{ steps.find_file.outputs.asset }}
+          version-type: release
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}

@@ -88,3 +88,7 @@ curseforge = "emi"
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
+
+[mc-publish]
+curseforge = "1271073"
+modrinth = "pGCxoM3B"

@@ -96,7 +96,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
 import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
-import me.alegian.thavma.impl.integration.jei.JEIDescriptions
+import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -291,15 +291,15 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7RecipeTypes.INFUSION.get().translationId, "Infusion")
     add(T7RecipeTypes.CRUCIBLE.get().translationId, "Crucible")
 
-    add(JEIDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
-    add(JEIDescriptions.BOOK, "Right click a bookcase with a wand to obtain!")
-    add(JEIDescriptions.ARCANE_WORKBENCH, "Right click a crafting table with a wand to convert it to an arcane workbench.")
-    add(JEIDescriptions.CRUCIBLE, "Right click a cauldron with a wand to convert it to a crucible.")
-    add(JEIDescriptions.RESEARCH_TABLE, "Can be formed by placing 2 tables next to each other, and right clicking one with a wand.")
-    add(JEIDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
-    add(JEIDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
-    add(JEIDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
-    add(JEIDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
+    add(RecipeViewerDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
+    add(RecipeViewerDescriptions.BOOK, "Right click a bookcase with a wand to obtain!")
+    add(RecipeViewerDescriptions.ARCANE_WORKBENCH, "Right click a crafting table with a wand to convert it to an arcane workbench.")
+    add(RecipeViewerDescriptions.CRUCIBLE, "Right click a cauldron with a wand to convert it to a crucible.")
+    add(RecipeViewerDescriptions.RESEARCH_TABLE, "Can be formed by placing 2 tables next to each other, and right clicking one with a wand.")
+    add(RecipeViewerDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
+    add(RecipeViewerDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
+    add(RecipeViewerDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
+    add(RecipeViewerDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
 
     add(RecipeViewerAliases.BOOK, "Book")
     add(RecipeViewerAliases.ORE, "Ore")

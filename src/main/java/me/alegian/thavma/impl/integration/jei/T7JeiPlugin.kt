@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
+import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import me.alegian.thavma.impl.integration.jei.recipe.CrucibleRecipeCategory
 import me.alegian.thavma.impl.integration.jei.recipe.InfusionRecipeCategory
 import me.alegian.thavma.impl.integration.jei.recipe.T7JeiCategories
@@ -35,16 +36,16 @@ internal class T7JeiPlugin : IModPlugin {
     registration.addRecipes(T7JeiCategories.CRUCIBLE, level.recipeManager.getAllRecipesFor(T7RecipeTypes.CRUCIBLE.get()))
     registration.addRecipes(T7JeiCategories.INFUSION, level.recipeManager.getAllRecipesFor(T7RecipeTypes.INFUSION.get()))
 
-    registration.addIngredientInfo(T7Items.ROTTEN_BRAIN.get(), Component.translatable(JEIDescriptions.ROTTEN_BRAIN))
-    registration.addIngredientInfo(T7Items.BOOK.get(), Component.translatable(JEIDescriptions.BOOK))
-    registration.addIngredientInfo(T7Blocks.ARCANE_WORKBENCH.get(), Component.translatable(JEIDescriptions.ARCANE_WORKBENCH))
-    registration.addIngredientInfo(T7Blocks.RESEARCH_TABLE.get(), Component.translatable(JEIDescriptions.RESEARCH_TABLE))
-    registration.addIngredientInfo(T7Blocks.CRUCIBLE.get(), Component.translatable(JEIDescriptions.CRUCIBLE))
-    registration.addIngredientInfo(T7Blocks.GREATWOOD_LOG.get(), Component.translatable(JEIDescriptions.GREATWOOD))
-    registration.addIngredientInfo(T7Blocks.SILVERWOOD_LOG.get(), Component.translatable(JEIDescriptions.SILVERWOOD))
-    registration.addIngredientInfo(T7Blocks.PILLAR.get(), Component.translatable(JEIDescriptions.PILLAR))
+    registration.addIngredientInfo(T7Items.ROTTEN_BRAIN, Component.translatable(RecipeViewerDescriptions.ROTTEN_BRAIN))
+    registration.addIngredientInfo(T7Items.BOOK, Component.translatable(RecipeViewerDescriptions.BOOK))
+    registration.addIngredientInfo(T7Blocks.ARCANE_WORKBENCH, Component.translatable(RecipeViewerDescriptions.ARCANE_WORKBENCH))
+    registration.addIngredientInfo(T7Blocks.RESEARCH_TABLE, Component.translatable(RecipeViewerDescriptions.RESEARCH_TABLE))
+    registration.addIngredientInfo(T7Blocks.CRUCIBLE, Component.translatable(RecipeViewerDescriptions.CRUCIBLE))
+    registration.addIngredientInfo(T7Blocks.GREATWOOD_LOG, Component.translatable(RecipeViewerDescriptions.GREATWOOD))
+    registration.addIngredientInfo(T7Blocks.SILVERWOOD_LOG, Component.translatable(RecipeViewerDescriptions.SILVERWOOD))
+    registration.addIngredientInfo(T7Blocks.PILLAR, Component.translatable(RecipeViewerDescriptions.PILLAR))
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
-      registration.addIngredientInfo(infusedBlock.get(), Component.translatable(JEIDescriptions.INFUSED_STONES))
+      registration.addIngredientInfo(infusedBlock, Component.translatable(RecipeViewerDescriptions.INFUSED_STONES))
   }
 
   override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

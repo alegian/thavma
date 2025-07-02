@@ -1,8 +1,8 @@
-package me.alegian.thavma.impl.integration.jei
+package me.alegian.thavma.impl.integration
 
-private const val PREFIX = "jei.thavma.description."
+private const val PREFIX = "recipe_viewer.thavma.description."
 
-object JEIDescriptions {
+object RecipeViewerDescriptions {
   val ROTTEN_BRAIN = PREFIX + "rotten_brain"
   val BOOK = PREFIX + "book"
   val ARCANE_WORKBENCH = PREFIX + "arcane_workbench"

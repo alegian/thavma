@@ -11,6 +11,6 @@ import java.util.concurrent.CompletableFuture
 
 class T7FluidTagProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>, existingFileHelper: ExistingFileHelper) : FluidTagsProvider(output, lookupProvider, Thavma.MODID, existingFileHelper) {
   override fun addTags(pProvider: HolderLookup.Provider) {
-    tag(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCE).addTag(FluidTags.LAVA)
+    tag(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCES).addTag(FluidTags.LAVA)
   }
 }

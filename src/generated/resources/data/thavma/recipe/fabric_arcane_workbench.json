@@ -9,7 +9,7 @@
   },
   "key": {
     "s": {
-      "tag": "thavma:shard"
+      "tag": "thavma:shards"
     },
     "w": {
       "tag": "minecraft:wool"

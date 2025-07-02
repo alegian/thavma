@@ -49,14 +49,14 @@ import java.util.concurrent.CompletableFuture
 
 class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<HolderLookup.Provider?>, pBlockTags: CompletableFuture<TagLookup<Block?>?>, pExistingFileHelper: ExistingFileHelper?) : ItemTagsProvider(pOutput, pLookupProvider, pBlockTags, Thavma.MODID, pExistingFileHelper) {
   override fun addTags(lookupProvider: HolderLookup.Provider) {
-    tag(T7Tags.Items.WAND_HANDLE).add(
+    tag(T7Tags.Items.WAND_HANDLES).add(
       IRON_HANDLE.get(),
       GOLD_HANDLE.get(),
       ORICHALCUM_HANDLE.get(),
       THAVMITE_HANDLE.get()
     )
 
-    tag(T7Tags.Items.WAND_CORE)
+    tag(T7Tags.Items.WAND_CORES)
       .addTag(Tags.Items.RODS_WOODEN)
       .add(
         GREATWOOD_CORE.get(),
@@ -64,9 +64,9 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       )
 
     for (shard in SHARDS.values)
-      tag(T7Tags.Items.SHARD).add(shard.get())
+      tag(T7Tags.Items.SHARDS).add(shard.get())
 
-    tag(Tags.Items.GEMS).addTag(T7Tags.Items.SHARD)
+    tag(Tags.Items.GEMS).addTag(T7Tags.Items.SHARDS)
 
     tag(Tags.Items.INGOTS).add(
       THAVMITE_INGOT.get(),
@@ -112,7 +112,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       THAVMITE_VANGUARD_HELMET.get()
     )
 
-    tag(T7Tags.Items.CATALYST).add(
+    tag(T7Tags.Items.CATALYSTS).add(
       Items.GLOWSTONE_DUST,
       Items.IRON_INGOT,
       Items.COPPER_INGOT,

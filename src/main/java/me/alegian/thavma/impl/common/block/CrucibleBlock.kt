@@ -161,7 +161,7 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
       val thrownStack = itemEntity.item
 
       // try to use as catalyst
-      if (thrownStack.`is`(T7Tags.Items.CATALYST)) {
+      if (thrownStack.`is`(T7Tags.Items.CATALYSTS)) {
         val crucibleAspects = AspectContainer.at(level, pPos)?.aspects ?: return
 
         val input = SingleRecipeInput(thrownStack)
@@ -224,9 +224,9 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
 
     protected fun isHeatSource(level: LevelAccessor, pos: BlockPos): Boolean {
       val bs = level.getBlockState(pos)
-      val bsHeat = bs.`is`(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCE)
+      val bsHeat = bs.`is`(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCES)
       val fs = level.getFluidState(pos)
-      val fsHeat = fs.`is`(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCE)
+      val fsHeat = fs.`is`(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCES)
       return bsHeat || fsHeat
     }
   }

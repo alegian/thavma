@@ -174,5 +174,14 @@
   "research/entry.thavma.thavma.thavma.page0.paragraph2": "To read them, I will first need to break that seal. It won't be easy... but I have a feeling it will be worth my efforts.",
   "research/entry.thavma.thavma.thavma.page0.title": "Thavma",
   "research/entry.thavma.thavma.thavma.page1.paragraph0": "I will document all my findings inside the book, so that I can recall them later.",
+  "tag.block.thavma.crucible_heat_sources": "Crucible Block Heat Sources",
+  "tag.block.thavma.infused_stones": "Infused Stones",
+  "tag.fluid.thavma.crucible_heat_sources": "Crucible Fluid Heat Sources",
+  "tag.item.thavma.catalysts": "Crucible Catalysts",
+  "tag.item.thavma.goggles": "Goggles of Revealing",
+  "tag.item.thavma.infused_stones": "Infused Stones",
+  "tag.item.thavma.shards": "Elemental Shards",
+  "tag.item.thavma.wand_cores": "Wand Cores",
+  "tag.item.thavma.wand_handles": "Wand Handles",
   "thavma": "Thavma"
 }

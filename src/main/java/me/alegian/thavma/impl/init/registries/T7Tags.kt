@@ -11,19 +11,19 @@ object T7Tags {
 
   object Items {
     val INFUSED_STONES = TagKey.create(Registries.ITEM, rl("infused_stones"))
-    val WAND_HANDLE = TagKey.create(Registries.ITEM, rl("wand_handle"))
-    val WAND_CORE = TagKey.create(Registries.ITEM, rl("wand_core"))
-    val SHARD = TagKey.create(Registries.ITEM, rl("shard"))
-    val CATALYST = TagKey.create(Registries.ITEM, rl("catalyst"))
+    val WAND_HANDLES = TagKey.create(Registries.ITEM, rl("wand_handles"))
+    val WAND_CORES = TagKey.create(Registries.ITEM, rl("wand_cores"))
+    val SHARDS = TagKey.create(Registries.ITEM, rl("shards"))
+    val CATALYSTS = TagKey.create(Registries.ITEM, rl("catalysts"))
     val GOGGLES = TagKey.create(Registries.ITEM, rl("goggles"))
   }
 
   object Blocks {
     val INFUSED_STONES = TagKey.create(Registries.BLOCK, rl("infused_stones"))
-    val CRUCIBLE_HEAT_SOURCE = TagKey.create(Registries.BLOCK, rl("crucible_heat_source"))
+    val CRUCIBLE_HEAT_SOURCES = TagKey.create(Registries.BLOCK, rl("crucible_heat_sources"))
   }
 
   object Fluids {
-    val CRUCIBLE_HEAT_SOURCE = TagKey.create(Registries.FLUID, rl("crucible_heat_source"))
+    val CRUCIBLE_HEAT_SOURCES = TagKey.create(Registries.FLUID, rl("crucible_heat_sources"))
   }
 }

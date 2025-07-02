@@ -14,6 +14,7 @@ import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
@@ -305,6 +306,16 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(RecipeViewerAliases.ORE, "Ore")
 
     add(T7KeyMappings.FOCI.name, "Wand Foci Wheel")
+
+    add(T7Tags.Blocks.INFUSED_STONES, "Infused Stones")
+    add(T7Tags.Items.INFUSED_STONES, "Infused Stones")
+    add(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCES, "Crucible Block Heat Sources")
+    add(T7Tags.Fluids.CRUCIBLE_HEAT_SOURCES, "Crucible Fluid Heat Sources")
+    add(T7Tags.Items.GOGGLES, "Goggles of Revealing")
+    add(T7Tags.Items.SHARDS, "Elemental Shards")
+    add(T7Tags.Items.WAND_CORES, "Wand Cores")
+    add(T7Tags.Items.WAND_HANDLES, "Wand Handles")
+    add(T7Tags.Items.CATALYSTS, "Crucible Catalysts")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

@@ -43,7 +43,7 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
     for (infusedStone in INFUSED_STONES.values)
       tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(infusedStone.get())
 
-    tag(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCE)
+    tag(T7Tags.Blocks.CRUCIBLE_HEAT_SOURCES)
       .addTag(BlockTags.FIRE)
       .addTag(BlockTags.CAMPFIRES)
       .add(T7Blocks.ETERNAL_FLAME.get())

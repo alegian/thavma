@@ -78,5 +78,7 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
     currentTab?.zoom(scrollY)
     return true
   }
+
+  override fun isPauseScreen() = false
 }
 

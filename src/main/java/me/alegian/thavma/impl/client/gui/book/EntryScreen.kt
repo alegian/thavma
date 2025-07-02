@@ -4,7 +4,6 @@ import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
-import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.Screen
@@ -63,9 +62,7 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
     return super.addRenderableOnly(renderable)
   }
 
-  fun getFont(): Font {
-    return font
-  }
+  fun getFont() = font
 
   // wrapper around unchecked cast
   private fun <T : Page?> initPage(page: T) {
@@ -73,4 +70,6 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
     val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
     renderer.initPage(this, page)
   }
+
+  override fun isPauseScreen() = false
 }

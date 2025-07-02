@@ -12,6 +12,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.entity.setKnowledge
 import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
@@ -85,6 +86,8 @@ private fun gatherTooltipComponents(event: GatherComponents) {
   }
 
   if (!Screen.hasShiftDown()) return
+  val player = Minecraft.getInstance().player ?: return
+  if (!player.isCreative && !player.hasScanned(event.itemStack)) return
 
   event.tooltipElements.addLast(Either.right(AspectTooltipComponent(event.itemStack)))
 }
@@ -112,9 +115,9 @@ private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
   event.newPlayer.setKnowledge(oldKnowledge)
 }
 
-private fun clientTick(event: ClientTickEvent.Post){
+private fun clientTick(event: ClientTickEvent.Post) {
   val mc = Minecraft.getInstance()
-  if(T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null && clientPlayerHoldingWand())
+  if (T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null && clientPlayerHoldingWand())
     mc.setScreen(FociScreen())
 }
 

@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "*.*.*-*.*.*" # Just reusing the already existing version codes (e.g.: 1.21.1-0.6.0), all that is needed to create a release is to make a new git tag following this format
+  release:
+    types: [ published ]
 
 permissions:
   contents: write
@@ -16,8 +15,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          ref: ${{ github.ref }}
-
       - name: Setup JDK
         uses: actions/setup-java@v2
         with:

@@ -14,14 +14,20 @@ import java.util.function.Function
 
 object T7RenderTypes {
   val AURA_NODE: RenderType = RenderType.create(
-    Thavma.MODID + "_aura_node", T7VertexFormats.AURA_NODE, VertexFormat.Mode.TRIANGLES, RenderType.SMALL_BUFFER_SIZE, false, true, auraNodeState()
+    Thavma.MODID + "_aura_node",
+    T7VertexFormats.AURA_NODE,
+    VertexFormat.Mode.TRIANGLES,
+    RenderType.SMALL_BUFFER_SIZE,
+    false,
+    true,
+    auraNodeState()
   )
 
   val TRANSLUCENT_TRIANGLES: RenderType = RenderType.create(
     Thavma.MODID + "_vis",
     DefaultVertexFormat.POSITION_COLOR,
     VertexFormat.Mode.TRIANGLE_STRIP,
-    1536,
+    RenderType.TRANSIENT_BUFFER_SIZE,
     false,
     true,
     CompositeState.builder()
@@ -43,7 +49,7 @@ object T7RenderTypes {
       Thavma.MODID + "_eyes_with_depth",
       DefaultVertexFormat.NEW_ENTITY,
       VertexFormat.Mode.QUADS,
-      1536,
+      RenderType.TRANSIENT_BUFFER_SIZE,
       false,
       true,
       CompositeState.builder()

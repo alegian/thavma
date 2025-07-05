@@ -19,15 +19,23 @@ object T7RenderTypes {
     VertexFormat.Mode.TRIANGLES,
     RenderType.SMALL_BUFFER_SIZE,
     false,
-    true,
-    auraNodeState()
+    false,
+    CompositeState.builder()
+      .setShaderState(T7RenderStateShards.AURA_NODE_SHADER)
+      .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+      .setTextureState(RenderStateShard.NO_TEXTURE)
+      .setDepthTestState(T7RenderStateShards.NOT_EQUAL_DEPTH_TEST) // alpha colors do not stack in aura node layers, and aura nodes can be seen through blocks
+      .setOutputState(RenderStateShard.TRANSLUCENT_TARGET)
+      .setCullState(RenderStateShard.NO_CULL)
+      .createCompositeState(false)
   )
 
-  val TRANSLUCENT_TRIANGLES: RenderType = RenderType.create(
-    Thavma.MODID + "_vis",
+  // batch rendered
+  val FLYING_ASPECTS: RenderType = RenderType.create(
+    Thavma.MODID + "_flying_aspects",
     DefaultVertexFormat.POSITION_COLOR,
     VertexFormat.Mode.QUADS,
-    RenderType.TRANSIENT_BUFFER_SIZE,
+    RenderType.BIG_BUFFER_SIZE,
     false,
     true,
     CompositeState.builder()
@@ -62,15 +70,4 @@ object T7RenderTypes {
   }
 
   val ANGRY_ZOMBIE_EYES: RenderType = RenderType.eyes(rl("textures/entity/angry_zombie_eyes.png"))
-
-  private fun auraNodeState(): CompositeState {
-    return CompositeState.builder()
-      .setShaderState(T7RenderStateShards.AURA_NODE_SHADER)
-      .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-      .setTextureState(RenderStateShard.NO_TEXTURE)
-      .setDepthTestState(T7RenderStateShards.NOT_EQUAL_DEPTH_TEST) // alpha colors do not stack in aura node layers, and aura nodes can be seen through blocks
-      .setOutputState(RenderStateShard.TRANSLUCENT_TARGET)
-      .setCullState(RenderStateShard.NO_CULL)
-      .createCompositeState(false)
-  }
 }

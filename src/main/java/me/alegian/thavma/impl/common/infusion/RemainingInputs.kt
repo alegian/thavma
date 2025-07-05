@@ -17,6 +17,6 @@ data class RemainingInputs(
       ).apply(it, ::RemainingInputs)
     }
 
-    fun of(recipe: InfusionRecipe) = RemainingInputs(recipe.ingredients, recipe.aspects)
+    fun of(recipe: InfusionRecipe) = RemainingInputs(recipe.components, recipe.aspects)
   }
 }

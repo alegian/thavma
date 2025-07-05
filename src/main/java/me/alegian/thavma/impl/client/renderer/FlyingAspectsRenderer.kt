@@ -1,4 +1,4 @@
-package me.alegian.thavma.impl.client.renderer.level
+package me.alegian.thavma.impl.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
@@ -35,8 +35,8 @@ private fun trajectory(start: Vec3, end: Vec3, height: Double): List<Vec3> {
   }
 }
 
-fun renderEssentia(start: Vec3, end: Vec3, trajectoryHeight: Double, headIndex: Int, length: Int, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int, radius: Double) {
-  val vc = multiBufferSource.getBuffer(T7RenderTypes.TRANSLUCENT_TRIANGLES)
+fun renderFlyingAspects(start: Vec3, end: Vec3, trajectoryHeight: Double, headIndex: Int, length: Int, poseStack: PoseStack, multiBufferSource: MultiBufferSource, ticks: Float, color: Int, radius: Double) {
+  val vc = multiBufferSource.getBuffer(T7RenderTypes.FLYING_ASPECTS)
   val traj = trajectory(start, end, trajectoryHeight)
 
   renderVariableRadiusCylinder(traj.subList(max(0, headIndex - length), headIndex + 1), vc, poseStack, ticks, color, radius)
@@ -59,7 +59,7 @@ private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsu
     val radius = oscillatingRadius(i, trajectory, ticks, baseRadius)
     val nextRadius = oscillatingRadius(i + 1, trajectory, ticks, baseRadius)
 
-    for (j in 0..CR0SS_AXIS_RESOLUTION) {
+    for (j in 0..CR0SS_AXIS_RESOLUTION - 1) {
       val angle = 2 * PI * j / CR0SS_AXIS_RESOLUTION
       val nextAngle = 2 * PI * (j + 1) / CR0SS_AXIS_RESOLUTION
 

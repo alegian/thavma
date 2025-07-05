@@ -240,7 +240,7 @@ class MatrixBE(
    * false -> dont
    */
   fun aspectPhaseTick(level: ServerLevel): Boolean {
-    val infusionState = get(INFUSION_STATE.get()) ?: return false
+    var infusionState = get(INFUSION_STATE.get()) ?: return false
     val remainingAspects = infusionState.remainingInputs.aspects
     val flyingAspects = infusionState.flyingAspects
     if (remainingAspects.isEmpty && flyingAspects.isEmpty()) return true
@@ -251,8 +251,9 @@ class MatrixBE(
 
     val currAspect = remainingAspects.firstOrNull()?.aspect ?: return false
 
-    // this line is expected to update currSourcePos as a side effect
+    // this line is expected to update prevSourcePos as a side effect
     val source = pickSource(currAspect, infusionState) ?: return false
+    infusionState = get(INFUSION_STATE.get()) ?: return false
     val sourcePos = infusionState.prevSourcePos ?: return false
     val extracted = extractFromSource(currAspect, source, infusionState) ?: return false
     level.updateBlockEntityS2C(sourcePos)
@@ -284,6 +285,7 @@ class MatrixBE(
     sendItemParticles(level, pedestalBE.blockPos, pedestalItemHandler.firstStack)
     if (itemDelay == 0) {
       pedestalItemHandler.extractItem(0, 1, false)
+      level.updateBlockEntityS2C(pedestalBE.blockPos)
       update(INFUSION_STATE) {
         it.copy(
           itemDelay = MAX_ITEM_DELAY,
@@ -295,6 +297,7 @@ class MatrixBE(
     } else {
       update(INFUSION_STATE) { it.copy(itemDelay = itemDelay - 1) }
     }
+    level.updateBlockEntityS2C(blockPos)
     return false
   }
 

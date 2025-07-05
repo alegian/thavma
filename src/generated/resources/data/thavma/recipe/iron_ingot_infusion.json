@@ -1,0 +1,25 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:aether": 16,
+    "thavma:ignis": 24
+  },
+  "base": {
+    "item": "minecraft:iron_ingot"
+  },
+  "components": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:iron_ingot"
+  }
+}

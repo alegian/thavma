@@ -19,7 +19,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTA
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
@@ -156,7 +155,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Blocks.PEDESTAL)
       .define('s', ELEMENTAL_STONE)
       .define('c', ELEMENTAL_CORE)
-      .define('-', ELEMENTAL_STONE_SLAB)
+      .define('-', T7Blocks.ELEMENTAL_STONE_SLAB)
       .pattern(" c ")
       .pattern(" s ")
       .pattern("-s-")
@@ -283,6 +282,15 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       AspectMap.builder()
         .add(PRAECANTATIO, 16)
         .add(PRAEMUNIO, 32)
+        .build(),
+    ).save(pRecipeOutput)
+    InfusionRecipeBuilder(
+      Items.IRON_INGOT,
+      Ingredient.of(Items.IRON_INGOT),
+      listOf(Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT)),
+      AspectMap.builder()
+        .add(AETHER, 16)
+        .add(IGNIS, 24)
         .build(),
     ).save(pRecipeOutput)
 

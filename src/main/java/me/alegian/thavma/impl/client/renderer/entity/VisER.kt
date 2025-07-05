@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.client.renderer.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.client.T7Colors
-import me.alegian.thavma.impl.client.renderer.level.renderEssentia
+import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
@@ -29,7 +29,7 @@ class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity
       val playerHandPos = preparePlayerHandPosition(pPartialTick, player)
       val length = trajectoryLength(visEntity.position(), playerHandPos)
       val colorWithAlpha = 0x44000000 or (T7Colors.PURPLE and 0xffffff)
-      renderEssentia(visEntity.position(), playerHandPos, 0.2, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, colorWithAlpha, 0.06)
+      renderFlyingAspects(visEntity.position(), playerHandPos, 0.2, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, colorWithAlpha, 0.06)
     }
   }
 

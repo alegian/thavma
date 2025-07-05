@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.client.renderer.geo.layer.EmissiveGeoLayer
 import me.alegian.thavma.impl.client.renderer.geo.layer.ItemRenderLayer
-import me.alegian.thavma.impl.client.renderer.level.renderEssentia
+import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
@@ -59,7 +59,7 @@ private class FlyingAspectsRenderLayer(renderer: MatrixBER) : GeoRenderLayer<Mat
         val aspect = flyingAspects[firstIndex]?.aspectStack?.aspect ?: continue
         val colorWithAlpha = 0x44000000 or (aspect.color and 0xffffff)
         if (head < 0) continue
-        renderEssentia(f.key, be.drainPos, 1.2, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha, 0.12)
+        renderFlyingAspects(f.key, be.drainPos, 1.2, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha, 0.12)
       }
     }
   }

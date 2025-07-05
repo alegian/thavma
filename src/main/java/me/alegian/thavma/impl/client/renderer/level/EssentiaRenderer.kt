@@ -42,7 +42,7 @@ fun renderEssentia(start: Vec3, end: Vec3, trajectoryHeight: Double, headIndex: 
   renderVariableRadiusCylinder(traj.subList(max(0, headIndex - length), headIndex + 1), vc, poseStack, ticks, color, radius)
 }
 
-private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsumer, poseStack: PoseStack, ticks: Float, color: Int, radius: Double) {
+private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsumer, poseStack: PoseStack, ticks: Float, color: Int, baseRadius: Double) {
   // we keep track of the previous normals to fix open ends in the cylinder, in non-linear trajectories
   var prevNormal1 = Vec3(0.0, 1.0, 0.0)
   var prevNormal2 = Vec3(1.0, 0.0, 0.0)
@@ -56,18 +56,23 @@ private fun renderVariableRadiusCylinder(trajectory: List<Vec3>, vc: VertexConsu
     val normal1 = (direction cross randomOtherDirection).normalize()
     val normal2 = (direction cross normal1).normalize()
 
-    val radius1 = oscillatingRadius(i, trajectory, ticks, radius)
-    val radius2 = oscillatingRadius(i + 1, trajectory, ticks, radius)
+    val radius = oscillatingRadius(i, trajectory, ticks, baseRadius)
+    val nextRadius = oscillatingRadius(i + 1, trajectory, ticks, baseRadius)
 
     for (j in 0..CR0SS_AXIS_RESOLUTION) {
       val angle = 2 * PI * j / CR0SS_AXIS_RESOLUTION
+      val nextAngle = 2 * PI * (j + 1) / CR0SS_AXIS_RESOLUTION
 
-      val prevNormalizedOffset = prevNormal1 * cos(angle) + prevNormal2 * sin(angle)
-      val normalizedOffset = normal1 * cos(angle) + normal2 * sin(angle)
+      val offset1 = prevNormal1 * cos(angle) + prevNormal2 * sin(angle)
+      val offset2 = prevNormal1 * cos(nextAngle) + prevNormal2 * sin(nextAngle)
+      val offset3 = normal1 * cos(nextAngle) + normal2 * sin(nextAngle)
+      val offset4 = normal1 * cos(angle) + normal2 * sin(angle)
 
-      // the first vertex uses the previous normals, to avoid open ends
-      vc.addVertex(poseStack, currentPoint + prevNormalizedOffset * radius1).setColor(color)
-      vc.addVertex(poseStack, nextPoint + normalizedOffset * radius2).setColor(color)
+      // the first vertices use the previous normals, to avoid open ends
+      vc.addVertex(poseStack, currentPoint + offset1 * radius).setColor(color)
+      vc.addVertex(poseStack, currentPoint + offset2 * radius).setColor(color)
+      vc.addVertex(poseStack, nextPoint + offset3 * nextRadius).setColor(color)
+      vc.addVertex(poseStack, nextPoint + offset4 * nextRadius).setColor(color)
     }
 
     prevNormal1 = normal1

@@ -26,7 +26,7 @@ object T7RenderTypes {
   val TRANSLUCENT_TRIANGLES: RenderType = RenderType.create(
     Thavma.MODID + "_vis",
     DefaultVertexFormat.POSITION_COLOR,
-    VertexFormat.Mode.TRIANGLE_STRIP,
+    VertexFormat.Mode.QUADS,
     RenderType.TRANSIENT_BUFFER_SIZE,
     false,
     true,

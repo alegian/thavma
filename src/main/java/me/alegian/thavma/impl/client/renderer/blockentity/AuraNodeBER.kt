@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
+import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.util.scale
 import me.alegian.thavma.impl.common.block.entity.AuraNodeBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
@@ -13,6 +14,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.util.Mth
 import net.neoforged.neoforge.client.model.data.ModelData
 import kotlin.math.max
+
+private const val MAX_ALPHA = 0.4f
 
 class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
   private var scale = 1f
@@ -56,12 +59,15 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       val rotation = Minecraft.getInstance().gameRenderer.mainCamera.rotation()
       poseStack.mulPose(rotation)
 
+      var alpha = 0.1f
+      if (clientPlayerHasRevealing()) alpha = MAX_ALPHA
+
       // empty nodes look like small black circles
       AspectContainer.from(be)?.aspects?.toSortedList()?.run {
         if (this.isNotEmpty())
           for (stack in this)
-            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, 0.4f, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
-        else renderAuraNodeLayer(poseStack, bufferSource, 0, 1f, 1f / AuraNodeBE.MAX_ASPECTS)
+            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
+        else renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
       }
     }
   }

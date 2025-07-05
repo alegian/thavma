@@ -220,6 +220,7 @@ private fun registerKeyMappings(event: RegisterKeyMappingsEvent){
 
 private fun registerRenderBuffers(event: RegisterRenderBuffersEvent){
   event.registerRenderBuffer(T7RenderTypes.FLYING_ASPECTS)
+  event.registerRenderBuffer(T7RenderTypes.AURA_NODE)
 }
 
 fun registerClientModEvents() {

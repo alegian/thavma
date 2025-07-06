@@ -18,6 +18,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.COGNITIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.EXANIMIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.GELUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HUMANUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
@@ -33,6 +34,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VACUOS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.VINCULUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VOLATUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -155,26 +157,33 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
       it.add(EXANIMIS, 4)
         .add(ALKIMIA, 4)
     }
-    i.item(Items.HEAVY_CORE) {
-      it.add(METALLUM, 16)
-        .add(DESIDERIUM, 8)
-        .add(VACUOS, 2)
-    }
     i.item(Items.SUGAR) {
       it.add(HERBA, 2)
         .add(VICTUS, 1)
     }
-    i.item(Items.PAPER){
+    i.item(Items.PAPER) {
       it.add(COGNITIO, 1)
         .add(HERBA, 1)
     }
-    i.item(Items.FIREWORK_ROCKET){
+    i.item(Items.FIREWORK_ROCKET) {
       it.add(POTENTIA, 1)
         .add(SENSUS, 1)
     }
-    i.item(Items.FIREWORK_STAR){
+    i.item(Items.FIREWORK_STAR) {
       it.add(POTENTIA, 1)
         .add(SENSUS, 2)
+    }
+    i.item(Items.SNOWBALL) { it.add(GELUM, 1) }
+
+    i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA, 2) }
+
+    i.item(Tags.Items.EGGS) { it.add(VICTUS, 4).add(BESTIA, 2) }
+
+    i.item(Items.END_CRYSTAL){
+      it.add(VITREUS, 14)
+        .add(POTENTIA, 8)
+        .add(ALIENIS, 4)
+        .add(IGNIS, 4)
     }
 
     b.block(Tags.Blocks.STONES) { it.add(TERRA, 4) }
@@ -222,8 +231,6 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(AETHER, 1)
     }
 
-    i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA, 2) }
-    i.item(Items.BAMBOO) { it.add(HERBA, 1) }
     b.block(BlockTags.PLANKS) { it.add(HERBA, 4) }
     b.block(BlockTags.LEAVES) { it.add(HERBA, 4) }
     b.block(BlockTags.SAPLINGS) { it.add(HERBA, 8).add(VICTUS, 4) }
@@ -248,12 +255,16 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
       it.add(BESTIA, 4).add(SENSUS, 2).add(FABRICO, 4)
     }
 
-    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 4) }
+    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 2) }
     b.block(Tags.Blocks.GLASS_PANES) { it.add(VITREUS, 1) }
 
     b.block(BlockTags.WOOL) { it.add(BESTIA, 8).add(FABRICO, 4) }
 
     b.block(Blocks.TORCH) { it.add(LUX, 4) }
+
+    b.block(Blocks.SNOW) { it.add(GELUM, 1) }
+    b.block(Blocks.SNOW_BLOCK) { it.add(GELUM, 4) }
+    b.block(Blocks.POWDER_SNOW) { it.add(GELUM, 2) }
 
     b.block(Blocks.BEDROCK) {
       it.add(VACUOS, 25)
@@ -297,7 +308,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(HERBA, 4)
         .add(PRAECANTATIO, 2)
     }
-    b.block(Blocks.CAULDRON) {
+    b.block(BlockTags.CAULDRONS) {
       it.add(METALLUM, 56)
         .add(ALKIMIA, 8)
     }
@@ -311,6 +322,21 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(VACUOS, 2)
         .add(PRAECANTATIO, 2)
     }
+    b.block(Blocks.TNT) {
+      it.add(POTENTIA, 20)
+        .add(TERRA, 1)
+    }
+    b.block(Blocks.TRIPWIRE_HOOK){
+      it.add(VINCULUM, 2)
+        .add(METALLUM, 2)
+    }
+    b.block(Blocks.HEAVY_CORE) {
+      it.add(METALLUM, 16)
+        .add(DESIDERIUM, 8)
+        .add(VACUOS, 2)
+    }
+    b.block(Blocks.BAMBOO) { it.add(HERBA, 1) }
+    b.block(BlockTags.BAMBOO_BLOCKS) { it.add(HERBA, 8) }
   }
 }
 

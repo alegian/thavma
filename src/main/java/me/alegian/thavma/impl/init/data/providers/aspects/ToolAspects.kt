@@ -4,8 +4,10 @@ import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
 import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AVERSIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.FABRICO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.INSTRUMENTUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
@@ -14,11 +16,13 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.PERMUTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TENEBRAE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 object ToolAspects {
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
@@ -220,6 +224,26 @@ object ToolAspects {
         it.add(METALLUM, 16)
           .add(AER, 8)
           .add(MOTUS, 8)
+      }
+      item(Items.TRIDENT){
+        it.add(METALLUM, 12)
+          .add(AQUA, 8)
+          .add(MOTUS, 8)
+      }
+      item(Tags.Items.TOOLS_BOW){
+        it.add(AVERSIO, 8)
+          .add(HERBA, 2)
+          .add(FABRICO, 2)
+      }
+      item(Tags.Items.TOOLS_CROSSBOW){
+        it.add(AVERSIO, 8)
+          .add(METALLUM, 4)
+          .add(FABRICO, 2)
+      }
+      item(Items.TOTEM_OF_UNDYING){
+        it.add(VICTUS, 16)
+          .add(PRAECANTATIO, 8)
+          .add(DESIDERIUM, 8)
       }
     }
   }

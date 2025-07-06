@@ -8,6 +8,14 @@
       "thavma:potentia": 4,
       "thavma:terra": 1
     },
+    "#c:eggs": {
+      "thavma:bestia": 2,
+      "thavma:victus": 4
+    },
+    "#c:ender_pearls": {
+      "thavma:alienis": 4,
+      "thavma:motus": 4
+    },
     "#c:feathers": {
       "thavma:aer": 4,
       "thavma:volatus": 4
@@ -74,15 +82,29 @@
       "thavma:terra": 2
     },
     "#c:rods/blaze": {
-      "thavma:ignis": 12,
-      "thavma:potentia": 8
+      "thavma:ignis": 8,
+      "thavma:potentia": 4
     },
     "#c:rods/breeze": {
-      "thavma:aer": 16,
+      "thavma:aer": 8,
       "thavma:motus": 4
     },
     "#c:rods/wooden": {
       "thavma:herba": 2
+    },
+    "#c:strings": {
+      "thavma:bestia": 1,
+      "thavma:fabrico": 1
+    },
+    "#c:tools/bow": {
+      "thavma:aversio": 8,
+      "thavma:fabrico": 2,
+      "thavma:herba": 2
+    },
+    "#c:tools/crossbow": {
+      "thavma:aversio": 8,
+      "thavma:fabrico": 2,
+      "thavma:metallum": 4
     },
     "#minecraft:arrows": {
       "thavma:aversio": 2,
@@ -104,8 +126,8 @@
     },
     "minecraft:blaze_powder": {
       "thavma:alkimia": 2,
-      "thavma:ignis": 4,
-      "thavma:potentia": 2
+      "thavma:ignis": 2,
+      "thavma:potentia": 1
     },
     "minecraft:chainmail_boots": {
       "thavma:metallum": 16,
@@ -174,14 +196,37 @@
       "thavma:desiderium": 16,
       "thavma:vitreus": 16
     },
+    "minecraft:end_crystal": {
+      "thavma:alienis": 4,
+      "thavma:ignis": 4,
+      "thavma:potentia": 8,
+      "thavma:vitreus": 14
+    },
+    "minecraft:ender_eye": {
+      "thavma:alienis": 4,
+      "thavma:motus": 4,
+      "thavma:praecantatio": 2
+    },
     "minecraft:fire_charge": {
       "thavma:aversio": 2,
       "thavma:ignis": 4,
       "thavma:potentia": 4
     },
+    "minecraft:firework_rocket": {
+      "thavma:potentia": 1,
+      "thavma:sensus": 1
+    },
+    "minecraft:firework_star": {
+      "thavma:potentia": 1,
+      "thavma:sensus": 2
+    },
     "minecraft:flint": {
       "thavma:instrumentum": 2,
       "thavma:terra": 4
+    },
+    "minecraft:ghast_tear": {
+      "thavma:alkimia": 4,
+      "thavma:exanimis": 4
     },
     "minecraft:golden_axe": {
       "thavma:desiderium": 24,
@@ -295,6 +340,11 @@
       "thavma:bestia": 56,
       "thavma:praemunio": 8
     },
+    "minecraft:mace": {
+      "thavma:aer": 8,
+      "thavma:metallum": 16,
+      "thavma:motus": 8
+    },
     "minecraft:netherite_axe": {
       "thavma:desiderium": 24,
       "thavma:instrumentum": 6,
@@ -354,9 +404,16 @@
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
     },
+    "minecraft:paper": {
+      "thavma:cognitio": 1,
+      "thavma:herba": 1
+    },
     "minecraft:rotten_flesh": {
       "thavma:exanimis": 2,
       "thavma:humanus": 2
+    },
+    "minecraft:snowball": {
+      "thavma:gelum": 1
     },
     "minecraft:stone_axe": {
       "thavma:instrumentum": 2,
@@ -378,8 +435,32 @@
       "thavma:aversio": 2,
       "thavma:terra": 8
     },
+    "minecraft:sugar": {
+      "thavma:herba": 2,
+      "thavma:victus": 1
+    },
+    "minecraft:totem_of_undying": {
+      "thavma:desiderium": 8,
+      "thavma:praecantatio": 8,
+      "thavma:victus": 16
+    },
+    "minecraft:trident": {
+      "thavma:aqua": 8,
+      "thavma:metallum": 12,
+      "thavma:motus": 8
+    },
+    "minecraft:turtle_helmet": {
+      "thavma:aqua": 5,
+      "thavma:bestia": 10,
+      "thavma:praemunio": 5
+    },
+    "minecraft:turtle_scute": {
+      "thavma:aqua": 1,
+      "thavma:bestia": 2,
+      "thavma:praemunio": 1
+    },
     "minecraft:wind_charge": {
-      "thavma:aer": 4,
+      "thavma:aer": 2,
       "thavma:motus": 1
     },
     "minecraft:wolf_armor": {

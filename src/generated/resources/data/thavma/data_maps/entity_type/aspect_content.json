@@ -30,15 +30,19 @@
     "minecraft:elder_guardian": {},
     "minecraft:ender_dragon": {},
     "minecraft:enderman": {
-      "thavma:alienis": 15,
-      "thavma:desiderium": 5,
-      "thavma:motus": 15
+      "thavma:alienis": 8,
+      "thavma:desiderium": 4,
+      "thavma:humanus": 4,
+      "thavma:motus": 12
     },
     "minecraft:endermite": {},
     "minecraft:evoker": {},
     "minecraft:fox": {},
     "minecraft:frog": {},
-    "minecraft:ghast": {},
+    "minecraft:ghast": {
+      "thavma:exanimis": 12,
+      "thavma:ignis": 8
+    },
     "minecraft:glow_squid": {},
     "minecraft:goat": {},
     "minecraft:guardian": {},

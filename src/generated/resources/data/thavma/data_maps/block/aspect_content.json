@@ -9,7 +9,7 @@
       "thavma:terra": 3
     },
     "#c:glass_blocks/cheap": {
-      "thavma:vitreus": 4
+      "thavma:vitreus": 2
     },
     "#c:glass_panes": {
       "thavma:vitreus": 1
@@ -118,6 +118,13 @@
       "thavma:potentia": 36,
       "thavma:terra": 9
     },
+    "#minecraft:bamboo_blocks": {
+      "thavma:herba": 8
+    },
+    "#minecraft:cauldrons": {
+      "thavma:alkimia": 8,
+      "thavma:metallum": 56
+    },
     "#minecraft:concrete_powder": {
       "thavma:terra": 3
     },
@@ -158,14 +165,13 @@
       "thavma:sensus": 4,
       "thavma:vitreus": 16
     },
+    "minecraft:bamboo": {
+      "thavma:herba": 1
+    },
     "minecraft:bedrock": {
       "thavma:tenebrae": 25,
       "thavma:terra": 25,
       "thavma:vacuos": 25
-    },
-    "minecraft:cauldron": {
-      "thavma:alkimia": 8,
-      "thavma:metallum": 56
     },
     "minecraft:coarse_dirt": {
       "thavma:terra": 3
@@ -185,6 +191,11 @@
       "thavma:herba": 2,
       "thavma:terra": 5
     },
+    "minecraft:heavy_core": {
+      "thavma:desiderium": 8,
+      "thavma:metallum": 16,
+      "thavma:vacuos": 2
+    },
     "minecraft:podzol": {
       "thavma:herba": 1,
       "thavma:terra": 5
@@ -198,6 +209,9 @@
     "minecraft:polished_granite": {
       "thavma:terra": 3
     },
+    "minecraft:powder_snow": {
+      "thavma:gelum": 2
+    },
     "minecraft:quartz_block": {
       "thavma:ignis": 4,
       "thavma:vitreus": 16
@@ -206,18 +220,37 @@
       "thavma:aer": 1,
       "thavma:herba": 5
     },
+    "minecraft:snow": {
+      "thavma:gelum": 1
+    },
+    "minecraft:snow_block": {
+      "thavma:gelum": 4
+    },
     "minecraft:stone_slab": {
       "thavma:terra": 2
     },
     "minecraft:stone_stairs": {
       "thavma:terra": 6
     },
+    "minecraft:sugar_cane": {
+      "thavma:aer": 1,
+      "thavma:aqua": 1,
+      "thavma:herba": 2
+    },
     "minecraft:tall_grass": {
       "thavma:aer": 1,
       "thavma:herba": 5
     },
+    "minecraft:tnt": {
+      "thavma:potentia": 20,
+      "thavma:terra": 1
+    },
     "minecraft:torch": {
       "thavma:lux": 4
+    },
+    "minecraft:tripwire_hook": {
+      "thavma:metallum": 2,
+      "thavma:vinculum": 2
     },
     "thavma:aer_infused_deepslate": {
       "thavma:aer": 4

@@ -103,11 +103,9 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   private fun renderEntry(guiGraphics: GuiGraphics) {
-    var alpha = 1f
-    if (unknown) alpha = 0.5f
-    RenderSystem.setShaderColor(1f, 1f, 1f, alpha)
-    RenderSystem.enableBlend()
-    RenderSystem.defaultBlendFunc()
+    var brightness = 1f
+    if (unknown) brightness = 0.4f
+    RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
 
     renderGridElement(
       guiGraphics,
@@ -117,14 +115,13 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       false
     )
 
-    RenderSystem.disableBlend()
-    resetRenderSystemColor()
-
     guiGraphics.usePose {
       scaleXY(1f / CELL_SIZE) // back to pixel space
       scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we dont want full size
       guiGraphics.renderItem(entry.icon, -8, -8)
     }
+
+    resetRenderSystemColor()
   }
 
   override fun playDownSound(handler: SoundManager) {

@@ -1,6 +1,7 @@
 {
   "category": "thavma:alchemy",
   "children": [],
+  "defaultKnown": true,
   "defaultResearchState": [
     {
       "aspect": "thavma:aqua",

@@ -3,6 +3,7 @@
   "children": [
     "thavma:thavma/arcane_lens"
   ],
+  "defaultKnown": false,
   "defaultResearchState": [
     {
       "aspect": "thavma:terra",

@@ -1,6 +1,7 @@
 {
   "category": "thavma:thavma",
   "children": [],
+  "defaultKnown": false,
   "defaultResearchState": [
     {
       "aspect": "thavma:instrumentum",

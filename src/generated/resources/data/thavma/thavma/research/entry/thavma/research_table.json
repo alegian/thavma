@@ -6,6 +6,7 @@
     "thavma:thavma/alchemy",
     "thavma:thavma/infusion"
   ],
+  "defaultKnown": false,
   "defaultResearchState": [
     {
       "aspect": "thavma:praecantatio",

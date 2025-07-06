@@ -4,6 +4,7 @@
     "thavma:thavma/trees",
     "thavma:thavma/ores"
   ],
+  "defaultKnown": true,
   "defaultResearchState": [
     {
       "aspect": "thavma:aether",

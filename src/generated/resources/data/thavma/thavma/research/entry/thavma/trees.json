@@ -3,6 +3,7 @@
   "children": [
     "thavma:thavma/research_table"
   ],
+  "defaultKnown": false,
   "defaultResearchState": [
     {
       "aspect": "thavma:herba",

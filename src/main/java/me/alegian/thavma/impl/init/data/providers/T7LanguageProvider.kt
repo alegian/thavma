@@ -287,6 +287,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
+    add(ResearchEntry.SCROLL_GIVEN_TRANSLATION, "You have received a research scroll")
 
     add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")
     add(T7RecipeTypes.INFUSION.get().translationId, "Infusion")

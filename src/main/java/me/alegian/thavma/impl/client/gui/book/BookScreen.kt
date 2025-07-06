@@ -1,9 +1,12 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.clientRegistry
+import me.alegian.thavma.impl.common.entity.hasKnowledge
 import me.alegian.thavma.impl.common.research.ResearchCategory
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -22,16 +25,26 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
 
   override fun init() {
     super.init()
+    val player = Minecraft.getInstance().player ?: return
 
     entryWidgets.clear()
     selectorOffset = cornerHeight + selectorGap
 
-    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.entrySet()?.forEach { (key) ->
-      tabs[key] = addRenderableOnly(TabRenderable(this, key))
+    clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)?.registryKeySet()?.forEach {
+      tabs[it] = addRenderableOnly(TabRenderable(this, it))
     }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.forEach {
-      val tab = tabs[it.category]
-      if (tab != null) entryWidgets.add(addRenderableWidget(EntryWidget.of(this, tab, it)))
+    val parentsKnown = mutableMapOf<ResourceKey<ResearchEntry>, Boolean>()
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.forEach { (key, entry) ->
+      if (player.hasKnowledge(key))
+        for (child in entry.children)
+          parentsKnown[child] = true
+    }
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.forEach { (key, entry) ->
+      val tab = tabs[entry.category]
+      val known = player.hasKnowledge(key)
+      val parentKnown = parentsKnown[key] == true
+      if (tab != null && (known || parentKnown))
+        entryWidgets.add(addRenderableWidget(EntryWidget.of(this, tab, entry, !known)))
     }
     updateEntryWidgets()
 

@@ -120,6 +120,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
@@ -164,6 +165,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
         ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .defaultKnown()
           .build(ctx)
       }
   }
@@ -178,6 +180,7 @@ private class ResearchEntryBuilder(
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
   private val pages = mutableListOf<Page>()
   private val socketStates = mutableListOf<SocketState>()
+  private var defaultKnown = false
 
   fun addChild(entryKey: ResourceKey<ResearchEntry>): ResearchEntryBuilder {
     children.add(entryKey)
@@ -194,8 +197,13 @@ private class ResearchEntryBuilder(
     return this
   }
 
+  fun defaultKnown(): ResearchEntryBuilder {
+    defaultKnown = true
+    return this
+  }
+
   fun build(ctx: BootstrapContext<ResearchEntry>) = ResearchEntries.CATEGORIES[key]?.let { cat ->
-    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates))
+    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates, defaultKnown))
   }
 }
 

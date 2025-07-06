@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.research
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
@@ -21,7 +22,8 @@ class ResearchEntry(
   val pages: List<Page>,
   val icon: ItemStack,
   val title: Component,
-  val defaultResearchState: List<SocketState>
+  val defaultResearchState: List<SocketState>,
+  val defaultKnown: Boolean
 ) {
   private var resolvedChildren: List<ResearchEntry>? = null
 
@@ -35,13 +37,15 @@ class ResearchEntry(
         Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
         ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
         ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title),
-        SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState)
+        SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState),
+        Codec.BOOL.fieldOf("defaultKnown").forGetter(ResearchEntry::defaultKnown),
       ).apply(it, ::ResearchEntry)
     }
 
     fun translationId(entryKey: ResourceKey<ResearchEntry>) = Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
 
-    val TOAST_TRANSLATION = "research.toast"
+    val TOAST_TRANSLATION = "research." + Thavma.MODID + ".toast"
+    val SCROLL_GIVEN_TRANSLATION = "research." + Thavma.MODID + ".scroll_given"
   }
 
   fun resolveChildren(): List<ResearchEntry> {

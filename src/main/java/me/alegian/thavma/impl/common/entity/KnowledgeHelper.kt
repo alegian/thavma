@@ -1,7 +1,9 @@
 package me.alegian.thavma.impl.common.entity
 
+import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.payload.KnowledgePayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
@@ -19,4 +21,7 @@ fun Player.setKnowledge(newKnowledge: List<ResourceKey<ResearchEntry>>, firstPac
 
 fun Player.setKnowledge(entry: ResourceKey<ResearchEntry>) = setKnowledge(listOf(entry))
 
-fun Player.hasKnowledge(researchEntry: ResourceKey<ResearchEntry>) = getData(T7Attachments.KNOWLEDGE).knowledge.contains(researchEntry)
+fun Player.hasKnowledge(researchEntry: ResourceKey<ResearchEntry>): Boolean {
+  val entry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.get(researchEntry) ?: return false
+  return entry.defaultKnown || getData(T7Attachments.KNOWLEDGE).knowledge.contains(researchEntry)
+}

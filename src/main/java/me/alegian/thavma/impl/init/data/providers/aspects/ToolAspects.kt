@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.init.data.providers.aspects
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
 import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AVERSIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
@@ -214,6 +215,11 @@ object ToolAspects {
       item(ItemTags.ARROWS) {
         it.add(AVERSIO, 2)
           .add(MOTUS, 1)
+      }
+      item(Items.MACE){
+        it.add(METALLUM, 16)
+          .add(AER, 8)
+          .add(MOTUS, 8)
       }
     }
   }

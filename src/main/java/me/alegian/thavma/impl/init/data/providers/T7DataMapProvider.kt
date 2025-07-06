@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALIENIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALKIMIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AVERSIO
@@ -68,8 +69,8 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     val i = builder(T7DataMaps.AspectContent.ITEM)
 
     i.item(Items.BLAZE_POWDER) {
-      it.add(IGNIS, 4)
-        .add(POTENTIA, 2)
+      it.add(IGNIS, 2)
+        .add(POTENTIA, 1)
         .add(ALKIMIA, 2)
     }
     i.item(Tags.Items.GUNPOWDERS) {
@@ -78,15 +79,15 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(TERRA, 1)
     }
     i.item(Tags.Items.RODS_BLAZE) {
-      it.add(IGNIS, 12)
-        .add(POTENTIA, 8)
+      it.add(IGNIS, 8)
+        .add(POTENTIA, 4)
     }
     i.item(Tags.Items.RODS_BREEZE) {
-      it.add(AER, 16)
+      it.add(AER, 8)
         .add(MOTUS, 4)
     }
     i.item(Items.WIND_CHARGE) {
-      it.add(AER, 4)
+      it.add(AER, 2)
         .add(MOTUS, 1)
     }
     i.item(Items.FIRE_CHARGE) {
@@ -124,6 +125,11 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
       it.add(BESTIA, 2)
         .add(PRAEMUNIO, 1)
     }
+    i.item(Items.TURTLE_SCUTE) {
+      it.add(BESTIA, 2)
+        .add(PRAEMUNIO, 1)
+        .add(AQUA, 1)
+    }
     i.item(Items.FLINT) {
       it.add(TERRA, 4)
         .add(INSTRUMENTUM, 2)
@@ -131,6 +137,44 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     i.item(Tags.Items.FEATHERS) {
       it.add(VOLATUS, 4)
         .add(AER, 4)
+    }
+    i.item(Tags.Items.ENDER_PEARLS) {
+      it.add(MOTUS, 4)
+        .add(ALIENIS, 4)
+    }
+    i.item(Items.ENDER_EYE) {
+      it.add(MOTUS, 4)
+        .add(ALIENIS, 4)
+        .add(PRAECANTATIO, 2)
+    }
+    i.item(Tags.Items.STRINGS) {
+      it.add(BESTIA, 1)
+        .add(FABRICO, 1)
+    }
+    i.item(Items.GHAST_TEAR) {
+      it.add(EXANIMIS, 4)
+        .add(ALKIMIA, 4)
+    }
+    i.item(Items.HEAVY_CORE) {
+      it.add(METALLUM, 16)
+        .add(DESIDERIUM, 8)
+        .add(VACUOS, 2)
+    }
+    i.item(Items.SUGAR) {
+      it.add(HERBA, 2)
+        .add(VICTUS, 1)
+    }
+    i.item(Items.PAPER){
+      it.add(COGNITIO, 1)
+        .add(HERBA, 1)
+    }
+    i.item(Items.FIREWORK_ROCKET){
+      it.add(POTENTIA, 1)
+        .add(SENSUS, 1)
+    }
+    i.item(Items.FIREWORK_STAR){
+      it.add(POTENTIA, 1)
+        .add(SENSUS, 2)
     }
 
     b.block(Tags.Blocks.STONES) { it.add(TERRA, 4) }
@@ -188,6 +232,12 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     b.block(BlockTags.LOGS) { it.add(HERBA, 16) }
     b.block(BlockTags.FLOWERS) { it.add(HERBA, 4).add(VICTUS, 1) }
 
+    b.block(Blocks.SUGAR_CANE) {
+      it.add(HERBA, 2)
+        .add(AQUA, 1)
+        .add(AER, 1)
+    }
+
     b.block(T7Blocks.TABLE) { it.add(HERBA, 12) }
     b.block(T7Blocks.RESEARCH_TABLE) {
       it.add(HERBA, 12)
@@ -195,7 +245,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     }
 
     b.block(BlockTags.WOOL) {
-      it.add(BESTIA, 11).add(SENSUS, 3).add(FABRICO, 3)
+      it.add(BESTIA, 4).add(SENSUS, 2).add(FABRICO, 4)
     }
 
     b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 4) }

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.init.data.providers.aspects
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
 import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.BESTIA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
@@ -157,6 +158,12 @@ object ArmorAspects {
           .add(DESIDERIUM, 16)
           .add(PRAEMUNIO, 12)
           .add(BESTIA, 8)
+      }
+
+      item(Items.TURTLE_HELMET) {
+        it.add(BESTIA, 10)
+          .add(PRAEMUNIO, 5)
+          .add(AQUA, 5)
       }
     }
   }

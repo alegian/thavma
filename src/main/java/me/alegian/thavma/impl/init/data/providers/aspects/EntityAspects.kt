@@ -50,15 +50,19 @@ object EntityAspects {
       entity(EntityType.DROWNED) {}
       entity(EntityType.ELDER_GUARDIAN) {}
       entity(EntityType.ENDERMAN) {
-        it.add(DESIDERIUM, 5)
-          .add(MOTUS, 15)
-          .add(ALIENIS, 15)
+        it.add(MOTUS, 12)
+          .add(ALIENIS, 8)
+          .add(HUMANUS, 4)
+          .add(DESIDERIUM, 4)
       }
       entity(EntityType.ENDERMITE) {}
       entity(EntityType.EVOKER) {}
       entity(EntityType.FOX) {}
       entity(EntityType.FROG) {}
-      entity(EntityType.GHAST) {}
+      entity(EntityType.GHAST) {
+        it.add(EXANIMIS, 12)
+          .add(IGNIS, 8)
+      }
       entity(EntityType.GLOW_SQUID) {}
       entity(EntityType.GOAT) {}
       entity(EntityType.GUARDIAN) {}

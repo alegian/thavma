@@ -38,6 +38,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.BlockFamily
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.BlockTags
@@ -178,6 +179,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     }
 
     i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA, 2) }
+    i.item(Items.BAMBOO) { it.add(HERBA, 1) }
     b.block(BlockTags.PLANKS) { it.add(HERBA, 4) }
     b.block(BlockTags.LEAVES) { it.add(HERBA, 4) }
     b.block(BlockTags.SAPLINGS) { it.add(HERBA, 8).add(VICTUS, 4) }
@@ -260,6 +262,37 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(PRAECANTATIO, 2)
     }
   }
+}
+
+fun Builder<AspectMap, Block>.blockFamily(blockFamily: BlockFamily, builderConsumer: Consumer<AspectMap.Builder>) {
+  val aspectBuilder = AspectMap.builder()
+  builderConsumer.accept(aspectBuilder)
+  val aspects = aspectBuilder.build()
+
+  fun addFamilyVariant(block: Block?, multiplier: Number) {
+    if (block == null) return
+    add(key(block), aspects.scale(multiplier), false)
+  }
+
+  addFamilyVariant(blockFamily.baseBlock, 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.BUTTON), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CHISELED), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CRACKED), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUT), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.DOOR), 2)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUSTOM_FENCE), 5)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.FENCE), 5)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUSTOM_FENCE_GATE), 4)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.FENCE_GATE), 4)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.MOSAIC), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.SIGN), 2)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.SLAB), 0.5)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.STAIRS), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.PRESSURE_PLATE), 2)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.POLISHED), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.TRAPDOOR), 3)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.WALL), 1)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.WALL_SIGN), 2)
 }
 
 /**

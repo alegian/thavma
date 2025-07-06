@@ -49,7 +49,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return builder.build()
   }
 
-  fun scale(multiplier: Int): AspectMap {
+  fun scale(multiplier: Number): AspectMap {
     return builder().copyOf(this).scale(multiplier).build()
   }
 
@@ -138,8 +138,8 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
       return this.subtract(aspectStack.aspect, aspectStack.amount)
     }
 
-    fun scale(multiplier: Int): Builder {
-      map.forEach { (k: Aspect, v: Int) -> map[k] = v * multiplier }
+    fun scale(multiplier: Number): Builder {
+      map.forEach { (k: Aspect, v: Int) -> map[k] = (v * multiplier.toDouble()).toInt() }
       return this
     }
 

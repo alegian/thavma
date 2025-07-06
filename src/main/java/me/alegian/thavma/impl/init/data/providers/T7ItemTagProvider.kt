@@ -15,7 +15,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
@@ -28,7 +27,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_LEGGINGS
@@ -92,8 +90,8 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     tag(ItemTags.HOES).add(THAVMITE_HOE.get())
 
     tag(ItemTags.FOOT_ARMOR).add(
-      THAVMITE_BOOTS.get(),
-      THAVMITE_VANGUARD_BOOTS.get(),
+      T7Items.THAVMITE_BOOTS.get(),
+      T7Items.THAVMITE_VANGUARD_BOOTS.get(),
       APPRENTICE_BOOTS.get()
     )
     tag(ItemTags.LEG_ARMOR).add(
@@ -121,6 +119,11 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     tag(T7Tags.Items.GOGGLES).add(
       T7Items.GOGGLES.get(),
       T7Items.GOGGLES_CURIO.get(),
+    )
+
+    tag(T7Tags.Items.STEP_HEIGHT).add(
+      T7Items.THAVMITE_BOOTS.get(),
+      T7Items.THAVMITE_VANGUARD_BOOTS.get()
     )
 
     copy(BlockTags.LEAVES, ItemTags.LEAVES)

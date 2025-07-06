@@ -317,6 +317,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Tags.Items.WAND_CORES, "Wand Cores")
     add(T7Tags.Items.WAND_HANDLES, "Wand Handles")
     add(T7Tags.Items.CATALYSTS, "Crucible Catalysts")
+    add(T7Tags.Items.STEP_HEIGHT, "Items that increase Step Height")
   }
 
   private fun add(attributeHolder: DeferredHolder<Attribute, Attribute>, name: String) {

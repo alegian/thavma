@@ -16,6 +16,7 @@ object T7Tags {
     val SHARDS = TagKey.create(Registries.ITEM, rl("shards"))
     val CATALYSTS = TagKey.create(Registries.ITEM, rl("catalysts"))
     val GOGGLES = TagKey.create(Registries.ITEM, rl("goggles"))
+    val STEP_HEIGHT = TagKey.create(Registries.ITEM, rl("step_height"))
   }
 
   object Blocks {

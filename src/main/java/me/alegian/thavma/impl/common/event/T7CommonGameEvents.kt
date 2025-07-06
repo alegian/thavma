@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
-import me.alegian.thavma.impl.common.entity.EntityHelper
+import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.entity.setKnowledge
 import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
@@ -39,12 +39,9 @@ private fun entityTickPre(event: EntityTickEvent.Pre) {
   val hasStepHeightFromOtherModifier =
     attribute.value >= 1.0 && !attribute.hasModifier(T7AttributeModifiers.StepHeight.LOCATION)
 
-  if (!EntityHelper.isEntityWearingBoots(livingEntity) || hasStepHeightFromOtherModifier || livingEntity.isCrouching())
-    attribute.removeModifier(
-      T7AttributeModifiers.StepHeight.MODIFIER
-    )
+  if (!livingEntity.isWearingStepHeightBoots() || hasStepHeightFromOtherModifier || livingEntity.isCrouching)
+    attribute.removeModifier(T7AttributeModifiers.StepHeight.MODIFIER)
   else attribute.addOrUpdateTransientModifier(T7AttributeModifiers.StepHeight.MODIFIER)
-
 }
 
 private fun livingDamagePost(event: LivingDamageEvent.Post) {
@@ -110,7 +107,7 @@ private fun preLivingDamage(event: LivingDamageEvent.Pre) {
   event.container.newDamage = max(0.0, (event.newDamage - damageBlocked).toDouble()).toFloat()
 }
 
-fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent){
+fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
   val player = event.entity
   if (player !is ServerPlayer) return
 
@@ -120,9 +117,9 @@ fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent){
   player.setKnowledge(oldKnowledge, true)
 }
 
-fun entityFall(event: LivingFallEvent){
+fun entityFall(event: LivingFallEvent) {
   val levitates = event.entity.getData(T7Attachments.LEVITATES)
-  if(!levitates)return
+  if (!levitates) return
 
   event.isCanceled = true
   event.entity.setData(T7Attachments.LEVITATES, false)

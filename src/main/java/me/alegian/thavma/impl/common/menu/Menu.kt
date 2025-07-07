@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack
  * Used to dynamically position Slots, and dynamically generate the
  * quick-move operations between all children containers.
  */
-abstract class Menu (menuType: MenuType<*>, containerId: Int, playerInventory: Inventory) : AbstractContainerMenu(menuType, containerId), ContainerListener {
+abstract class Menu(menuType: MenuType<*>, containerId: Int, playerInventory: Inventory) : AbstractContainerMenu(menuType, containerId), ContainerListener {
   var inventory: T7Inventory
     protected set
 
@@ -35,18 +35,21 @@ abstract class Menu (menuType: MenuType<*>, containerId: Int, playerInventory: I
    */
   override fun quickMoveStack(player: Player, slotIndex: Int): ItemStack {
     var originalItem = ItemStack.EMPTY
-    val slot = this.slots[slotIndex]
+    val slot = slots[slotIndex]
     if (slot.hasItem()) {
       val slotItem = slot.item
       originalItem = slotItem.copy()
 
       // attempt to move stack, one by one to each target container, until one succeeds
       // zeros are converted to EMPTY. auto-updates dest slot
-      val isInventorySlot = this.inventory.range.contains(slotIndex)
+      val isInventorySlot = inventory.range.contains(slotIndex)
       if (isInventorySlot) {
-        if (this.quickMovePriorities.stream().noneMatch { container -> this.moveItemStackToRange(slotItem, container.range) }
-        ) return ItemStack.EMPTY
-      } else if (!this.moveItemStackToRange(slotItem, this.inventory.range)) return ItemStack.EMPTY
+        if (quickMovePriorities.none { container ->
+            moveItemStackToRange(slotItem, container.range)
+          })
+          return ItemStack.EMPTY
+      } else if (!moveItemStackToRange(slotItem, inventory.range))
+        return ItemStack.EMPTY
 
       // update source slot, zeros are converted to EMPTY
       if (slotItem.isEmpty) slot.set(ItemStack.EMPTY)

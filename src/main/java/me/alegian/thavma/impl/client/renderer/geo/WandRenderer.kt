@@ -22,6 +22,8 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
   }
 
   companion object {
+    val FOCUS_MODEL = rl("item/test_focus")
+
     private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_handle_")
 
     private fun coreTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_core_")

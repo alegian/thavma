@@ -1,17 +1,29 @@
 package me.alegian.thavma.impl.client.renderer.geo
 
+import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.rl
+import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedItemGeoModel
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer
 import software.bernie.geckolib.renderer.specialty.DynamicGeoItemRenderer
 
 class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial) : DynamicGeoItemRenderer<WandItem>(DefaultedItemGeoModel(rl("wand"))) {
   private val handleLocation = handleTexture(handleMaterial.registeredLocation)
   private val coreLocation = coreTexture(coreMaterial.registeredLocation)
+
+  init {
+    addRenderLayer(FocusRenderLayer(this))
+  }
 
   override fun getTextureOverrideForBone(bone: GeoBone, animatable: WandItem, partialTick: Float): ResourceLocation? {
     return when (bone.name) {
@@ -22,13 +34,21 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
   }
 
   companion object {
-    val FOCUS_MODEL = rl("item/test_focus")
+    val FOCUS_MODEL = ModelResourceLocation.standalone(rl("item/test_focus"))
 
     private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_handle_")
 
     private fun coreTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_core_")
 
-    private fun texture(registeredLocation: ResourceLocation, prefix: String)=
+    private fun texture(registeredLocation: ResourceLocation, prefix: String) =
       registeredLocation.withPrefix("textures/item/$prefix").withSuffix(".png")
+  }
+}
+
+private class FocusRenderLayer(renderer: WandRenderer) : GeoRenderLayer<WandItem>(renderer) {
+  override fun renderForBone(poseStack: PoseStack, animatable: WandItem, bone: GeoBone, renderType: RenderType, bufferSource: MultiBufferSource, vc: VertexConsumer, partialTick: Float, packedLight: Int, packedOverlay: Int) {
+    val mc = Minecraft.getInstance()
+    val focusModel = mc.modelManager.getModel(WandRenderer.FOCUS_MODEL)
+    mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
   }
 }

@@ -28,7 +28,6 @@ import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.item.ItemProperties
-import net.minecraft.client.resources.model.ModelResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.ModLoader
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
@@ -226,7 +225,7 @@ private fun registerRenderBuffers(event: RegisterRenderBuffersEvent) {
 }
 
 private fun registerAdditionalModels(event: ModelEvent.RegisterAdditional) {
-  event.register(ModelResourceLocation.inventory(WandRenderer.FOCUS_MODEL))
+  event.register(WandRenderer.FOCUS_MODEL)
 }
 
 fun registerClientModEvents() {

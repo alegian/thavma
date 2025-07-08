@@ -7,9 +7,9 @@
 	},
 	"elements": [
 		{
-			"from": [6.2, 19.2, 6.2],
-			"to": [9.8, 22.8, 9.8],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 20, 8]},
+			"from": [-1.8, 19.2, -1.8],
+			"to": [1.8, 22.8, 1.8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 20, 0]},
 			"faces": {
 				"north": {"uv": [0, 0, 4, 4], "texture": "#0"},
 				"east": {"uv": [0, 4, 4, 8], "texture": "#0"},
@@ -21,9 +21,9 @@
 		},
 		{
 			"name": "cube_outline",
-			"from": [10, 23, 10],
-			"to": [6, 19, 6],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 20, 8]},
+			"from": [2, 23, 2],
+			"to": [-2, 19, -2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 20, 0]},
 			"faces": {
 				"north": {"uv": [4, 8, 8, 12], "texture": "#0"},
 				"east": {"uv": [8, 4, 12, 8], "texture": "#0"},

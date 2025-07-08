@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
+import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedItemGeoModel
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer
@@ -46,9 +47,10 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
 }
 
 private class FocusRenderLayer(renderer: WandRenderer) : GeoRenderLayer<WandItem>(renderer) {
-  override fun renderForBone(poseStack: PoseStack, animatable: WandItem, bone: GeoBone, renderType: RenderType, bufferSource: MultiBufferSource, vc: VertexConsumer, partialTick: Float, packedLight: Int, packedOverlay: Int) {
+  override fun render(poseStack: PoseStack, animatable: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
     val focusModel = mc.modelManager.getModel(WandRenderer.FOCUS_MODEL)
+    val vc = bufferSource.getBuffer(RenderType.cutout())
     mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
   }
 }

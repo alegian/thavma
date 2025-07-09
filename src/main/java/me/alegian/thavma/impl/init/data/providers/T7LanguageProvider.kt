@@ -302,6 +302,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(RecipeViewerDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
     add(RecipeViewerDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
     add(RecipeViewerDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
+    add(RecipeViewerDescriptions.RESEARCH_SCROLL, "Obtained by clicking any unknown entry in the \"Elements of Thavma\"")
 
     add(RecipeViewerAliases.BOOK, "Book")
     add(RecipeViewerAliases.ORE, "Ore")

@@ -115,6 +115,11 @@ object ToolAspects {
           .add(PRAECANTATIO, 8)
           .add(INSTRUMENTUM, 4)
       }
+      item(T7Items.THAVMITE_HAMMER) {
+        it.add(METALLUM, 48)
+          .add(PRAECANTATIO, 24)
+          .add(INSTRUMENTUM, 4)
+      }
 
       item(Items.GOLDEN_SWORD) {
         it.add(METALLUM, 8)

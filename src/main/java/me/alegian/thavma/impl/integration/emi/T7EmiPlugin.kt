@@ -50,6 +50,7 @@ internal class T7EmiPlugin : EmiPlugin {
     registry.addRecipe(infoRecipe(T7Blocks.GREATWOOD_LOG, Component.translatable(RecipeViewerDescriptions.GREATWOOD), "greatwood_log"))
     registry.addRecipe(infoRecipe(T7Blocks.SILVERWOOD_LOG, Component.translatable(RecipeViewerDescriptions.SILVERWOOD), "silverwood_log"))
     registry.addRecipe(infoRecipe(T7Blocks.PILLAR, Component.translatable(RecipeViewerDescriptions.PILLAR), "infusion_pillar"))
+    registry.addRecipe(infoRecipe(T7Items.RESEARCH_SCROLL, Component.translatable(RecipeViewerDescriptions.RESEARCH_SCROLL), "research_scroll"))
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
       registry.addRecipe(infoRecipe(infusedBlock, Component.translatable(RecipeViewerDescriptions.INFUSED_STONES), infusedBlock.id.path))
   }

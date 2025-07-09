@@ -12,4 +12,5 @@ object RecipeViewerDescriptions {
   val GREATWOOD = PREFIX + "greatwood"
   val SILVERWOOD = PREFIX + "silverwood"
   val PILLAR = PREFIX + "pillar"
+  val RESEARCH_SCROLL = PREFIX + "research_scroll"
 }

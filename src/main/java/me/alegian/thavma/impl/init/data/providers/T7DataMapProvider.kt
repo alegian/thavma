@@ -6,7 +6,6 @@ import me.alegian.thavma.impl.init.data.providers.aspects.EntityAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
 import me.alegian.thavma.impl.init.data.providers.aspects.ToolAspects
 import me.alegian.thavma.impl.init.registries.T7DataMaps
-import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALIENIS
@@ -108,12 +107,6 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(DESIDERIUM, 32)
         .add(PRAECANTATIO, 2)
         .add(VITREUS, 2)
-    }
-    i.item(T7Tags.Items.GOGGLES) {
-      it.add(METALLUM, 32)
-        .add(DESIDERIUM, 32)
-        .add(PRAECANTATIO, 4)
-        .add(VITREUS, 4)
     }
     i.item(T7Items.ROTTEN_BRAIN) {
       it.add(COGNITIO, 16)

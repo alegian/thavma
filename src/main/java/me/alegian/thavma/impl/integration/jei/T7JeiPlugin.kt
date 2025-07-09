@@ -44,6 +44,7 @@ internal class T7JeiPlugin : IModPlugin {
     registration.addIngredientInfo(T7Blocks.GREATWOOD_LOG, Component.translatable(RecipeViewerDescriptions.GREATWOOD))
     registration.addIngredientInfo(T7Blocks.SILVERWOOD_LOG, Component.translatable(RecipeViewerDescriptions.SILVERWOOD))
     registration.addIngredientInfo(T7Blocks.PILLAR, Component.translatable(RecipeViewerDescriptions.PILLAR))
+    registration.addIngredientInfo(T7Items.RESEARCH_SCROLL, Component.translatable(RecipeViewerDescriptions.RESEARCH_SCROLL))
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
       registration.addIngredientInfo(infusedBlock, Component.translatable(RecipeViewerDescriptions.INFUSED_STONES))
   }

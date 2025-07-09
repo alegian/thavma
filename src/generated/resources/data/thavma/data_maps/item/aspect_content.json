@@ -131,19 +131,19 @@
     },
     "minecraft:chainmail_boots": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 4
+      "thavma:praemunio": 2
     },
     "minecraft:chainmail_chestplate": {
       "thavma:metallum": 32,
-      "thavma:praemunio": 20
+      "thavma:praemunio": 10
     },
     "minecraft:chainmail_helmet": {
       "thavma:metallum": 20,
-      "thavma:praemunio": 8
+      "thavma:praemunio": 4
     },
     "minecraft:chainmail_leggings": {
       "thavma:metallum": 28,
-      "thavma:praemunio": 16
+      "thavma:praemunio": 8
     },
     "minecraft:diamond_axe": {
       "thavma:desiderium": 24,
@@ -152,17 +152,17 @@
     },
     "minecraft:diamond_boots": {
       "thavma:desiderium": 32,
-      "thavma:praemunio": 16,
+      "thavma:praemunio": 8,
       "thavma:vitreus": 32
     },
     "minecraft:diamond_chestplate": {
       "thavma:desiderium": 64,
-      "thavma:praemunio": 36,
+      "thavma:praemunio": 18,
       "thavma:vitreus": 64
     },
     "minecraft:diamond_helmet": {
       "thavma:desiderium": 40,
-      "thavma:praemunio": 16,
+      "thavma:praemunio": 8,
       "thavma:vitreus": 40
     },
     "minecraft:diamond_hoe": {
@@ -178,7 +178,7 @@
     },
     "minecraft:diamond_leggings": {
       "thavma:desiderium": 56,
-      "thavma:praemunio": 28,
+      "thavma:praemunio": 14,
       "thavma:vitreus": 56
     },
     "minecraft:diamond_pickaxe": {
@@ -236,17 +236,17 @@
     "minecraft:golden_boots": {
       "thavma:desiderium": 32,
       "thavma:metallum": 16,
-      "thavma:praemunio": 4
+      "thavma:praemunio": 2
     },
     "minecraft:golden_chestplate": {
       "thavma:desiderium": 64,
       "thavma:metallum": 32,
-      "thavma:praemunio": 20
+      "thavma:praemunio": 10
     },
     "minecraft:golden_helmet": {
       "thavma:desiderium": 40,
       "thavma:metallum": 20,
-      "thavma:praemunio": 8
+      "thavma:praemunio": 4
     },
     "minecraft:golden_hoe": {
       "thavma:desiderium": 16,
@@ -262,7 +262,7 @@
     "minecraft:golden_leggings": {
       "thavma:desiderium": 56,
       "thavma:metallum": 28,
-      "thavma:praemunio": 12
+      "thavma:praemunio": 6
     },
     "minecraft:golden_pickaxe": {
       "thavma:desiderium": 24,
@@ -285,15 +285,15 @@
     },
     "minecraft:iron_boots": {
       "thavma:metallum": 32,
-      "thavma:praemunio": 8
+      "thavma:praemunio": 4
     },
     "minecraft:iron_chestplate": {
       "thavma:metallum": 64,
-      "thavma:praemunio": 24
+      "thavma:praemunio": 12
     },
     "minecraft:iron_helmet": {
       "thavma:metallum": 40,
-      "thavma:praemunio": 8
+      "thavma:praemunio": 4
     },
     "minecraft:iron_hoe": {
       "thavma:instrumentum": 3,
@@ -306,7 +306,7 @@
     },
     "minecraft:iron_leggings": {
       "thavma:metallum": 56,
-      "thavma:praemunio": 20
+      "thavma:praemunio": 10
     },
     "minecraft:iron_pickaxe": {
       "thavma:instrumentum": 3,
@@ -322,15 +322,15 @@
     },
     "minecraft:leather_boots": {
       "thavma:bestia": 32,
-      "thavma:praemunio": 4
+      "thavma:praemunio": 2
     },
     "minecraft:leather_chestplate": {
       "thavma:bestia": 64,
-      "thavma:praemunio": 12
+      "thavma:praemunio": 6
     },
     "minecraft:leather_helmet": {
       "thavma:bestia": 40,
-      "thavma:praemunio": 4
+      "thavma:praemunio": 2
     },
     "minecraft:leather_horse_armor": {
       "thavma:bestia": 16,
@@ -338,7 +338,7 @@
     },
     "minecraft:leather_leggings": {
       "thavma:bestia": 56,
-      "thavma:praemunio": 8
+      "thavma:praemunio": 4
     },
     "minecraft:mace": {
       "thavma:aer": 8,
@@ -354,19 +354,19 @@
     "minecraft:netherite_boots": {
       "thavma:desiderium": 32,
       "thavma:metallum": 32,
-      "thavma:praemunio": 18,
+      "thavma:praemunio": 9,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_chestplate": {
       "thavma:desiderium": 64,
       "thavma:metallum": 64,
-      "thavma:praemunio": 38,
+      "thavma:praemunio": 19,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_helmet": {
       "thavma:desiderium": 40,
       "thavma:metallum": 40,
-      "thavma:praemunio": 18,
+      "thavma:praemunio": 9,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_hoe": {
@@ -378,7 +378,7 @@
     "minecraft:netherite_leggings": {
       "thavma:desiderium": 56,
       "thavma:metallum": 56,
-      "thavma:praemunio": 30,
+      "thavma:praemunio": 15,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_pickaxe": {
@@ -452,7 +452,7 @@
     "minecraft:turtle_helmet": {
       "thavma:aqua": 5,
       "thavma:bestia": 10,
-      "thavma:praemunio": 5
+      "thavma:praemunio": 4
     },
     "minecraft:turtle_scute": {
       "thavma:aqua": 1,
@@ -492,6 +492,21 @@
     },
     "thavma:aether_shard": {
       "thavma:aether": 4
+    },
+    "thavma:apprentice_boots": {
+      "thavma:fabrico": 16,
+      "thavma:praecantatio": 4,
+      "thavma:praemunio": 2
+    },
+    "thavma:apprentice_chestplate": {
+      "thavma:fabrico": 32,
+      "thavma:praecantatio": 8,
+      "thavma:praemunio": 2
+    },
+    "thavma:apprentice_leggings": {
+      "thavma:fabrico": 28,
+      "thavma:praecantatio": 7,
+      "thavma:praemunio": 2
     },
     "thavma:aqua_shard": {
       "thavma:aqua": 4
@@ -538,9 +553,29 @@
       "thavma:metallum": 24,
       "thavma:praecantatio": 12
     },
+    "thavma:thavmite_boots": {
+      "thavma:metallum": 32,
+      "thavma:praecantatio": 16,
+      "thavma:praemunio": 5
+    },
+    "thavma:thavmite_chestplate": {
+      "thavma:metallum": 64,
+      "thavma:praecantatio": 32,
+      "thavma:praemunio": 13
+    },
+    "thavma:thavmite_hammer": {
+      "thavma:instrumentum": 4,
+      "thavma:metallum": 48,
+      "thavma:praecantatio": 24
+    },
     "thavma:thavmite_handle": {
       "thavma:metallum": 16,
       "thavma:praecantatio": 8
+    },
+    "thavma:thavmite_helmet": {
+      "thavma:metallum": 40,
+      "thavma:praecantatio": 20,
+      "thavma:praemunio": 7
     },
     "thavma:thavmite_hoe": {
       "thavma:instrumentum": 4,
@@ -550,6 +585,11 @@
     "thavma:thavmite_ingot": {
       "thavma:metallum": 8,
       "thavma:praecantatio": 4
+    },
+    "thavma:thavmite_leggings": {
+      "thavma:metallum": 56,
+      "thavma:praecantatio": 28,
+      "thavma:praemunio": 11
     },
     "thavma:thavmite_pickaxe": {
       "thavma:instrumentum": 4,

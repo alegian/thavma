@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
+import me.alegian.thavma.impl.common.entity.getScanHitResult
 import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.item.ArcaneLensItem
 import net.minecraft.client.DeltaTracker
@@ -22,27 +23,26 @@ object ArcaneLensLayer : LayeredDraw.Layer {
     val width = graphics.guiWidth()
     val height = graphics.guiHeight()
     val mc = Minecraft.getInstance()
-    val hitResult = mc.hitResult
-    val level = mc.level
-    val player = mc.player
+    val level = mc.level ?: return
+    val player = mc.player ?: return
 
-    if (
-      level == null ||
-      player == null ||
-      hitResult?.type == HitResult.Type.MISS ||
-      !player.isHolding { stack -> stack.item is ArcaneLensItem }
-    ) return
+    if (!player.isHolding { stack -> stack.item is ArcaneLensItem }) return
+
+    val hitResult = player.getScanHitResult()
+
+    if (hitResult.type == HitResult.Type.MISS) return
 
     var displayName: Component? = null
     var aspects: AspectMap? = null
 
-    when(hitResult){
+    when (hitResult) {
       is BlockHitResult -> {
         val blockState = level.getBlockState(hitResult.blockPos)
         if (!player.hasScanned(blockState)) return
         displayName = Component.translatable(blockState.block.descriptionId)
         aspects = getAspects(blockState.block)
       }
+
       is EntityHitResult -> {
         val entity = hitResult.entity
         if (!player.hasScanned(entity)) return
@@ -51,7 +51,7 @@ object ArcaneLensLayer : LayeredDraw.Layer {
       }
     }
 
-    if(displayName == null) return
+    if (displayName == null) return
     graphics.drawCenteredString(
       mc.font,
       displayName,
@@ -60,7 +60,7 @@ object ArcaneLensLayer : LayeredDraw.Layer {
       0xFFFFFF
     )
 
-    if(aspects == null) return
+    if (aspects == null) return
     graphics.usePose {
       translateXY(width / 2, 5 * height / 8)
       scaleXY(2)

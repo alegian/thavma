@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.common.item
 
 import me.alegian.thavma.impl.common.entity.getScanHitResult
 import me.alegian.thavma.impl.common.entity.hasScanned
-import me.alegian.thavma.impl.common.entity.setScanned
+import me.alegian.thavma.impl.common.entity.tryScan
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.ARCANE_LENS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl
@@ -76,16 +76,14 @@ class ArcaneLensItem(props: Properties) : Item(
 
   override fun releaseUsing(itemStack: ItemStack, level: Level, entity: LivingEntity, timeCharged: Int) {
     if (entity is Player && timeCharged == getUseDuration(itemStack, entity)) {
-      if (entity is ServerPlayer) {
+      if (entity is ServerPlayer && !level.isClientSide) {
         val hitResult = entity.getScanHitResult()
         if (hitResult.type != HitResult.Type.MISS)
           when (hitResult) {
-            is BlockHitResult -> entity.setScanned(level.getBlockState(hitResult.blockPos))
-            is EntityHitResult -> entity.setScanned(hitResult.entity)
+            is BlockHitResult -> entity.tryScan(level.getBlockState(hitResult.blockPos))
+            is EntityHitResult -> entity.tryScan(hitResult.entity)
           }
       }
-      if (level.isClientSide)
-        level.playSound(entity, entity.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
     }
   }
 

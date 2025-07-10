@@ -11,23 +11,24 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
 fun getAspects(itemEntity: ItemEntity): AspectMap? {
-    return getAspects(itemEntity.item)
+  return getAspects(itemEntity.item)
 }
 
 /**
  * This method checks for Block aspects before returning Item aspects.
  */
 fun getAspects(itemLike: ItemLike): AspectMap? {
-    return when (val item = itemLike.asItem()) {
-        is BlockItem -> BuiltInRegistries.BLOCK.wrapAsHolder(item.block).getData(BLOCK)
-        else -> BuiltInRegistries.ITEM.wrapAsHolder(item).getData(ITEM)
-    }
+  return when (val item = itemLike.asItem()) {
+    is BlockItem -> BuiltInRegistries.BLOCK.wrapAsHolder(item.block).getData(BLOCK)
+    else -> BuiltInRegistries.ITEM.wrapAsHolder(item).getData(ITEM)
+  }
 }
 
 fun getAspects(entity: Entity): AspectMap? {
-    return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.type).getData(ENTITY)
+  if (entity is ItemEntity) return getAspects(entity.item)
+  return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.type).getData(ENTITY)
 }
 
 fun getAspects(itemStack: ItemStack): AspectMap? {
-    return getAspects(itemStack.item)?.scale(itemStack.count)
+  return getAspects(itemStack.item)?.scale(itemStack.count)
 }

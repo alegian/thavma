@@ -1,6 +1,8 @@
 package me.alegian.thavma.impl.common.entity
 
 import com.google.common.primitives.Doubles.max
+import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.Util
@@ -41,7 +43,7 @@ fun Player.hasScanned(itemStack: ItemStack): Boolean {
   return hasScanned(itemScanKey(itemStack.item))
 }
 
-fun Player.setScanned(newScans: List<String>) {
+fun Player.tryScan(newScans: List<String>) {
   val old = getData(T7Attachments.SCANNED)
   old.scanned.addAll(newScans)
   setData(T7Attachments.SCANNED, old)
@@ -50,29 +52,28 @@ fun Player.setScanned(newScans: List<String>) {
     PacketDistributor.sendToPlayer(this, ScanPayload(newScans))
 }
 
-fun Player.setScanned(key: String) {
-  setScanned(listOf(key))
+fun Player.tryScan(key: String, aspects: AspectMap?) {
+  // TODO: check if aspect is known
+  if (aspects == null || aspects.isEmpty) return
+  if (hasScanned(key)) return
+  tryScan(listOf(key))
 }
 
 // itemEntities fall back to items
-fun ServerPlayer.setScanned(entity: Entity) {
-  if (entity is ItemEntity) return setScanned(entity.item)
+fun ServerPlayer.tryScan(entity: Entity) {
+  if (entity is ItemEntity) return tryScan(itemScanKey(entity.item.item), getAspects(entity.item))
 
-  setScanned(entityScanKey(entity.type))
+  tryScan(entityScanKey(entity.type), getAspects(entity))
 }
 
 // blocks fall back to items if possible
-fun ServerPlayer.setScanned(blockState: BlockState) {
+fun ServerPlayer.tryScan(blockState: BlockState) {
   val item = blockState.block.asItem()
   if (item != Items.AIR) {
-    setScanned(itemScanKey(item))
+    tryScan(itemScanKey(item), getAspects(item))
   } else {
-    setScanned(blockScanKey(blockState.block))
+    tryScan(blockScanKey(blockState.block), getAspects(blockState.block))
   }
-}
-
-fun ServerPlayer.setScanned(itemStack: ItemStack) {
-  setScanned(itemScanKey(itemStack.item))
 }
 
 private fun entityScanKey(entityType: EntityType<*>): String =
@@ -96,7 +97,7 @@ private fun itemScanKey(item: Item): String =
 // for client, use Minecraft.hitResult
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))
-  val predicate = { entity: Entity -> !entity.isSpectator && entity.isPickable }
+  val predicate = { entity: Entity -> !entity.isSpectator && (entity.isPickable || entity is ItemEntity) }
   val trueHitResult = ProjectileUtil.getHitResult(eyePosition, this, predicate, rayVec, level(), 0.0f, ClipContext.Block.OUTLINE)
 
   val range =

@@ -14,7 +14,7 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.entity.setKnowledge
-import me.alegian.thavma.impl.common.entity.setScanned
+import me.alegian.thavma.impl.common.entity.tryScan
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.client.Minecraft
@@ -110,7 +110,7 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
 
 private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
   val oldScans = event.oldPlayer.getData(T7Attachments.SCANNED).scanned.toList()
-  event.newPlayer.setScanned(oldScans)
+  event.newPlayer.tryScan(oldScans)
   val oldKnowledge = event.oldPlayer.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
   event.newPlayer.setKnowledge(oldKnowledge)
 }

@@ -1,7 +1,7 @@
 {
   "values": {
     "#c:cobblestones": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:concretes": {
       "thavma:aether": 1,
@@ -13,6 +13,13 @@
     },
     "#c:glass_panes": {
       "thavma:vitreus": 1
+    },
+    "#c:gravels": {
+      "thavma:terra": 2
+    },
+    "#c:netherracks": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
     },
     "#c:ores/coal": {
       "thavma:ignis": 8,
@@ -63,10 +70,10 @@
       "thavma:terra": 4
     },
     "#c:sands": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:stones": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "#c:storage_blocks/coal": {
       "thavma:ignis": 72,
@@ -128,6 +135,9 @@
     "#minecraft:concrete_powder": {
       "thavma:terra": 3
     },
+    "#minecraft:dirt": {
+      "thavma:terra": 1
+    },
     "#minecraft:flowers": {
       "thavma:herba": 4,
       "thavma:victus": 1
@@ -161,31 +171,504 @@
       "thavma:bestia": 8,
       "thavma:fabrico": 4
     },
+    "minecraft:acacia_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:acacia_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:acacia_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:acacia_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:acacia_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:acacia_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:acacia_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:acacia_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:acacia_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:acacia_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:acacia_wall_sign": {
+      "thavma:herba": 4
+    },
     "minecraft:amethyst_block": {
       "thavma:sensus": 4,
       "thavma:vitreus": 16
     },
+    "minecraft:andesite": {
+      "thavma:terra": 2
+    },
+    "minecraft:andesite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:andesite_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:andesite_wall": {
+      "thavma:terra": 2
+    },
     "minecraft:bamboo": {
       "thavma:herba": 1
+    },
+    "minecraft:bamboo_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:bamboo_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:bamboo_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:bamboo_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:bamboo_mosaic": {
+      "thavma:herba": 2
+    },
+    "minecraft:bamboo_mosaic_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:bamboo_mosaic_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:bamboo_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:bamboo_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:bamboo_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:bamboo_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:bamboo_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:bamboo_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:bamboo_wall_sign": {
+      "thavma:herba": 4
     },
     "minecraft:bedrock": {
       "thavma:tenebrae": 25,
       "thavma:terra": 25,
       "thavma:vacuos": 25
     },
+    "minecraft:birch_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:birch_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:birch_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:birch_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:birch_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:birch_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:birch_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:birch_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:birch_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:birch_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:birch_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:blackstone": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:blackstone_slab": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:blackstone_stairs": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:blackstone_wall": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:brick_slab": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:brick_stairs": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:brick_wall": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:bricks": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:cherry_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:cherry_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:cherry_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:cherry_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:cherry_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:cherry_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:cherry_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:cherry_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:cherry_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:cherry_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:cherry_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:chiseled_deepslate": {
+      "thavma:terra": 2
+    },
+    "minecraft:chiseled_nether_bricks": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:chiseled_polished_blackstone": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:chiseled_quartz_block": {
+      "thavma:ignis": 4,
+      "thavma:vitreus": 16
+    },
+    "minecraft:chiseled_red_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:chiseled_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:chiseled_stone_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:chiseled_tuff": {
+      "thavma:terra": 2
+    },
+    "minecraft:chiseled_tuff_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:chorus_flower": {
+      "thavma:alienis": 4,
+      "thavma:herba": 4
+    },
+    "minecraft:chorus_plant": {
+      "thavma:alienis": 2,
+      "thavma:herba": 2
+    },
+    "minecraft:clay": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
     "minecraft:coarse_dirt": {
-      "thavma:terra": 3
+      "thavma:terra": 1
+    },
+    "minecraft:cobbled_deepslate": {
+      "thavma:terra": 2
+    },
+    "minecraft:cobbled_deepslate_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:cobbled_deepslate_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:cobbled_deepslate_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:cobblestone": {
+      "thavma:terra": 2
+    },
+    "minecraft:cobblestone_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:cobblestone_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:cobblestone_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:copper_block": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:cracked_deepslate_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:cracked_deepslate_tiles": {
+      "thavma:terra": 2
+    },
+    "minecraft:cracked_nether_bricks": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:cracked_polished_blackstone_bricks": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:cracked_stone_bricks": {
+      "thavma:terra": 2
     },
     "minecraft:crafting_table": {
       "thavma:fabrico": 8,
       "thavma:herba": 4
     },
-    "minecraft:dirt": {
+    "minecraft:crimson_button": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:crimson_door": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:crimson_fence": {
+      "thavma:herba": 10,
+      "thavma:ignis": 10
+    },
+    "minecraft:crimson_fence_gate": {
+      "thavma:herba": 8,
+      "thavma:ignis": 8
+    },
+    "minecraft:crimson_planks": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:crimson_pressure_plate": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:crimson_sign": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:crimson_slab": {
+      "thavma:herba": 1,
+      "thavma:ignis": 1
+    },
+    "minecraft:crimson_stairs": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:crimson_trapdoor": {
+      "thavma:herba": 6,
+      "thavma:ignis": 6
+    },
+    "minecraft:crimson_wall_sign": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:cut_red_sandstone": {
       "thavma:terra": 4
+    },
+    "minecraft:cut_red_sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:cut_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:cut_sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:dark_oak_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:dark_oak_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:dark_oak_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:dark_oak_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:dark_oak_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:dark_oak_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:dark_oak_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:dark_oak_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:dark_oak_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:dark_oak_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:dark_oak_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:dark_prismarine": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:dark_prismarine_slab": {
+      "thavma:aqua": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:dark_prismarine_stairs": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:deepslate": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_brick_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:deepslate_brick_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_brick_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_tile_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:deepslate_tile_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_tile_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:deepslate_tiles": {
+      "thavma:terra": 2
+    },
+    "minecraft:diorite": {
+      "thavma:terra": 2
+    },
+    "minecraft:diorite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:diorite_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:diorite_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:end_stone_brick_slab": {
+      "thavma:alienis": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:end_stone_brick_stairs": {
+      "thavma:alienis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:end_stone_brick_wall": {
+      "thavma:alienis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:end_stone_bricks": {
+      "thavma:alienis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:exposed_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:exposed_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:exposed_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:exposed_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:exposed_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:glowstone": {
       "thavma:lux": 16,
       "thavma:terra": 4
+    },
+    "minecraft:granite": {
+      "thavma:terra": 2
+    },
+    "minecraft:granite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:granite_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:granite_wall": {
+      "thavma:terra": 2
     },
     "minecraft:grass_block": {
       "thavma:herba": 2,
@@ -196,29 +679,432 @@
       "thavma:metallum": 16,
       "thavma:vacuos": 2
     },
+    "minecraft:jungle_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:jungle_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:jungle_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:jungle_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:jungle_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:jungle_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:jungle_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:jungle_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:jungle_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:jungle_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:jungle_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:mangrove_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:mangrove_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:mangrove_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:mangrove_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:mangrove_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:mangrove_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:mangrove_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:mangrove_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:mangrove_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:mangrove_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:mangrove_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:mossy_cobblestone": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mossy_cobblestone_slab": {
+      "thavma:herba": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:mossy_cobblestone_stairs": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mossy_cobblestone_wall": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mossy_stone_brick_slab": {
+      "thavma:herba": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:mossy_stone_brick_stairs": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mossy_stone_brick_wall": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mossy_stone_bricks": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mud": {
+      "thavma:aqua": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:mud_brick_slab": {
+      "thavma:herba": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:mud_brick_stairs": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mud_brick_wall": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:mud_bricks": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:nether_brick_fence": {
+      "thavma:ignis": 20,
+      "thavma:terra": 20
+    },
+    "minecraft:nether_brick_slab": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:nether_brick_stairs": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:nether_brick_wall": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:nether_bricks": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:nether_wart": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:oak_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:oak_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:oak_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:oak_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:oak_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:oak_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:oak_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:oak_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:oak_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:oak_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:oak_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:oxidized_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:oxidized_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:oxidized_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:oxidized_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:oxidized_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:packed_mud": {
+      "thavma:herba": 2,
+      "thavma:terra": 2
+    },
     "minecraft:podzol": {
       "thavma:herba": 1,
       "thavma:terra": 5
     },
     "minecraft:polished_andesite": {
-      "thavma:terra": 3
+      "thavma:terra": 2
+    },
+    "minecraft:polished_andesite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:polished_andesite_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_brick_slab": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:polished_blackstone_brick_stairs": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_brick_wall": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_bricks": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_button": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_pressure_plate": {
+      "thavma:ignis": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:polished_blackstone_slab": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:polished_blackstone_stairs": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_blackstone_wall": {
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:polished_deepslate": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_deepslate_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:polished_deepslate_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_deepslate_wall": {
+      "thavma:terra": 2
     },
     "minecraft:polished_diorite": {
-      "thavma:terra": 3
+      "thavma:terra": 2
+    },
+    "minecraft:polished_diorite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:polished_diorite_stairs": {
+      "thavma:terra": 2
     },
     "minecraft:polished_granite": {
-      "thavma:terra": 3
+      "thavma:terra": 2
+    },
+    "minecraft:polished_granite_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:polished_granite_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_tuff": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_tuff_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:polished_tuff_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:polished_tuff_wall": {
+      "thavma:terra": 2
     },
     "minecraft:powder_snow": {
       "thavma:gelum": 2
+    },
+    "minecraft:prismarine": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:prismarine_brick_slab": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:prismarine_brick_stairs": {
+      "thavma:aqua": 8,
+      "thavma:terra": 8
+    },
+    "minecraft:prismarine_bricks": {
+      "thavma:aqua": 8,
+      "thavma:terra": 8
+    },
+    "minecraft:prismarine_slab": {
+      "thavma:aqua": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:prismarine_stairs": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:prismarine_wall": {
+      "thavma:aqua": 4,
+      "thavma:terra": 4
+    },
+    "minecraft:purpur_block": {
+      "thavma:alienis": 2,
+      "thavma:herba": 2
+    },
+    "minecraft:purpur_slab": {
+      "thavma:alienis": 1,
+      "thavma:herba": 1
+    },
+    "minecraft:purpur_stairs": {
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:quartz_block": {
       "thavma:ignis": 4,
       "thavma:vitreus": 16
     },
+    "minecraft:quartz_slab": {
+      "thavma:ignis": 2,
+      "thavma:vitreus": 8
+    },
+    "minecraft:quartz_stairs": {
+      "thavma:ignis": 4,
+      "thavma:vitreus": 16
+    },
+    "minecraft:red_nether_brick_slab": {
+      "thavma:herba": 1,
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
+    "minecraft:red_nether_brick_stairs": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:red_nether_brick_wall": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:red_nether_bricks": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
+      "thavma:terra": 2
+    },
+    "minecraft:red_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:red_sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:red_sandstone_stairs": {
+      "thavma:terra": 4
+    },
+    "minecraft:red_sandstone_wall": {
+      "thavma:terra": 4
+    },
+    "minecraft:sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:sandstone_stairs": {
+      "thavma:terra": 4
+    },
+    "minecraft:sandstone_wall": {
+      "thavma:terra": 4
+    },
     "minecraft:short_grass": {
       "thavma:aer": 1,
       "thavma:herba": 5
+    },
+    "minecraft:smooth_quartz": {
+      "thavma:ignis": 4,
+      "thavma:vitreus": 16
+    },
+    "minecraft:smooth_quartz_slab": {
+      "thavma:ignis": 2,
+      "thavma:vitreus": 8
+    },
+    "minecraft:smooth_quartz_stairs": {
+      "thavma:ignis": 4,
+      "thavma:vitreus": 16
+    },
+    "minecraft:smooth_red_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:smooth_red_sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:smooth_red_sandstone_stairs": {
+      "thavma:terra": 4
+    },
+    "minecraft:smooth_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:smooth_sandstone_slab": {
+      "thavma:terra": 2
+    },
+    "minecraft:smooth_sandstone_stairs": {
+      "thavma:terra": 4
     },
     "minecraft:snow": {
       "thavma:gelum": 1
@@ -226,11 +1112,65 @@
     "minecraft:snow_block": {
       "thavma:gelum": 4
     },
-    "minecraft:stone_slab": {
+    "minecraft:spruce_button": {
+      "thavma:herba": 2
+    },
+    "minecraft:spruce_door": {
+      "thavma:herba": 4
+    },
+    "minecraft:spruce_fence": {
+      "thavma:herba": 10
+    },
+    "minecraft:spruce_fence_gate": {
+      "thavma:herba": 8
+    },
+    "minecraft:spruce_planks": {
+      "thavma:herba": 2
+    },
+    "minecraft:spruce_pressure_plate": {
+      "thavma:herba": 4
+    },
+    "minecraft:spruce_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:spruce_slab": {
+      "thavma:herba": 1
+    },
+    "minecraft:spruce_stairs": {
+      "thavma:herba": 2
+    },
+    "minecraft:spruce_trapdoor": {
+      "thavma:herba": 6
+    },
+    "minecraft:spruce_wall_sign": {
+      "thavma:herba": 4
+    },
+    "minecraft:stone": {
       "thavma:terra": 2
     },
+    "minecraft:stone_brick_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:stone_brick_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:stone_brick_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:stone_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:stone_button": {
+      "thavma:terra": 2
+    },
+    "minecraft:stone_pressure_plate": {
+      "thavma:terra": 4
+    },
+    "minecraft:stone_slab": {
+      "thavma:terra": 1
+    },
     "minecraft:stone_stairs": {
-      "thavma:terra": 6
+      "thavma:terra": 2
     },
     "minecraft:sugar_cane": {
       "thavma:aer": 1,
@@ -251,6 +1191,174 @@
     "minecraft:tripwire_hook": {
       "thavma:metallum": 2,
       "thavma:vinculum": 2
+    },
+    "minecraft:tuff": {
+      "thavma:terra": 2
+    },
+    "minecraft:tuff_brick_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:tuff_brick_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:tuff_brick_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:tuff_bricks": {
+      "thavma:terra": 2
+    },
+    "minecraft:tuff_slab": {
+      "thavma:terra": 1
+    },
+    "minecraft:tuff_stairs": {
+      "thavma:terra": 2
+    },
+    "minecraft:tuff_wall": {
+      "thavma:terra": 2
+    },
+    "minecraft:warped_button": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:warped_door": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:warped_fence": {
+      "thavma:herba": 10,
+      "thavma:ignis": 10
+    },
+    "minecraft:warped_fence_gate": {
+      "thavma:herba": 8,
+      "thavma:ignis": 8
+    },
+    "minecraft:warped_planks": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:warped_pressure_plate": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:warped_sign": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:warped_slab": {
+      "thavma:herba": 1,
+      "thavma:ignis": 1
+    },
+    "minecraft:warped_stairs": {
+      "thavma:herba": 2,
+      "thavma:ignis": 2
+    },
+    "minecraft:warped_trapdoor": {
+      "thavma:herba": 6,
+      "thavma:ignis": 6
+    },
+    "minecraft:warped_wall_sign": {
+      "thavma:herba": 4,
+      "thavma:ignis": 4
+    },
+    "minecraft:waxed_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_copper_block": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:waxed_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_exposed_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_exposed_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_exposed_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_exposed_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:waxed_exposed_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_oxidized_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_oxidized_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_oxidized_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_oxidized_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:waxed_oxidized_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_weathered_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_weathered_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_weathered_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:waxed_weathered_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:waxed_weathered_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:weathered_chiseled_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:weathered_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:weathered_cut_copper": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
+    },
+    "minecraft:weathered_cut_copper_slab": {
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
+    },
+    "minecraft:weathered_cut_copper_stairs": {
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "thavma:aer_infused_deepslate": {
       "thavma:aer": 4

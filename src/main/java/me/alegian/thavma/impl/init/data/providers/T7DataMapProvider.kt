@@ -1,10 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.init.data.providers.aspects.ArmorAspects
-import me.alegian.thavma.impl.init.data.providers.aspects.EntityAspects
-import me.alegian.thavma.impl.init.data.providers.aspects.MineralAspects
-import me.alegian.thavma.impl.init.data.providers.aspects.ToolAspects
+import me.alegian.thavma.impl.init.data.providers.aspects.*
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AER
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.AETHER
@@ -65,6 +62,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     MineralAspects.gather(this, lookupProvider)
     ToolAspects.gather(this, lookupProvider)
     ArmorAspects.gather(this, lookupProvider)
+    BlockFamilyAspects.gather(this, lookupProvider)
 
     val b = builder(T7DataMaps.AspectContent.BLOCK)
     val i = builder(T7DataMaps.AspectContent.ITEM)
@@ -167,27 +165,40 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(SENSUS, 2)
     }
     i.item(Items.SNOWBALL) { it.add(GELUM, 1) }
+    i.item(Items.NETHER_BRICK) { it.add(TERRA, 1).add(IGNIS, 1) }
+    i.item(Items.PRISMARINE_CRYSTALS) { it.add(VITREUS, 4).add(AQUA, 4).add(LUX, 2) }
+    i.item(Items.PRISMARINE_SHARD) { it.add(AQUA, 2).add(TERRA, 2) }
+    i.item(Items.CHORUS_FRUIT) { it.add(HERBA, 2).add(ALIENIS, 2) }
+    i.item(Items.POPPED_CHORUS_FRUIT) { it.add(HERBA, 2).add(ALIENIS, 2) }
+    i.item(Items.CLAY_BALL) { it.add(TERRA, 1).add(AQUA, 1) }
+    i.item(Items.BRICK) { it.add(TERRA, 1).add(IGNIS, 1) }
 
     i.item(Tags.Items.RODS_WOODEN) { it.add(HERBA, 2) }
 
     i.item(Tags.Items.EGGS) { it.add(VICTUS, 4).add(BESTIA, 2) }
 
-    i.item(Items.END_CRYSTAL){
+    i.item(Tags.Items.CROPS_WHEAT) { it.add(VICTUS, 2).add(HERBA, 2) }
+
+    i.item(Items.END_CRYSTAL) {
       it.add(VITREUS, 14)
         .add(POTENTIA, 8)
         .add(ALIENIS, 4)
         .add(IGNIS, 4)
     }
 
-    b.block(Tags.Blocks.STONES) { it.add(TERRA, 4) }
-    b.block(Blocks.STONE_STAIRS) { it.add(TERRA, 6) }
-    b.block(Blocks.STONE_SLAB) { it.add(TERRA, 2) }
-    b.block(Blocks.DIRT) { it.add(TERRA, 4) }
-
-    b.block(Blocks.POLISHED_GRANITE) { it.add(TERRA, 3) }
-    b.block(Blocks.POLISHED_DIORITE) { it.add(TERRA, 3) }
-    b.block(Blocks.POLISHED_ANDESITE) { it.add(TERRA, 3) }
-    b.block(Blocks.COARSE_DIRT) { it.add(TERRA, 3) }
+    b.block(Blocks.NETHER_WART) { it.add(HERBA, 2).add(IGNIS, 2) }
+    b.block(Blocks.CHORUS_PLANT) { it.add(HERBA, 2).add(ALIENIS, 2) }
+    b.block(Blocks.CHORUS_FLOWER) { it.add(HERBA, 4).add(ALIENIS, 4) }
+    b.block(Tags.Blocks.NETHERRACKS) { it.add(TERRA, 1).add(IGNIS, 1) }
+    b.block(Blocks.MUD) { it.add(TERRA, 1).add(AQUA, 1) }
+    b.block(Blocks.PACKED_MUD) { it.add(TERRA, 2).add(HERBA, 2) }
+    b.block(BlockTags.DIRT) { it.add(TERRA, 1) }
+    b.block(Blocks.COARSE_DIRT) { it.add(TERRA, 1) }
+    b.block(Tags.Blocks.GRAVELS) { it.add(TERRA, 2) }
+    b.block(Tags.Blocks.STONES) { it.add(TERRA, 2) }
+    b.block(Tags.Blocks.COBBLESTONES) { it.add(TERRA, 2) }
+    b.block(Tags.Blocks.SANDS) { it.add(TERRA, 2) }
+    b.block(Blocks.CLAY) { it.add(TERRA, 4).add(AQUA, 4) }
 
     b.block(Blocks.GRASS_BLOCK) {
       it.add(TERRA, 5).add(HERBA, 2)
@@ -200,13 +211,6 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     }
     b.block(Blocks.TALL_GRASS) {
       it.add(HERBA, 5).add(AER, 1)
-    }
-
-    b.block(Tags.Blocks.COBBLESTONES) {
-      it.add(TERRA, 4)
-    }
-    b.block(Tags.Blocks.SANDS) {
-      it.add(TERRA, 4)
     }
 
     b.block(BlockTags.TERRACOTTA) {
@@ -319,7 +323,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
       it.add(POTENTIA, 20)
         .add(TERRA, 1)
     }
-    b.block(Blocks.TRIPWIRE_HOOK){
+    b.block(Blocks.TRIPWIRE_HOOK) {
       it.add(VINCULUM, 2)
         .add(METALLUM, 2)
     }

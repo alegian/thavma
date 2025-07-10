@@ -1,5 +1,9 @@
 {
   "values": {
+    "#c:crops/wheat": {
+      "thavma:herba": 2,
+      "thavma:victus": 2
+    },
     "#c:dusts/glowstone": {
       "thavma:lux": 4,
       "thavma:terra": 1
@@ -129,6 +133,10 @@
       "thavma:ignis": 2,
       "thavma:potentia": 1
     },
+    "minecraft:brick": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
     "minecraft:chainmail_boots": {
       "thavma:metallum": 16,
       "thavma:praemunio": 2
@@ -144,6 +152,14 @@
     "minecraft:chainmail_leggings": {
       "thavma:metallum": 28,
       "thavma:praemunio": 8
+    },
+    "minecraft:chorus_fruit": {
+      "thavma:alienis": 2,
+      "thavma:herba": 2
+    },
+    "minecraft:clay_ball": {
+      "thavma:aqua": 1,
+      "thavma:terra": 1
     },
     "minecraft:diamond_axe": {
       "thavma:desiderium": 24,
@@ -345,6 +361,10 @@
       "thavma:metallum": 16,
       "thavma:motus": 8
     },
+    "minecraft:nether_brick": {
+      "thavma:ignis": 1,
+      "thavma:terra": 1
+    },
     "minecraft:netherite_axe": {
       "thavma:desiderium": 24,
       "thavma:instrumentum": 6,
@@ -407,6 +427,19 @@
     "minecraft:paper": {
       "thavma:cognitio": 1,
       "thavma:herba": 1
+    },
+    "minecraft:popped_chorus_fruit": {
+      "thavma:alienis": 2,
+      "thavma:herba": 2
+    },
+    "minecraft:prismarine_crystals": {
+      "thavma:aqua": 4,
+      "thavma:lux": 2,
+      "thavma:vitreus": 4
+    },
+    "minecraft:prismarine_shard": {
+      "thavma:aqua": 2,
+      "thavma:terra": 2
     },
     "minecraft:rotten_flesh": {
       "thavma:exanimis": 2,

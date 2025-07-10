@@ -319,7 +319,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(VACUOS, 2)
     }
     b.block(Blocks.BAMBOO) { it.add(HERBA, 1) }
-    b.block(BlockTags.BAMBOO_BLOCKS) { it.add(HERBA, 8) }
+    b.block(BlockTags.BAMBOO_BLOCKS) { it.add(HERBA, 4) }
   }
 }
 
@@ -339,8 +339,8 @@ fun Builder<AspectMap, Block>.blockFamily(blockFamily: BlockFamily, builderConsu
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.CRACKED), 1)
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUT), 1)
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.DOOR), 2)
-  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUSTOM_FENCE), 5)
-  addFamilyVariant(blockFamily.get(BlockFamily.Variant.FENCE), 5)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUSTOM_FENCE), 1.5)
+  addFamilyVariant(blockFamily.get(BlockFamily.Variant.FENCE), 1.5)
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.CUSTOM_FENCE_GATE), 4)
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.FENCE_GATE), 4)
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.MOSAIC), 1)

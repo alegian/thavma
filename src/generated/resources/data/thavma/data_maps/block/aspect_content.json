@@ -126,7 +126,7 @@
       "thavma:terra": 9
     },
     "#minecraft:bamboo_blocks": {
-      "thavma:herba": 8
+      "thavma:herba": 4
     },
     "#minecraft:cauldrons": {
       "thavma:alkimia": 8,
@@ -169,7 +169,7 @@
       "thavma:herba": 4
     },
     "minecraft:acacia_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:acacia_fence_gate": {
       "thavma:herba": 8
@@ -221,7 +221,7 @@
       "thavma:herba": 4
     },
     "minecraft:bamboo_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:bamboo_fence_gate": {
       "thavma:herba": 8
@@ -268,7 +268,7 @@
       "thavma:herba": 4
     },
     "minecraft:birch_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:birch_fence_gate": {
       "thavma:herba": 8
@@ -333,7 +333,7 @@
       "thavma:herba": 4
     },
     "minecraft:cherry_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:cherry_fence_gate": {
       "thavma:herba": 8
@@ -466,8 +466,8 @@
       "thavma:ignis": 4
     },
     "minecraft:crimson_fence": {
-      "thavma:herba": 10,
-      "thavma:ignis": 10
+      "thavma:herba": 3,
+      "thavma:ignis": 3
     },
     "minecraft:crimson_fence_gate": {
       "thavma:herba": 8,
@@ -532,7 +532,7 @@
       "thavma:herba": 4
     },
     "minecraft:dark_oak_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:dark_oak_fence_gate": {
       "thavma:herba": 8
@@ -677,7 +677,7 @@
       "thavma:herba": 4
     },
     "minecraft:jungle_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:jungle_fence_gate": {
       "thavma:herba": 8
@@ -710,7 +710,7 @@
       "thavma:herba": 4
     },
     "minecraft:mangrove_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:mangrove_fence_gate": {
       "thavma:herba": 8
@@ -789,8 +789,8 @@
       "thavma:terra": 2
     },
     "minecraft:nether_brick_fence": {
-      "thavma:ignis": 20,
-      "thavma:terra": 20
+      "thavma:ignis": 6,
+      "thavma:terra": 6
     },
     "minecraft:nether_brick_slab": {
       "thavma:ignis": 2,
@@ -819,7 +819,7 @@
       "thavma:herba": 4
     },
     "minecraft:oak_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:oak_fence_gate": {
       "thavma:herba": 8
@@ -1110,7 +1110,7 @@
       "thavma:herba": 4
     },
     "minecraft:spruce_fence": {
-      "thavma:herba": 10
+      "thavma:herba": 3
     },
     "minecraft:spruce_fence_gate": {
       "thavma:herba": 8
@@ -1216,8 +1216,8 @@
       "thavma:ignis": 4
     },
     "minecraft:warped_fence": {
-      "thavma:herba": 10,
-      "thavma:ignis": 10
+      "thavma:herba": 3,
+      "thavma:ignis": 3
     },
     "minecraft:warped_fence_gate": {
       "thavma:herba": 8,

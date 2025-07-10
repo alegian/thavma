@@ -77,7 +77,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return map.getOrDefault(aspect, 0)
   }
 
-  fun has(aspect:Aspect): Boolean {
+  fun has(aspect: Aspect): Boolean {
     return map.containsKey(aspect)
   }
 
@@ -140,6 +140,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     fun scale(multiplier: Number): Builder {
       map.forEach { (k: Aspect, v: Int) -> map[k] = (v * multiplier.toDouble()).toInt() }
+      map = LinkedHashMap(map.filterValues { it > 0 })
       return this
     }
 
@@ -180,7 +181,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     fun ofPrimals(amount: Int): AspectMap {
       val builder = Builder()
-      for(a in PRIMAL_ASPECTS){
+      for (a in PRIMAL_ASPECTS) {
         builder.add(a.get(), amount)
       }
       return builder.build()

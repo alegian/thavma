@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.init.data.providers.aspects
 
+import me.alegian.thavma.impl.init.data.T7BlockFamilies
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
 import me.alegian.thavma.impl.init.data.providers.blockFamily
 import me.alegian.thavma.impl.init.registries.T7DataMaps
@@ -9,6 +10,7 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.METALLUM
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PERMUTATIO
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRAECANTATIO
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.VITREUS
 import net.minecraft.core.HolderLookup
@@ -235,6 +237,13 @@ object BlockFamilyAspects {
       }
       blockFamily(BlockFamilies.DEEPSLATE_TILES) {
         it.add(TERRA, 2)
+      }
+      blockFamily(T7BlockFamilies.GREATWOOD_PLANKS) {
+        it.add(HERBA, 2)
+      }
+      blockFamily(T7BlockFamilies.ELEMENTAL_STONE) {
+        it.add(TERRA, 4)
+          .add(PRAECANTATIO, 1)
       }
     }
 }

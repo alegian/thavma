@@ -228,12 +228,9 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(AETHER, 1)
     }
 
-    b.block(BlockTags.PLANKS) { it.add(HERBA, 4) }
-    b.block(BlockTags.LEAVES) { it.add(HERBA, 4) }
-    b.block(BlockTags.SAPLINGS) { it.add(HERBA, 8).add(VICTUS, 4) }
-    b.block(BlockTags.WOODEN_STAIRS) { it.add(HERBA, 6) }
-    b.block(BlockTags.WOODEN_SLABS) { it.add(HERBA, 2) }
-    b.block(BlockTags.LOGS) { it.add(HERBA, 16) }
+    b.block(BlockTags.LEAVES) { it.add(HERBA, 2) }
+    b.block(BlockTags.SAPLINGS) { it.add(HERBA, 4).add(VICTUS, 4) }
+    b.block(BlockTags.LOGS) { it.add(HERBA, 8) }
     b.block(BlockTags.FLOWERS) { it.add(HERBA, 4).add(VICTUS, 1) }
 
     b.block(Blocks.SUGAR_CANE) {
@@ -273,20 +270,9 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(POTENTIA, 8)
         .add(IGNIS, 8)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE) {
-      it.add(TERRA, 4)
-        .add(PRAECANTATIO, 1)
-    }
     b.block(T7Blocks.CRACKED_ELEMENTAL_STONE) {
       it.add(TERRA, 4)
         .add(PRAECANTATIO, 1)
-    }
-    b.block(T7Blocks.ELEMENTAL_STONE_STAIRS) {
-      it.add(TERRA, 6)
-        .add(PRAECANTATIO, 1)
-    }
-    b.block(T7Blocks.ELEMENTAL_STONE_SLAB) {
-      it.add(TERRA, 2)
     }
     b.block(T7Blocks.ELEMENTAL_STONE_BRICKS) {
       it.add(TERRA, 4)

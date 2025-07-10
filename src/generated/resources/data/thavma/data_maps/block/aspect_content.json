@@ -143,16 +143,13 @@
       "thavma:victus": 1
     },
     "#minecraft:leaves": {
-      "thavma:herba": 4
+      "thavma:herba": 2
     },
     "#minecraft:logs": {
-      "thavma:herba": 16
-    },
-    "#minecraft:planks": {
-      "thavma:herba": 4
+      "thavma:herba": 8
     },
     "#minecraft:saplings": {
-      "thavma:herba": 8,
+      "thavma:herba": 4,
       "thavma:victus": 4
     },
     "#minecraft:terracotta": {
@@ -160,12 +157,6 @@
       "thavma:ignis": 1,
       "thavma:sensus": 1,
       "thavma:terra": 15
-    },
-    "#minecraft:wooden_slabs": {
-      "thavma:herba": 2
-    },
-    "#minecraft:wooden_stairs": {
-      "thavma:herba": 6
     },
     "#minecraft:wool": {
       "thavma:bestia": 8,
@@ -1409,12 +1400,21 @@
     },
     "thavma:elemental_stone_stairs": {
       "thavma:praecantatio": 1,
-      "thavma:terra": 6
+      "thavma:terra": 4
     },
     "thavma:eternal_flame": {
       "thavma:ignis": 8,
       "thavma:lux": 12,
       "thavma:potentia": 8
+    },
+    "thavma:greatwood_planks": {
+      "thavma:herba": 2
+    },
+    "thavma:greatwood_slab": {
+      "thavma:herba": 1
+    },
+    "thavma:greatwood_stairs": {
+      "thavma:herba": 2
     },
     "thavma:ignis_infused_deepslate": {
       "thavma:ignis": 4

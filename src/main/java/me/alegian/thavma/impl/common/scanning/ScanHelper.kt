@@ -6,10 +6,9 @@ import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.entity.knowsAspect
 import me.alegian.thavma.impl.common.entity.tryLearnAspects
 import me.alegian.thavma.impl.common.payload.ScanPayload
+import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
-import net.minecraft.Util
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -18,9 +17,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ProjectileUtil
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.ClipContext
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
@@ -34,11 +31,9 @@ fun Player.hasScanned(entity: Entity): Boolean {
   return hasScanned(entityScanKey(entity.type))
 }
 
-// blocks fall back to items if possible
+// blocks fall back to items
 fun Player.hasScanned(blockState: BlockState): Boolean {
-  val item = blockState.block.asItem()
-  if (item != Items.AIR) return hasScanned(itemScanKey(item))
-  return hasScanned(blockScanKey(blockState.block))
+  return hasScanned(itemScanKey(blockState.block.asItem()))
 }
 
 fun Player.hasScanned(itemStack: ItemStack): Boolean {
@@ -76,26 +71,14 @@ fun ServerPlayer.tryScan(entity: Entity) {
 }
 
 fun ServerPlayer.tryScan(blockState: BlockState) {
-  tryScan(blockScanKey(blockState.block), getAspects(blockState.block))
+  tryScan(itemScanKey(blockState.block.asItem()), getAspects(blockState.block))
 }
 
 private fun entityScanKey(entityType: EntityType<*>): String =
-  Util.makeDescriptionId(
-    Registries.ENTITY_TYPE.location().path,
-    BuiltInRegistries.ENTITY_TYPE.getKey(entityType)
-  )
-
-private fun blockScanKey(block: Block): String =
-  Util.makeDescriptionId(
-    Registries.BLOCK.location().path,
-    BuiltInRegistries.BLOCK.getKey(block)
-  )
+  BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).get().serialize()
 
 private fun itemScanKey(item: Item): String =
-  Util.makeDescriptionId(
-    Registries.ITEM.location().path,
-    BuiltInRegistries.ITEM.getKey(item)
-  )
+  BuiltInRegistries.ITEM.getResourceKey(item).get().serialize()
 
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))

@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layer
 
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
@@ -19,6 +20,8 @@ import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 
 object ArcaneLensLayer : LayeredDraw.Layer {
+  val NO_ASPECTS = "gui.layer." + Thavma.MODID + ".arcane_lens.no_aspects"
+
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val width = graphics.guiWidth()
     val height = graphics.guiHeight()
@@ -32,29 +35,39 @@ object ArcaneLensLayer : LayeredDraw.Layer {
 
     if (hitResult.type == HitResult.Type.MISS) return
 
-    var displayName: Component? = null
+    var text: Component? = null
     var aspects: AspectMap? = null
 
     when (hitResult) {
       is BlockHitResult -> {
         val blockState = level.getBlockState(hitResult.blockPos)
-        if (!player.hasScanned(blockState)) return
-        displayName = Component.translatable(blockState.block.descriptionId)
-        aspects = getAspects(blockState.block)
+        val blockAspects = getAspects(blockState.block)
+        if (!player.hasScanned(blockState)) {
+          if (blockAspects == null || blockAspects.isEmpty)
+            text = Component.translatable(NO_ASPECTS)
+        } else {
+          text = Component.translatable(blockState.block.descriptionId)
+          aspects = blockAspects
+        }
       }
 
       is EntityHitResult -> {
         val entity = hitResult.entity
-        if (!player.hasScanned(entity)) return
-        displayName = entity.name
-        aspects = getAspects(entity)
+        val entityAspects = getAspects(entity)
+        if (!player.hasScanned(entity)) {
+          if (entityAspects == null || entityAspects.isEmpty)
+            text = Component.translatable(NO_ASPECTS)
+        } else {
+          text = entity.name
+          aspects = entityAspects
+        }
       }
     }
 
-    if (displayName == null) return
+    if (text == null) return
     graphics.drawCenteredString(
       mc.font,
-      displayName,
+      text,
       width / 2,
       3 * height / 8,
       0xFFFFFF

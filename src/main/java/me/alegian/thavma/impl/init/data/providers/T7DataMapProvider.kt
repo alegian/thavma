@@ -199,6 +199,10 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     b.block(Tags.Blocks.COBBLESTONES) { it.add(TERRA, 2) }
     b.block(Tags.Blocks.SANDS) { it.add(TERRA, 2) }
     b.block(Blocks.CLAY) { it.add(TERRA, 4).add(AQUA, 4) }
+    b.block(Blocks.TRIPWIRE) {
+      it.add(BESTIA, 1)
+        .add(FABRICO, 1)
+    }
 
     b.block(Blocks.GRASS_BLOCK) {
       it.add(TERRA, 1).add(HERBA, 1)

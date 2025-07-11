@@ -86,6 +86,7 @@
   "container.thavma.research_table.buttonWidget.right": "Next Page",
   "container.thavma.research_table.socketWidget.remove": "Click to remove",
   "entity.thavma.angry_zombie": "Angry Zombie",
+  "gui.layer.thavma.arcane_lens.no_aspects": "Nothing can be learned from this",
   "item.thavma.aer_shard": "Aer Shard",
   "item.thavma.aether_shard": "Aether Shard",
   "item.thavma.angry_zombie_spawn_egg": "Angry Zombie Spawn Egg",

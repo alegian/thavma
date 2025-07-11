@@ -45,22 +45,27 @@ fun Player.hasScanned(itemStack: ItemStack): Boolean {
   return hasScanned(itemScanKey(itemStack.item))
 }
 
-fun Player.setScanned(newScans: List<String>, firstPacket: Boolean = false) {
-  val old = getData(T7Attachments.SCANNED)
-  old.scanned.addAll(newScans)
-  setData(T7Attachments.SCANNED, old)
+fun Player.handleScanResult(scanResult: ScanResult, newScans: List<String>, firstPacket: Boolean = false) {
+  if (scanResult == ScanResult.SUCCESS) {
+    val old = getData(T7Attachments.SCANNED)
+    old.scanned.addAll(newScans)
+    setData(T7Attachments.SCANNED, old)
+  }
 
   if (this is ServerPlayer)
-    PacketDistributor.sendToPlayer(this, ScanPayload(newScans, firstPacket))
+    PacketDistributor.sendToPlayer(this, ScanPayload(scanResult, newScans, firstPacket))
 }
 
 fun Player.tryScan(key: String, aspectMap: AspectMap?) {
-  if (aspectMap == null || aspectMap.isEmpty) return
-  if (hasScanned(key)) return
-  val aspects = aspectMap.map { it.aspect }
-  if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) return
-  setScanned(listOf(key))
-  tryLearnAspects(aspects)
+  var scanResult = ScanResult.SUCCESS
+  if (aspectMap == null || aspectMap.isEmpty) scanResult = ScanResult.UNSUPPORTED
+  else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
+  else {
+    val aspects = aspectMap.map { it.aspect }
+    if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) scanResult = ScanResult.LOCKED
+    else tryLearnAspects(aspects)
+  }
+  handleScanResult(scanResult, listOf(key))
 }
 
 // itemEntities fall back to items

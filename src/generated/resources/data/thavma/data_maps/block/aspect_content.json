@@ -1050,6 +1050,10 @@
     "minecraft:red_sandstone_wall": {
       "thavma:terra": 4
     },
+    "minecraft:redstone_wire": {
+      "thavma:potentia": 4,
+      "thavma:terra": 1
+    },
     "minecraft:sandstone": {
       "thavma:terra": 4
     },
@@ -1177,6 +1181,10 @@
     },
     "minecraft:torch": {
       "thavma:lux": 4
+    },
+    "minecraft:tripwire": {
+      "thavma:bestia": 1,
+      "thavma:fabrico": 1
     },
     "minecraft:tripwire_hook": {
       "thavma:metallum": 2,

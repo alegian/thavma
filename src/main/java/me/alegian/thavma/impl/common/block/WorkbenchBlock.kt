@@ -44,6 +44,6 @@ class WorkbenchBlock : Block(Properties.ofFullCopy(Blocks.STONE).noOcclusion()),
   }
 
   companion object {
-    val CONTAINER_TITLE: String = "container." + Thavma.MODID + ".arcane_workbench"
+    val CONTAINER_TITLE = "container." + Thavma.MODID + ".arcane_workbench"
   }
 }

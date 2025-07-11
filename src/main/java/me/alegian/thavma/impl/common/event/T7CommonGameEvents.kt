@@ -4,7 +4,8 @@ import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.entity.setKnowledge
 import me.alegian.thavma.impl.common.item.HammerItem
-import me.alegian.thavma.impl.common.scanning.setScanned
+import me.alegian.thavma.impl.common.scanning.ScanResult
+import me.alegian.thavma.impl.common.scanning.handleScanResult
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -112,7 +113,7 @@ fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
   if (player !is ServerPlayer) return
 
   val oldScans = player.getData(T7Attachments.SCANNED).scanned.toList()
-  player.setScanned(oldScans, true)
+  player.handleScanResult(ScanResult.SUCCESS, oldScans, true)
   val oldKnowledge = player.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
   player.setKnowledge(oldKnowledge, true)
 }

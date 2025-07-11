@@ -149,6 +149,10 @@ object MineralAspects {
         it.add(VITREUS, 16)
           .add(SENSUS, 4)
       }
+      block(Blocks.REDSTONE_WIRE) {
+        it.add(POTENTIA, 4)
+          .add(TERRA, 1)
+      }
 
       for (infusedBlock in (INFUSED_STONES.values + INFUSED_DEEPSLATES.values)) {
         block(infusedBlock) {

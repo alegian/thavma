@@ -6,9 +6,9 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
-import me.alegian.thavma.impl.common.entity.getScanHitResult
-import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.item.ArcaneLensItem
+import me.alegian.thavma.impl.common.scanning.getScanHitResult
+import me.alegian.thavma.impl.common.scanning.hasScanned
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

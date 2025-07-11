@@ -31,12 +31,15 @@ fun Player.knowsResearch(researchKey: ResourceKey<ResearchEntry>): Boolean {
   return entry.defaultKnown || knows(researchKey)
 }
 
-fun Player.tryLearnAspect(aspect: Aspect) {
-  if (knowsAspect(aspect)) return
-  setKnowledge(listOf(aspect.resourceKey.serialize()))
+fun Player.tryLearnAspects(aspects: List<Aspect>) {
+  setKnowledge(
+    aspects
+      .filter { !knowsAspect(it) }
+      .map { it.resourceKey.serialize() }
+  )
 }
 
-fun Player.knowsAspect(aspect: Aspect) = knows(aspect.resourceKey)
+fun Player.knowsAspect(aspect: Aspect) = aspect.isPrimal || knows(aspect.resourceKey)
 
 private fun Player.knows(resourceKey: ResourceKey<*>) =
   getData(T7Attachments.KNOWLEDGE).knowledge.contains(resourceKey.serialize())

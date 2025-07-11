@@ -12,10 +12,10 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.entity.hasScanned
 import me.alegian.thavma.impl.common.entity.setKnowledge
-import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.common.item.HammerItem
+import me.alegian.thavma.impl.common.scanning.hasScanned
+import me.alegian.thavma.impl.common.scanning.setScanned
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen

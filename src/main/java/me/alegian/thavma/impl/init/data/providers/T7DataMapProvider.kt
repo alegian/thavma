@@ -201,22 +201,21 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     b.block(Blocks.CLAY) { it.add(TERRA, 4).add(AQUA, 4) }
 
     b.block(Blocks.GRASS_BLOCK) {
-      it.add(TERRA, 5).add(HERBA, 2)
+      it.add(TERRA, 1).add(HERBA, 1)
     }
     b.block(Blocks.PODZOL) {
-      it.add(TERRA, 5).add(HERBA, 1)
+      it.add(TERRA, 1).add(HERBA, 1)
     }
     b.block(Blocks.SHORT_GRASS) {
-      it.add(HERBA, 5).add(AER, 1)
+      it.add(HERBA, 1).add(AER, 1)
     }
     b.block(Blocks.TALL_GRASS) {
-      it.add(HERBA, 5).add(AER, 1)
+      it.add(HERBA, 1).add(AER, 1)
     }
 
     b.block(BlockTags.TERRACOTTA) {
-      it.add(AQUA, 15)
-        .add(TERRA, 15)
-        .add(IGNIS, 1)
+      it.add(TERRA, 4)
+        .add(IGNIS, 4)
         .add(SENSUS, 1)
     }
     b.block(BlockTags.CONCRETE_POWDER) {

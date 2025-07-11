@@ -153,10 +153,9 @@
       "thavma:victus": 4
     },
     "#minecraft:terracotta": {
-      "thavma:aqua": 15,
-      "thavma:ignis": 1,
+      "thavma:ignis": 4,
       "thavma:sensus": 1,
-      "thavma:terra": 15
+      "thavma:terra": 4
     },
     "#minecraft:wool": {
       "thavma:bestia": 8,
@@ -662,8 +661,8 @@
       "thavma:terra": 2
     },
     "minecraft:grass_block": {
-      "thavma:herba": 2,
-      "thavma:terra": 5
+      "thavma:herba": 1,
+      "thavma:terra": 1
     },
     "minecraft:heavy_core": {
       "thavma:desiderium": 8,
@@ -871,7 +870,7 @@
     },
     "minecraft:podzol": {
       "thavma:herba": 1,
-      "thavma:terra": 5
+      "thavma:terra": 1
     },
     "minecraft:polished_andesite": {
       "thavma:terra": 2
@@ -1065,7 +1064,7 @@
     },
     "minecraft:short_grass": {
       "thavma:aer": 1,
-      "thavma:herba": 5
+      "thavma:herba": 1
     },
     "minecraft:smooth_quartz": {
       "thavma:ignis": 4,
@@ -1170,7 +1169,7 @@
     },
     "minecraft:tall_grass": {
       "thavma:aer": 1,
-      "thavma:herba": 5
+      "thavma:herba": 1
     },
     "minecraft:tnt": {
       "thavma:potentia": 20,

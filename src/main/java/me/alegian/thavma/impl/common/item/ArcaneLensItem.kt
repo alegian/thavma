@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.common.entity.getScanHitResult
-import me.alegian.thavma.impl.common.entity.hasScanned
-import me.alegian.thavma.impl.common.entity.tryScan
+import me.alegian.thavma.impl.common.scanning.getScanHitResult
+import me.alegian.thavma.impl.common.scanning.hasScanned
+import me.alegian.thavma.impl.common.scanning.tryScan
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers.Revealing.ARCANE_LENS
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import me.alegian.thavma.impl.rl
@@ -53,7 +53,7 @@ class ArcaneLensItem(props: Properties) : Item(
       is EntityHitResult -> player.hasScanned(hitResult.entity)
       else -> false
     }
-    if(hasScanned) return InteractionResultHolder.pass(player.getItemInHand(hand))
+    if (hasScanned) return InteractionResultHolder.pass(player.getItemInHand(hand))
 
     player.startUsingItem(hand)
     return InteractionResultHolder.success(player.getItemInHand(hand))

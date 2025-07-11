@@ -1,8 +1,10 @@
-package me.alegian.thavma.impl.common.entity
+package me.alegian.thavma.impl.common.scanning
 
 import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
+import me.alegian.thavma.impl.common.entity.knowsAspect
+import me.alegian.thavma.impl.common.entity.tryLearnAspects
 import me.alegian.thavma.impl.common.payload.ScanPayload
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.Util
@@ -52,11 +54,13 @@ fun Player.setScanned(newScans: List<String>, firstPacket: Boolean = false) {
     PacketDistributor.sendToPlayer(this, ScanPayload(newScans, firstPacket))
 }
 
-fun Player.tryScan(key: String, aspects: AspectMap?) {
-  // TODO: check if aspect is known
-  if (aspects == null || aspects.isEmpty) return
+fun Player.tryScan(key: String, aspectMap: AspectMap?) {
+  if (aspectMap == null || aspectMap.isEmpty) return
   if (hasScanned(key)) return
+  val aspects = aspectMap.map { it.aspect }
+  if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) return
   setScanned(listOf(key))
+  tryLearnAspects(aspects)
 }
 
 // itemEntities fall back to items
@@ -66,14 +70,8 @@ fun ServerPlayer.tryScan(entity: Entity) {
   tryScan(entityScanKey(entity.type), getAspects(entity))
 }
 
-// blocks fall back to items if possible
 fun ServerPlayer.tryScan(blockState: BlockState) {
-  val item = blockState.block.asItem()
-  if (item != Items.AIR) {
-    tryScan(itemScanKey(item), getAspects(item))
-  } else {
-    tryScan(blockScanKey(blockState.block), getAspects(blockState.block))
-  }
+  tryScan(blockScanKey(blockState.block), getAspects(blockState.block))
 }
 
 private fun entityScanKey(entityType: EntityType<*>): String =
@@ -94,7 +92,6 @@ private fun itemScanKey(item: Item): String =
     BuiltInRegistries.ITEM.getKey(item)
   )
 
-// for client, use Minecraft.hitResult
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))
   val predicate = { entity: Entity -> !entity.isSpectator && (entity.isPickable || entity is ItemEntity) }

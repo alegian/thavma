@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.payload
 
-import me.alegian.thavma.impl.common.entity.setScanned
+import me.alegian.thavma.impl.common.scanning.setScanned
 import me.alegian.thavma.impl.rl
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec

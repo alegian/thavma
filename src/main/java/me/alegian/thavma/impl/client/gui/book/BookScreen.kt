@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.clientRegistry
-import me.alegian.thavma.impl.common.entity.hasKnowledge
+import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -35,13 +35,13 @@ class BookScreen : Screen(Component.literal("Thaumonomicon")) {
     }
     val parentsKnown = mutableMapOf<ResourceKey<ResearchEntry>, Boolean>()
     clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.forEach { (key, entry) ->
-      if (player.hasKnowledge(key))
+      if (player.knowsResearch(key))
         for (child in entry.children)
           parentsKnown[child] = true
     }
     clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.entrySet()?.forEach { (key, entry) ->
       val tab = tabs[entry.category]
-      val known = player.hasKnowledge(key)
+      val known = player.knowsResearch(key)
       val parentKnown = parentsKnown[key] == true
       if (tab != null && (known || parentKnown))
         entryWidgets.add(addRenderableWidget(EntryWidget.of(this, tab, entry, !known)))

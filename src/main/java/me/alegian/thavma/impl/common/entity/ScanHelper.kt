@@ -43,20 +43,20 @@ fun Player.hasScanned(itemStack: ItemStack): Boolean {
   return hasScanned(itemScanKey(itemStack.item))
 }
 
-fun Player.tryScan(newScans: List<String>) {
+fun Player.setScanned(newScans: List<String>, firstPacket: Boolean = false) {
   val old = getData(T7Attachments.SCANNED)
   old.scanned.addAll(newScans)
   setData(T7Attachments.SCANNED, old)
 
   if (this is ServerPlayer)
-    PacketDistributor.sendToPlayer(this, ScanPayload(newScans))
+    PacketDistributor.sendToPlayer(this, ScanPayload(newScans, firstPacket))
 }
 
 fun Player.tryScan(key: String, aspects: AspectMap?) {
   // TODO: check if aspect is known
   if (aspects == null || aspects.isEmpty) return
   if (hasScanned(key)) return
-  tryScan(listOf(key))
+  setScanned(listOf(key))
 }
 
 // itemEntities fall back to items

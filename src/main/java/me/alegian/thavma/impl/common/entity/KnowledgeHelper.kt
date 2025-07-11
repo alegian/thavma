@@ -1,8 +1,10 @@
 package me.alegian.thavma.impl.common.entity
 
 import me.alegian.thavma.impl.client.clientRegistry
+import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.payload.KnowledgePayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.resources.ResourceKey
@@ -10,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.network.PacketDistributor
 
-fun Player.setKnowledge(newKnowledge: List<ResourceKey<ResearchEntry>>, firstPacket: Boolean = false) {
+fun Player.setKnowledge(newKnowledge: List<String>, firstPacket: Boolean = false) {
   val old = getData(T7Attachments.KNOWLEDGE)
   old.knowledge.addAll(newKnowledge)
   setData(T7Attachments.KNOWLEDGE, old)
@@ -19,9 +21,22 @@ fun Player.setKnowledge(newKnowledge: List<ResourceKey<ResearchEntry>>, firstPac
     PacketDistributor.sendToPlayer(this, KnowledgePayload(newKnowledge, firstPacket))
 }
 
-fun Player.setKnowledge(entry: ResourceKey<ResearchEntry>) = setKnowledge(listOf(entry))
-
-fun Player.hasKnowledge(researchEntry: ResourceKey<ResearchEntry>): Boolean {
-  val entry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.get(researchEntry) ?: return false
-  return entry.defaultKnown || getData(T7Attachments.KNOWLEDGE).knowledge.contains(researchEntry)
+fun Player.tryLearnResearch(researchKey: ResourceKey<ResearchEntry>) {
+  if (knowsResearch(researchKey)) return
+  setKnowledge(listOf(researchKey.serialize()))
 }
+
+fun Player.knowsResearch(researchKey: ResourceKey<ResearchEntry>): Boolean {
+  val entry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.get(researchKey) ?: return false
+  return entry.defaultKnown || knows(researchKey)
+}
+
+fun Player.tryLearnAspect(aspect: Aspect) {
+  if (knowsAspect(aspect)) return
+  setKnowledge(listOf(aspect.resourceKey.serialize()))
+}
+
+fun Player.knowsAspect(aspect: Aspect) = knows(aspect.resourceKey)
+
+private fun Player.knows(resourceKey: ResourceKey<*>) =
+  getData(T7Attachments.KNOWLEDGE).knowledge.contains(resourceKey.serialize())

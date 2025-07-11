@@ -16,6 +16,8 @@ class Aspect(var id: String, var color: Int, var components: List<Supplier<Aspec
     if (isPrimal) 1
     else components.maxOf { a -> a.get().rank } + 1
   }
+  val resourceKey
+    get() = ASPECT.getResourceKey(this).get()
 
   companion object {
     val STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(

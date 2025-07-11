@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.payload
 
-import me.alegian.thavma.impl.common.entity.tryScan
+import me.alegian.thavma.impl.common.entity.setScanned
 import me.alegian.thavma.impl.rl
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -10,7 +10,7 @@ import net.minecraft.sounds.SoundSource
 import net.neoforged.neoforge.network.handling.IPayloadContext
 
 // S2C
-class ScanPayload(val newScans: List<String>): CustomPacketPayload {
+class ScanPayload(private val newScans: List<String>, private val firstPacket: Boolean = false): CustomPacketPayload {
   override fun type() = TYPE
 
   companion object{
@@ -19,12 +19,17 @@ class ScanPayload(val newScans: List<String>): CustomPacketPayload {
     val STREAM_CODEC = StreamCodec.composite(
       ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()),
       ScanPayload::newScans,
+      ByteBufCodecs.BOOL,
+      ScanPayload::firstPacket,
       ::ScanPayload
     )
 
     fun handle(payload: ScanPayload, context: IPayloadContext){
       val player = context.player()
-      player.tryScan(payload.newScans)
+      player.setScanned(payload.newScans)
+
+      if (payload.firstPacket) return
+
       player.level().playSound(player, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.4f, 1f)
     }
   }

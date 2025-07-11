@@ -30,7 +30,7 @@ fun <T> clientRegistry(key: ResourceKey<Registry<T>>) =
 
 fun pushScreen(screen: Screen) = Minecraft.getInstance().pushGuiLayer(screen)
 
-fun researchToast(entry: ResourceKey<ResearchEntry>) =
+fun researchToast(entry: ResearchEntry) =
   Minecraft.getInstance().toasts.addToast(ResearchToast(entry))
 
 fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Float) {

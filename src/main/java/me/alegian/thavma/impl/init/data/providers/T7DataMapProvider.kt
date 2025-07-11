@@ -40,12 +40,12 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.BlockFamily
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
-import net.minecraft.tags.BlockTags
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
@@ -64,7 +64,6 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     ArmorAspects.gather(this, lookupProvider)
     BlockFamilyAspects.gather(this, lookupProvider)
 
-    val b = builder(T7DataMaps.AspectContent.BLOCK)
     val i = builder(T7DataMaps.AspectContent.ITEM)
 
     i.item(Items.BLAZE_POWDER) {
@@ -186,154 +185,150 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(IGNIS, 4)
     }
 
-    b.block(Blocks.NETHER_WART) { it.add(HERBA, 2).add(IGNIS, 2) }
-    b.block(Blocks.CHORUS_PLANT) { it.add(HERBA, 2).add(ALIENIS, 2) }
-    b.block(Blocks.CHORUS_FLOWER) { it.add(HERBA, 4).add(ALIENIS, 4) }
-    b.block(Tags.Blocks.NETHERRACKS) { it.add(TERRA, 1).add(IGNIS, 1) }
-    b.block(Blocks.MUD) { it.add(TERRA, 1).add(AQUA, 1) }
-    b.block(Blocks.PACKED_MUD) { it.add(TERRA, 2).add(HERBA, 2) }
-    b.block(BlockTags.DIRT) { it.add(TERRA, 1) }
-    b.block(Blocks.COARSE_DIRT) { it.add(TERRA, 1) }
-    b.block(Tags.Blocks.GRAVELS) { it.add(TERRA, 2) }
-    b.block(Tags.Blocks.STONES) { it.add(TERRA, 2) }
-    b.block(Tags.Blocks.COBBLESTONES) { it.add(TERRA, 2) }
-    b.block(Tags.Blocks.SANDS) { it.add(TERRA, 2) }
-    b.block(Blocks.CLAY) { it.add(TERRA, 4).add(AQUA, 4) }
-    b.block(Blocks.TRIPWIRE) {
-      it.add(BESTIA, 1)
-        .add(FABRICO, 1)
-    }
+    i.item(Blocks.NETHER_WART) { it.add(HERBA, 2).add(IGNIS, 2) }
+    i.item(Blocks.CHORUS_PLANT) { it.add(HERBA, 2).add(ALIENIS, 2) }
+    i.item(Blocks.CHORUS_FLOWER) { it.add(HERBA, 4).add(ALIENIS, 4) }
+    i.item(Tags.Items.NETHERRACKS) { it.add(TERRA, 1).add(IGNIS, 1) }
+    i.item(Blocks.MUD) { it.add(TERRA, 1).add(AQUA, 1) }
+    i.item(Blocks.PACKED_MUD) { it.add(TERRA, 2).add(HERBA, 2) }
+    i.item(ItemTags.DIRT) { it.add(TERRA, 1) }
+    i.item(Blocks.COARSE_DIRT) { it.add(TERRA, 1) }
+    i.item(Tags.Items.GRAVELS) { it.add(TERRA, 2) }
+    i.item(Tags.Items.STONES) { it.add(TERRA, 2) }
+    i.item(Tags.Items.COBBLESTONES) { it.add(TERRA, 2) }
+    i.item(Tags.Items.SANDS) { it.add(TERRA, 2) }
+    i.item(Blocks.CLAY) { it.add(TERRA, 4).add(AQUA, 4) }
 
-    b.block(Blocks.GRASS_BLOCK) {
+    i.item(Blocks.GRASS_BLOCK) {
       it.add(TERRA, 1).add(HERBA, 1)
     }
-    b.block(Blocks.PODZOL) {
+    i.item(Blocks.PODZOL) {
       it.add(TERRA, 1).add(HERBA, 1)
     }
-    b.block(Blocks.SHORT_GRASS) {
+    i.item(Blocks.SHORT_GRASS) {
       it.add(HERBA, 1).add(AER, 1)
     }
-    b.block(Blocks.TALL_GRASS) {
+    i.item(Blocks.TALL_GRASS) {
       it.add(HERBA, 1).add(AER, 1)
     }
 
-    b.block(BlockTags.TERRACOTTA) {
+    i.item(ItemTags.TERRACOTTA) {
       it.add(TERRA, 4)
         .add(IGNIS, 4)
         .add(SENSUS, 1)
     }
-    b.block(BlockTags.CONCRETE_POWDER) {
+    i.item(Tags.Items.CONCRETE_POWDERS) {
       it.add(TERRA, 3)
     }
-    b.block(Tags.Blocks.CONCRETES) {
+    i.item(Tags.Items.CONCRETES) {
       it.add(TERRA, 3)
         .add(AQUA, 1)
         .add(AETHER, 1)
     }
 
-    b.block(BlockTags.LEAVES) { it.add(HERBA, 2) }
-    b.block(BlockTags.SAPLINGS) { it.add(HERBA, 4).add(VICTUS, 4) }
-    b.block(BlockTags.LOGS) { it.add(HERBA, 8) }
-    b.block(BlockTags.FLOWERS) { it.add(HERBA, 4).add(VICTUS, 1) }
+    i.item(ItemTags.LEAVES) { it.add(HERBA, 2) }
+    i.item(ItemTags.SAPLINGS) { it.add(HERBA, 4).add(VICTUS, 4) }
+    i.item(ItemTags.LOGS) { it.add(HERBA, 8) }
+    i.item(ItemTags.FLOWERS) { it.add(HERBA, 4).add(VICTUS, 1) }
 
-    b.block(Blocks.SUGAR_CANE) {
+    i.item(Blocks.SUGAR_CANE) {
       it.add(HERBA, 2)
         .add(AQUA, 1)
         .add(AER, 1)
     }
 
-    b.block(T7Blocks.TABLE) { it.add(HERBA, 12) }
-    b.block(T7Blocks.RESEARCH_TABLE) {
+    i.item(T7Blocks.TABLE) { it.add(HERBA, 12) }
+    i.item(T7Blocks.RESEARCH_TABLE) {
       it.add(HERBA, 12)
         .add(PRAECANTATIO, 2)
     }
 
-    b.block(BlockTags.WOOL) {
+    i.item(ItemTags.WOOL) {
       it.add(BESTIA, 4).add(SENSUS, 2).add(FABRICO, 4)
     }
 
-    b.block(Tags.Blocks.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 2) }
-    b.block(Tags.Blocks.GLASS_PANES) { it.add(VITREUS, 1) }
+    i.item(Tags.Items.GLASS_BLOCKS_CHEAP) { it.add(VITREUS, 2) }
+    i.item(Tags.Items.GLASS_PANES) { it.add(VITREUS, 1) }
 
-    b.block(BlockTags.WOOL) { it.add(BESTIA, 8).add(FABRICO, 4) }
+    i.item(ItemTags.WOOL) { it.add(BESTIA, 8).add(FABRICO, 4) }
 
-    b.block(Blocks.TORCH) { it.add(LUX, 4) }
+    i.item(Blocks.TORCH) { it.add(LUX, 4) }
 
-    b.block(Blocks.SNOW) { it.add(GELUM, 1) }
-    b.block(Blocks.SNOW_BLOCK) { it.add(GELUM, 4) }
-    b.block(Blocks.POWDER_SNOW) { it.add(GELUM, 2) }
+    i.item(Blocks.SNOW) { it.add(GELUM, 1) }
+    i.item(Blocks.SNOW_BLOCK) { it.add(GELUM, 4) }
+    i.item(Blocks.POWDER_SNOW) { it.add(GELUM, 2) }
 
-    b.block(Blocks.BEDROCK) {
+    i.item(Blocks.BEDROCK) {
       it.add(VACUOS, 25)
         .add(TERRA, 25)
         .add(TENEBRAE, 25)
     }
-    b.block(T7Blocks.ETERNAL_FLAME) {
+    i.item(T7Blocks.ETERNAL_FLAME) {
       it.add(LUX, 12)
         .add(POTENTIA, 8)
         .add(IGNIS, 8)
     }
-    b.block(T7Blocks.CRACKED_ELEMENTAL_STONE) {
+    i.item(T7Blocks.CRACKED_ELEMENTAL_STONE) {
       it.add(TERRA, 4)
         .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.ELEMENTAL_STONE_BRICKS) {
+    i.item(T7Blocks.ELEMENTAL_STONE_BRICKS) {
       it.add(TERRA, 4)
         .add(PRAECANTATIO, 1)
     }
-    b.block(T7Blocks.ELEMENTAL_CORE) {
+    i.item(T7Blocks.ELEMENTAL_CORE) {
       it.add(TERRA, 6)
         .add(PRAECANTATIO, 2)
     }
-    b.block(Blocks.CRAFTING_TABLE) {
+    i.item(Blocks.CRAFTING_TABLE) {
       it.add(FABRICO, 8)
         .add(HERBA, 4)
     }
-    b.block(T7Blocks.ARCANE_WORKBENCH) {
+    i.item(T7Blocks.ARCANE_WORKBENCH) {
       it.add(FABRICO, 12)
         .add(HERBA, 4)
         .add(PRAECANTATIO, 2)
     }
-    b.block(BlockTags.CAULDRONS) {
+    i.item(Items.CAULDRON) {
       it.add(METALLUM, 56)
         .add(ALKIMIA, 8)
     }
-    b.block(T7Blocks.CRUCIBLE) {
+    i.item(T7Blocks.CRUCIBLE) {
       it.add(METALLUM, 56)
         .add(ALKIMIA, 8)
         .add(PRAECANTATIO, 2)
     }
-    b.block(T7Blocks.SEALING_JAR) {
+    i.item(T7Blocks.SEALING_JAR) {
       it.add(VITREUS, 4)
         .add(VACUOS, 2)
         .add(PRAECANTATIO, 2)
     }
-    b.block(Blocks.TNT) {
+    i.item(Blocks.TNT) {
       it.add(POTENTIA, 20)
         .add(TERRA, 1)
     }
-    b.block(Blocks.TRIPWIRE_HOOK) {
+    i.item(Blocks.TRIPWIRE_HOOK) {
       it.add(VINCULUM, 2)
         .add(METALLUM, 2)
     }
-    b.block(Blocks.HEAVY_CORE) {
+    i.item(Blocks.HEAVY_CORE) {
       it.add(METALLUM, 16)
         .add(DESIDERIUM, 8)
         .add(VACUOS, 2)
     }
-    b.block(Blocks.BAMBOO) { it.add(HERBA, 1) }
-    b.block(BlockTags.BAMBOO_BLOCKS) { it.add(HERBA, 4) }
+    i.item(Blocks.BAMBOO) { it.add(HERBA, 1) }
+    i.item(ItemTags.BAMBOO_BLOCKS) { it.add(HERBA, 4) }
   }
 }
 
-fun Builder<AspectMap, Block>.blockFamily(blockFamily: BlockFamily, builderConsumer: Consumer<AspectMap.Builder>) {
+fun Builder<AspectMap, Item>.blockFamily(blockFamily: BlockFamily, builderConsumer: Consumer<AspectMap.Builder>) {
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
   val aspects = aspectBuilder.build()
 
   fun addFamilyVariant(block: Block?, multiplier: Number) {
     if (block == null) return
-    add(key(block), aspects.scale(multiplier), false)
+    add(key(block.asItem()), aspects.scale(multiplier), false)
   }
 
   addFamilyVariant(blockFamily.baseBlock, 1)
@@ -357,40 +352,16 @@ fun Builder<AspectMap, Block>.blockFamily(blockFamily: BlockFamily, builderConsu
   addFamilyVariant(blockFamily.get(BlockFamily.Variant.WALL_SIGN), 2)
 }
 
-/**
- * When checking for Aspect contents, the Block aspects are prioritized over the Item aspects.
- * Therefore, to avoid ambiguities, BlockItem aspect registration is forbidden.
- */
-fun Builder<AspectMap, Item>.item(item: Item, builderConsumer: Consumer<AspectMap.Builder>) {
-  require(item !is BlockItem) { "Cannot register Aspects for BlockItems, you should register for their Blocks instead" }
-
+fun Builder<AspectMap, Item>.item(item: ItemLike, builderConsumer: Consumer<AspectMap.Builder>) {
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
-  add(key(item), aspectBuilder.build(), false)
+  add(key(item.asItem()), aspectBuilder.build(), false)
 }
 
 fun <T : Item> Builder<AspectMap, Item>.item(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
   item(sup.get(), builderConsumer)
 
 fun Builder<AspectMap, Item>.item(tag: TagKey<Item>, builderConsumer: Consumer<AspectMap.Builder>) {
-  val aspectBuilder = AspectMap.builder()
-  builderConsumer.accept(aspectBuilder)
-  add(tag, aspectBuilder.build(), false)
-}
-
-fun Builder<AspectMap, Block>.block(block: Block, builderConsumer: Consumer<AspectMap.Builder>) {
-  val aspectBuilder = AspectMap.builder()
-  builderConsumer.accept(aspectBuilder)
-  add(key(block), aspectBuilder.build(), false)
-}
-
-fun <T : Block> Builder<AspectMap, Block>.block(sup: Supplier<T>, builderConsumer: Consumer<AspectMap.Builder>) =
-  block(sup.get(), builderConsumer)
-
-fun Builder<AspectMap, Block>.block(
-  tag: TagKey<Block>,
-  builderConsumer: Consumer<AspectMap.Builder>
-) {
   val aspectBuilder = AspectMap.builder()
   builderConsumer.accept(aspectBuilder)
   add(tag, aspectBuilder.build(), false)
@@ -417,8 +388,4 @@ private fun key(entityType: EntityType<*>): ResourceKey<EntityType<*>> {
 
 private fun key(item: Item): ResourceKey<Item> {
   return BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow()
-}
-
-private fun key(block: Block): ResourceKey<Block> {
-  return BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow()
 }

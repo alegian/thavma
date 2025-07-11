@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.init.data.providers.aspects
 
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
-import me.alegian.thavma.impl.init.data.providers.block
 import me.alegian.thavma.impl.init.data.providers.item
 import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
@@ -29,133 +28,129 @@ import net.neoforged.neoforge.common.Tags
 
 object MineralAspects {
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
-    datamapProvider.builder(T7DataMaps.AspectContent.BLOCK).run {
-      block(Tags.Blocks.ORES_COAL) {
+    datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
+      item(Tags.Items.ORES_COAL) {
         it.add(IGNIS, 8)
           .add(POTENTIA, 8)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_COAL) {
+      item(Tags.Items.STORAGE_BLOCKS_COAL) {
         it.add(IGNIS, 72)
           .add(POTENTIA, 72)
       }
-      block(Tags.Blocks.ORES_COPPER) {
+      item(Tags.Items.ORES_COPPER) {
         it.add(METALLUM, 4)
           .add(PERMUTATIO, 4)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_RAW_COPPER) {
+      item(Tags.Items.STORAGE_BLOCKS_RAW_COPPER) {
         it.add(METALLUM, 18)
           .add(PERMUTATIO, 18)
           .add(TERRA, 18)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_COPPER) {
+      item(Tags.Items.STORAGE_BLOCKS_COPPER) {
         it.add(METALLUM, 36)
           .add(PERMUTATIO, 36)
       }
-      block(Tags.Blocks.ORES_IRON) {
+      item(Tags.Items.ORES_IRON) {
         it.add(METALLUM, 8)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_RAW_IRON) {
+      item(Tags.Items.STORAGE_BLOCKS_RAW_IRON) {
         it.add(METALLUM, 36)
           .add(TERRA, 18)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_IRON) {
+      item(Tags.Items.STORAGE_BLOCKS_IRON) {
         it.add(METALLUM, 72)
       }
-      block(T7Blocks.THAVMITE_BLOCK) {
+      item(T7Blocks.THAVMITE_BLOCK) {
         it.add(METALLUM, 72)
           .add(PRAECANTATIO, 36)
       }
-      block(T7Blocks.ORICHALCUM_BLOCK) {
+      item(T7Blocks.ORICHALCUM_BLOCK) {
         it.add(METALLUM, 36)
           .add(PERMUTATIO, 36)
           .add(PRAECANTATIO, 36)
       }
-      block(Tags.Blocks.ORES_GOLD) {
+      item(Tags.Items.ORES_GOLD) {
         it.add(METALLUM, 4)
           .add(DESIDERIUM, 8)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_RAW_GOLD) {
+      item(Tags.Items.STORAGE_BLOCKS_RAW_GOLD) {
         it.add(METALLUM, 18)
           .add(DESIDERIUM, 36)
           .add(TERRA, 18)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_GOLD) {
+      item(Tags.Items.STORAGE_BLOCKS_GOLD) {
         it.add(METALLUM, 36)
           .add(DESIDERIUM, 72)
       }
-      block(Tags.Blocks.ORES_DIAMOND) {
+      item(Tags.Items.ORES_DIAMOND) {
         it.add(VITREUS, 8)
           .add(DESIDERIUM, 8)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_DIAMOND) {
+      item(Tags.Items.STORAGE_BLOCKS_DIAMOND) {
         it.add(VITREUS, 72)
           .add(DESIDERIUM, 72)
       }
-      block(Tags.Blocks.ORES_EMERALD) {
+      item(Tags.Items.ORES_EMERALD) {
         it.add(VITREUS, 8)
           .add(DESIDERIUM, 4)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_EMERALD) {
+      item(Tags.Items.STORAGE_BLOCKS_EMERALD) {
         it.add(VITREUS, 72)
           .add(DESIDERIUM, 36)
       }
-      block(Tags.Blocks.ORES_NETHERITE_SCRAP) {
+      item(Tags.Items.ORES_NETHERITE_SCRAP) {
         it.add(METALLUM, 2)
           .add(TERRA, 6)
           .add(TENEBRAE, 1)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_NETHERITE) {
+      item(Tags.Items.STORAGE_BLOCKS_NETHERITE) {
         it.add(METALLUM, 144)
           .add(DESIDERIUM, 72)
           .add(TENEBRAE, 36)
       }
-      block(Blocks.GLOWSTONE) {
+      item(Blocks.GLOWSTONE) {
         it.add(LUX, 16)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.ORES_QUARTZ) {
+      item(Tags.Items.ORES_QUARTZ) {
         it.add(VITREUS, 4)
           .add(TERRA, 4)
           .add(IGNIS, 1)
       }
-      block(Blocks.QUARTZ_BLOCK) {
+      item(Blocks.QUARTZ_BLOCK) {
         it.add(VITREUS, 16)
           .add(IGNIS, 4)
       }
-      block(Tags.Blocks.ORES_LAPIS) {
+      item(Tags.Items.ORES_LAPIS) {
         it.add(VITREUS, 4)
           .add(TERRA, 4)
           .add(SENSUS, 2)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_LAPIS) {
+      item(Tags.Items.STORAGE_BLOCKS_LAPIS) {
         it.add(VITREUS, 36)
           .add(SENSUS, 18)
       }
-      block(Tags.Blocks.ORES_REDSTONE) {
+      item(Tags.Items.ORES_REDSTONE) {
         it.add(POTENTIA, 4)
           .add(TERRA, 4)
       }
-      block(Tags.Blocks.STORAGE_BLOCKS_REDSTONE) {
+      item(Tags.Items.STORAGE_BLOCKS_REDSTONE) {
         it.add(POTENTIA, 36)
           .add(TERRA, 9)
       }
-      block(Blocks.AMETHYST_BLOCK) {
+      item(Blocks.AMETHYST_BLOCK) {
         it.add(VITREUS, 16)
           .add(SENSUS, 4)
       }
-      block(Blocks.REDSTONE_WIRE) {
-        it.add(POTENTIA, 4)
-          .add(TERRA, 1)
-      }
 
       for (infusedBlock in (INFUSED_STONES.values + INFUSED_DEEPSLATES.values)) {
-        block(infusedBlock) {
+        item(infusedBlock) {
           it.add(infusedBlock.get().getAspect(), 4)
         }
       }

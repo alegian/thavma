@@ -18,7 +18,7 @@ import net.minecraft.data.BlockFamilies
 
 object BlockFamilyAspects {
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) =
-    datamapProvider.builder(T7DataMaps.AspectContent.BLOCK).run {
+    datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {
       blockFamily(BlockFamilies.ACACIA_PLANKS) {
         it.add(HERBA, 2)
       }

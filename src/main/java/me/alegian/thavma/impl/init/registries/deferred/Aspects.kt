@@ -27,12 +27,13 @@ object Aspects {
   val GELUM = register("gelum", 0xffe1ffff.toInt(), listOf(AER, AQUA))
   val VITREUS = register("vitreus", 0xff80ffff.toInt(), listOf(TERRA, AER))
   val METALLUM = register("metallum", 0xffb5b5cd.toInt(), listOf(TERRA, IGNIS))
-  val VICTUS = register("victus", 0xffde0005.toInt(), listOf(TERRA, AQUA))
-  val MORTUUS = register("mortuus", 0xff6a0005.toInt(), listOf(AQUA, AETHER))
+  val VICTUS = register("victus", 0xffde0005.toInt(), listOf(AETHER, AQUA))
+  val HERBA = register("herba", 0xff01ac00.toInt(), listOf(AQUA, TERRA))
   val POTENTIA = register("potentia", 0xffc0ffff.toInt(), listOf(AETHER, IGNIS))
   val PERMUTATIO = register("permutatio", 0xff578357.toInt(), listOf(AQUA, IGNIS))
 
   // TERTIARY
+  val MORTUUS = register("mortuus", 0xff6a0005.toInt(), listOf(VICTUS, VACUOS))
   val PRAECANTATIO = register("praecantatio", T7Colors.PURPLE, listOf(POTENTIA, AER))
   val AURAM = register("auram", 0xffffc0ff.toInt(), listOf(PRAECANTATIO, AER))
   val ALKIMIA = register("alkimia", 0xff23ac9d.toInt(), listOf(PRAECANTATIO, AQUA))
@@ -40,7 +41,6 @@ object Aspects {
   val TENEBRAE = register("tenebrae", 0xff222222.toInt(), listOf(VACUOS, LUX))
   val ALIENIS = register("alienis", 0xff805080.toInt(), listOf(VACUOS, TENEBRAE))
   val VOLATUS = register("volatus", 0xffe7e7d7.toInt(), listOf(AER, MOTUS))
-  val HERBA = register("herba", 0xff01ac00.toInt(), listOf(VICTUS, TERRA))
   val INSTRUMENTUM = register("instrumentum", 0xff4040ee.toInt(), listOf(METALLUM, POTENTIA))
   val FABRICO = register("fabrico", 0xff809d80.toInt(), listOf(PERMUTATIO, INSTRUMENTUM))
   val MACHINA = register("machina", 0xff8080a0.toInt(), listOf(MOTUS, INSTRUMENTUM))

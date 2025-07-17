@@ -55,7 +55,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     }
   }
 
-  override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+  override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     val partialProgress = lerp(partialTick, prevAnimationProgress.toFloat(), animationProgress.toFloat())
     val animatedRadius = lerp(partialProgress / ANIMATION_DURATION, 0f, MAX_RADIUS)
     val deadRadius = animatedRadius / 2
@@ -68,6 +68,9 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     if (mouseAngle < 0) mouseAngle += 2 * PI
     selectedIndex = floor(mouseAngle / anglePerItem).toInt()
     if (mouseRadius <= deadRadius) selectedIndex = null
+
+    val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.getStackInSlot(0) ?: return
+    var tooltipFocus = equippedFocus
 
     guiGraphics.usePose {
       translateXY(width / 2, height / 2)
@@ -94,11 +97,15 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
           guiGraphics.renderItem(stack, 0, 0)
         }
 
-      val focus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
-      if (focus == null) return@usePose
+      if (selectedIndex == null) scaleXY(1.5f)
       translateXY(-8, -8)
-      guiGraphics.renderItem(focus, 0, 0)
+      guiGraphics.renderItem(equippedFocus, 0, 0)
     }
+
+    if (foci.isNotEmpty())
+      selectedIndex?.let { tooltipFocus = foci[it] }
+
+    guiGraphics.renderTooltip(font, tooltipFocus, -8, 16)
   }
 
   override fun shouldCloseOnEsc() = false

@@ -75,8 +75,10 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
   }
 }
 
-private fun gatherTooltipComponents(event: GatherComponents) {
-  if (!clientPlayerHasRevealing() || event.itemStack.isEmpty) return
+private fun wandTooltip(event: GatherComponents) {
+  if (event.itemStack.isEmpty) return
+  val player = Minecraft.getInstance().player ?: return
+  if (!clientPlayerHasRevealing() && !player.isCreative) return
 
   AspectContainer.from(event.itemStack)?.aspects?.let {
     event.tooltipElements.add(
@@ -85,8 +87,10 @@ private fun gatherTooltipComponents(event: GatherComponents) {
       )
     )
   }
+}
 
-  if (!Screen.hasShiftDown()) return
+private fun aspectTooltip(event: GatherComponents) {
+  if (!Screen.hasShiftDown() || event.itemStack.isEmpty) return
   val player = Minecraft.getInstance().player ?: return
   if (!player.isCreative && !player.hasScanned(event.itemStack)) return
 
@@ -127,7 +131,8 @@ fun registerClientGameEvents() {
 
   KFF_GAME_BUS.addListener(::renderBlockHighlight)
   KFF_GAME_BUS.addListener(::renderLevelAfterWeather)
-  KFF_GAME_BUS.addListener(::gatherTooltipComponents)
+  KFF_GAME_BUS.addListener(::wandTooltip)
+  KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
   KFF_GAME_BUS.addListener(::playerClone)
   KFF_GAME_BUS.addListener(::clientTick)

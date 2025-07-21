@@ -13,7 +13,7 @@ import org.joml.Vector3f
 // the frame around the scrollable content
 object FrameRenderable : Renderable {
   val CORNER_TEXTURE = Texture("gui/book/frame_corner", 32, 32)
-  val EDGE_TEXTURE = Texture("gui/book/frame_edge", 32, 24)
+  val EDGE_TEXTURE = Texture("gui/book/frame_edge", 64, 24)
 
   /**
    * Renders the edge layer before the corners to avoid overlay bugs

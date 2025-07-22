@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.payload
 
+import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.research.ResearchState
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -31,7 +32,12 @@ class ResearchScrollPayload(val entry: ResourceKey<ResearchEntry>) : CustomPacke
       val stack = T7Items.RESEARCH_SCROLL.toStack()
       val registry = player.level().registryAccess().registry(T7DatapackRegistries.RESEARCH_ENTRY).getOrNull()
         ?: return
-      val defaultState = registry.get(payload.entry)?.defaultResearchState ?: return
+      val entry = registry.get(payload.entry) ?: return
+
+      for (p in entry.parents(context.player().level()))
+        if (!player.knowsResearch(p)) return
+
+      val defaultState = entry.defaultResearchState
       stack.set(T7DataComponents.RESEARCH_STATE, ResearchState(payload.entry, defaultState, false))
 
       giveItemToPlayer(player, stack)

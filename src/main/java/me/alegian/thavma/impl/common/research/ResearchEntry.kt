@@ -3,16 +3,22 @@ package me.alegian.thavma.impl.common.research
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.clientPlayer
 import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.book.Page
+import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
+import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.Util
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import org.joml.Vector2i
+
+private val parentsMap = mutableMapOf<ResearchEntry, List<ResourceKey<ResearchEntry>>>()
 
 class ResearchEntry(
   val category: ResourceKey<ResearchCategory>,
@@ -25,7 +31,27 @@ class ResearchEntry(
   val defaultResearchState: List<SocketState>,
   val defaultKnown: Boolean
 ) {
-  private var resolvedChildren: List<ResearchEntry>? = null
+  val clientResolvedChildren by lazy {
+    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
+    if (registry == null)
+      listOf()
+    else
+      children.map { registry.getOrThrow(it) }
+  }
+  val clientKnown by lazy {
+    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
+    if (registry == null)
+      false
+    else
+      clientPlayer()?.knowsResearch(this) ?: false
+  }
+
+  fun parents(level: Level) =
+    parentsMap.computeIfAbsent(this) { _ ->
+      val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)
+      registry.filter { e -> e.children.contains(registry.getResourceKey(this).get()) }
+        .map { e -> registry.getResourceKey(e).get() }
+    }
 
   companion object {
     val CODEC = RecordCodecBuilder.create {
@@ -46,17 +72,5 @@ class ResearchEntry(
 
     val TOAST_TRANSLATION = "research." + Thavma.MODID + ".toast"
     val SCROLL_GIVEN_TRANSLATION = "research." + Thavma.MODID + ".scroll_given"
-  }
-
-  fun resolveChildren(): List<ResearchEntry> {
-    resolvedChildren?.let { return it }
-
-    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
-    if (registry == null) return listOf()
-
-    val resolved = children.map { registry.getOrThrow(it) }
-    resolvedChildren = resolved
-
-    return resolved
   }
 }

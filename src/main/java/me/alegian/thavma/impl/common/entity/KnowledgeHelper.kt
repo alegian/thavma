@@ -31,6 +31,12 @@ fun Player.knowsResearch(researchKey: ResourceKey<ResearchEntry>): Boolean {
   return entry.defaultKnown || knows(researchKey)
 }
 
+fun Player.knowsResearch(entry: ResearchEntry): Boolean {
+  if (entry.defaultKnown) return true
+  val key = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.getResourceKey(entry)?.get() ?: return false
+  return knows(key)
+}
+
 fun Player.tryLearnAspects(aspects: List<Aspect>) {
   setKnowledge(
     aspects

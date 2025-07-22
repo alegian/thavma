@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.client
 import me.alegian.thavma.impl.client.gui.toast.ResearchToast
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
@@ -11,7 +12,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.EquipmentSlot
-import kotlin.jvm.optionals.getOrNull
 
 fun clientPlayerHasRevealing() =
   Minecraft.getInstance().player?.getAttribute(REVEALING)?.value == 1.0
@@ -26,7 +26,9 @@ fun setScreen(screen: Screen) =
   Minecraft.getInstance().setScreen(screen)
 
 fun <T> clientRegistry(key: ResourceKey<Registry<T>>) =
-  Minecraft.getInstance().connection?.registryAccess()?.registry(key)?.getOrNull()
+  Minecraft.getInstance().level?.registry(key)
+
+fun clientPlayer() = Minecraft.getInstance().player
 
 fun pushScreen(screen: Screen) = Minecraft.getInstance().pushGuiLayer(screen)
 

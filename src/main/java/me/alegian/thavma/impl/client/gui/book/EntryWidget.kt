@@ -32,7 +32,7 @@ import kotlin.jvm.optionals.getOrNull
  * entry.preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<ResearchEntry>, val unknown: Boolean) :
+class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<ResearchEntry>) :
   AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.title) {
   private var gaveScroll = false
 
@@ -74,7 +74,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
       renderEntry(guiGraphics)
 
-      if (unknown) return@usePose
+      if (!entry.clientKnown) return@usePose
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
@@ -90,12 +90,12 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
     val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY) ?: return
     val entryKey = registry.getResourceKey(entry).getOrNull() ?: return
-    if (unknown && !gaveScroll) {
+    if (!entry.clientKnown && !gaveScroll) {
       PacketDistributor.sendToServer(ResearchScrollPayload(entryKey))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
       tooltip = T7Tooltip(entry.title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
-    } else if(!unknown)
+    } else if(entry.clientKnown)
       pushScreen(EntryScreen(entry))
   }
 
@@ -104,7 +104,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   private fun renderEntry(guiGraphics: GuiGraphics) {
     var brightness = 1f
-    if (unknown) brightness = 0.4f
+    if (!entry.clientKnown) brightness = 0.4f
     RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
 
     renderGridElement(
@@ -131,8 +131,8 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   companion object {
     val TEXTURE = Texture("gui/book/node", 32, 32)
 
-    fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry, unknown: Boolean) =
-      EntryWidget(screen, tab, entry, entry.resolveChildren(), unknown)
+    fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry) =
+      EntryWidget(screen, tab, entry, entry.clientResolvedChildren)
   }
 }
 

@@ -1,6 +1,8 @@
 package me.alegian.thavma.impl.common.util
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -25,3 +27,6 @@ fun <T : BlockEntity> Level.getBE(blockPos: BlockPos?, type: BlockEntityType<T>)
 }
 
 fun <K : RecipeInput, T : Recipe<K>> Level.getRecipe(type: Supplier<RecipeType<T>>, input: K) = recipeManager.getRecipeFor(type.get(), input, this).getOrNull()?.value()
+
+fun <T> Level.registry(key: ResourceKey<Registry<T>>) =
+  registryAccess().registry(key).get()

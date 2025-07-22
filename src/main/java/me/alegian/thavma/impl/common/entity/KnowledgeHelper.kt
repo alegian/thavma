@@ -1,9 +1,9 @@
 package me.alegian.thavma.impl.common.entity
 
-import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.payload.KnowledgePayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
@@ -27,13 +27,13 @@ fun Player.tryLearnResearch(researchKey: ResourceKey<ResearchEntry>) {
 }
 
 fun Player.knowsResearch(researchKey: ResourceKey<ResearchEntry>): Boolean {
-  val entry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.get(researchKey) ?: return false
+  val entry = level().registry(T7DatapackRegistries.RESEARCH_ENTRY).get(researchKey) ?: return false
   return entry.defaultKnown || knows(researchKey)
 }
 
 fun Player.knowsResearch(entry: ResearchEntry): Boolean {
   if (entry.defaultKnown) return true
-  val key = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.getResourceKey(entry)?.get() ?: return false
+  val key = level().registry(T7DatapackRegistries.RESEARCH_ENTRY).getResourceKey(entry).get()
   return knows(key)
 }
 

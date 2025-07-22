@@ -1,12 +1,6 @@
 {
   "category": "thavma:thavma",
-  "children": [
-    "thavma:thavma/wands",
-    "thavma:thavma/technology",
-    "thavma:thavma/alchemy",
-    "thavma:thavma/infusion",
-    "thavma:thavma/research_proficiency"
-  ],
+  "children": [],
   "defaultKnown": false,
   "defaultResearchState": [
     {
@@ -34,12 +28,12 @@
   },
   "pages": [],
   "position": [
-    0,
-    0
+    -1,
+    -1
   ],
-  "preferX": true,
+  "preferX": false,
   "title": {
     "color": "yellow",
-    "translate": "research/entry.thavma.thavma.research_table"
+    "translate": "research/entry.thavma.thavma.research_proficiency"
   }
 }

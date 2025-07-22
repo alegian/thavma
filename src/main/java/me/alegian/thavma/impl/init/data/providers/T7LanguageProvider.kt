@@ -241,9 +241,18 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.THAVMA, "Thavma")
     addEntry(ResearchEntries.Thavma.THAVMA, "Thavma")
+    addEntry(ResearchEntries.Thavma.ORES, "Ores")
+    addEntry(ResearchEntries.Thavma.TREES, "Trees")
     addEntry(ResearchEntries.Thavma.ARCANE_LENS, "The Arcane Lens")
+    addEntry(ResearchEntries.Thavma.RESEARCH_TABLE, "Research Table")
+    addEntry(ResearchEntries.Thavma.RESEARCH_PROFICIENCY, "Research Proficiency")
+    addEntry(ResearchEntries.Thavma.ALCHEMY, "Alchemy")
+    addEntry(ResearchEntries.Thavma.INFUSION, "Infusion")
+    addEntry(ResearchEntries.Thavma.WANDS, "Wands")
+    addEntry(ResearchEntries.Thavma.TECHNOLOGY, "Technology")
+
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
-    addEntry(ResearchEntries.Alchemy.ALCHEMY, "Second Tab Entry")
+    addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,

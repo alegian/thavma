@@ -145,6 +145,11 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
           .addChild(ResearchEntries.Thavma.INFUSION)
+          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_PROFICIENCY, Vector2i(-1, -1), false, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)

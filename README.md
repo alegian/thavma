@@ -44,6 +44,7 @@ Good pick azanor ;-)
 - Screaming Brain Studios, for their awesome free space backgrounds, used in the book: https://opengameart.org/content/seamless-space-backgrounds
 - RedBlobGames, for their brilliant guide to hexagonal grids, used in research: https://www.redblobgames.com/grids/hexagons/
 - BlakeBr0 of Mystical Agriculture, I learnt the Item Particle effects for Infusion from their codebase
+- my friend thedarkcolour, for helping with KFF and mc-publish
 
 ## License
 

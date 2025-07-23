@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedItemGeoModel
@@ -50,6 +51,6 @@ private class FocusRenderLayer(renderer: WandRenderer) : GeoRenderLayer<WandItem
     val mc = Minecraft.getInstance()
     val focusModel = mc.modelManager.getModel(WandRenderer.FOCUS_MODEL)
     val vc = bufferSource.getBuffer(RenderType.cutout())
-    //mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
+    mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
   }
 }

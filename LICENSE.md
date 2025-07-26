@@ -31,7 +31,7 @@ rights. So here you go.
 - Maintain a visible repository of your code which is inspired by, derived from, or copied from this code. Basically, if
   you use it, pay it forward. You keep rights to your OWN code, but you still must make your source visible.
 - Not be a jerk**. Seriously, if you're a jerk, you can't use this code. That's part of the agreement.
-- Not be a contributor of Team CoFH's Thaumcraft 7 private repository.
+- Not be a contributor of Team CoFH's Thaumcraft 7 private repository. If you are, you can't use this code.
 
 #### Notes, License & Copyright
 

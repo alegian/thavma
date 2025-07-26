@@ -24,13 +24,14 @@ rights. So here you go.
 #### You CANNOT
 
 - Redistribute this in its entirety as source or compiled code.
-- Create or distribute code which contains 50% or more Functionally Equivalent Statements* from this repository.
+- Create or distribute code which contains more than 33% of Functionally Equivalent Statements* from this repository.
 
 #### You MUST
 
 - Maintain a visible repository of your code which is inspired by, derived from, or copied from this code. Basically, if
   you use it, pay it forward. You keep rights to your OWN code, but you still must make your source visible.
 - Not be a jerk**. Seriously, if you're a jerk, you can't use this code. That's part of the agreement.
+- Not be a contributor of Team CoFH's Thaumcraft 7 private repository.
 
 #### Notes, License & Copyright
 
@@ -40,7 +41,7 @@ whitespace and say it's different. It's not.
 
 **A jerk is anyone who attempts to or intends to claim partial or total ownership of the original or repackaged code
 and/or attempts to or intends to redistribute original or repackaged code without prior express written permission from
-the owner (alegian). **Also, any contributor of Team CoFH's Thaumcraft private repository is considered a jerk.**
+the owner (alegian).
 
 Essentially, take this and learn from it! Create addon mods that depend on it! If you see something we can improve, tell
 us. Submit a Pull Request. The one catch: don't steal! A lot of effort has gone into this, and if you were to take this

@@ -2,10 +2,8 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
-import me.alegian.thavma.impl.common.research.ResearchCategory
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
-import net.minecraft.resources.ResourceKey
 import kotlin.math.pow
 
 private const val ZOOM_MULTIPLIER = 1.25
@@ -15,7 +13,7 @@ private const val minZoom = 0.0
 private const val maxZoom = 5.0
 
 // represents the renderable content of a tab in the book
-class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCategory>) : Renderable {
+class TabRenderable(val screen: BookScreen) : Renderable {
   var scrollX = 0.0
     private set
   var scrollY = 0.0
@@ -39,7 +37,7 @@ class TabRenderable(val screen: BookScreen, val category: ResourceKey<ResearchCa
   }
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {
-    if (screen.currentCategory.compareTo(category) != 0) return
+    if (screen.currentTab != this) return
 
     val corner = FrameRenderable.CORNER_TEXTURE
     val edge = FrameRenderable.EDGE_TEXTURE

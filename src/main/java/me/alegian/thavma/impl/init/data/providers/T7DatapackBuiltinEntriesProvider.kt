@@ -208,7 +208,11 @@ private class ResearchEntryBuilder(
   }
 
   fun build(ctx: BootstrapContext<ResearchEntry>) = ResearchEntries.CATEGORIES[key]?.let { cat ->
-    ctx.register(key, ResearchEntry(cat, pos, preferX, children, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates, defaultKnown))
+    val categoryRegistry = ctx.lookup(T7DatapackRegistries.RESEARCH_CATEGORY)
+    val entryRegistry = ctx.lookup(T7DatapackRegistries.RESEARCH_ENTRY)
+    val categoryHolder = categoryRegistry.getOrThrow(cat)
+    val childrenHolders = children.map { entryRegistry.getOrThrow(it) }
+    ctx.register(key, ResearchEntry(categoryHolder, pos, preferX, childrenHolders, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates, defaultKnown))
   }
 }
 

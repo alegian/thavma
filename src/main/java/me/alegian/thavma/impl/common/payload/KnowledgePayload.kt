@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.payload
 import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.client.researchToast
 import me.alegian.thavma.impl.common.codec.listOf
-import me.alegian.thavma.impl.common.entity.setKnowledge
+import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.rl
 import net.minecraft.network.codec.ByteBufCodecs
@@ -33,7 +33,7 @@ class KnowledgePayload(private val newKnowledge: List<String>, private val first
 
     fun handle(payload: KnowledgePayload, context: IPayloadContext) {
       val player = context.player()
-      player.setKnowledge(payload.newKnowledge)
+      player.addKnowledge(payload.newKnowledge)
 
       if (payload.firstPacket) return
 

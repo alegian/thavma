@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.clientPlayer
 import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
@@ -10,6 +11,7 @@ import me.alegian.thavma.impl.client.util.resetRenderSystemColor
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
@@ -21,11 +23,11 @@ import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.sounds.SoundManager
+import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.neoforged.neoforge.network.PacketDistributor
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -35,6 +37,13 @@ import kotlin.jvm.optionals.getOrNull
 class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<ResearchEntry>) :
   AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.title) {
   private var gaveScroll = false
+  val knowsResearch by lazy {
+    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
+    if (registry == null)
+      false
+    else
+      clientPlayer()?.knowsResearch(entry) ?: false
+  }
 
   init {
     tooltip = Tooltip.create(entry.title)
@@ -74,7 +83,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
       renderEntry(guiGraphics)
 
-      if (!entry.clientKnown) return@usePose
+      if (!knowsResearch) return@usePose
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
@@ -88,14 +97,12 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY) ?: return
-    val entryKey = registry.getResourceKey(entry).getOrNull() ?: return
-    if (!entry.clientKnown && !gaveScroll) {
-      PacketDistributor.sendToServer(ResearchScrollPayload(entryKey))
+    if (!knowsResearch && !gaveScroll) {
+      PacketDistributor.sendToServer(ResearchScrollPayload(Holder.direct(entry)))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
       tooltip = T7Tooltip(entry.title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
-    } else if(entry.clientKnown)
+    } else if (knowsResearch)
       pushScreen(EntryScreen(entry))
   }
 
@@ -104,7 +111,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   private fun renderEntry(guiGraphics: GuiGraphics) {
     var brightness = 1f
-    if (!entry.clientKnown) brightness = 0.4f
+    if (!knowsResearch) brightness = 0.4f
     RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
 
     renderGridElement(
@@ -132,8 +139,6 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     val TEXTURE = Texture("gui/book/node", 32, 32)
 
     fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry) =
-      EntryWidget(screen, tab, entry, entry.clientResolvedChildren)
+      EntryWidget(screen, tab, entry, entry.children.map { it.value() })
   }
 }
-
-private val PERIOD_TICKS = 30

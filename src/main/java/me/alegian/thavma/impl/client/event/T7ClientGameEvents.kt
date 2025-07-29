@@ -12,7 +12,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.entity.setKnowledge
+import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.scanning.ScanResult
 import me.alegian.thavma.impl.common.scanning.handleScanResult
@@ -117,7 +117,7 @@ private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
   val oldScans = event.oldPlayer.getData(T7Attachments.SCANNED).scanned.toList()
   event.newPlayer.handleScanResult(ScanResult.SUCCESS, oldScans)
   val oldKnowledge = event.oldPlayer.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
-  event.newPlayer.setKnowledge(oldKnowledge)
+  event.newPlayer.addKnowledge(oldKnowledge)
 }
 
 private fun clientTick(event: ClientTickEvent.Post) {

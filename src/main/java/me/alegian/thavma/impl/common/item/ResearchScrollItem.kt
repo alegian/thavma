@@ -1,7 +1,9 @@
 package me.alegian.thavma.impl.common.item
 
+import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.entity.tryLearnResearch
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -15,6 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
+import kotlin.jvm.optionals.getOrNull
 
 class ResearchScrollItem : Item(Properties().stacksTo(1)) {
   override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
@@ -24,7 +27,7 @@ class ResearchScrollItem : Item(Properties().stacksTo(1)) {
 
     if (player is ServerPlayer) {
       player.setItemInHand(usedHand, ItemStack.EMPTY)
-      player.tryLearnResearch(state.researchEntry)
+      player.tryLearnResearch(state.researchEntry.value())
     }
 
     if (level.isClientSide)
@@ -36,11 +39,13 @@ class ResearchScrollItem : Item(Properties().stacksTo(1)) {
   override fun appendHoverText(stack: ItemStack, context: TooltipContext, tooltipComponents: MutableList<Component>, tooltipFlag: TooltipFlag) {
     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag)
     val state = stack.get(T7DataComponents.RESEARCH_STATE) ?: return
-    tooltipComponents.add(
-      Component.translatable(
-        ResearchEntry.translationId(state.researchEntry)
-      ).withStyle(Rarity.UNCOMMON.styleModifier)
-    )
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.getResourceKey(state.researchEntry.value())?.getOrNull()?.let {
+      tooltipComponents.add(
+        Component.translatable(
+          ResearchEntry.translationId(it)
+        ).withStyle(Rarity.UNCOMMON.styleModifier)
+      )
+    }
   }
 
   override fun getName(stack: ItemStack): Component {

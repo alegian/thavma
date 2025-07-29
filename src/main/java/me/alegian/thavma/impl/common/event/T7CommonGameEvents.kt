@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
+import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
-import me.alegian.thavma.impl.common.entity.setKnowledge
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.scanning.ScanResult
 import me.alegian.thavma.impl.common.scanning.handleScanResult
@@ -115,7 +115,7 @@ fun playerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
   val oldScans = player.getData(T7Attachments.SCANNED).scanned.toList()
   player.handleScanResult(ScanResult.SUCCESS, oldScans, true)
   val oldKnowledge = player.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
-  player.setKnowledge(oldKnowledge, true)
+  player.addKnowledge(oldKnowledge, true)
 }
 
 fun entityFall(event: LivingFallEvent) {

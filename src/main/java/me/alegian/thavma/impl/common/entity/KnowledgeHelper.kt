@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.network.PacketDistributor
 
-fun Player.setKnowledge(newKnowledge: List<String>, firstPacket: Boolean = false) {
+fun Player.addKnowledge(newKnowledge: List<String>, firstPacket: Boolean = false) {
   val old = getData(T7Attachments.KNOWLEDGE)
   old.knowledge.addAll(newKnowledge)
   setData(T7Attachments.KNOWLEDGE, old)
@@ -21,14 +21,10 @@ fun Player.setKnowledge(newKnowledge: List<String>, firstPacket: Boolean = false
     PacketDistributor.sendToPlayer(this, KnowledgePayload(newKnowledge, firstPacket))
 }
 
-fun Player.tryLearnResearch(researchKey: ResourceKey<ResearchEntry>) {
-  if (knowsResearch(researchKey)) return
-  setKnowledge(listOf(researchKey.serialize()))
-}
-
-fun Player.knowsResearch(researchKey: ResourceKey<ResearchEntry>): Boolean {
-  val entry = level().registry(T7DatapackRegistries.RESEARCH_ENTRY).get(researchKey) ?: return false
-  return entry.defaultKnown || knows(researchKey)
+fun Player.tryLearnResearch(entry: ResearchEntry) {
+  if (knowsResearch(entry)) return
+  val key = level().registry(T7DatapackRegistries.RESEARCH_ENTRY).getResourceKey(entry).get()
+  addKnowledge(listOf(key.serialize()))
 }
 
 fun Player.knowsResearch(entry: ResearchEntry): Boolean {
@@ -38,7 +34,7 @@ fun Player.knowsResearch(entry: ResearchEntry): Boolean {
 }
 
 fun Player.tryLearnAspects(aspects: List<Aspect>) {
-  setKnowledge(
+  addKnowledge(
     aspects
       .filter { !knowsAspect(it) }
       .map { it.resourceKey.serialize() }

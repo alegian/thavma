@@ -3,10 +3,7 @@ package me.alegian.thavma.impl.common.research
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.client.clientPlayer
-import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -33,14 +30,6 @@ class ResearchEntry(
   val defaultResearchState: List<SocketState>,
   val defaultKnown: Boolean
 ) {
-  val clientKnown by lazy {
-    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
-    if (registry == null)
-      false
-    else
-      clientPlayer()?.knowsResearch(this) ?: false
-  }
-
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
       val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)

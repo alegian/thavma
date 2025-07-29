@@ -95,7 +95,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
       tooltip = T7Tooltip(entry.title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
-    } else if(entry.clientKnown)
+    } else if (entry.clientKnown)
       pushScreen(EntryScreen(entry))
   }
 
@@ -132,7 +132,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     val TEXTURE = Texture("gui/book/node", 32, 32)
 
     fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry) =
-      EntryWidget(screen, tab, entry, entry.clientResolvedChildren)
+      EntryWidget(screen, tab, entry, entry.children.map { it.value() })
   }
 }
 

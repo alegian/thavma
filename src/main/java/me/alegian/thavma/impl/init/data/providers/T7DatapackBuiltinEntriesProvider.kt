@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.book.CraftingPage
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
@@ -9,6 +10,7 @@ import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
+import me.alegian.thavma.impl.init.data.Recipes
 import me.alegian.thavma.impl.init.data.worldgen.Node
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
@@ -141,6 +143,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
           .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
+          .addPage{_,_-> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)

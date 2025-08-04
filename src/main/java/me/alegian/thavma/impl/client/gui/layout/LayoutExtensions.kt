@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layout
 
+import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.drawString
@@ -31,7 +32,10 @@ fun T7LayoutElement.text(content: Component, color: Int = 0) = Renderable { guiG
 fun T7LayoutElement.texture(texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
   guiGraphics.usePose {
     translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+    RenderSystem.enableBlend()
+    RenderSystem.defaultBlendFunc()
     guiGraphics.blit(texture)
+    RenderSystem.disableBlend()
   }
 }
 

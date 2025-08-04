@@ -10,7 +10,6 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
 private val BG = Texture("gui/book/background", 510, 282, 512, 512)
-val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
 class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
   private val currentPage = 0

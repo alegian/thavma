@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
+import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
@@ -213,6 +214,7 @@ private fun registerScreens(event: RegisterMenuScreensEvent) {
 
 private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.TEXT.get(), TextPageRenderer)
+  event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {

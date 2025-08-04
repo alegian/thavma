@@ -104,6 +104,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.data.LanguageProvider
 import net.neoforged.neoforge.registries.DeferredHolder
 
@@ -299,6 +300,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
     add(ResearchEntry.SCROLL_GIVEN_TRANSLATION, "You have received a research scroll")
 
+    add(RecipeType.CRAFTING.translationId, "Crafting")
     add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")
     add(T7RecipeTypes.INFUSION.get().translationId, "Infusion")
     add(T7RecipeTypes.CRUCIBLE.get().translationId, "Crucible")

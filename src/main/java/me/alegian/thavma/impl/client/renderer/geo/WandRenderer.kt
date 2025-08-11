@@ -5,12 +5,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import software.bernie.geckolib.cache.`object`.BakedGeoModel
 import software.bernie.geckolib.cache.`object`.GeoBone
@@ -35,7 +37,7 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
   }
 
   companion object {
-    val FOCUS_MODEL = ModelResourceLocation.standalone(rl("item/test_focus"))
+    val FOCUS_MODELS = mutableMapOf<Item, ModelResourceLocation>()
 
     private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_handle_")
 
@@ -46,10 +48,12 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
   }
 }
 
-private class FocusRenderLayer(renderer: WandRenderer) : GeoRenderLayer<WandItem>(renderer) {
-  override fun render(poseStack: PoseStack, animatable: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
+private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<WandItem>(wandRenderer) {
+  override fun render(poseStack: PoseStack, wand: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
-    val focusModel = mc.modelManager.getModel(WandRenderer.FOCUS_MODEL)
+    val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.getStackInSlot(0) ?: return
+    val modelRL = WandRenderer.FOCUS_MODELS[focus.item] ?: return
+    val focusModel = mc.modelManager.getModel(modelRL)
     val vc = bufferSource.getBuffer(RenderType.cutout())
     mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
   }

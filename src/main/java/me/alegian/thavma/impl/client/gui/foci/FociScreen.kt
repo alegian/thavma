@@ -66,8 +66,11 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     val anglePerItem = 2 * PI / foci.size
     var mouseAngle = atan2(centeredMouseY, centeredMouseX) + anglePerItem / 2
     if (mouseAngle < 0) mouseAngle += 2 * PI
-    selectedIndex = floor(mouseAngle / anglePerItem).toInt()
-    if (mouseRadius <= deadRadius) selectedIndex = null
+
+    if (T7KeyMappings.FOCI.isDown) {
+      selectedIndex = floor(mouseAngle / anglePerItem).toInt()
+      if (mouseRadius <= deadRadius) selectedIndex = null
+    }
 
     val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.getStackInSlot(0) ?: return
     var tooltipFocus = equippedFocus

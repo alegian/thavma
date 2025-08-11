@@ -29,6 +29,7 @@ import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.renderer.ShaderInstance
 import net.minecraft.client.renderer.item.ItemProperties
+import net.minecraft.world.item.Items
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.ModLoader
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
@@ -217,6 +218,10 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
 }
 
+private fun registerFocusModels(event: RegisterFocusModelsEvent) {
+  event.register(Items.DIAMOND_PICKAXE, rl("item/test_focus"))
+}
+
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
   event.register(T7KeyMappings.FOCI)
 }
@@ -227,7 +232,9 @@ private fun registerRenderBuffers(event: RegisterRenderBuffersEvent) {
 }
 
 private fun registerAdditionalModels(event: ModelEvent.RegisterAdditional) {
-  event.register(WandRenderer.FOCUS_MODEL)
+  ModLoader.postEvent(RegisterFocusModelsEvent())
+  for (model in WandRenderer.FOCUS_MODELS.values)
+    event.register(model)
 }
 
 fun registerClientModEvents() {
@@ -249,4 +256,5 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerKeyMappings)
   KFF_MOD_BUS.addListener(::registerRenderBuffers)
   KFF_MOD_BUS.addListener(::registerAdditionalModels)
+  KFF_MOD_BUS.addListener(::registerFocusModels)
 }

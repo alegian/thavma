@@ -71,6 +71,17 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       ORICHALCUM_INGOT.get()
     )
 
+    tag(T7Tags.Items.FOCI).add(
+      T7Items.FOCUS_EMBERS.get(),
+      T7Items.FOCUS_EXCAVATION.get(),
+      T7Items.FOCUS_ENDERCHEST.get(),
+      T7Items.FOCUS_LIGHT.get(),
+      T7Items.FOCUS_HOLE.get(),
+      T7Items.FOCUS_TELEPORT.get(),
+      T7Items.FOCUS_EXCHANGE.get(),
+      T7Items.FOCUS_LIGHTNING.get(),
+    )
+
     tag(Tags.Items.NUGGETS).add(
       THAVMITE_NUGGET.get(),
       ORICHALCUM_NUGGET.get()

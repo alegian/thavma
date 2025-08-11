@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.payload.FocusPayload
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -123,7 +124,7 @@ fun getFociFromLocalInventory(): List<ItemStack> {
   player.inventory.run {
     for (i in 0..<containerSize) {
       val stack = getItem(i)
-      if (stack.item is PickaxeItem)
+      if (stack.`is`(T7Tags.Items.FOCI))
         foci.add(stack)
     }
   }

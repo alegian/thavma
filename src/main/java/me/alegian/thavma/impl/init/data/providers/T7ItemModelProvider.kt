@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
@@ -43,6 +44,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -110,7 +112,19 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     for (wand in WANDS.values()) withExistingParent(wand.name, rl("wand"))
 
     withExistingParent(ANGRY_ZOMBIE_SPAWN_EGG.id.path, "template_spawn_egg")
+
+
+    basicItem(T7Items.FOCUS_EMBERS)
+    basicItem(T7Items.FOCUS_EXCAVATION)
+    basicItem(T7Items.FOCUS_ENDERCHEST)
+    basicItem(T7Items.FOCUS_LIGHT)
+    basicItem(T7Items.FOCUS_HOLE)
+    basicItem(T7Items.FOCUS_TELEPORT)
+    basicItem(T7Items.FOCUS_EXCHANGE)
+    basicItem(T7Items.FOCUS_LIGHTNING)
   }
+
+  private fun basicItem(itemLike: ItemLike) = basicItem(itemLike.asItem())
 
   private fun handheldItem(deferredItem: DeferredItem<*>) {
     withVanillaParent(deferredItem, "handheld")

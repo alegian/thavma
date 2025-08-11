@@ -219,7 +219,7 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
 }
 
 private fun registerFocusModels(event: RegisterFocusModelsEvent) {
-  event.register(Items.DIAMOND_PICKAXE, rl("item/test_focus"))
+  event.register(T7Items.FOCUS_HOLE, rl("item/test_focus"))
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {

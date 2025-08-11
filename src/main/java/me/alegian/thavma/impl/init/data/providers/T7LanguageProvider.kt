@@ -184,6 +184,15 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       add(wand, "$value $value1 Wand")
     }
 
+    add(T7Items.FOCUS_EMBERS.get(), "Focus: Embers")
+    add(T7Items.FOCUS_EXCAVATION.get(), "Focus: Excavation")
+    add(T7Items.FOCUS_ENDERCHEST.get(), "Focus: Enderchest")
+    add(T7Items.FOCUS_LIGHT.get(), "Focus: Light")
+    add(T7Items.FOCUS_HOLE.get(), "Focus: Hole")
+    add(T7Items.FOCUS_TELEPORT.get(), "Focus: Teleport")
+    add(T7Items.FOCUS_EXCHANGE.get(), "Focus: Exchange")
+    add(T7Items.FOCUS_LIGHTNING.get(), "Focus: Lightning")
+
     add(AURA_NODE.get(), "Aura Node")
     add(CRUCIBLE.get(), "Crucible")
     add(ARCANE_WORKBENCH.get(), "Arcane Workbench")

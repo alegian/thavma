@@ -26,7 +26,6 @@ object T7Items {
 
   val EYE_OF_WARDEN = REGISTRAR.registerSimpleItem("eye_of_warden", Item.Properties().rarity(Rarity.EPIC))
   val ROTTEN_BRAIN = REGISTRAR.registerSimpleItem("rotten_brain", Item.Properties())
-  val SIGIL = REGISTRAR.registerSimpleItem("sigil")
   val FABRIC = REGISTRAR.registerSimpleItem("fabric")
 
   val GREATWOOD_CORE = REGISTRAR.registerSimpleItem("greatwood_core")
@@ -181,6 +180,15 @@ object T7Items {
   }
 
   val ANGRY_ZOMBIE_SPAWN_EGG = REGISTRAR.registerItem("angry_zombie_spawn_egg") { p -> DeferredSpawnEggItem(T7EntityTypes.ANGRY_ZOMBIE, 0x00AFAF, 0x9e2323, p) }
+
+  val FOCUS_EMBERS = REGISTRAR.registerItem("focus_embers", ::Item)
+  val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation", ::Item)
+  val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest", ::Item)
+  val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light", ::Item)
+  val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)
+  val FOCUS_TELEPORT = REGISTRAR.registerItem("focus_teleport", ::Item)
+  val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange", ::Item)
+  val FOCUS_LIGHTNING = REGISTRAR.registerItem("focus_lightning", ::Item)
 
   // (handleName, coreName)->wand. populated on Item Registry bake
   val WANDS = DoubleMap<String, String, WandItem>()

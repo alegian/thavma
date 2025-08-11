@@ -43,6 +43,7 @@ import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVM
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object T7CreativeModeTabs {
@@ -165,6 +166,15 @@ object T7CreativeModeTabs {
           output.accept(T7Items.ZEPHYR)
 
           output.accept(T7Items.ANGRY_ZOMBIE_SPAWN_EGG)
+
+          output.accept(T7Items.FOCUS_EMBERS)
+          output.accept(T7Items.FOCUS_EXCAVATION)
+          output.accept(T7Items.FOCUS_ENDERCHEST)
+          output.accept(T7Items.FOCUS_LIGHT)
+          output.accept(T7Items.FOCUS_HOLE)
+          output.accept(T7Items.FOCUS_TELEPORT)
+          output.accept(T7Items.FOCUS_EXCHANGE)
+          output.accept(T7Items.FOCUS_LIGHTNING)
         }
         .build()
     }

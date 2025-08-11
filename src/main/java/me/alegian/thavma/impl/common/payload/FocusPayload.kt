@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.payload
 
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.NonNullList
@@ -24,6 +25,7 @@ class FocusPayload(val itemStack: ItemStack) : CustomPacketPayload {
     )
 
     fun handle(payload: FocusPayload, context: IPayloadContext) {
+      if (!payload.itemStack.`is`(T7Tags.Items.FOCI)) return
       val player = context.player()
       val wand = player.mainHandItem
       if (wand.item !is WandItem) return

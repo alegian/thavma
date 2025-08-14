@@ -10,10 +10,10 @@ import me.alegian.thavma.impl.common.util.cross
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.util.Mth.smoothstep
 import net.minecraft.world.phys.Vec3
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.div
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.minus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.times
+import me.alegian.thavma.impl.common.util.plus
+import me.alegian.thavma.impl.common.util.minus
+import me.alegian.thavma.impl.common.util.times
+import me.alegian.thavma.impl.common.util.div
 import kotlin.math.*
 
 // number of "corners" of every 3d cylinder slice

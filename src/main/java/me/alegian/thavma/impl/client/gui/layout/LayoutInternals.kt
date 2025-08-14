@@ -1,10 +1,10 @@
 package me.alegian.thavma.impl.client.gui.layout
 
 import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.div
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
+import me.alegian.thavma.impl.common.util.plus
+import me.alegian.thavma.impl.common.util.minus
+import me.alegian.thavma.impl.common.util.times
+import me.alegian.thavma.impl.common.util.div
 import kotlin.math.max
 import kotlin.math.round
 
@@ -188,7 +188,7 @@ class T7LayoutElement internal constructor(
    * second passes). Ran recursively from the root (DFS)
    */
   internal fun calculatePositionsRecursively() {
-    var childPosition = position + (paddingStart() * align.signs(direction))
+    val childPosition = position + (paddingStart() * align.signs(direction))
 
     val childrenLength = children.map { c -> c.size.dot(direction.basis) }.sum()
     val remainingMain = (size - padding.all).dot(direction.basis) - childrenLength
@@ -197,7 +197,7 @@ class T7LayoutElement internal constructor(
 
     for (child in children) {
       val remainingCross = (size - padding.all - child.size).dot(direction.crossBasis)
-      var crossOffset = round(remainingCross * align.cross.factor)
+      val crossOffset = round(remainingCross * align.cross.factor)
 
       child.position = childPosition + (direction.basis * mainOffset + direction.crossBasis * crossOffset)
 

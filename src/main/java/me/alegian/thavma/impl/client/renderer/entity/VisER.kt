@@ -6,6 +6,8 @@ import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
+import me.alegian.thavma.impl.common.util.unaryMinus
+import me.alegian.thavma.impl.common.util.plus
 import me.alegian.thavma.impl.common.util.use
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
@@ -16,8 +18,6 @@ import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.phys.Vec3
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 
 // TODO: move to world rendering
 class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity>(pContext) {

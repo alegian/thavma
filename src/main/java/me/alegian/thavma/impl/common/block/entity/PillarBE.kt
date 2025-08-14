@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.block.entity
 
 import me.alegian.thavma.impl.common.block.PillarBlock.Companion.multiblockRequiredLayout
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.common.util.toVec3
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties.MASTER
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -19,7 +20,6 @@ import net.minecraft.world.phys.AABB
 import software.bernie.geckolib.animatable.GeoBlockEntity
 import software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar
 import software.bernie.geckolib.util.GeckoLibUtil
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.toVec3
 import kotlin.jvm.optionals.getOrNull
 
 private val MASTER_POS_NBT_KEY = "masterPos"

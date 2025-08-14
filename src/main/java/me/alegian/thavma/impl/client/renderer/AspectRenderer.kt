@@ -16,8 +16,8 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.Vec2
 import net.minecraft.world.phys.Vec3
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
+import me.alegian.thavma.impl.common.util.plus
+import me.alegian.thavma.impl.common.util.unaryMinus
 import kotlin.math.ceil
 import kotlin.math.min
 

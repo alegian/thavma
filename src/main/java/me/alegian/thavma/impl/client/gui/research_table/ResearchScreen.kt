@@ -20,10 +20,9 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.phys.Vec2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.div
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.minus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.plus
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v2d.times
+import me.alegian.thavma.impl.common.util.plus
+import me.alegian.thavma.impl.common.util.times
+import me.alegian.thavma.impl.common.util.div
 import kotlin.math.ceil
 
 private const val BORDER = 5

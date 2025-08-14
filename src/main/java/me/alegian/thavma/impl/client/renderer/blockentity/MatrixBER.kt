@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
+import me.alegian.thavma.impl.common.util.unaryMinus
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.INFUSION_STATE
 import me.alegian.thavma.impl.rl
@@ -20,7 +21,6 @@ import software.bernie.geckolib.cache.`object`.GeoBone
 import software.bernie.geckolib.model.DefaultedBlockGeoModel
 import software.bernie.geckolib.renderer.GeoBlockRenderer
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.unaryMinus
 
 class MatrixBER : GeoBlockRenderer<MatrixBE>(DefaultedBlockGeoModel(rl("infusion_matrix"))) {
   init {

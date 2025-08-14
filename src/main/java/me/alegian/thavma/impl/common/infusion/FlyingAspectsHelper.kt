@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.common.infusion
 
+import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.world.phys.Vec3
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.minus
 import kotlin.math.roundToInt
 
 // number of trajectory points per block length

@@ -12,19 +12,18 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
-import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.item.HammerItem
-import me.alegian.thavma.impl.common.scanning.ScanResult
-import me.alegian.thavma.impl.common.scanning.handleScanResult
 import me.alegian.thavma.impl.common.scanning.hasScanned
-import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.api.distmarker.Dist
-import net.neoforged.neoforge.client.event.*
+import net.neoforged.neoforge.client.event.ClientTickEvent
+import net.neoforged.neoforge.client.event.RenderHighlightEvent
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent
+import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import net.neoforged.neoforge.client.event.RenderTooltipEvent.GatherComponents
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
@@ -113,13 +112,6 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   }
 }
 
-private fun playerClone(event: ClientPlayerNetworkEvent.Clone) {
-  val oldScans = event.oldPlayer.getData(T7Attachments.SCANNED).scanned.toList()
-  event.newPlayer.handleScanResult(ScanResult.SUCCESS, oldScans)
-  val oldKnowledge = event.oldPlayer.getData(T7Attachments.KNOWLEDGE).knowledge.toList()
-  event.newPlayer.addKnowledge(oldKnowledge)
-}
-
 private fun clientTick(event: ClientTickEvent.Post) {
   val mc = Minecraft.getInstance()
   if (T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null && clientPlayerHoldingWand())
@@ -134,6 +126,5 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::wandTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
-  KFF_GAME_BUS.addListener(::playerClone)
   KFF_GAME_BUS.addListener(::clientTick)
 }

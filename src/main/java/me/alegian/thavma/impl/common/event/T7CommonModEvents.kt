@@ -155,14 +155,14 @@ private fun registerSpawnPlacements(event: RegisterSpawnPlacementsEvent) {
 private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
   val registrar = event.registrar("1")
   registrar.playToClient(
-    ScanPayload.TYPE,
-    ScanPayload.STREAM_CODEC,
-    ScanPayload::handle
+    ScanResultPayload.TYPE,
+    ScanResultPayload.STREAM_CODEC,
+    ScanResultPayload::handle
   )
   registrar.playToClient(
-    KnowledgePayload.TYPE,
-    KnowledgePayload.STREAM_CODEC,
-    KnowledgePayload::handle
+    ResearchToastPayload.TYPE,
+    ResearchToastPayload.STREAM_CODEC,
+    ResearchToastPayload::handle
   )
   registrar.playToServer(
     ResearchScrollPayload.TYPE,

@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.entity.knowsAspect
 import me.alegian.thavma.impl.common.entity.tryLearnAspects
-import me.alegian.thavma.impl.common.payload.ScanPayload
+import me.alegian.thavma.impl.common.payload.ScanResultPayload
 import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.core.registries.BuiltInRegistries
@@ -40,18 +40,17 @@ fun Player.hasScanned(itemStack: ItemStack): Boolean {
   return hasScanned(itemScanKey(itemStack.item))
 }
 
-fun Player.handleScanResult(scanResult: ScanResult, newScans: List<String>, firstPacket: Boolean = false) {
+fun ServerPlayer.handleScanResult(scanResult: ScanResult, newScans: List<String>) {
   if (scanResult == ScanResult.SUCCESS) {
     val old = getData(T7Attachments.SCANNED)
     old.scanned.addAll(newScans)
     setData(T7Attachments.SCANNED, old)
-  }
 
-  if (this is ServerPlayer)
-    PacketDistributor.sendToPlayer(this, ScanPayload(scanResult, newScans, firstPacket))
+    PacketDistributor.sendToPlayer(this, ScanResultPayload(scanResult))
+  }
 }
 
-fun Player.tryScan(key: String, aspectMap: AspectMap?) {
+fun ServerPlayer.tryScan(key: String, aspectMap: AspectMap?) {
   var scanResult = ScanResult.SUCCESS
   if (aspectMap == null || aspectMap.isEmpty) scanResult = ScanResult.UNSUPPORTED
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS

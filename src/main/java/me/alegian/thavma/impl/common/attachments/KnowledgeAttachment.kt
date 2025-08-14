@@ -3,6 +3,8 @@ package me.alegian.thavma.impl.common.attachments
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.common.codec.mutableSetOf
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.neoforged.neoforge.attachment.AttachmentType
 
 /**
@@ -20,10 +22,16 @@ data class KnowledgeAttachment(
         Codec.STRING.mutableSetOf().fieldOf("knowledge").forGetter(KnowledgeAttachment::knowledge)
       ).apply(it, ::KnowledgeAttachment)
     }
+    private val STREAM_CODEC = StreamCodec.composite(
+      ByteBufCodecs.STRING_UTF8.mutableSetOf(),
+      KnowledgeAttachment::knowledge,
+      ::KnowledgeAttachment
+    )
 
     val TYPE = AttachmentType
       .builder(::KnowledgeAttachment)
       .serialize(CODEC)
+      .sync(STREAM_CODEC)
       .copyOnDeath()
       .build()
   }

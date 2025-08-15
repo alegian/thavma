@@ -51,7 +51,7 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
 private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<WandItem>(wandRenderer) {
   override fun render(poseStack: PoseStack, wand: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
-    val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.getStackInSlot(0) ?: return
+    val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull() ?: return
     val modelRL = WandRenderer.FOCUS_MODELS[focus.item] ?: return
     val focusModel = mc.modelManager.getModel(modelRL)
     val vc = bufferSource.getBuffer(RenderType.cutout())

@@ -73,7 +73,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       if (mouseRadius <= deadRadius) selectedIndex = null
     }
 
-    val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.getStackInSlot(0) ?: return
+    val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
     var tooltipFocus = equippedFocus
 
     guiGraphics.usePose {
@@ -101,15 +101,18 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
           guiGraphics.renderItem(stack, 0, 0)
         }
 
-      if (selectedIndex == null) scaleXY(1.5f)
-      translateXY(-8, -8)
-      guiGraphics.renderItem(equippedFocus, 0, 0)
+      if (equippedFocus != null) {
+        if (selectedIndex == null) scaleXY(1.5f)
+        translateXY(-8, -8)
+        guiGraphics.renderItem(equippedFocus, 0, 0)
+      }
     }
 
     if (foci.isNotEmpty())
       selectedIndex?.let { tooltipFocus = foci[it] }
 
-    guiGraphics.renderTooltip(font, tooltipFocus, -8, 16)
+    if (tooltipFocus != null)
+      guiGraphics.renderTooltip(font, tooltipFocus, -8, 16)
   }
 
   override fun shouldCloseOnEsc() = false

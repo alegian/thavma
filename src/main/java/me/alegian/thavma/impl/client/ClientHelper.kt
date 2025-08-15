@@ -16,9 +16,6 @@ import net.minecraft.world.entity.EquipmentSlot
 fun clientPlayerHasRevealing() =
   Minecraft.getInstance().player?.getAttribute(REVEALING)?.value == 1.0
 
-fun clientPlayerHoldingWand() =
-  Minecraft.getInstance().player?.mainHandItem?.item is WandItem
-
 fun getClientPlayerEquipmentItem(slot: EquipmentSlot) =
   Minecraft.getInstance().player?.getItemBySlot(slot)?.item
 

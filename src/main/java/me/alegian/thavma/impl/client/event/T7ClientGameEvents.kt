@@ -3,7 +3,6 @@ package me.alegian.thavma.impl.client.event
 import com.mojang.datafixers.util.Either
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
-import me.alegian.thavma.impl.client.clientPlayerHoldingWand
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
@@ -13,7 +12,10 @@ import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
+import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.world.entity.EquipmentSlot
@@ -25,6 +27,7 @@ import net.neoforged.neoforge.client.event.RenderHighlightEvent
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import net.neoforged.neoforge.client.event.RenderTooltipEvent.GatherComponents
+import net.neoforged.neoforge.network.PacketDistributor
 import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
 
@@ -112,9 +115,19 @@ private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   }
 }
 
+private var cooldownTicks = 0
 private fun clientTick(event: ClientTickEvent.Post) {
+  cooldownTicks--
   val mc = Minecraft.getInstance()
-  if (T7KeyMappings.FOCI.isDown && mc.screen == null && mc.overlay == null && clientPlayerHoldingWand())
+  val player = mc.player ?: return
+  val wandStack = player.mainHandItem
+  if (!T7KeyMappings.FOCI.isDown || wandStack.item !is WandItem) return
+
+  val focus = wandStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+  if (player.isShiftKeyDown && focus != null && cooldownTicks <= 0) {
+    PacketDistributor.sendToServer(FocusPayload(null))
+    cooldownTicks = 10
+  } else if (!player.isShiftKeyDown && mc.screen == null && mc.overlay == null)
     mc.setScreen(FociScreen())
 }
 

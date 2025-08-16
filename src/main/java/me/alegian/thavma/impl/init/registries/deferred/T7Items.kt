@@ -183,7 +183,7 @@ object T7Items {
 
   val FOCUS_EMBERS = REGISTRAR.registerItem("focus_embers", ::Item)
   val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation", ::Item)
-  val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest", ::Item)
+  val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest") { EnderChestFocus() }
   val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light", ::Item)
   val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)
   val FOCUS_TELEPORT = REGISTRAR.registerItem("focus_teleport", ::Item)

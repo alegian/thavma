@@ -11,15 +11,19 @@ import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandHandleMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -55,12 +59,15 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
   /**
    * Use Wand on a Block. Has 3 main uses:
    *
-   *
-   * 1. Receiving Vis from an Aura Node, by spawning a VisEntity<br></br>
-   * 2. Turning Cauldrons into Crucibles<br></br>
-   * 3. Creating "Elements of Thavma" books from Bookcases
+   * 1. delegate the action to a focus
+   * 2. Receiving Vis from an Aura Node, by spawning a VisEntity<br></br>
+   * 3. Turning Cauldrons into Crucibles<br></br>
+   * 4. Creating "Elements of Thavma" books from Bookcases
    */
   override fun useOn(context: UseOnContext): InteractionResult {
+    val focusResult = context.itemInHand.equippedFocus?.item?.useOn(context) ?: InteractionResult.PASS
+    if (focusResult != InteractionResult.PASS) return focusResult
+
     val level = context.level
     val blockPos = context.clickedPos
     val blockState = level.getBlockState(blockPos)
@@ -116,6 +123,21 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
         } ?: InteractionResult.PASS
     }
     return InteractionResult.PASS
+  }
+
+  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
+    val itemInHand = player.getItemInHand(usedHand)
+    val focusResult = itemInHand.equippedFocus?.item?.use(level, player, usedHand) ?: InteractionResultHolder.pass(itemInHand)
+    if (focusResult.result != InteractionResult.PASS) return focusResult
+
+    return super.use(level, player, usedHand)
+  }
+
+  override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
+    val focusResult = stack.equippedFocus?.item?.interactLivingEntity(stack, player, interactionTarget, usedHand) ?: InteractionResult.PASS
+    if (focusResult != InteractionResult.PASS) return focusResult
+
+    return super.interactLivingEntity(stack, player, interactionTarget, usedHand)
   }
 
   override fun getUseAnimation(itemStack: ItemStack): UseAnim {
@@ -216,5 +238,8 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     fun name(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial): String {
       return handleMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
     }
+
+    val ItemStack.equippedFocus
+      get() = get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
   }
 }

@@ -7,12 +7,14 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.item.context.UseOnContext
 
-class LightFocus: Item(
+class LightFocus : Item(
   Properties().stacksTo(1)
 ) {
   override fun useOn(context: UseOnContext): InteractionResult {
+    if (context.itemInHand.item !is WandItem) return InteractionResult.PASS
+
     val blockItem = T7Blocks.ETERNAL_FLAME.get().asItem()
-    if(blockItem !is BlockItem) return InteractionResult.PASS
+    if (blockItem !is BlockItem) return InteractionResult.PASS
 
     return blockItem.place(BlockPlaceContext(context))
   }

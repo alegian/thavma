@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "thavma:eternal_flame",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "fake": "false"
+              }
+            }
+          ],
           "name": "thavma:eternal_flame"
         }
       ],

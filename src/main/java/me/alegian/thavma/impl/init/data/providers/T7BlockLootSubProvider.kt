@@ -14,7 +14,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
@@ -73,6 +72,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
     dropSelf(TABLE.get())
     dropSelf(ITEM_HATCH.get())
     add(RESEARCH_TABLE.get()) { b -> createSinglePropConditionTable(b, BedBlock.PART, BedPart.HEAD) }
+    add(T7Blocks.ETERNAL_FLAME.get()) { b -> createBooleanPropertyTable(b, T7BlockStateProperties.FAKE, false) }
     add(PILLAR.get()) { b -> createBooleanPropertyTable(b, T7BlockStateProperties.MASTER, true) }
     dropSelf(ELEMENTAL_STONE.get())
     dropSelf(ELEMENTAL_CORE.get())
@@ -91,7 +91,6 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
       infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
     }
 
-    dropSelf(ETERNAL_FLAME.get())
     dropSelf(HUNGRY_CHEST.get())
     dropSelf(ELEMENTAL_STONE_STAIRS.get())
     add(ELEMENTAL_STONE_SLAB.get()) { b -> createSlabItemTable(b) }

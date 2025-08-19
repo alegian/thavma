@@ -1,8 +1,11 @@
 package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.EternalFlameBE
+import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import net.minecraft.core.BlockPos
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.EntityBlock
@@ -12,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.material.PushReaction
 
 class EternalFlameBlock : Block(
@@ -22,8 +26,22 @@ class EternalFlameBlock : Block(
     .lightLevel { 15 }
     .pushReaction(PushReaction.DESTROY)
     .noTerrainParticles()
-) , EntityBlock{
+), EntityBlock {
+  init {
+    registerDefaultState(stateDefinition.any().setValue(T7BlockStateProperties.FAKE, false))
+  }
+
   override fun newBlockEntity(pos: BlockPos, state: BlockState) = EternalFlameBE(pos, state)
+
+  override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
+    builder.add(T7BlockStateProperties.FAKE)
+  }
+
+  // flames placed by the wand focus are "fake"
+  override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+    val placedByWand = context.itemInHand.item is WandItem
+    return defaultBlockState().setValue(T7BlockStateProperties.FAKE, placedByWand)
+  }
 
   override fun <T : BlockEntity?> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
     return if (type === T7BlockEntities.ETERNAL_FLAME.get()) BlockEntityTicker(EternalFlameBE::tick) else null

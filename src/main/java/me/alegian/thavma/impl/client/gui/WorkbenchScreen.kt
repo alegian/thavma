@@ -16,15 +16,19 @@ import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-private val WORKBENCH_BG = Texture("gui/container/arcane_workbench/bg", 214, 132, 256, 256)
-private val RESULT_SLOT = Texture("gui/container/arcane_workbench/result_slot", 34, 34)
-private val WAND_SLOT = Texture("gui/container/arcane_workbench/wand_slot", 20, 20)
-private val ASPECT_SOCKET = Texture("gui/container/arcane_workbench/aspect_socket", 25, 25)
-private val SLOTS = (0..8).map { Texture("gui/container/arcane_workbench/crafting_slots/$it", 21, 21) }
-private const val BORDER = 5
-private const val WOOD_SIZE = 122
-
 open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<WorkbenchMenu>(menu, pPlayerInventory, pTitle, WORKBENCH_BG) {
+  companion object {
+    private const val GAP = 4
+    private val WORKBENCH_BG = Texture("gui/arcane_workbench/bg", 214, 132, 256, 256)
+    private val RESULT_SLOT = Texture("gui/arcane_workbench/result_slot", 34, 34)
+    private val WAND_SLOT = Texture("gui/arcane_workbench/wand_slot", 20, 20)
+    private val ASPECT_SOCKET = Texture("gui/arcane_workbench/aspect_socket", 25, 25)
+    private val GRID = Texture("gui/arcane_workbench/grid", 62, 62)
+    private val GRID_OVERLAY = Texture("gui/arcane_workbench/grid_overlay", 62, 62)
+    private const val BORDER = 5
+    private const val WOOD_SIZE = 122
+  }
+
   override fun layout() {
     Row({
       size = grow()
@@ -37,10 +41,12 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
         align = Alignment.CENTER
       }) {
         Box({
-          width = fixed(SLOTS[0].width * 3)
-          height = fixed(SLOTS[0].height * 3)
+          width = fixed(GRID.width)
+          height = fixed(GRID.height)
         }) {
-          addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots) { i, j -> SLOTS[i * 3 + j] })
+          afterLayout {
+            addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 20, 1, null))
+          }
         }
       }
 
@@ -53,14 +59,18 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
           width = fixed(WAND_SLOT.width)
           height = fixed(WAND_SLOT.height)
         }) {
-          addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
+          afterLayout {
+            addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
+          }
         }
 
         Box({
           width = fixed(RESULT_SLOT.width)
           height = fixed(RESULT_SLOT.height)
         }) {
-          addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
+          afterLayout {
+            addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
+          }
         }
       }
     }
@@ -90,11 +100,11 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
           translateXY(0.0, -BASE_RADIUS)
           rotateZ(-ANGLE * i)
           guiGraphics.usePose {
-            translateXY((SLOTS[0].width - ASPECT_SOCKET.width) / 2.0, (SLOTS[0].height - ASPECT_SOCKET.height) / 2.0)
+            translateXY((middleSlot.size - ASPECT_SOCKET.width) / 2.0, (middleSlot.size - ASPECT_SOCKET.height) / 2.0)
             guiGraphics.blit(ASPECT_SOCKET)
           }
           if (requiredAmount != 0) {
-            translateXY((SLOTS[0].width - 16) / 2, (SLOTS[0].height - 16) / 2)
+            translateXY((middleSlot.size - 16) / 2, (middleSlot.size - 16) / 2)
             AspectRenderer.renderAspect(guiGraphics, requiredStack)
           }
         }

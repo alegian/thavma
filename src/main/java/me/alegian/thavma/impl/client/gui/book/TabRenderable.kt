@@ -6,14 +6,17 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import kotlin.math.pow
 
-private const val ZOOM_MULTIPLIER = 1.25
-private const val maxScrollX = 300.0
-private const val maxScrollY = 300.0
-private const val minZoom = 0.0
-private const val maxZoom = 5.0
-
 // represents the renderable content of a tab in the book
 class TabRenderable(val screen: BookScreen) : Renderable {
+  companion object{
+    private const val ZOOM_MULTIPLIER = 1.25
+    private const val maxScrollX = 300.0
+    private const val maxScrollY = 300.0
+    private const val minZoom = 0.0
+    private const val maxZoom = 5.0
+    val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
+  }
+
   var scrollX = 0.0
     private set
   var scrollY = 0.0
@@ -65,9 +68,5 @@ class TabRenderable(val screen: BookScreen) : Renderable {
     }
 
     graphics.disableCrop()
-  }
-
-  companion object {
-    val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
   }
 }

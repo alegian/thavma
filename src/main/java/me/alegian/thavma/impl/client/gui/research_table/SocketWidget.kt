@@ -86,7 +86,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
       guiGraphics.usePose {
         rotateZ(angleDegrees)
         translateXY(0, -0.5)
-        guiGraphics.hLine(0, TEXTURE.width + HEX_GRID_GAP, 0, T7Colors.GREEN)
+        guiGraphics.hLine(0, TEXTURE.width + ResearchScreen.HEX_GRID_GAP, 0, T7Colors.GREEN)
       }
     }
   }

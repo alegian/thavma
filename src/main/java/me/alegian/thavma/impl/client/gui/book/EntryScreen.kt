@@ -9,9 +9,11 @@ import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-private val BG = Texture("gui/book/background", 510, 282, 512, 512)
-
 class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
+  companion object {
+    private val BG = Texture("gui/book/background", 510, 282, 512, 512)
+  }
+
   private val currentPage = 0
 
   override fun init() {

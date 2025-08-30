@@ -18,16 +18,18 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import kotlin.math.min
 
-private val INVENTORY_BG = Texture("gui/container/inventory", 174, 97, 256, 256)
-private val SLOT_TEXTURE = Texture("gui/container/slot", 18, 18)
-const val GAP = 4
-private const val INVENTORY_PADDING = 6
-private const val HOTBAR_GAP = 4
-
 /**
  * The background texture's size is used to determine the size of the container
  */
 abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory, pTitle: Component, private val bgTexture: Texture) : AbstractContainerScreen<T>(menu, pPlayerInventory, pTitle) {
+  companion object {
+    private val INVENTORY_BG = Texture("gui/container/inventory", 174, 97, 256, 256)
+    private val SLOT_TEXTURE = Texture("gui/container/slot", 18, 18)
+    private const val GAP = 4
+    private const val INVENTORY_PADDING = 6
+    private const val HOTBAR_GAP = 4
+  }
+
   abstract fun layout()
 
   override fun init() {
@@ -48,7 +50,9 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           height = fixed(font.lineHeight)
           width = grow()
         }) {
-          addRenderableOnly(text(this@T7ContainerScreen.title, T7Colors.GREEN))
+          afterLayout {
+            addRenderableOnly(text(this@T7ContainerScreen.title, T7Colors.GREEN))
+          }
         }
 
         TextureBox(bgTexture) {
@@ -66,7 +70,9 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
               width = grow()
               height = fixed(font.lineHeight)
             }) {
-              addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
+              afterLayout {
+                addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
+              }
             }
 
             Column({
@@ -76,14 +82,18 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
                 height = fixed(SLOT_TEXTURE.height * 3)
                 width = grow()
               }) {
-                addRenderableOnly(slotGrid(3, 9, menu.inventory.range.slots) { _, _ -> SLOT_TEXTURE })
+                afterLayout {
+                  addRenderableOnly(slotGrid(3, 9, menu.inventory.range.slots, listOf(), 18, 0, SLOT_TEXTURE))
+                }
               }
 
               Box({
                 height = fixed(SLOT_TEXTURE.height)
                 width = grow()
               }) {
-                addRenderableOnly(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9)) { _, _ -> SLOT_TEXTURE })
+                afterLayout {
+                  addRenderableOnly(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9), listOf(), 18, 0, SLOT_TEXTURE))
+                }
               }
             }
           }
@@ -221,7 +231,9 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
       width = fixed(texture.width)
       height = fixed(texture.height)
     }) {
-      addRenderableOnly(texture(texture))
+      afterLayout {
+        addRenderableOnly(texture(texture))
+      }
       children()
     }
 }

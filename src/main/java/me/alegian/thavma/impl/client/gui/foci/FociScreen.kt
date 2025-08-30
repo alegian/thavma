@@ -15,18 +15,19 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth.lerp
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.PickaxeItem
 import net.neoforged.neoforge.network.PacketDistributor
 import kotlin.math.*
 
-private const val TITLE_ID = "screen." + Thavma.MODID + ".title"
-private val BACKGROUND = Texture("gui/foci/circle", 236, 236)
-private const val SCALE = 0.5f
-private const val DEGREES_PER_TICK = 0.5f
-private val MAX_RADIUS = SCALE * BACKGROUND.width / 2
-private val ANIMATION_DURATION = 5
-
 class FociScreen : Screen(Component.translatable(TITLE_ID)) {
+  companion object{
+    private const val TITLE_ID = "screen." + Thavma.MODID + ".title"
+    private val BACKGROUND = Texture("gui/foci/circle", 236, 236)
+    private const val SCALE = 0.5f
+    private const val DEGREES_PER_TICK = 0.5f
+    private val MAX_RADIUS = SCALE * BACKGROUND.width / 2
+    private val ANIMATION_DURATION = 5
+  }
+
   var ticks = 0
   var selectedIndex: Int? = null
   val foci = getFociFromLocalInventory()

@@ -9,10 +9,12 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-private val cornerHeight = FrameRenderable.CORNER_TEXTURE.height
-private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
+class BookScreen : Screen(Component.literal("book")) {
+  companion object {
+    private val cornerHeight = FrameRenderable.CORNER_TEXTURE.height
+    private val selectorGap = TabSelectorWidget.TEXTURE.height / 2
+  }
 
-class BookScreen : Screen(Component.literal("Thaumonomicon")) {
   private var isScrolling = false
   private var currentCategory: ResearchCategory? = null
   private val tabs = mutableMapOf<ResearchCategory, TabRenderable>()

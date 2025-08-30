@@ -39,24 +39,28 @@ fun T7LayoutElement.texture(texture: Texture) = Renderable { guiGraphics: GuiGra
   }
 }
 
-fun T7LayoutElement.slotGrid(rows: Int, columns: Int, slots: List<Slot>, getTexture: (Int, Int) -> Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+fun T7LayoutElement.slotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture>, slotSize: Int, gap: Int, slotTexture: Texture?) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
   guiGraphics.usePose {
     translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+
+    for (bgTexture in bgLayers)
+      guiGraphics.blit(bgTexture)
+
     for (i in 0 until rows) {
-      pushPose()
-      for (j in 0 until columns) {
-        guiGraphics.blit(getTexture(i, j))
-        val slot = slots[i * columns + j]
-        if (slot is DynamicSlot<*>) {
-          val pos = transformOrigin()
-          slot.actualX = pos.x
-          slot.actualY = pos.y
-          slot.size = getTexture(i, j).width
+      guiGraphics.usePose {
+        for (j in 0 until columns) {
+          slotTexture?.let(guiGraphics::blit)
+          val slot = slots[i * columns + j]
+          if (slot is DynamicSlot<*>) {
+            val pos = transformOrigin()
+            slot.actualX = pos.x
+            slot.actualY = pos.y
+            slot.size = slotSize
+          }
+          translate((slotSize + gap).toDouble(), 0.0, 0.0)
         }
-        translate(getTexture(0, 0).width.toDouble(), 0.0, 0.0)
       }
-      popPose()
-      translate(0.0, getTexture(0, 0).height.toDouble(), 0.0)
+      translate(0.0, (slotSize + gap).toDouble(), 0.0)
     }
   }
 }

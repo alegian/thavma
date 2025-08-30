@@ -25,13 +25,16 @@ import me.alegian.thavma.impl.common.util.times
 import me.alegian.thavma.impl.common.util.div
 import kotlin.math.ceil
 
-private const val BORDER = 5
-private val BG = Texture("gui/research_table/bg", 231, 154, 256, 256)
-private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 104, 72, 104)
-private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 144, 144, 144, 144)
-const val HEX_GRID_GAP = 2
-
 open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<ResearchMenu>(menu, pPlayerInventory, pTitle, BG) {
+  companion object {
+    private const val BORDER = 5
+    private val BG = Texture("gui/research_table/bg", 231, 154, 256, 256)
+    private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 104, 72, 104)
+    private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 144, 144, 144, 144)
+    const val HEX_GRID_GAP = 2
+    val translationId = "container." + Thavma.MODID + ".research_table"
+  }
+
   private var page = 0
   private var maxPages = 1
   private var aspectsPerPage = 0
@@ -60,7 +63,9 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             width = fixed(RuneSlot.TEXTURE.width)
             height = fixed(RuneSlot.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
+            afterLayout {
+              addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
+            }
           }
 
           Box({ width = grow() }) {}
@@ -69,7 +74,9 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             width = fixed(ScrollSlot.TEXTURE.width)
             height = fixed(ScrollSlot.TEXTURE.height)
           }) {
-            addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
+            afterLayout {
+              addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
+            }
           }
         }
 
@@ -227,10 +234,6 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     val result = super.mouseReleased(mouseX, mouseY, button)
     if (selectedAspect != null) selectedAspect = null
     return result
-  }
-
-  companion object {
-    val translationId = "container." + Thavma.MODID + ".research_table"
   }
 }
 

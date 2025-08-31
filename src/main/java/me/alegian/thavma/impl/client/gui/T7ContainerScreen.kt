@@ -55,11 +55,11 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           }
         }
 
-        TextureBox(bgTexture) {
+        TextureBox(this@T7ContainerScreen, bgTexture) {
           layout()
         }
 
-        TextureBox(INVENTORY_BG) {
+        TextureBox(this@T7ContainerScreen, INVENTORY_BG) {
           Column({
             size = grow()
             paddingX = INVENTORY_PADDING
@@ -224,16 +224,4 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           && mouseY < (actualY + size)
     }
   }
-
-  // layout helper
-  fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
-    Row({
-      width = fixed(texture.width)
-      height = fixed(texture.height)
-    }) {
-      afterLayout {
-        addRenderableOnly(texture(texture))
-      }
-      children()
-    }
 }

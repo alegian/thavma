@@ -10,8 +10,10 @@ import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.inventory.Slot
+import net.minecraft.world.phys.Vec2
 
 /**
  * Useful functions that can be called inside Layout Elements,
@@ -29,7 +31,7 @@ fun T7LayoutElement.text(content: Component, color: Int = 0) = Renderable { guiG
   }
 }
 
-fun T7LayoutElement.texture(texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+private fun renderableTexture(position: Vec2, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
   guiGraphics.usePose {
     translate(position.x.toDouble(), position.y.toDouble(), 0.0)
     RenderSystem.enableBlend()
@@ -77,3 +79,14 @@ fun T7LayoutElement.slot(slot: Slot, texture: Texture) = Renderable { guiGraphic
     }
   }
 }
+
+fun TextureBox(screen: Screen, texture: Texture, children: T7LayoutElement.() -> Unit) =
+  Row({
+    width = fixed(texture.width)
+    height = fixed(texture.height)
+  }) {
+    afterLayout {
+      screen.renderables.add(renderableTexture(position, texture))
+    }
+    children()
+  }

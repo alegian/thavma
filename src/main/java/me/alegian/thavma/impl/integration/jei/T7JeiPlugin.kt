@@ -13,10 +13,7 @@ import me.alegian.thavma.impl.rl
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.registration.IIngredientAliasRegistration
-import mezz.jei.api.registration.IRecipeCatalystRegistration
-import mezz.jei.api.registration.IRecipeCategoryRegistration
-import mezz.jei.api.registration.IRecipeRegistration
+import mezz.jei.api.registration.*
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 
@@ -59,5 +56,9 @@ internal class T7JeiPlugin : IModPlugin {
     registration.addAlias(VanillaTypes.ITEM_STACK, T7Items.BOOK.get().defaultInstance, RecipeViewerAliases.BOOK)
     for (infusedBlock in T7Blocks.INFUSED_STONES.values + T7Blocks.INFUSED_DEEPSLATES.values)
       registration.addAlias(VanillaTypes.ITEM_STACK, infusedBlock.get().asItem().defaultInstance, RecipeViewerAliases.ORE)
+  }
+
+  override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
+    super.registerGuiHandlers(registration)
   }
 }

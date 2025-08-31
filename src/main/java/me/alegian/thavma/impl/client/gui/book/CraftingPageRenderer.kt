@@ -31,32 +31,23 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
     }) {
       Title(screen)
 
-      Image(screen, RESULT)
+      TextureBox(screen, RESULT) {}
 
-      Image(screen, GRID)
-    }
-  }
-
-  private fun Image(screen: EntryScreen, texture: Texture) {
-    Row({
-      width = fixed(texture.width)
-      height = fixed(texture.height)
-    }) {
-      afterLayout {
-        screen.addRenderableOnly(texture(texture))
-      }
+      TextureBox(screen, GRID) {}
     }
   }
 
   private fun Title(screen: EntryScreen) {
+    val font = Minecraft.getInstance().font
+    
     Row({
-      height = fixed(screen.getFont().lineHeight)
+      height = fixed(font.lineHeight)
     }) {
       afterLayout {
-        screen.addRenderableOnly(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
+        screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
           guiGraphics.usePose {
             translateXY(position.x, position.y)
-            guiGraphics.drawCenteredString(screen.getFont(), TITLE, size.x / 2)
+            guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
           }
         })
       }

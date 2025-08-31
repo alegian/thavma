@@ -11,18 +11,12 @@ import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import me.alegian.thavma.impl.common.menu.slot.RuneSlot
 import me.alegian.thavma.impl.common.menu.slot.ScrollSlot
-import me.alegian.thavma.impl.common.util.Dimensions
-import me.alegian.thavma.impl.common.util.Indices
-import me.alegian.thavma.impl.common.util.minus
-import me.alegian.thavma.impl.common.util.vec2
+import me.alegian.thavma.impl.common.util.*
 import me.alegian.thavma.impl.init.registries.T7Registries
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.phys.Vec2
-import me.alegian.thavma.impl.common.util.plus
-import me.alegian.thavma.impl.common.util.times
-import me.alegian.thavma.impl.common.util.div
 import kotlin.math.ceil
 
 open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, pTitle: Component) : T7ContainerScreen<ResearchMenu>(menu, pPlayerInventory, pTitle, BG) {
@@ -92,7 +86,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       height = grow()
       gap = BORDER
     }) {
-      TextureBox(ASPECTS_BG) {
+      TextureBox(this@ResearchScreen, ASPECTS_BG) {
         Row({
           size = grow()
           padding = (ASPECTS_BG.width - 16 * 4) / 2 // fits 4 aspects
@@ -172,7 +166,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   private fun PuzzleSection() {
-    TextureBox(PUZZLE_BG) {
+    TextureBox(this@ResearchScreen, PUZZLE_BG) {
       afterLayout {
         makeSocketWidgets(position, size)
       }

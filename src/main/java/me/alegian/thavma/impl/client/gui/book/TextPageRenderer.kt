@@ -15,7 +15,8 @@ object TextPageRenderer : PageRenderer<TextPage> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
   override fun initPage(screen: EntryScreen, page: TextPage) {
-    val LINE_HEIGHT = screen.getFont().lineHeight + 2
+    val font = Minecraft.getInstance().font
+    val LINE_HEIGHT = font.lineHeight + 2
 
     Column({
       size = grow()
@@ -29,12 +30,12 @@ object TextPageRenderer : PageRenderer<TextPage> {
         size = grow()
       }) {
         afterLayout {
-          screen.addRenderableOnly(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
+          screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
             guiGraphics.usePose {
               translateXY(position.x, position.y)
 
               for (paragraph in page.paragraphs) {
-                for (line in screen.getFont().split(paragraph, size.x.toInt())) {
+                for (line in font.split(paragraph, size.x.toInt())) {
                   guiGraphics.drawString(Minecraft.getInstance().font, line)
                   translateXY(0, LINE_HEIGHT)
                 }
@@ -52,27 +53,22 @@ object TextPageRenderer : PageRenderer<TextPage> {
       width = grow()
       alignMain = Alignment.CENTER
     }) {
-      Row({
-        width = fixed(SEPARATOR.width)
-        height = fixed(SEPARATOR.height)
-      }) {
-        afterLayout {
-          screen.addRenderableOnly(texture(SEPARATOR))
-        }
-      }
+      TextureBox(screen, SEPARATOR) {}
     }
   }
 
   private fun Title(screen: EntryScreen, text: Component) {
+    val font = Minecraft.getInstance().font
+   
     Row({
       width = grow()
-      height = fixed(screen.getFont().lineHeight)
+      height = fixed(font.lineHeight)
     }) {
       afterLayout {
-        screen.addRenderableOnly(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
+        screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
           guiGraphics.usePose {
             translateXY(position.x, position.y)
-            guiGraphics.drawCenteredString(screen.getFont(), text, size.x / 2)
+            guiGraphics.drawCenteredString(font, text, size.x / 2)
           }
         })
       }

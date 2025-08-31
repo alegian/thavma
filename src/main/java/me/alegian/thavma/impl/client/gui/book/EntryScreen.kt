@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
@@ -24,10 +23,7 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
       height = fixed(this@EntryScreen.height)
       align = Alignment.CENTER
     }) {
-      Row({
-        width = fixed(BG.width)
-        height = fixed(BG.height)
-      }) {
+      TextureBox(this@EntryScreen, BG) {
         Row({
           size = grow()
           paddingTop = 32
@@ -35,10 +31,6 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
           paddingBottom = 42
           gap = 48
         }) {
-          afterLayout {
-            addRenderableOnly(texture(BG))
-          }
-
           Row({
             size = grow()
           }) {
@@ -58,12 +50,6 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     renderTransparentBackground(guiGraphics)
   }
-
-  public override fun <T : Renderable> addRenderableOnly(renderable: T): T {
-    return super.addRenderableOnly(renderable)
-  }
-
-  fun getFont() = font
 
   // wrapper around unchecked cast
   private fun <T : Page?> initPage(page: T) {

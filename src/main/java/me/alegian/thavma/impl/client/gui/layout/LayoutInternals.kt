@@ -1,10 +1,10 @@
 package me.alegian.thavma.impl.client.gui.layout
 
-import net.minecraft.world.phys.Vec2
-import me.alegian.thavma.impl.common.util.plus
-import me.alegian.thavma.impl.common.util.minus
-import me.alegian.thavma.impl.common.util.times
 import me.alegian.thavma.impl.common.util.div
+import me.alegian.thavma.impl.common.util.minus
+import me.alegian.thavma.impl.common.util.plus
+import me.alegian.thavma.impl.common.util.times
+import net.minecraft.world.phys.Vec2
 import kotlin.math.max
 import kotlin.math.round
 
@@ -119,7 +119,7 @@ class T7LayoutElement internal constructor(
       if (sizing.y.mode == SizingMode.FIXED) maskY = 0f
       return Vec2(maskX, maskY)
     }
-  internal var afterLayoutCallback: T7LayoutElement.() -> Unit = {}
+  internal var afterLayoutCallbacks = mutableListOf<T7LayoutElement.() -> Unit>()
 
   init {
     parent?.children?.add(this)
@@ -129,7 +129,7 @@ class T7LayoutElement internal constructor(
    * runs an action after the layout has been calculated
    */
   fun afterLayout(callback: T7LayoutElement.() -> Unit) {
-    afterLayoutCallback = callback
+    afterLayoutCallbacks.add(callback)
   }
 
   /**
@@ -211,7 +211,8 @@ class T7LayoutElement internal constructor(
    * fourth pass: side effects after layout (e.g. drawing)
    */
   internal fun afterLayoutRecursively() {
-    afterLayoutCallback()
+    for (callback in afterLayoutCallbacks)
+      callback()
     for (child in children)
       child.afterLayoutRecursively()
   }

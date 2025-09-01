@@ -44,9 +44,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
           width = fixed(GRID.width)
           height = fixed(GRID.height)
         }) {
-          afterLayout {
-            addRenderableOnly(slotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 20, 1, null))
-          }
+          relativeRenderable(slotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 20, 1, null))
         }
       }
 
@@ -59,18 +57,14 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
           width = fixed(WAND_SLOT.width)
           height = fixed(WAND_SLOT.height)
         }) {
-          afterLayout {
-            addRenderableOnly(slot(menu.wandContainer.range.slot, WAND_SLOT))
-          }
+          relativeRenderable(slot(menu.wandContainer.range.slot, WAND_SLOT))
         }
 
         Box({
           width = fixed(RESULT_SLOT.width)
           height = fixed(RESULT_SLOT.height)
         }) {
-          afterLayout {
-            addRenderableOnly(slot(menu.resultContainer.range.slot, RESULT_SLOT))
-          }
+          relativeRenderable(slot(menu.resultContainer.range.slot, RESULT_SLOT))
         }
       }
     }

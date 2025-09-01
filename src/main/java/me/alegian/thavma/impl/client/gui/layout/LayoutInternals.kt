@@ -16,7 +16,7 @@ import kotlin.math.round
  * See LayoutAPI.kt for usable components.
  */
 
-private var currParent: T7LayoutElement? = null
+internal var currElement: T7LayoutElement? = null
 private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
 
 internal enum class Direction(val basis: Vec2) {
@@ -74,9 +74,9 @@ internal fun createElement(
 ): T7LayoutElement {
   val element = T7LayoutElement(sizing, padding, direction, gap, align)
 
-  currParent = element
+  currElement = element
   element.children()
-  currParent = element.parent
+  currElement = element.parent
 
   // first pass: reverse BFS
   element.calculateInitialSizes()
@@ -87,7 +87,7 @@ internal fun createElement(
     element.calculatePositionsRecursively()
     // fourth pass: DFS from root
     element.afterLayoutRecursively()
-    currParent = null
+    currElement = null
   }
   return element
 }
@@ -101,7 +101,7 @@ class T7LayoutElement internal constructor(
 ) {
   var position = Vec2.ZERO
   val children = mutableListOf<T7LayoutElement>()
-  val parent = currParent
+  val parent = currElement
   var size = Vec2(sizing.x.value.toFloat(), sizing.y.value.toFloat())
   internal val growBasis: Vec2
     get() {
@@ -123,13 +123,6 @@ class T7LayoutElement internal constructor(
 
   init {
     parent?.children?.add(this)
-  }
-
-  /**
-   * runs an action after the layout has been calculated
-   */
-  fun afterLayout(callback: T7LayoutElement.() -> Unit) {
-    afterLayoutCallbacks.add(callback)
   }
 
   /**

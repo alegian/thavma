@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.drawString
 import me.alegian.thavma.impl.client.util.transformOrigin
+import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
 import net.minecraft.client.Minecraft
@@ -20,31 +21,27 @@ import net.minecraft.world.phys.Vec2
  * from the Layout API. See LayoutAPI.kt for more.
  */
 
-fun T7LayoutElement.debugRect(color: Int) = Renderable { guiGraphics, _, _, _ ->
-  guiGraphics.fill(position.x.toInt(), position.y.toInt(), position.x.toInt() + size.x.toInt(), position.y.toInt() + size.y.toInt(), color)
+object LayoutExtensions {
+  var currScreen: Screen? = null
 }
 
-fun T7LayoutElement.text(content: Component, color: Int = 0) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-  guiGraphics.usePose {
-    translate(position.x.toDouble(), position.y.toDouble(), 0.0)
-    guiGraphics.drawString(Minecraft.getInstance().font, content, color)
-  }
+fun debugRect(size: Vec2, color: Int) = Renderable { guiGraphics, _, _, _ ->
+  guiGraphics.fill(0, 0, size.x.toInt(), size.y.toInt(), color)
 }
 
-private fun renderableTexture(position: Vec2, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-  guiGraphics.usePose {
-    translate(position.x.toDouble(), position.y.toDouble(), 0.0)
-    RenderSystem.enableBlend()
-    RenderSystem.defaultBlendFunc()
-    guiGraphics.blit(texture)
-    RenderSystem.disableBlend()
-  }
+fun text(content: Component, color: Int = 0) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+  guiGraphics.drawString(Minecraft.getInstance().font, content, color)
 }
 
-fun T7LayoutElement.slotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture>, slotSize: Int, gap: Int, slotTexture: Texture?) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-  guiGraphics.usePose {
-    translate(position.x.toDouble(), position.y.toDouble(), 0.0)
+private fun renderableTexture(texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+  RenderSystem.enableBlend()
+  RenderSystem.defaultBlendFunc()
+  guiGraphics.blit(texture)
+  RenderSystem.disableBlend()
+}
 
+fun slotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture>, slotSize: Int, gap: Int, slotTexture: Texture?) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+  guiGraphics.usePose {
     for (bgTexture in bgLayers)
       guiGraphics.blit(bgTexture)
 
@@ -67,9 +64,8 @@ fun T7LayoutElement.slotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayer
   }
 }
 
-fun T7LayoutElement.slot(slot: Slot, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+fun slot(slot: Slot, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
   guiGraphics.usePose {
-    translate(position.x.toDouble(), position.y.toDouble(), 0.0)
     guiGraphics.blit(texture)
     if (slot is DynamicSlot<*>) {
       val pos = transformOrigin()
@@ -80,13 +76,23 @@ fun T7LayoutElement.slot(slot: Slot, texture: Texture) = Renderable { guiGraphic
   }
 }
 
-fun TextureBox(screen: Screen, texture: Texture, children: T7LayoutElement.() -> Unit) =
+fun relativeRenderable(renderable: Renderable) {
+  afterLayout {
+    val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
+    screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
+      guiGraphics.usePose {
+        translateXY(position.x, position.y)
+        renderable.render(guiGraphics, mouseX, mouseY, partialTick)
+      }
+    })
+  }
+}
+
+fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
   Row({
     width = fixed(texture.width)
     height = fixed(texture.height)
   }) {
-    afterLayout {
-      screen.renderables.add(renderableTexture(position, texture))
-    }
+    relativeRenderable(renderableTexture(texture))
     children()
   }

@@ -3,12 +3,9 @@ package me.alegian.thavma.impl.client.gui.book
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.drawCenteredString
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.CraftingPage
 import me.alegian.thavma.impl.common.recipe.translationId
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -29,27 +26,22 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
       size = grow()
       gap = GAP
     }) {
-      Title(screen)
+      Title()
 
-      TextureBox(screen, RESULT) {}
+      TextureBox(RESULT) {}
 
-      TextureBox(screen, GRID) {}
+      TextureBox(GRID) {}
     }
   }
 
-  private fun Title(screen: EntryScreen) {
+  private fun Title() {
     val font = Minecraft.getInstance().font
-    
+
     Row({
       height = fixed(font.lineHeight)
     }) {
-      afterLayout {
-        screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, tickDelta ->
-          guiGraphics.usePose {
-            translateXY(position.x, position.y)
-            guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
-          }
-        })
+      relativeRenderable { guiGraphics, _, _, _ ->
+        guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
       }
     }
   }

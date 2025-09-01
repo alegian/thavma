@@ -18,12 +18,13 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
   override fun init() {
     super.init()
 
+    LayoutExtensions.currScreen = this
     Row({
       width = fixed(this@EntryScreen.width)
       height = fixed(this@EntryScreen.height)
       align = Alignment.CENTER
     }) {
-      TextureBox(this@EntryScreen, BG) {
+      TextureBox(BG) {
         Row({
           size = grow()
           paddingTop = 32

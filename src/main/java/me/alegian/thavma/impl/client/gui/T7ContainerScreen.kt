@@ -37,6 +37,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     topPos = 0
     leftPos = 0
 
+    LayoutExtensions.currScreen = this
     Row({
       width = fixed(this@T7ContainerScreen.width)
       height = fixed(this@T7ContainerScreen.height)
@@ -50,16 +51,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           height = fixed(font.lineHeight)
           width = grow()
         }) {
-          afterLayout {
-            addRenderableOnly(text(this@T7ContainerScreen.title, T7Colors.GREEN))
-          }
+          relativeRenderable(text(this@T7ContainerScreen.title, T7Colors.GREEN))
         }
 
-        TextureBox(this@T7ContainerScreen, bgTexture) {
+        TextureBox(bgTexture) {
           layout()
         }
 
-        TextureBox(this@T7ContainerScreen, INVENTORY_BG) {
+        TextureBox(INVENTORY_BG) {
           Column({
             size = grow()
             paddingX = INVENTORY_PADDING
@@ -70,9 +69,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
               width = grow()
               height = fixed(font.lineHeight)
             }) {
-              afterLayout {
-                addRenderableOnly(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
-              }
+              relativeRenderable(text(this@T7ContainerScreen.playerInventoryTitle, 0x404040))
             }
 
             Column({
@@ -82,18 +79,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
                 height = fixed(SLOT_TEXTURE.height * 3)
                 width = grow()
               }) {
-                afterLayout {
-                  addRenderableOnly(slotGrid(3, 9, menu.inventory.range.slots, listOf(), 18, 0, SLOT_TEXTURE))
-                }
+                relativeRenderable(slotGrid(3, 9, menu.inventory.range.slots, listOf(), 18, 0, SLOT_TEXTURE))
               }
 
               Box({
                 height = fixed(SLOT_TEXTURE.height)
                 width = grow()
               }) {
-                afterLayout {
-                  addRenderableOnly(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9), listOf(), 18, 0, SLOT_TEXTURE))
-                }
+                relativeRenderable(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9), listOf(), 18, 0, SLOT_TEXTURE))
               }
             }
           }

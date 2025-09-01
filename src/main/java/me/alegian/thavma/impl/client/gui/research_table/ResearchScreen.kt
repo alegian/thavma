@@ -57,9 +57,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             width = fixed(RuneSlot.TEXTURE.width)
             height = fixed(RuneSlot.TEXTURE.height)
           }) {
-            afterLayout {
-              addRenderableOnly(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
-            }
+            relativeRenderable(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
           }
 
           Box({ width = grow() }) {}
@@ -68,9 +66,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
             width = fixed(ScrollSlot.TEXTURE.width)
             height = fixed(ScrollSlot.TEXTURE.height)
           }) {
-            afterLayout {
-              addRenderableOnly(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
-            }
+            relativeRenderable(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
           }
         }
 
@@ -86,7 +82,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       height = grow()
       gap = BORDER
     }) {
-      TextureBox(this@ResearchScreen, ASPECTS_BG) {
+      TextureBox(ASPECTS_BG) {
         Row({
           size = grow()
           padding = (ASPECTS_BG.width - 16 * 4) / 2 // fits 4 aspects
@@ -166,7 +162,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   }
 
   private fun PuzzleSection() {
-    TextureBox(this@ResearchScreen, PUZZLE_BG) {
+    TextureBox(PUZZLE_BG) {
       afterLayout {
         makeSocketWidgets(position, size)
       }

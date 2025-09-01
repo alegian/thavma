@@ -7,6 +7,13 @@ package me.alegian.thavma.impl.client.gui.layout
  * not needed for usage.
  */
 
+/**
+ * runs an action after the layout of the current element has been calculated
+ */
+fun afterLayout(callback: T7LayoutElement.() -> Unit) {
+  currElement?.afterLayoutCallbacks?.add(callback)
+}
+
 enum class Alignment() {
   START,
   CENTER,

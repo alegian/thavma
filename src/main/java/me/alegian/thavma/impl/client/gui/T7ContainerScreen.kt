@@ -102,28 +102,16 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
   }
 
-  /**
-   * leftPos and topPos are set to 0 during render
-   * this is because we use absolute renderers, but JEI and another tools
-   * depend on them
-   */
   override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    val oldLeftPos = leftPos
-    val oldTopPos = topPos
-    leftPos = 0
-    topPos = 0
-
     super.render(guiGraphics, mouseX, mouseY, partialTick)
     renderTooltip(guiGraphics, mouseX, mouseY)
-
-    leftPos = oldLeftPos
-    topPos = oldTopPos
   }
 
   override fun renderBg(guiGraphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {}
 
   override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {}
 
+  // same as super, except it accounts for absolute slot positions
   override fun renderSlot(guiGraphics: GuiGraphics, slot: Slot) {
     if (slot !is DynamicSlot<*>) return super.renderSlot(guiGraphics, slot)
 
@@ -157,7 +145,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
 
     guiGraphics.usePose {
-      translate(slot.actualX + slot.padding, slot.actualY + slot.padding, 100.0f)
+      translate(slot.actualX + slot.padding - leftPos, slot.actualY + slot.padding - topPos, 100.0f)
       if (itemStack.isEmpty && slot.isActive) {
         val pair = slot.noItemIcon
         if (pair != null) {
@@ -177,13 +165,14 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
   }
 
+  // same as super, except it accounts for absolute slot positions, and slot sizes different from 16
   override fun renderSlotHighlight(guiGraphics: GuiGraphics, slot: Slot, mouseX: Int, mouseY: Int, partialTick: Float) {
     if (slot !is DynamicSlot<*>) return super.renderSlotHighlight(guiGraphics, slot, mouseX, mouseY, partialTick)
 
     if (slot.isHighlightable) {
       val color = getSlotColor(slot.index)
       guiGraphics.usePose {
-        translate(slot.actualX + slot.padding, slot.actualY + slot.padding, 0f)
+        translate(slot.actualX + slot.padding - leftPos, slot.actualY + slot.padding - topPos, 0f)
         guiGraphics.fillGradient(
           RenderType.guiOverlay(),
           0, 0,
@@ -195,6 +184,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     }
   }
 
+  // same as super, except it accounts for absolute slot positions
   override fun renderSlotContents(guiGraphics: GuiGraphics, itemstack: ItemStack, slot: Slot, countString: String?) {
     if (slot !is DynamicSlot<*>) return super.renderSlotContents(guiGraphics, itemstack, slot, countString)
 
@@ -207,6 +197,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
     guiGraphics.renderItemDecorations(this.font, itemstack, 0, 0, countString)
   }
 
+  // same as super, except it accounts for absolute slot positions, and slot sizes different from 16
   override fun isHovering(slot: Slot, mouseX: Double, mouseY: Double): Boolean {
     if (slot !is DynamicSlot<*>) return super.isHovering(slot, mouseX, mouseY)
 

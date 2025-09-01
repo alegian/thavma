@@ -77,8 +77,8 @@ fun slot(slot: Slot, texture: Texture) = Renderable { guiGraphics: GuiGraphics, 
 }
 
 fun relativeRenderable(renderable: Renderable) {
+  val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   afterLayout {
-    val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
     screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
       guiGraphics.usePose {
         translateXY(position.x, position.y)

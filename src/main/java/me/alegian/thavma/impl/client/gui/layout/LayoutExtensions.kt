@@ -40,42 +40,6 @@ private fun renderableTexture(texture: Texture) = Renderable { guiGraphics: GuiG
   RenderSystem.disableBlend()
 }
 
-fun slotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture>, slotSize: Int, gap: Int, slotTexture: Texture?) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-  guiGraphics.usePose {
-    for (bgTexture in bgLayers)
-      guiGraphics.blit(bgTexture)
-
-    for (i in 0 until rows) {
-      guiGraphics.usePose {
-        for (j in 0 until columns) {
-          slotTexture?.let(guiGraphics::blit)
-          val slot = slots[i * columns + j]
-          if (slot is DynamicSlot<*>) {
-            val pos = transformOrigin()
-            slot.actualX = pos.x
-            slot.actualY = pos.y
-            slot.size = slotSize
-          }
-          translate((slotSize + gap).toDouble(), 0.0, 0.0)
-        }
-      }
-      translate(0.0, (slotSize + gap).toDouble(), 0.0)
-    }
-  }
-}
-
-fun slot(slot: Slot, texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
-  guiGraphics.usePose {
-    guiGraphics.blit(texture)
-    if (slot is DynamicSlot<*>) {
-      val pos = transformOrigin()
-      slot.actualX = pos.x
-      slot.actualY = pos.y
-      slot.size = texture.width
-    }
-  }
-}
-
 fun relativeRenderable(renderable: Renderable) {
   val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   afterLayout {
@@ -95,4 +59,34 @@ fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
   }) {
     relativeRenderable(renderableTexture(texture))
     children()
+  }
+
+private fun T7LayoutElement.slotSetup(slot: Slot) {
+  if (slot !is DynamicSlot<*>) return
+  slot.actualX = position.x
+  slot.actualY = position.y
+  slot.size = size.x.toInt()
+}
+
+fun Slot(slot: Slot, texture: Texture? = null, slotSize: Int? = null) =
+  if (texture != null)
+    TextureBox(texture) {
+      afterLayout { slotSetup(slot) }
+    }
+  else
+    Box({ size = fixed(slotSize ?: 0) }) {
+      afterLayout { slotSetup(slot) }
+    }
+
+fun SlotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture> = listOf(), gapSize: Int = 0, slotTexture: Texture? = null, slotSize: Int? = null) =
+  Column({ gap = gapSize }) {
+    for (layer in bgLayers)
+      relativeRenderable(renderableTexture(layer))
+
+    for (i in 0 until rows)
+      Row({ gap = gapSize }) {
+        for (j in 0 until columns) {
+          Slot(slots[i * columns + j], slotTexture, slotSize)
+        }
+      }
   }

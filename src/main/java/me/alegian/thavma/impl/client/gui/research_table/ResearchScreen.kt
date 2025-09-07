@@ -53,21 +53,11 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
         height = grow()
       }) {
         Row({ width = grow() }) {
-          Box({
-            width = fixed(RuneSlot.TEXTURE.width)
-            height = fixed(RuneSlot.TEXTURE.height)
-          }) {
-            relativeRenderable(slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE))
-          }
+          Slot(menu.runeContainer.range.slot, RuneSlot.TEXTURE)
 
           Box({ width = grow() }) {}
 
-          Box({
-            width = fixed(ScrollSlot.TEXTURE.width)
-            height = fixed(ScrollSlot.TEXTURE.height)
-          }) {
-            relativeRenderable(slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE))
-          }
+          Slot(menu.scrollContainer.range.slot, ScrollSlot.TEXTURE)
         }
 
         AspectsSection()

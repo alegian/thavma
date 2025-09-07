@@ -40,12 +40,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
         height = grow()
         align = Alignment.CENTER
       }) {
-        Box({
-          width = fixed(GRID.width)
-          height = fixed(GRID.height)
-        }) {
-          relativeRenderable(slotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 20, 1, null))
-        }
+        SlotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 1, slotSize = 20)
       }
 
       Column({
@@ -53,19 +48,9 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
         align = Alignment.CENTER
         gap = GAP
       }) {
-        Box({
-          width = fixed(WAND_SLOT.width)
-          height = fixed(WAND_SLOT.height)
-        }) {
-          relativeRenderable(slot(menu.wandContainer.range.slot, WAND_SLOT))
-        }
+        Slot(menu.wandContainer.range.slot, WAND_SLOT)
 
-        Box({
-          width = fixed(RESULT_SLOT.width)
-          height = fixed(RESULT_SLOT.height)
-        }) {
-          relativeRenderable(slot(menu.resultContainer.range.slot, RESULT_SLOT))
-        }
+        Slot(menu.resultContainer.range.slot, RESULT_SLOT)
       }
     }
   }

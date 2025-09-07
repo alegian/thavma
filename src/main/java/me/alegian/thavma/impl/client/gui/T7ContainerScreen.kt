@@ -75,19 +75,9 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
             Column({
               gap = HOTBAR_GAP
             }) {
-              Box({
-                height = fixed(SLOT_TEXTURE.height * 3)
-                width = grow()
-              }) {
-                relativeRenderable(slotGrid(3, 9, menu.inventory.range.slots, listOf(), 18, 0, SLOT_TEXTURE))
-              }
+              SlotGrid(3, 9, menu.inventory.range.slots, slotTexture = SLOT_TEXTURE)
 
-              Box({
-                height = fixed(SLOT_TEXTURE.height)
-                width = grow()
-              }) {
-                relativeRenderable(slotGrid(1, 9, menu.inventory.range.slots.takeLast(9), listOf(), 18, 0, SLOT_TEXTURE))
-              }
+              SlotGrid(1, 9, menu.inventory.range.slots.takeLast(9), slotTexture = SLOT_TEXTURE)
             }
           }
         }

@@ -69,6 +69,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
 
     guiGraphics.usePose {
       translateXY(middleSlot.actualX.toDouble(), middleSlot.actualY.toDouble() + 5)
+      translateXY((middleSlot.size - ASPECT_SOCKET.width) / 2.0, (middleSlot.size - ASPECT_SOCKET.height) / 2.0)
 
       // draw aspects at pentagon points (or N-gon if more primals are added by addons)
       for ((i, a) in Aspects.PRIMAL_ASPECTS.withIndex()) {
@@ -78,12 +79,9 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
           rotateZ(ANGLE * i)
           translateXY(0.0, -BASE_RADIUS)
           rotateZ(-ANGLE * i)
-          guiGraphics.usePose {
-            translateXY((middleSlot.size - ASPECT_SOCKET.width) / 2.0, (middleSlot.size - ASPECT_SOCKET.height) / 2.0)
-            guiGraphics.blit(ASPECT_SOCKET)
-          }
+          guiGraphics.blit(ASPECT_SOCKET)
           if (requiredAmount != 0) {
-            translateXY((middleSlot.size - 16) / 2, (middleSlot.size - 16) / 2)
+            translateXY((ASPECT_SOCKET.width - 16) / 2, (ASPECT_SOCKET.width - 16) / 2)
             AspectRenderer.renderAspect(guiGraphics, requiredStack)
           }
         }

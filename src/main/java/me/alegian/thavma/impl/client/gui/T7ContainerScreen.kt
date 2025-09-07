@@ -75,9 +75,13 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
             Column({
               gap = HOTBAR_GAP
             }) {
-              SlotGrid(3, 9, menu.inventory.range.slots, slotTexture = SLOT_TEXTURE)
+              Grid(3, 9, menu.inventory.range.slots) { slot ->
+                Slot(slot, SLOT_TEXTURE)
+              }
 
-              SlotGrid(1, 9, menu.inventory.range.slots.takeLast(9), slotTexture = SLOT_TEXTURE)
+              Grid(1, 9, menu.inventory.range.slots.takeLast(9)) { slot ->
+                Slot(slot, SLOT_TEXTURE)
+              }
             }
           }
         }

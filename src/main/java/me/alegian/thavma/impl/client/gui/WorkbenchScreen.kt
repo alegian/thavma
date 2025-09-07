@@ -40,7 +40,9 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
         height = grow()
         align = Alignment.CENTER
       }) {
-        SlotGrid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 1, slotSize = 20)
+        Grid(3, 3, menu.craftingContainer.range.slots, listOf(GRID, GRID_OVERLAY), 1) { slot ->
+          Slot(slot, slotSize = 20)
+        }
       }
 
       Column({

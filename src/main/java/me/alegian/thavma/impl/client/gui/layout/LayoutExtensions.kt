@@ -78,7 +78,7 @@ fun Slot(slot: Slot, texture: Texture? = null, slotSize: Int? = null) =
       afterLayout { slotSetup(slot) }
     }
 
-fun SlotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture> = listOf(), gapSize: Int = 0, slotTexture: Texture? = null, slotSize: Int? = null) =
+fun <T> Grid(rows: Int, columns: Int, elements: List<T>, bgLayers: List<Texture> = listOf(), gapSize: Int = 0, child: (T) -> Unit) =
   Column({ gap = gapSize }) {
     for (layer in bgLayers)
       relativeRenderable(renderableTexture(layer))
@@ -86,7 +86,7 @@ fun SlotGrid(rows: Int, columns: Int, slots: List<Slot>, bgLayers: List<Texture>
     for (i in 0 until rows)
       Row({ gap = gapSize }) {
         for (j in 0 until columns) {
-          Slot(slots[i * columns + j], slotTexture, slotSize)
+          child(elements[i * columns + j])
         }
       }
   }

@@ -27,7 +27,6 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
-// TODO: add multiblock cant-be-moved tags
 class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider?>, existingFileHelper: ExistingFileHelper?) : BlockTagsProvider(output, lookupProvider, Thavma.MODID, existingFileHelper) {
   override fun addTags(pProvider: HolderLookup.Provider) {
     for (infusedBlock in (INFUSED_STONES.values + INFUSED_DEEPSLATES.values)) {
@@ -76,6 +75,11 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
     tag(BlockTags.BEACON_BASE_BLOCKS).add(
       THAVMITE_BLOCK.get(),
       ORICHALCUM_BLOCK.get()
+    )
+
+    tag(Tags.Blocks.RELOCATION_NOT_SUPPORTED).add(
+      T7Blocks.RESEARCH_TABLE.get(),
+      T7Blocks.PILLAR.get()
     )
   }
 }

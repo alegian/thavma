@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "bone2",
+					"name": "core",
 					"pivot": [0.02782, -14.5, 0],
 					"cubes": [
 						{
@@ -314,7 +314,7 @@
 					]
 				},
 				{
-					"name": "bone3",
+					"name": "plating",
 					"pivot": [0.02782, -14.5, 0],
 					"cubes": [
 						{
@@ -959,8 +959,8 @@
 					]
 				},
 				{
-					"name": "bone",
-					"parent": "bone3",
+					"name": "circle",
+					"parent": "plating",
 					"pivot": [0, 18, 0],
 					"cubes": [
 						{

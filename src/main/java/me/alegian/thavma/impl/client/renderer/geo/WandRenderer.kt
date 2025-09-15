@@ -30,8 +30,9 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
 
   override fun getTextureOverrideForBone(bone: GeoBone, animatable: WandItem, partialTick: Float): ResourceLocation? {
     return when (bone.name) {
-      "handle" -> this.handleLocation
-      "stick" -> this.coreLocation
+      "plating" -> this.handleLocation
+      "circle" -> this.handleLocation
+      "core" -> this.coreLocation
       else -> null
     }
   }

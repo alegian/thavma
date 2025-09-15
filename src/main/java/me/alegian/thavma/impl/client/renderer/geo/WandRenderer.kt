@@ -39,7 +39,7 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
   companion object {
     val FOCUS_MODELS = mutableMapOf<Item, ModelResourceLocation>()
 
-    private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_handle_")
+    private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_plating_")
 
     private fun coreTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_core_")
 

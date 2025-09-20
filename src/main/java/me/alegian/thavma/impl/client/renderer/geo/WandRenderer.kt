@@ -38,8 +38,6 @@ class WandRenderer(handleMaterial: WandPlatingMaterial, coreMaterial: WandCoreMa
   }
 
   companion object {
-    val FOCUS_MODELS = mutableMapOf<Item, ModelResourceLocation>()
-
     private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_plating_")
 
     private fun coreTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_core_")
@@ -53,8 +51,7 @@ private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<
   override fun render(poseStack: PoseStack, wand: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
     val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull() ?: return
-    val modelRL = WandRenderer.FOCUS_MODELS[focus.item] ?: return
-    val focusModel = mc.modelManager.getModel(modelRL)
+    val focusModel = mc.itemRenderer.getModel(focus, null, null, 0)
     val vc = bufferSource.getBuffer(RenderType.cutout())
     mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
   }

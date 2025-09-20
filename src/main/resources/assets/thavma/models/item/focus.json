@@ -2,15 +2,11 @@
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
-	"textures": {
-		"0": "thavma:item/test_focus",
-		"particle": "thavma:item/test_focus"
-	},
 	"elements": [
 		{
-			"from": [-2, 16, -2],
-			"to": [2, 20, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 17, 0]},
+			"from": [-2, -2, -2],
+			"to": [2, 2, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-2, -1, -2]},
 			"faces": {
 				"north": {"uv": [2.5, 5, 4.5, 7], "texture": "#0"},
 				"east": {"uv": [5, 2.5, 7, 4.5], "texture": "#0"},
@@ -22,9 +18,9 @@
 		},
 		{
 			"name": "cube_outline",
-			"from": [2.5, 20.5, 2.5],
-			"to": [-2.5, 15.5, -2.5],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 17, 0]},
+			"from": [2.5, 2.5, 2.5],
+			"to": [-2.5, -2.5, -2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, -1, 2.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 2.5, 2.5], "texture": "#0"},
 				"east": {"uv": [0, 2.5, 2.5, 5], "texture": "#0"},
@@ -35,6 +31,31 @@
 			}
 		}
 	],
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [7, 9, 8]
+		},
+		"thirdperson_lefthand": {
+			"translation": [-9, 9, 8]
+		},
+		"firstperson_righthand": {
+			"translation": [9, 10, 10]
+		},
+		"firstperson_lefthand": {
+			"translation": [-9, 10, 10]
+		},
+		"ground": {
+			"translation": [8, 7, 9]
+		},
+		"gui": {
+			"rotation": [-45, 0, -45],
+			"translation": [11.25, 5.5, 0]
+		},
+		"fixed": {
+			"translation": [8, 8, 6]
+		}
+	},
 	"groups": [
 		{
 			"name": "group",

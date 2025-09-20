@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "thavma:item/focus",
   "textures": {
-    "layer0": "thavma:item/focus_enderchest"
+    "0": "thavma:item/focus_enderchest",
+    "particle": "thavma:item/focus_enderchest"
   }
 }

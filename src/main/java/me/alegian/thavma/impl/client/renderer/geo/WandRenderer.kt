@@ -53,6 +53,9 @@ private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<
     val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull() ?: return
     val focusModel = mc.itemRenderer.getModel(focus, null, null, 0)
     val vc = bufferSource.getBuffer(RenderType.cutout())
-    mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
+    poseStack.run {
+      translate(0f, 1.125f, 0f)
+      mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
+    }
   }
 }

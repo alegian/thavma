@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
-import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
@@ -20,7 +20,7 @@ import software.bernie.geckolib.model.DefaultedItemGeoModel
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer
 import software.bernie.geckolib.renderer.specialty.DynamicGeoItemRenderer
 
-class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial) : DynamicGeoItemRenderer<WandItem>(DefaultedItemGeoModel(rl("wand"))) {
+class WandRenderer(handleMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial) : DynamicGeoItemRenderer<WandItem>(DefaultedItemGeoModel(rl("wand"))) {
   private val handleLocation = handleTexture(handleMaterial.registeredLocation)
   private val coreLocation = coreTexture(coreMaterial.registeredLocation)
 

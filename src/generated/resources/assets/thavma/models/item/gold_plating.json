@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thavma:item/gold_handle"
+    "layer0": "thavma:item/gold_plating"
   }
 }

@@ -143,7 +143,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
           .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
-          .addPage{_,_-> CraftingPage(Recipes.CHEST) }
+          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -159,7 +159,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandHandleMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
           .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 

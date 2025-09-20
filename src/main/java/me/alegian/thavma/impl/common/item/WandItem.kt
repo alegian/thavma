@@ -8,7 +8,7 @@ import me.alegian.thavma.impl.common.entity.FancyBookEntity
 import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
-import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
@@ -47,7 +47,7 @@ import java.util.function.Consumer
 private val CAST_ANIMATION: RawAnimation = RawAnimation.begin().thenPlay("casting")
 private val IDLE_ANIMATION: RawAnimation = RawAnimation.begin().thenPlay("idle")
 
-open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, val coreMaterial: WandCoreMaterial) :
+open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial, val coreMaterial: WandCoreMaterial) :
   Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)), GeoItem {
 
   private val cache = GeckoLibUtil.createInstanceCache(this)
@@ -207,7 +207,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
     consumer.accept(object : GeoRenderProvider {
       private val renderer by lazy {
         WandRenderer(
-          handleMaterial,
+          platingMaterial,
           coreMaterial
         )
       }
@@ -221,7 +221,7 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
   }
 
   open val name: String
-    get() = name(this.handleMaterial, this.coreMaterial)
+    get() = name(this.platingMaterial, this.coreMaterial)
 
   /**
    * Custom Animatable Syncable ID, for Gecko. By default, Item classes
@@ -235,8 +235,8 @@ open class WandItem(props: Properties, val handleMaterial: WandHandleMaterial, v
   }
 
   companion object {
-    fun name(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial): String {
-      return handleMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
+    fun name(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): String {
+      return platingMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
     }
 
     val ItemStack.equippedFocus

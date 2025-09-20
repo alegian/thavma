@@ -6,14 +6,14 @@
     "c": {
       "tag": "c:rods/wooden"
     },
-    "h": {
-      "item": "thavma:iron_handle"
+    "p": {
+      "item": "thavma:iron_plating"
     }
   },
   "pattern": [
     "  c",
     " c ",
-    "h  "
+    "p  "
   ],
   "result": {
     "count": 1,

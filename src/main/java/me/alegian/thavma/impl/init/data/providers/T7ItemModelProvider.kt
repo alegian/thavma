@@ -12,12 +12,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
@@ -27,13 +27,13 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
@@ -52,10 +52,10 @@ import net.neoforged.neoforge.registries.DeferredItem
 
 class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) : ItemModelProvider(output, Thavma.MODID, existingFileHelper) {
   override fun registerModels() {
-    basicItem(IRON_HANDLE.get())
-    basicItem(GOLD_HANDLE.get())
-    basicItem(ORICHALCUM_HANDLE.get())
-    basicItem(THAVMITE_HANDLE.get())
+    basicItem(IRON_PLATING.get())
+    basicItem(GOLD_PLATING.get())
+    basicItem(ORICHALCUM_PLATING.get())
+    basicItem(THAVMITE_PLATING.get())
 
     basicItem(EYE_OF_WARDEN.get())
     basicItem(ROTTEN_BRAIN.get())

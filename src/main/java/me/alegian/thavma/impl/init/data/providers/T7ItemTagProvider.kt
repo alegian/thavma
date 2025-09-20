@@ -6,18 +6,17 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
@@ -25,6 +24,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_CHESTPLATE
@@ -47,11 +47,11 @@ import java.util.concurrent.CompletableFuture
 
 class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<HolderLookup.Provider?>, pBlockTags: CompletableFuture<TagLookup<Block?>?>, pExistingFileHelper: ExistingFileHelper?) : ItemTagsProvider(pOutput, pLookupProvider, pBlockTags, Thavma.MODID, pExistingFileHelper) {
   override fun addTags(lookupProvider: HolderLookup.Provider) {
-    tag(T7Tags.Items.WAND_HANDLES).add(
-      IRON_HANDLE.get(),
-      GOLD_HANDLE.get(),
-      ORICHALCUM_HANDLE.get(),
-      THAVMITE_HANDLE.get()
+    tag(T7Tags.Items.WAND_PLATINGS).add(
+      IRON_PLATING.get(),
+      GOLD_PLATING.get(),
+      ORICHALCUM_PLATING.get(),
+      THAVMITE_PLATING.get()
     )
 
     tag(T7Tags.Items.WAND_CORES)

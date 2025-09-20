@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_handle": {
+    "has_iron_plating": {
       "conditions": {
         "items": [
           {
-            "items": "thavma:iron_handle"
+            "items": "thavma:iron_plating"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_handle"
+      "has_iron_plating"
     ]
   ],
   "rewards": {

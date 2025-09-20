@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.*
 import me.alegian.thavma.impl.common.util.DoubleMap
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
-import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Capabilities
 import me.alegian.thavma.impl.init.registries.T7Tiers
 import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.THAVMITE
@@ -19,10 +19,10 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object T7Items {
   val REGISTRAR = DeferredRegister.createItems(Thavma.MODID)
 
-  val IRON_HANDLE = REGISTRAR.registerSimpleItem("iron_handle")
-  val GOLD_HANDLE = REGISTRAR.registerSimpleItem("gold_handle")
-  val ORICHALCUM_HANDLE = REGISTRAR.registerSimpleItem("orichalcum_handle")
-  val THAVMITE_HANDLE = REGISTRAR.registerSimpleItem("thavmite_handle")
+  val IRON_PLATING = REGISTRAR.registerSimpleItem("iron_plating")
+  val GOLD_PLATING = REGISTRAR.registerSimpleItem("gold_plating")
+  val ORICHALCUM_PLATING = REGISTRAR.registerSimpleItem("orichalcum_plating")
+  val THAVMITE_PLATING = REGISTRAR.registerSimpleItem("thavmite_plating")
 
   val EYE_OF_WARDEN = REGISTRAR.registerSimpleItem("eye_of_warden", Item.Properties().rarity(Rarity.EPIC))
   val ROTTEN_BRAIN = REGISTRAR.registerSimpleItem("rotten_brain", Item.Properties())
@@ -190,7 +190,7 @@ object T7Items {
   val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange", ::Item)
   val FOCUS_LIGHTNING = REGISTRAR.registerItem("focus_lightning", ::Item)
 
-  // (handleName, coreName)->wand. populated on Item Registry bake
+  // (platingName, coreName)->wand. populated on Item Registry bake
   val WANDS = DoubleMap<String, String, WandItem>()
 
   fun registerCapabilities(event: RegisterCapabilitiesEvent) {
@@ -202,30 +202,30 @@ object T7Items {
   }
 
   /**
-   * Registers a wand with the given handle and core materials
+   * Registers a wand with the given plating and core materials
    */
-  fun registerWand(registry: Registry<Item>, handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial) {
-    val handleName = handleMaterial.registeredName
+  fun registerWand(registry: Registry<Item>, platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial) {
+    val platingName = platingMaterial.registeredName
     val coreName = coreMaterial.registeredName
-    val wandName = WandItem.name(handleMaterial, coreMaterial)
+    val wandName = WandItem.name(platingMaterial, coreMaterial)
 
-    val newWand = WandItem(Item.Properties(), handleMaterial, coreMaterial)
+    val newWand = WandItem(Item.Properties(), platingMaterial, coreMaterial)
     Registry.register(registry, rl(wandName), newWand)
-    WANDS.put(handleName, coreName, newWand)
+    WANDS.put(platingName, coreName, newWand)
   }
 
   /**
    * Helper that gets a wand from the DoubleMap of registered wands.
    * WARNING: cannot get wands from addons, these have to be accessed manually.
    */
-  fun wandOrThrow(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial): WandItem {
-    val handleName = handleMaterial.registeredName
+  fun wandOrThrow(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): WandItem {
+    val platingName = platingMaterial.registeredName
     val coreName = coreMaterial.registeredName
-    val wand = WANDS[handleName, coreName]
+    val wand = WANDS[platingName, coreName]
 
     requireNotNull(wand) {
       "Thavma Exception: Trying to Access Unregistered Wand Combination" + WandItem.name(
-        handleMaterial,
+        platingMaterial,
         coreMaterial
       )
     }
@@ -233,9 +233,9 @@ object T7Items {
     return wand
   }
 
-  fun isWandRegistered(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial): Boolean {
-    val handleName = handleMaterial.registeredName
+  fun isWandRegistered(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): Boolean {
+    val platingName = platingMaterial.registeredName
     val coreName = coreMaterial.registeredName
-    return WANDS[handleName, coreName] != null
+    return WANDS[platingName, coreName] != null
   }
 }

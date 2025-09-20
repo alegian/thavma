@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "wand_handle",
+  "group": "wand_plating",
   "key": {
     "i": {
       "item": "minecraft:iron_ingot"
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "thavma:iron_handle"
+    "id": "thavma:iron_plating"
   }
 }

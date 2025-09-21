@@ -11,9 +11,8 @@
     }
   },
   "pattern": [
-    " n ",
-    " in",
-    "i  "
+    " ni",
+    " in"
   ],
   "result": {
     "count": 1,

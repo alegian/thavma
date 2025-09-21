@@ -11,9 +11,9 @@
     }
   },
   "pattern": [
-    "  c",
-    " c ",
-    "p  "
+    " pp",
+    " cp",
+    "c  "
   ],
   "result": {
     "count": 1,

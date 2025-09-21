@@ -12,12 +12,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
@@ -27,13 +27,13 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
@@ -44,31 +44,33 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredItem
 
 class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHelper) : ItemModelProvider(output, Thavma.MODID, existingFileHelper) {
   override fun registerModels() {
-    basicItem(IRON_HANDLE.get())
-    basicItem(GOLD_HANDLE.get())
-    basicItem(ORICHALCUM_HANDLE.get())
-    basicItem(THAVMITE_HANDLE.get())
+    basicItem(IRON_PLATING)
+    basicItem(GOLD_PLATING)
+    basicItem(ORICHALCUM_PLATING)
+    basicItem(THAVMITE_PLATING)
 
-    basicItem(EYE_OF_WARDEN.get())
-    basicItem(ROTTEN_BRAIN.get())
-    basicItem(FABRIC.get())
+    basicItem(EYE_OF_WARDEN)
+    basicItem(ROTTEN_BRAIN)
+    basicItem(FABRIC)
 
-    basicItem(GREATWOOD_CORE.get())
-    basicItem(SILVERWOOD_CORE.get())
+    basicItem(GREATWOOD_CORE)
+    basicItem(SILVERWOOD_CORE)
 
-    basicItem(RUNE.get())
-    basicItem(THAVMITE_INGOT.get())
-    basicItem(THAVMITE_NUGGET.get())
-    basicItem(ORICHALCUM_INGOT.get())
-    basicItem(ORICHALCUM_NUGGET.get())
+    basicItem(RUNE)
+    basicItem(THAVMITE_INGOT)
+    basicItem(THAVMITE_NUGGET)
+    basicItem(ORICHALCUM_INGOT)
+    basicItem(ORICHALCUM_NUGGET)
 
     val scrollRL = BuiltInRegistries.ITEM.getKey(RESEARCH_SCROLL.get())
     val completedRL = scrollRL.withSuffix("_completed")
@@ -83,22 +85,22 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         )
       ).end()
 
-    basicItem(GOGGLES.get())
-    basicItem(GOGGLES_CURIO.get())
-    basicItem(DAWN_CHARM.get())
-    basicItem(APPRENTICE_CHESTPLATE.get())
-    basicItem(APPRENTICE_LEGGINGS.get())
-    basicItem(APPRENTICE_BOOTS.get())
+    basicItem(GOGGLES)
+    basicItem(GOGGLES_CURIO)
+    basicItem(DAWN_CHARM)
+    basicItem(APPRENTICE_CHESTPLATE)
+    basicItem(APPRENTICE_LEGGINGS)
+    basicItem(APPRENTICE_BOOTS)
 
-    basicItem(THAVMITE_HELMET.get())
-    basicItem(THAVMITE_CHESTPLATE.get())
-    basicItem(THAVMITE_LEGGINGS.get())
-    basicItem(THAVMITE_BOOTS.get())
+    basicItem(THAVMITE_HELMET)
+    basicItem(THAVMITE_CHESTPLATE)
+    basicItem(THAVMITE_LEGGINGS)
+    basicItem(THAVMITE_BOOTS)
 
-    basicItem(THAVMITE_VANGUARD_HELMET.get())
-    basicItem(THAVMITE_VANGUARD_CHESTPLATE.get())
-    basicItem(THAVMITE_VANGUARD_LEGGINGS.get())
-    basicItem(THAVMITE_VANGUARD_BOOTS.get())
+    basicItem(THAVMITE_VANGUARD_HELMET)
+    basicItem(THAVMITE_VANGUARD_CHESTPLATE)
+    basicItem(THAVMITE_VANGUARD_LEGGINGS)
+    basicItem(THAVMITE_VANGUARD_BOOTS)
 
     handheldItem(THAVMITE_SWORD)
     handheldItem(THAVMITE_AXE)
@@ -107,40 +109,33 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     handheldItem(THAVMITE_SHOVEL)
     handheldItem(THAVMITE_HOE)
 
-    for (shard in SHARDS.values) withVanillaParent(shard.id.path, "shard", "generated")
+    for (shard in SHARDS.values) item(shard, rl("item/shard"))
 
     for (wand in WANDS.values()) withExistingParent(wand.name, rl("wand"))
 
     withExistingParent(ANGRY_ZOMBIE_SPAWN_EGG.id.path, "template_spawn_egg")
 
-
-    basicItem(T7Items.FOCUS_EMBERS)
-    basicItem(T7Items.FOCUS_EXCAVATION)
-    basicItem(T7Items.FOCUS_ENDERCHEST)
-    basicItem(T7Items.FOCUS_LIGHT)
-    basicItem(T7Items.FOCUS_HOLE)
-    basicItem(T7Items.FOCUS_TELEPORT)
-    basicItem(T7Items.FOCUS_EXCHANGE)
-    basicItem(T7Items.FOCUS_LIGHTNING)
+    focus(T7Items.FOCUS_EMBERS)
+    focus(T7Items.FOCUS_EXCAVATION)
+    focus(T7Items.FOCUS_ENDERCHEST)
+    focus(T7Items.FOCUS_LIGHT)
+    focus(T7Items.FOCUS_HOLE)
+    focus(T7Items.FOCUS_TELEPORT)
+    focus(T7Items.FOCUS_EXCHANGE)
+    focus(T7Items.FOCUS_LIGHTNING)
   }
 
   private fun basicItem(itemLike: ItemLike) = basicItem(itemLike.asItem())
+  private fun handheldItem(itemLike: ItemLike) = handheldItem(itemLike.asItem())
 
-  private fun handheldItem(deferredItem: DeferredItem<*>) {
-    withVanillaParent(deferredItem, "handheld")
+  fun item(itemLike: ItemLike, textureRL: ResourceLocation): ItemModelBuilder {
+    return getBuilder(BuiltInRegistries.ITEM.getKey(itemLike.asItem()).toString())
+      .parent(UncheckedModelFile("item/generated"))
+      .texture("layer0", textureRL)
   }
 
-  private fun withVanillaParent(deferredItem: DeferredItem<*>, parent: String) {
-    val path = deferredItem.id.path
-    withVanillaParent(path, parent)
-  }
-
-  private fun withVanillaParent(itemPath: String, parent: String) {
-    withVanillaParent(itemPath, itemPath, parent)
-  }
-
-  private fun withVanillaParent(itemPath: String, texturePath: String, parent: String) {
-    withExistingParent(itemPath, parent)
-      .texture("layer0", rl(texturePath).withPrefix("item/"))
-  }
+  fun focus(itemLike: ItemLike) =
+    BuiltInRegistries.ITEM.getKey(itemLike.asItem()).also {
+      withExistingParent(it.toString(), rl("focus")).texture("0", it.withPrefix("item/")).texture("particle", it.withPrefix("item/"))
+    }
 }

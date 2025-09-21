@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:iron_handle"
+        "recipe": "thavma:iron_plating"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:iron_handle"
+      "thavma:iron_plating"
     ]
   }
 }

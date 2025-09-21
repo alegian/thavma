@@ -10,7 +10,7 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.callback.WandCoreCombinations
-import me.alegian.thavma.impl.init.registries.deferred.callback.WandHandleCombinations
+import me.alegian.thavma.impl.init.registries.deferred.callback.WandPlatingCombinations
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -37,7 +37,7 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun registerRegistries(event: NewRegistryEvent) {
-  event.register(T7Registries.WAND_HANDLE)
+  event.register(T7Registries.WAND_PLATING)
   event.register(T7Registries.WAND_CORE)
   event.register(T7Registries.ASPECT)
   event.register(T7Registries.PAGE_TYPE)
@@ -51,10 +51,10 @@ private fun registerDatapackRegistries(event: DataPackRegistryEvent.NewRegistry)
 private fun modifyRegistries(event: ModifyRegistriesEvent) {
   val itemRegistry = event.getRegistry(Registries.ITEM)
   val coreRegistry = event.getRegistry(T7Registries.WAND_CORE.key())
-  val handleRegistry = event.getRegistry(T7Registries.WAND_HANDLE.key())
+  val platingRegistry = event.getRegistry(T7Registries.WAND_PLATING.key())
 
-  coreRegistry.addCallback(WandCoreCombinations(itemRegistry, handleRegistry))
-  handleRegistry.addCallback(WandHandleCombinations(itemRegistry, coreRegistry))
+  coreRegistry.addCallback(WandCoreCombinations(itemRegistry, platingRegistry))
+  platingRegistry.addCallback(WandPlatingCombinations(itemRegistry, coreRegistry))
 }
 
 private fun registerCapabilities(event: RegisterCapabilitiesEvent) {

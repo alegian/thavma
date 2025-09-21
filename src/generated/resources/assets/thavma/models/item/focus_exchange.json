@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "thavma:item/focus",
   "textures": {
-    "layer0": "thavma:item/focus_exchange"
+    "0": "thavma:item/focus_exchange",
+    "particle": "thavma:item/focus_exchange"
   }
 }

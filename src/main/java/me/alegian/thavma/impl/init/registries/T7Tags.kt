@@ -11,7 +11,7 @@ object T7Tags {
 
   object Items {
     val INFUSED_STONES = TagKey.create(Registries.ITEM, rl("infused_stones"))
-    val WAND_HANDLES = TagKey.create(Registries.ITEM, rl("wand_handles"))
+    val WAND_PLATINGS = TagKey.create(Registries.ITEM, rl("wand_platings"))
     val WAND_CORES = TagKey.create(Registries.ITEM, rl("wand_cores"))
     val SHARDS = TagKey.create(Registries.ITEM, rl("shards"))
     val CATALYSTS = TagKey.create(Registries.ITEM, rl("catalysts"))

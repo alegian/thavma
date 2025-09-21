@@ -97,12 +97,14 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
             (cos(anglePerItem * i) * animatedRadius),
             (sin(anglePerItem * i) * animatedRadius)
           )
+          scale(2f)
           if (i == selectedIndex) scaleXY(1.5f)
           translateXY(-8, -8)
           guiGraphics.renderItem(stack, 0, 0)
         }
 
       if (equippedFocus != null) {
+        scale(2f)
         if (selectedIndex == null) scaleXY(1.5f)
         translateXY(-8, -8)
         guiGraphics.renderItem(equippedFocus, 0, 0)

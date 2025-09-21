@@ -11,20 +11,20 @@ import net.neoforged.neoforge.registries.callback.AddCallback
 
 /**
  * Registry Callback to register all wand combinations of current
- * core being registered.
+ * plating being registered.
  */
-class WandCoreCombinations(
+class WandPlatingCombinations(
   private val itemRegistry: Registry<Item>,
-  private val platingRegistry: Registry<WandPlatingMaterial>
-) : AddCallback<WandCoreMaterial> {
+  private val coreRegistry: Registry<WandCoreMaterial>
+) : AddCallback<WandPlatingMaterial> {
   override fun onAdd(
-    coreRegistry: Registry<WandCoreMaterial>,
+    platingRegistry: Registry<WandPlatingMaterial>,
     id: Int,
-    key: ResourceKey<WandCoreMaterial>,
-    newCore: WandCoreMaterial
+    key: ResourceKey<WandPlatingMaterial>,
+    newPlating: WandPlatingMaterial
   ) {
-    for (plating in this.platingRegistry)
-      if (plating.registerCombinations && !isWandRegistered(plating, newCore))
-        registerWand(this.itemRegistry, plating, newCore)
+    for (core in this.coreRegistry)
+      if (core.registerCombinations && !isWandRegistered(newPlating, core))
+        registerWand(this.itemRegistry, newPlating, core)
   }
 }

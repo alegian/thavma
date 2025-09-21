@@ -1,29 +1,12 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"casting": {
-			"loop": true,
-			"bones": {
-				"magic_circle": {
-					"rotation": {
-						"vector": [0, "query.anim_time*100", 0],
-						"easing": "linear"
-					}
-				},
-				"bone2": {
-					"rotation": {
-						"vector": [0, "-query.anim_time*300", 0],
-						"easing": "linear"
-					}
-				}
-			}
-		},
 		"idle": {
 			"loop": true,
 			"bones": {
-				"magic_circle": {
-					"scale": {
-						"vector": [0, 0, 0],
+				"circle": {
+					"rotation": {
+						"vector": [0, "query.anim_time*100", 0],
 						"easing": "linear"
 					}
 				}

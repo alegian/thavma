@@ -37,13 +37,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.GOLD
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object T7CreativeModeTabs {
@@ -101,10 +100,10 @@ object T7CreativeModeTabs {
           output.accept(ETERNAL_FLAME.get())
           output.accept(HUNGRY_CHEST.get())
 
-          output.accept(T7Items.IRON_HANDLE)
-          output.accept(T7Items.GOLD_HANDLE)
-          output.accept(T7Items.ORICHALCUM_HANDLE)
-          output.accept(T7Items.THAVMITE_HANDLE)
+          output.accept(T7Items.IRON_PLATING)
+          output.accept(T7Items.GOLD_PLATING)
+          output.accept(T7Items.ORICHALCUM_PLATING)
+          output.accept(T7Items.THAVMITE_PLATING)
 
           output.accept(T7Items.EYE_OF_WARDEN)
           output.accept(T7Items.ROTTEN_BRAIN)

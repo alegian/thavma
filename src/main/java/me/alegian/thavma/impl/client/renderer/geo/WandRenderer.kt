@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
-import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
 import net.minecraft.client.Minecraft
@@ -20,7 +20,7 @@ import software.bernie.geckolib.model.DefaultedItemGeoModel
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer
 import software.bernie.geckolib.renderer.specialty.DynamicGeoItemRenderer
 
-class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMaterial) : DynamicGeoItemRenderer<WandItem>(DefaultedItemGeoModel(rl("wand"))) {
+class WandRenderer(handleMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial) : DynamicGeoItemRenderer<WandItem>(DefaultedItemGeoModel(rl("wand"))) {
   private val handleLocation = handleTexture(handleMaterial.registeredLocation)
   private val coreLocation = coreTexture(coreMaterial.registeredLocation)
 
@@ -30,16 +30,15 @@ class WandRenderer(handleMaterial: WandHandleMaterial, coreMaterial: WandCoreMat
 
   override fun getTextureOverrideForBone(bone: GeoBone, animatable: WandItem, partialTick: Float): ResourceLocation? {
     return when (bone.name) {
-      "handle" -> this.handleLocation
-      "stick" -> this.coreLocation
+      "plating" -> this.handleLocation
+      "circle" -> this.handleLocation
+      "core" -> this.coreLocation
       else -> null
     }
   }
 
   companion object {
-    val FOCUS_MODELS = mutableMapOf<Item, ModelResourceLocation>()
-
-    private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_handle_")
+    private fun handleTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_plating_")
 
     private fun coreTexture(registeredLocation: ResourceLocation) = texture(registeredLocation, "wand_core_")
 
@@ -52,9 +51,11 @@ private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<
   override fun render(poseStack: PoseStack, wand: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
     val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull() ?: return
-    val modelRL = WandRenderer.FOCUS_MODELS[focus.item] ?: return
-    val focusModel = mc.modelManager.getModel(modelRL)
+    val focusModel = mc.itemRenderer.getModel(focus, null, null, 0)
     val vc = bufferSource.getBuffer(RenderType.cutout())
-    mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
+    poseStack.run {
+      translate(0f, 1.125f, 0f)
+      mc.itemRenderer.renderModelLists(focusModel, ItemStack.EMPTY, packedLight, packedOverlay, poseStack, vc)
+    }
   }
 }

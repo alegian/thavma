@@ -30,7 +30,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
@@ -47,7 +47,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -66,8 +66,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
   override fun buildRecipes(pRecipeOutput: RecipeOutput) {
     planksFromLog(pRecipeOutput, T7Blocks.GREATWOOD_PLANKS, GREATWOOD_LOG)
     planksFromLog(pRecipeOutput, SILVERWOOD_PLANKS, SILVERWOOD_LOG)
-    wandHandle(pRecipeOutput, IRON_HANDLE.get(), Items.IRON_INGOT, Items.IRON_NUGGET)
-    wand(pRecipeOutput, wandOrThrow(IRON.get(), WOOD.get()), IRON_HANDLE.get(), Tags.Items.RODS_WOODEN)
+    wandPlating(pRecipeOutput, IRON_PLATING.get(), Items.IRON_INGOT, Items.IRON_NUGGET)
+    wand(pRecipeOutput, wandOrThrow(IRON.get(), WOOD.get()), IRON_PLATING.get(), Tags.Items.RODS_WOODEN)
     ingot(pRecipeOutput, THAVMITE_INGOT.get(), THAVMITE_NUGGET.get(), THAVMITE_BLOCK.get())
     ingot(pRecipeOutput, T7Items.ORICHALCUM_INGOT.get(), ORICHALCUM_NUGGET.get(), ORICHALCUM_BLOCK.get())
     slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.GREATWOOD_SLAB.get(), T7Blocks.GREATWOOD_PLANKS.get())
@@ -338,39 +338,38 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       )
     }
 
-    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, handle: ItemLike, core: ItemLike) {
+    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, plating: ItemLike, core: ItemLike) {
       ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
-        .define('h', handle)
+        .define('p', plating)
         .define('c', core)
         .pattern("  c")
         .pattern(" c ")
-        .pattern("h  ")
+        .pattern("p  ")
         .group("wand")
-        .unlockedBy(getHasName(handle), has(handle))
+        .unlockedBy(getHasName(plating), has(plating))
         .save(pRecipeOutput)
     }
 
     // for wooden cores
-    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, handle: ItemLike, core: TagKey<Item?>) {
+    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, plating: ItemLike, core: TagKey<Item?>) {
       ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
-        .define('h', handle)
+        .define('p', plating)
         .define('c', core)
-        .pattern("  c")
-        .pattern(" c ")
-        .pattern("h  ")
+        .pattern(" pp")
+        .pattern(" cp")
+        .pattern("c  ")
         .group("wand")
-        .unlockedBy(getHasName(handle), has(handle))
+        .unlockedBy(getHasName(plating), has(plating))
         .save(pRecipeOutput)
     }
 
-    protected fun wandHandle(pRecipeOutput: RecipeOutput, cap: ItemLike, ingot: ItemLike, nugget: ItemLike) {
+    protected fun wandPlating(pRecipeOutput: RecipeOutput, cap: ItemLike, ingot: ItemLike, nugget: ItemLike) {
       ShapedRecipeBuilder.shaped(RecipeCategory.MISC, cap)
         .define('i', ingot)
         .define('n', nugget)
-        .pattern(" n ")
+        .pattern(" ni")
         .pattern(" in")
-        .pattern("i  ")
-        .group("wand_handle")
+        .group("wand_plating")
         .unlockedBy(getHasName(ingot), has(ingot))
         .save(pRecipeOutput)
     }

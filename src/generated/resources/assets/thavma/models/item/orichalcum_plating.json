@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thavma:item/orichalcum_handle"
+    "layer0": "thavma:item/orichalcum_plating"
   }
 }

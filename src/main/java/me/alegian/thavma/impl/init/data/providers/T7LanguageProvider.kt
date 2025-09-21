@@ -14,7 +14,7 @@ import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
-import me.alegian.thavma.impl.common.wand.WandHandleMaterial
+import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
@@ -60,12 +60,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_HANDLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_HANDLE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
@@ -74,7 +74,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HANDLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
@@ -82,6 +81,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
+import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
@@ -93,10 +93,10 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.GOLD
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.IRON
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.ORICHALCUM
-import me.alegian.thavma.impl.init.registries.deferred.WandHandleMaterials.THAVMITE
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.GOLD
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.ORICHALCUM
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -118,10 +118,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(Thavma.MODID, "Thavma")
 
-    add(IRON_HANDLE.get(), "Iron Wand Handle")
-    add(GOLD_HANDLE.get(), "Gold Wand Handle")
-    add(ORICHALCUM_HANDLE.get(), "Orichalcum Wand Handle")
-    add(THAVMITE_HANDLE.get(), "Thavmite Wand Handle")
+    add(IRON_PLATING.get(), "Iron Wand Plating")
+    add(GOLD_PLATING.get(), "Gold Wand Plating")
+    add(ORICHALCUM_PLATING.get(), "Orichalcum Wand Plating")
+    add(THAVMITE_PLATING.get(), "Thavmite Wand Plating")
 
     add(EYE_OF_WARDEN.get(), "Eye of Warden")
     add(ROTTEN_BRAIN.get(), "Rotten Brain")
@@ -168,20 +168,20 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(THAVMITE_KATANA.get(), "Thavmite Katana")
     add(ZEPHYR.get(), "Zephyr")
 
-    val handleNames: MutableMap<WandHandleMaterial, String> = HashMap()
-    handleNames[IRON.get()] = "Iron Handle"
-    handleNames[GOLD.get()] = "Gold Handle"
-    handleNames[ORICHALCUM.get()] = "Orichalcum Handle"
-    handleNames[THAVMITE.get()] = "Thavmite Handle"
+    val platingNames: MutableMap<WandPlatingMaterial, String> = HashMap()
+    platingNames[IRON.get()] = "Iron Plated"
+    platingNames[GOLD.get()] = "Gold Plated"
+    platingNames[ORICHALCUM.get()] = "Orichalcum Plated"
+    platingNames[THAVMITE.get()] = "Thavmite Plated"
 
     val coreNames: MutableMap<WandCoreMaterial, String> = HashMap()
     coreNames[WOOD.get()] = "Wooden"
     coreNames[GREATWOOD.get()] = "Greatwood"
     coreNames[SILVERWOOD.get()] = "Silverwood"
 
-    for ((key, value) in handleNames) for ((key1, value1) in coreNames) {
-      val wand = wandOrThrow(key, key1)
-      add(wand, "$value $value1 Wand")
+    for ((pKey, pName) in platingNames) for ((cKey, cName) in coreNames) {
+      val wand = wandOrThrow(pKey, cKey)
+      add(wand, "$pName $cName Wand")
     }
 
     add(T7Items.FOCUS_EMBERS.get(), "Focus: Embers")
@@ -337,7 +337,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Tags.Items.GOGGLES, "Goggles of Revealing")
     add(T7Tags.Items.SHARDS, "Elemental Shards")
     add(T7Tags.Items.WAND_CORES, "Wand Cores")
-    add(T7Tags.Items.WAND_HANDLES, "Wand Handles")
+    add(T7Tags.Items.WAND_PLATINGS, "Wand Platings")
     add(T7Tags.Items.CATALYSTS, "Crucible Catalysts")
     add(T7Tags.Items.STEP_HEIGHT, "Items that increase Step Height")
 

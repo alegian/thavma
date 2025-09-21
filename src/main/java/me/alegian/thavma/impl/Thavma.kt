@@ -31,7 +31,7 @@ object Thavma {
     T7RecipeTypes.REGISTRAR.register(KFF_MOD_BUS)
     T7RecipeSerializers.REGISTRAR.register(KFF_MOD_BUS)
     WandCoreMaterials.REGISTRAR.register(KFF_MOD_BUS)
-    WandHandleMaterials.REGISTRAR.register(KFF_MOD_BUS)
+    WandPlatingMaterials.REGISTRAR.register(KFF_MOD_BUS)
     Aspects.REGISTRAR.register(KFF_MOD_BUS)
     T7Attributes.REGISTRAR.register(KFF_MOD_BUS)
     T7GlobalLootModifierSerializers.REGISTRAR.register(KFF_MOD_BUS)
@@ -42,7 +42,7 @@ object Thavma {
     registerClientModEvents()
     registerCommonGameEvents()
     registerClientGameEvents()
-    
+
     CuriosIntegration.init()
   }
 }

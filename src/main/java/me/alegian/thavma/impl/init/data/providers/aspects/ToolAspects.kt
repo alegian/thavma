@@ -204,19 +204,19 @@ object ToolAspects {
           .add(TENEBRAE, 8)
       }
 
-      item(T7Items.IRON_HANDLE) {
+      item(T7Items.IRON_PLATING) {
         it.add(METALLUM, 16)
       }
-      item(T7Items.GOLD_HANDLE) {
+      item(T7Items.GOLD_PLATING) {
         it.add(METALLUM, 8)
           .add(DESIDERIUM, 16)
       }
-      item(T7Items.ORICHALCUM_HANDLE) {
+      item(T7Items.ORICHALCUM_PLATING) {
         it.add(METALLUM, 8)
           .add(PERMUTATIO, 8)
           .add(INSTRUMENTUM, 8)
       }
-      item(T7Items.THAVMITE_HANDLE) {
+      item(T7Items.THAVMITE_PLATING) {
         it.add(METALLUM, 16)
           .add(PRAECANTATIO, 8)
       }
@@ -225,27 +225,27 @@ object ToolAspects {
         it.add(AVERSIO, 2)
           .add(MOTUS, 1)
       }
-      item(Items.MACE){
+      item(Items.MACE) {
         it.add(METALLUM, 16)
           .add(AER, 8)
           .add(MOTUS, 8)
       }
-      item(Items.TRIDENT){
+      item(Items.TRIDENT) {
         it.add(METALLUM, 12)
           .add(AQUA, 8)
           .add(MOTUS, 8)
       }
-      item(Tags.Items.TOOLS_BOW){
+      item(Tags.Items.TOOLS_BOW) {
         it.add(AVERSIO, 8)
           .add(HERBA, 2)
           .add(FABRICO, 2)
       }
-      item(Tags.Items.TOOLS_CROSSBOW){
+      item(Tags.Items.TOOLS_CROSSBOW) {
         it.add(AVERSIO, 8)
           .add(METALLUM, 4)
           .add(FABRICO, 2)
       }
-      item(Items.TOTEM_OF_UNDYING){
+      item(Items.TOTEM_OF_UNDYING) {
         it.add(VICTUS, 16)
           .add(PRAECANTATIO, 8)
           .add(DESIDERIUM, 8)

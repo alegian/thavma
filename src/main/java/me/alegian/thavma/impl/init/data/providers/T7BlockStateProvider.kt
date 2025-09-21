@@ -66,6 +66,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
       ITEM_HATCH.get(), models()
         .withExistingParent(name(ITEM_HATCH.get()), mcLoc("block/iron_trapdoor_top"))
         .renderType(RenderType.cutout().name)
+        .texture("texture", key(ITEM_HATCH.get()).withPrefix("block/"))
         .customLoader(WithTransformParentModel::Builder)
         .transformParent(ResourceLocation.withDefaultNamespace("block/block"))
         .end()
@@ -123,12 +124,12 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     simpleSlabWithItem(GREATWOOD_SLAB.get(), blockTexture(GREATWOOD_PLANKS.get()))
   }
 
-  fun simpleStairsWithItem(block: StairBlock, parentLocation: ResourceLocation){
+  fun simpleStairsWithItem(block: StairBlock, parentLocation: ResourceLocation) {
     stairsBlock(block, parentLocation)
     itemModels().withExistingParent(name(block), blockTexture(block))
   }
 
-  fun simpleSlabWithItem(block: SlabBlock, parentLocation: ResourceLocation){
+  fun simpleSlabWithItem(block: SlabBlock, parentLocation: ResourceLocation) {
     slabBlock(block, parentLocation, parentLocation)
     itemModels().withExistingParent(name(block), blockTexture(block))
   }
@@ -147,7 +148,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     cubeAllEmissiveOverlayWithItem(infusedBlock.getBaseBlock(), infusedBlock, rl("block/infused_stone"))
   }
 
-  private fun cubeAllEmissiveOverlayWithItem(baseBlock:Block, block: Block, overlayLoc: ResourceLocation){
+  private fun cubeAllEmissiveOverlayWithItem(baseBlock: Block, block: Block, overlayLoc: ResourceLocation) {
     val blockModel = models().withExistingParent(name(block), rl("block/cube_all_emissive_overlay"))
       .texture("layer0", blockTexture(baseBlock))
       .texture("layer1", overlayLoc)

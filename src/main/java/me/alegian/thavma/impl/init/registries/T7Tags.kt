@@ -17,6 +17,7 @@ object T7Tags {
     val CATALYSTS = TagKey.create(Registries.ITEM, rl("catalysts"))
     val GOGGLES = TagKey.create(Registries.ITEM, rl("goggles"))
     val STEP_HEIGHT = TagKey.create(Registries.ITEM, rl("step_height"))
+    val TREE_FELLING = TagKey.create(Registries.ITEM, rl("tree_felling"))
     val FOCI = TagKey.create(Registries.ITEM, rl("foci"))
   }
 

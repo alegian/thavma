@@ -70,7 +70,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
@@ -160,13 +159,14 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       add(shard.get(), aspectTranslations[aspect]!! + " Shard")
 
     add(THAVMITE_SWORD.get(), "Thavmite Sword")
-    add(THAVMITE_AXE.get(), "Thavmite Axe")
+    add(T7Items.THAVMITE_AXE.get(), "Thavmite Axe")
     add(THAVMITE_PICKAXE.get(), "Thavmite Pickaxe")
     add(THAVMITE_HAMMER.get(), "Thavmite Hammer")
     add(THAVMITE_SHOVEL.get(), "Thavmite Shovel")
     add(THAVMITE_HOE.get(), "Thavmite Hoe")
     add(THAVMITE_KATANA.get(), "Thavmite Katana")
     add(ZEPHYR.get(), "Zephyr")
+    add(T7Items.AXE_OF_THE_FOREST.get(), "Axe of the Forest")
 
     val platingNames: MutableMap<WandPlatingMaterial, String> = HashMap()
     platingNames[IRON.get()] = "Iron Plated"
@@ -340,6 +340,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Tags.Items.WAND_PLATINGS, "Wand Platings")
     add(T7Tags.Items.CATALYSTS, "Crucible Catalysts")
     add(T7Tags.Items.STEP_HEIGHT, "Items that increase Step Height")
+    add(T7Tags.Items.TREE_FELLING, "Items that Fell Trees")
 
     add(ArcaneLensLayer.NO_ASPECTS, "Nothing can be learned from this")
   }

@@ -163,6 +163,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.THAVMITE_SWORD)
           output.accept(T7Items.THAVMITE_KATANA)
           output.accept(T7Items.ZEPHYR)
+          output.accept(T7Items.AXE_OF_THE_FOREST)
 
           output.accept(T7Items.ANGRY_ZOMBIE_SPAWN_EGG)
 

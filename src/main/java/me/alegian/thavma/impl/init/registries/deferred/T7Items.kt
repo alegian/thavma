@@ -93,6 +93,17 @@ object T7Items {
       )
     )
   }
+  val AXE_OF_THE_FOREST = REGISTRAR.register("axe_of_the_forest") { ->
+    AxeItem(
+      T7Tiers.THAVMITE_TIER,
+      Item.Properties().attributes(
+        AxeItem.createAttributes(
+          T7Tiers.THAVMITE_TIER,
+          5.0f, -3.0f
+        )
+      )
+    )
+  }
   val THAVMITE_HOE = REGISTRAR.register("thavmite_hoe") { ->
     HoeItem(
       T7Tiers.THAVMITE_TIER,

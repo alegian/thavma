@@ -14,7 +14,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SHARDS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_AXE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
@@ -92,7 +91,10 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       THAVMITE_KATANA.get(),
       ZEPHYR.get()
     )
-    tag(ItemTags.AXES).add(THAVMITE_AXE.get())
+    tag(ItemTags.AXES).add(
+      T7Items.THAVMITE_AXE.get(),
+      T7Items.AXE_OF_THE_FOREST.get(),
+    )
     tag(ItemTags.PICKAXES).add(THAVMITE_PICKAXE.get())
     tag(ItemTags.MINING_ENCHANTABLE).add(THAVMITE_HAMMER.get())
     tag(ItemTags.MINING_LOOT_ENCHANTABLE).add(THAVMITE_HAMMER.get())
@@ -135,6 +137,10 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
     tag(T7Tags.Items.STEP_HEIGHT).add(
       T7Items.THAVMITE_BOOTS.get(),
       T7Items.THAVMITE_VANGUARD_BOOTS.get()
+    )
+
+    tag(T7Tags.Items.TREE_FELLING).add(
+      T7Items.AXE_OF_THE_FOREST.get()
     )
 
     copy(BlockTags.LEAVES, ItemTags.LEAVES)

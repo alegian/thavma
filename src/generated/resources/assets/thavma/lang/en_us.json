@@ -95,6 +95,7 @@
   "item.thavma.apprentice_leggings": "Apprentice Pants",
   "item.thavma.aqua_shard": "Aqua Shard",
   "item.thavma.arcane_lens": "Arcane Lens",
+  "item.thavma.axe_of_the_forest": "Axe of the Forest",
   "item.thavma.book": "Elements of Thavma",
   "item.thavma.charm_of_the_dawn": "Charm of the Dawn",
   "item.thavma.eye_of_warden": "Eye of Warden",
@@ -202,6 +203,7 @@
   "tag.item.thavma.infused_stones": "Infused Stones",
   "tag.item.thavma.shards": "Elemental Shards",
   "tag.item.thavma.step_height": "Items that increase Step Height",
+  "tag.item.thavma.tree_felling": "Items that Fell Trees",
   "tag.item.thavma.wand_cores": "Wand Cores",
   "tag.item.thavma.wand_platings": "Wand Platings",
   "thavma": "Thavma"

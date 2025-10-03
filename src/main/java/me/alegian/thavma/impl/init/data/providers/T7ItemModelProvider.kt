@@ -109,6 +109,8 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     handheldItem(THAVMITE_SHOVEL)
     handheldItem(THAVMITE_HOE)
 
+    handheldItem(T7Items.AXE_OF_THE_FOREST)
+
     for (shard in SHARDS.values) item(shard, rl("item/shard"))
 
     for (wand in WANDS.values()) withExistingParent(wand.name, rl("wand"))

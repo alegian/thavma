@@ -3,8 +3,8 @@ package me.alegian.thavma.impl.common.event
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.item.HammerItem
+import me.alegian.thavma.impl.common.level.TreeFelling
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
-import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.tags.BlockTags
 import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
@@ -22,7 +21,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.level.BlockEvent
-import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import kotlin.math.max
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
@@ -65,13 +63,15 @@ private fun livingDamagePost(event: LivingDamageEvent.Post) {
   }
 }
 
-private fun breakBlock(event: BreakEvent) {
+private fun breakBlock(event: BlockEvent.BreakEvent) {
   val player = event.player
+  if (player !is ServerPlayer) return
+
   val itemStack = player.mainHandItem
   val item = itemStack.item
   val level = event.level
 
-  if (player is ServerPlayer && item is HammerItem) {
+  if (item is HammerItem) {
     // disallow nested hammer break events, to avoid infinite recursion
     if (!allowHammerBreakEvents) return
     allowHammerBreakEvents = false
@@ -115,11 +115,6 @@ fun entityFall(event: LivingFallEvent) {
   event.entity.setData(T7Attachments.LEVITATES, false)
 }
 
-fun blockBreak(event: BlockEvent.BreakEvent) {
-  if (!event.player.mainHandItem.`is`(T7Tags.Items.TREE_FELLING)) return
-  if (!event.level.getBlockState(event.pos).`is`(BlockTags.LOGS)) return
-}
-
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
@@ -127,5 +122,6 @@ fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
   KFF_GAME_BUS.addListener(::entityFall)
-  KFF_GAME_BUS.addListener(::blockBreak)
+  KFF_GAME_BUS.addListener(TreeFelling::blockBreak)
+  KFF_GAME_BUS.addListener(TreeFelling::levelTick)
 }

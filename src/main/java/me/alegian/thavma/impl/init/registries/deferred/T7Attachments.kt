@@ -16,4 +16,6 @@ object T7Attachments {
   val KNOWLEDGE = REGISTRAR.register("knowledge") { -> KnowledgeAttachment.TYPE }
 
   val LEVITATES = REGISTRAR.register("levitates") { -> AttachmentType.builder { -> false }.serialize(Codec.BOOL).build() }
+
+  val ENDERPEARL_NO_DAMAGE = REGISTRAR.register("enderpearl_no_damage") { -> AttachmentType.builder { -> false }.serialize(Codec.BOOL).build() }
 }

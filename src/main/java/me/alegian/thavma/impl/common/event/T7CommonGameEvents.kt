@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.event
 
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
+import me.alegian.thavma.impl.common.item.EnderpearlFocus
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.level.Exchanging
 import me.alegian.thavma.impl.common.level.TreeFelling
@@ -126,4 +127,5 @@ fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(TreeFelling::blockBreak)
   KFF_GAME_BUS.addListener(TreeFelling::levelTick)
   KFF_GAME_BUS.addListener(Exchanging::levelTick)
+  KFF_GAME_BUS.addListener(EnderpearlFocus::enderpearlTeleport)
 }

@@ -122,7 +122,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     focus(T7Items.FOCUS_ENDERCHEST)
     focus(T7Items.FOCUS_LIGHT)
     focus(T7Items.FOCUS_HOLE)
-    focus(T7Items.FOCUS_TELEPORT)
+    focus(T7Items.FOCUS_ENDERPEARL)
     focus(T7Items.FOCUS_EXCHANGE)
     focus(T7Items.FOCUS_LIGHTNING)
   }

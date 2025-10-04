@@ -1,19 +1,18 @@
 package me.alegian.thavma.impl.common.item
 
 import net.minecraft.core.BlockPos
-import net.minecraft.stats.Stats
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
-import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.ChestMenu
+import net.minecraft.world.entity.projectile.ThrownEnderpearl
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.block.EnderChestBlock
 
-class EnderChestFocus : Item(
+class EnderpearlFocus : Item(
   Properties().stacksTo(1)
 ) {
   override fun doesSneakBypassUse(stack: ItemStack, level: LevelReader, pos: BlockPos, player: Player) = true
@@ -22,11 +21,23 @@ class EnderChestFocus : Item(
     val stackInHand = player.getItemInHand(usedHand)
     if (stackInHand.item !is WandItem) return InteractionResultHolder.pass(stackInHand)
 
-    val container = player.enderChestInventory
-    player.openMenu(SimpleMenuProvider({ id, inv, _ ->
-      ChestMenu.threeRows(id, inv, container)
-    }, EnderChestBlock.CONTAINER_TITLE))
-    player.awardStat(Stats.OPEN_ENDERCHEST)
-    return InteractionResultHolder.consume(stackInHand)
+    level.playSound(
+      null,
+      player.x,
+      player.y,
+      player.z,
+      SoundEvents.ENDER_PEARL_THROW,
+      SoundSource.NEUTRAL,
+      0.5F,
+      0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
+    )
+    player.cooldowns.addCooldown(stackInHand.item, 20)
+    if (!level.isClientSide) {
+      val thrownPearl = ThrownEnderpearl(level, player)
+      thrownPearl.shootFromRotation(player, player.xRot, player.yRot, 0.0F, 1.5F, 1.0F)
+      level.addFreshEntity(thrownPearl)
+    }
+
+    return InteractionResultHolder.sidedSuccess(stackInHand, level.isClientSide())
   }
 }

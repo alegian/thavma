@@ -172,7 +172,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.FOCUS_ENDERCHEST)
           output.accept(T7Items.FOCUS_LIGHT)
           output.accept(T7Items.FOCUS_HOLE)
-          output.accept(T7Items.FOCUS_TELEPORT)
+          output.accept(T7Items.FOCUS_ENDERPEARL)
           output.accept(T7Items.FOCUS_EXCHANGE)
           output.accept(T7Items.FOCUS_LIGHTNING)
         }

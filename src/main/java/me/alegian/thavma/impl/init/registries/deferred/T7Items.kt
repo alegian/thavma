@@ -197,7 +197,7 @@ object T7Items {
   val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest") { EnderChestFocus() }
   val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light") { LightFocus() }
   val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)
-  val FOCUS_TELEPORT = REGISTRAR.registerItem("focus_teleport", ::Item)
+  val FOCUS_ENDERPEARL = REGISTRAR.registerItem("focus_enderpearl") { EnderpearlFocus() }
   val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange", ::Item)
   val FOCUS_LIGHTNING = REGISTRAR.registerItem("focus_lightning", ::Item)
 

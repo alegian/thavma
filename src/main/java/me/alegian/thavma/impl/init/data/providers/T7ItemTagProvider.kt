@@ -76,7 +76,7 @@ class T7ItemTagProvider(pOutput: PackOutput, pLookupProvider: CompletableFuture<
       T7Items.FOCUS_ENDERCHEST.get(),
       T7Items.FOCUS_LIGHT.get(),
       T7Items.FOCUS_HOLE.get(),
-      T7Items.FOCUS_TELEPORT.get(),
+      T7Items.FOCUS_ENDERPEARL.get(),
       T7Items.FOCUS_EXCHANGE.get(),
       T7Items.FOCUS_LIGHTNING.get(),
     )

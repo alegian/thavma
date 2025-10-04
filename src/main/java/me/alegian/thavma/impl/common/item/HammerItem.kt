@@ -40,14 +40,15 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
     val perpendicularAxes = allAxes.stream().filter { a -> a !== hitAxis }.toList()
 
     // 3x3 area, except original block, only for correct mining tool
-    for (i in -1..1) for (j in -1..1) {
-      val currPos = originBlockPos
-        .relative(perpendicularAxes[0], i)
-        .relative(perpendicularAxes[1], j)
-      val currBlockState = level.getBlockState(currPos)
+    for (i in -1..1)
+      for (j in -1..1) {
+        val currPos = originBlockPos
+          .relative(perpendicularAxes[0], i)
+          .relative(perpendicularAxes[1], j)
+        val currBlockState = level.getBlockState(currPos)
 
-      if ((i != 0 || j != 0) && isCorrectToolForDrops(itemStack, currBlockState)) positions.add(currPos)
-    }
+        if ((i != 0 || j != 0) && isCorrectToolForDrops(itemStack, currBlockState)) positions.add(currPos)
+      }
 
     return positions
   }

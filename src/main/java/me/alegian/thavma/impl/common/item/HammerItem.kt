@@ -31,8 +31,8 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
     val originBlockPos = hitResult.blockPos
     val originBlockState = level.getBlockState(originBlockPos)
 
-    // doesn't do AoE if it cant break the original block, or if crouching
-    if (!isCorrectToolForDrops(itemStack, originBlockState) || entity.isCrouching) return mutableListOf()
+    // doesn't do AoE if it cant break the original block, or if shifting
+    if (!isCorrectToolForDrops(itemStack, originBlockState) || entity.isShiftKeyDown) return mutableListOf()
 
     // find the 2 axes perpendicular to the block hit direction
     val hitAxis = hitResult.direction.axis

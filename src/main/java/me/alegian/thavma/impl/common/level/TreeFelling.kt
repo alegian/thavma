@@ -4,6 +4,7 @@ import me.alegian.thavma.impl.init.registries.T7Tags
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.event.level.BlockEvent
@@ -12,6 +13,7 @@ import java.util.*
 
 class TreeFelling(
   val player: ServerPlayer,
+  val stack: ItemStack,
   val blockState: BlockState,
   val positions: Queue<BlockPos>
 ) {
@@ -27,7 +29,7 @@ class TreeFelling(
       if (!player.mainHandItem.`is`(T7Tags.Items.TREE_FELLING)) return
       if (!event.state.`is`(BlockTags.LOGS)) return
 
-      instances.add(TreeFelling(player, event.state, fellingPositions(event.level, event.pos, event.state)))
+      instances.add(TreeFelling(player, player.mainHandItem, event.state, fellingPositions(event.level, event.pos, event.state)))
     }
 
     fun fellingPositions(level: LevelAccessor, origin: BlockPos, state: BlockState): Queue<BlockPos> {
@@ -66,7 +68,8 @@ class TreeFelling(
         if (instance.player.level() != event.level) continue
         if (
           instance.player.isRemoved ||
-          instance.positions.isEmpty()
+          instance.positions.isEmpty() ||
+          instance.stack != instance.player.mainHandItem
         ) {
           instanceIterator.remove()
           continue

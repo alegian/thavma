@@ -1,49 +1,39 @@
 package me.alegian.thavma.impl.common.level
 
-import me.alegian.thavma.impl.init.registries.T7Tags
 import net.minecraft.core.BlockPos
-import net.minecraft.network.protocol.game.ClientboundLevelEventPacket
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.tags.BlockTags
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.LevelEvent
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.event.tick.LevelTickEvent
 import java.util.*
 
-class TreeFelling(
+class Exchanging(
   val player: ServerPlayer,
   val stack: ItemStack,
   val blockState: BlockState,
   val positions: Queue<BlockPos>
 ) {
   companion object {
-    val instances = mutableListOf<TreeFelling>()
-    var disableEvents = false
+    val instances = mutableListOf<Exchanging>()
 
-    fun blockBreak(event: BlockEvent.BreakEvent) {
-      if (disableEvents) return
-      val player = event.player
-      if (player !is ServerPlayer) return
+    fun exchange(level: Level, player: ServerPlayer, pos: BlockPos) {
       if (player.isShiftKeyDown) return
-      if (!player.mainHandItem.`is`(T7Tags.Items.TREE_FELLING)) return
-      if (!event.state.`is`(BlockTags.LOGS)) return
-      val canHarvest = event.state.canHarvestBlock(event.level, event.pos, player)
-      if (!canHarvest) return
 
-      instances.add(TreeFelling(player, player.mainHandItem, event.state, fellingPositions(event.level, event.pos, event.state)))
+      val state = level.getBlockState(pos)
+      instances.add(Exchanging(player, player.mainHandItem, state, exchangingPositions(level, pos, state)))
     }
 
-    fun fellingPositions(level: LevelAccessor, origin: BlockPos, state: BlockState): Queue<BlockPos> {
+    fun exchangingPositions(level: LevelAccessor, origin: BlockPos, state: BlockState): Queue<BlockPos> {
       val checking = mutableListOf<BlockPos>()
       checking.add(origin)
       val mutablePos = BlockPos.MutableBlockPos()
       val visited = mutableSetOf<BlockPos>()
 
-      while (!checking.isEmpty() && visited.size < 512) {
+      while (!checking.isEmpty() && visited.size < 64) {
         val currPos = checking.removeFirst()
         visited.add(currPos)
         for (i in -1..1)
@@ -59,14 +49,13 @@ class TreeFelling(
             }
       }
 
-      return ArrayDeque(visited.sortedBy { v -> v.y })
+      return ArrayDeque(visited)
     }
 
     fun levelTick(event: LevelTickEvent.Pre) {
       if (event.level.isClientSide) return
-      if (event.level.gameTime % 2 != 0L) return
+      if (event.level.gameTime % 3 != 0L) return
 
-      disableEvents = true
       val instanceIterator = instances.iterator()
       while (instanceIterator.hasNext()) {
         val instance = instanceIterator.next()
@@ -81,11 +70,18 @@ class TreeFelling(
         }
         val pos = instance.positions.remove()
         if (event.level.getBlockState(pos).block != instance.blockState.block) continue
-        instance.player.gameMode.destroyBlock(pos)
-        // due to the internals of the previous function, we need to separately send sound to the breaking player
-        instance.player.connection.send(ClientboundLevelEventPacket(LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(instance.blockState), false))
+        val newState = Blocks.QUARTZ_BLOCK.defaultBlockState()
+        event.level.setBlockAndUpdate(pos, newState)
+        val soundType = newState.getSoundType(event.level, pos, instance.player)
+        event.level.playSound(
+          null,
+          pos,
+          soundType.placeSound,
+          SoundSource.BLOCKS,
+          (soundType.getVolume() + 1.0f) / 2.0f,
+          soundType.getPitch() * 0.8f
+        )
       }
-      disableEvents = false
     }
   }
 }

@@ -92,8 +92,8 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
         val secondPos = pos.relative(getNeighbourDirection(state))
         val secondState = level.getBlockState(secondPos)
         if (secondState.`is`(this)) {
-          level.setBlock(secondPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL or UPDATE_SUPPRESS_DROPS)
-          level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, secondPos, getId(secondState))
+          level.setBlock(secondPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL + UPDATE_SUPPRESS_DROPS)
+          level.levelEvent(null, LevelEvent.PARTICLES_DESTROY_BLOCK, secondPos, getId(secondState))
         }
       }
     }

@@ -198,7 +198,7 @@ object T7Items {
   val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light") { LightFocus() }
   val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)
   val FOCUS_ENDERPEARL = REGISTRAR.registerItem("focus_enderpearl") { EnderpearlFocus() }
-  val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange", ::Item)
+  val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange") { ExchangeFocus() }
   val FOCUS_LIGHTNING = REGISTRAR.registerItem("focus_lightning", ::Item)
 
   // (platingName, coreName)->wand. populated on Item Registry bake

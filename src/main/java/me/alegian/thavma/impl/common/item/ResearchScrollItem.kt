@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.common.entity.tryLearnResearch
+import me.alegian.thavma.impl.common.entity.addKnowledge
+import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.network.chat.Component
@@ -25,7 +26,8 @@ class ResearchScrollItem : Item(Properties().stacksTo(1)) {
 
     if (player is ServerPlayer) {
       player.setItemInHand(usedHand, ItemStack.EMPTY)
-      player.tryLearnResearch(state.researchEntry.value())
+      if (!player.knowsResearch(state.researchEntry))
+      player.addKnowledge(listOf(state.researchEntry.unwrapKey().get()))
     }
 
     if (level.isClientSide)

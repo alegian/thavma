@@ -27,7 +27,7 @@ class ResearchToastPayload(private val newKnowledge: List<String>) : CustomPacke
 
     fun handle(payload: ResearchToastPayload, context: IPayloadContext) {
       for (entry in payload.newKnowledge) {
-        val rawRL = entry.split('.').drop(1).joinToString("")
+        val rawRL = entry.split(':').drop(2).joinToString(":")
         val rl = ResourceLocation.parse(rawRL)
         val entry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.get(rl)
         if (entry != null) researchToast(entry)

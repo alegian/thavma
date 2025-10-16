@@ -6,9 +6,10 @@ import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
+import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 
-class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("Book Entry")) {
+class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
@@ -35,13 +36,13 @@ class EntryScreen(private val entry: ResearchEntry) : Screen(Component.literal("
           Row({
             size = grow()
           }) {
-            initPage(entry.pages.getOrNull(currentPage))
+            initPage(entry.value().pages.getOrNull(currentPage))
           }
 
           Row({
             size = grow()
           }) {
-            initPage(entry.pages.getOrNull(currentPage + 1))
+            initPage(entry.value().pages.getOrNull(currentPage + 1))
           }
         }
       }

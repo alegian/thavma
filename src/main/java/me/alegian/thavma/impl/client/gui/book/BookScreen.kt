@@ -34,14 +34,14 @@ class BookScreen : Screen(Component.literal("book")) {
     categoryRegistry?.forEach {
       tabs[it] = addRenderableOnly(TabRenderable(this))
     }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.forEach {
-      val tab = tabs[it.category.value()]
+    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.forEach {
+      val tab = tabs[it.value().category.value()]
       var shown = player.knowsResearch(it)
-      for (p in it.parents(player.level()))
+      for (p in it.value().parents(player.level()))
         if (player.knowsResearch(p)) shown = true
 
       if (tab != null && shown)
-        entryWidgets.add(addRenderableWidget(EntryWidget.of(this, tab, it)))
+        entryWidgets.add(addRenderableWidget(EntryWidget(this, tab, it)))
     }
     updateEntryWidgets()
 

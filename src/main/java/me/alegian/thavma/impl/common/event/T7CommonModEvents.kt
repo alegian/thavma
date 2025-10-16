@@ -62,7 +62,7 @@ private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
   T7BlockEntities.registerCapabilities(event)
   event.registerBlock(
     Capabilities.ItemHandler.BLOCK,
-    { level, pos, state, be, side ->
+    { level, pos, state, _, _ ->
       InvWrapper(ChestBlock.getContainer(state.block as ChestBlock, state, level, pos, true)!!)
     },
     T7Blocks.HUNGRY_CHEST.get()
@@ -178,6 +178,11 @@ private fun registerPayloadHandlers(event: RegisterPayloadHandlersEvent) {
     FocusPayload.TYPE,
     FocusPayload.STREAM_CODEC,
     FocusPayload::handle
+  )
+  registrar.playToServer(
+    HammerPayload.TYPE,
+    HammerPayload.STREAM_CODEC,
+    HammerPayload::handle
   )
 }
 

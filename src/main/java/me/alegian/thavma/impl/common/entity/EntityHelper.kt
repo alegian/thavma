@@ -25,18 +25,4 @@ object EntityHelper {
   fun isHandKatana(hand: InteractionHand): Boolean {
     return Minecraft.getInstance().player?.getItemInHand(hand)?.item == THAVMITE_KATANA.get()
   }
-
-  fun getServerHitResult(player: ServerPlayer): BlockHitResult {
-    return player.level().clip(
-      ClipContext(
-        player.getEyePosition(1f),
-        player.getEyePosition(1f).add(
-          player.getViewVector(1f).scale(6.0)
-        ),
-        ClipContext.Block.COLLIDER,
-        ClipContext.Fluid.NONE,
-        player
-      )
-    )
-  }
 }

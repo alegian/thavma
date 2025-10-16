@@ -38,3 +38,7 @@ fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Fl
 
   level.playSound(player, player.blockPosition(), sound, source, volume, pitch)
 }
+
+object ClientHelper {
+  fun hitResult() = Minecraft.getInstance().hitResult
+}

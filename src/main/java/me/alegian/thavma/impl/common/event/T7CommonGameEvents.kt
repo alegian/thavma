@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.item.EnderpearlFocus
 import me.alegian.thavma.impl.common.level.Exchanging
 import me.alegian.thavma.impl.common.level.TreeFelling
+import me.alegian.thavma.impl.common.payload.HammerPayload
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -104,4 +105,5 @@ fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(TreeFelling::levelTick)
   KFF_GAME_BUS.addListener(Exchanging::levelTick)
   KFF_GAME_BUS.addListener(EnderpearlFocus::enderpearlTeleport)
+  KFF_GAME_BUS.addListener(HammerPayload::placeBlock)
 }

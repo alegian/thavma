@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.neoforge.event.level.BlockEvent
 
 /**
  * Mining hammer for 3x3 mining.
@@ -51,5 +52,28 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
       }
 
     return positions
+  }
+
+  companion object{
+    private var allowHammerBreakEvents = true
+
+    fun breakBlock(event: BlockEvent.BreakEvent) {
+      val player = event.player
+      if (player !is ServerPlayer) return
+
+      val itemStack = player.mainHandItem
+      val item = itemStack.item
+      val level = event.level
+
+      if (item is HammerItem) {
+        // disallow nested hammer break events, to avoid infinite recursion
+        if (!allowHammerBreakEvents) return
+        allowHammerBreakEvents = false
+
+        item.tryBreak3x3exceptOrigin(player, level, itemStack)
+
+        allowHammerBreakEvents = true
+      }
+    }
   }
 }

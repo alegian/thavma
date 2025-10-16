@@ -22,12 +22,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
-import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import kotlin.math.max
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
-
-private var allowHammerBreakEvents = true
 
 private fun entityTickPre(event: EntityTickEvent.Pre) {
   val livingEntity = event.entity
@@ -62,25 +59,6 @@ private fun livingDamagePost(event: LivingDamageEvent.Post) {
       0.1f,
       2.0f
     )
-  }
-}
-
-private fun breakBlock(event: BlockEvent.BreakEvent) {
-  val player = event.player
-  if (player !is ServerPlayer) return
-
-  val itemStack = player.mainHandItem
-  val item = itemStack.item
-  val level = event.level
-
-  if (item is HammerItem) {
-    // disallow nested hammer break events, to avoid infinite recursion
-    if (!allowHammerBreakEvents) return
-    allowHammerBreakEvents = false
-
-    item.tryBreak3x3exceptOrigin(player, level, itemStack)
-
-    allowHammerBreakEvents = true
   }
 }
 
@@ -120,7 +98,7 @@ fun entityFall(event: LivingFallEvent) {
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
-  KFF_GAME_BUS.addListener(::breakBlock)
+  KFF_GAME_BUS.addListener(HammerItem::breakBlock)
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
   KFF_GAME_BUS.addListener(::entityFall)

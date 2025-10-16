@@ -3,7 +3,6 @@ package me.alegian.thavma.impl.common.event
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.item.EnderpearlFocus
-import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.level.Exchanging
 import me.alegian.thavma.impl.common.level.TreeFelling
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
@@ -98,7 +97,6 @@ fun entityFall(event: LivingFallEvent) {
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
-  KFF_GAME_BUS.addListener(HammerItem::breakBlock)
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
   KFF_GAME_BUS.addListener(::entityFall)

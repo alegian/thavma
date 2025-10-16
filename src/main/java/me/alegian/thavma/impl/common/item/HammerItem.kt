@@ -5,13 +5,14 @@ import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
-import net.neoforged.neoforge.event.level.BlockEvent
 
 /**
  * Mining hammer for 3x3 mining.
@@ -19,23 +20,21 @@ import net.neoforged.neoforge.event.level.BlockEvent
  * but takes 9x more damage from mining (every block counts)
  */
 class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MINEABLE_WITH_PICKAXE, props) {
-  fun getValid3x3PositionsExceptOrigin(hitResult: BlockHitResult, level: LevelAccessor, itemStack: ItemStack, entity: LivingEntity): MutableList<BlockPos> {
+  fun getValid3x3PositionsExceptOrigin(pos: BlockPos, direction: Direction, level: LevelAccessor, itemStack: ItemStack, entity: LivingEntity): MutableList<BlockPos> {
     val positions = mutableListOf<BlockPos>()
-    val originBlockPos = hitResult.blockPos
-    val originBlockState = level.getBlockState(originBlockPos)
 
-    // doesn't do AoE if it cant break the original block, or if shifting
-    if (!isCorrectToolForDrops(itemStack, originBlockState) || entity.isShiftKeyDown) return mutableListOf()
+    // doesn't do AoE if shifting
+    if (entity.isShiftKeyDown) return mutableListOf()
 
     // find the 2 axes perpendicular to the block hit direction
-    val hitAxis = hitResult.direction.axis
+    val hitAxis = direction.axis
     val allAxes = listOf(Direction.Axis.X, Direction.Axis.Y, Direction.Axis.Z)
     val perpendicularAxes = allAxes.stream().filter { a -> a !== hitAxis }.toList()
 
     // 3x3 area, except original block, only for correct mining tool
     for (i in -1..1)
       for (j in -1..1) {
-        val currPos = originBlockPos
+        val currPos = pos
           .relative(perpendicularAxes[0], i)
           .relative(perpendicularAxes[1], j)
         val currBlockState = level.getBlockState(currPos)
@@ -49,23 +48,21 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
   companion object {
     private var allowHammerBreakEvents = true
 
-    fun breakBlock(event: BlockEvent.BreakEvent) {
-      // disallow nested hammer break events, to avoid infinite recursion
+    fun destroyBlockMixin(player: Player, level: Level, pos: BlockPos) {
+      // disallow nested hammer breaks, to avoid infinite recursion
       if (!allowHammerBreakEvents) return
 
-      val player = event.player
       if (player !is ServerPlayer) return
 
       val itemStack = player.mainHandItem
       val item = itemStack.item
-      val level = event.level
 
       if (item is HammerItem) {
         allowHammerBreakEvents = false
 
         val hitResult = player.pick(player.blockInteractionRange(), 0f, false)
         if (hitResult is BlockHitResult && hitResult.type != HitResult.Type.MISS)
-          for (pos in item.getValid3x3PositionsExceptOrigin(hitResult, level, itemStack, player))
+          for (pos in item.getValid3x3PositionsExceptOrigin(pos, hitResult.direction, level, itemStack, player))
             player.gameMode.destroyBlock(pos)
 
         allowHammerBreakEvents = true

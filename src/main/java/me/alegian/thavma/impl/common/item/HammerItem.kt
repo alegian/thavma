@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.common.item
 
-import me.alegian.thavma.impl.common.entity.EntityHelper.getServerHitResult
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerPlayer
@@ -11,6 +10,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Tier
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.event.level.BlockEvent
 
 /**
@@ -19,14 +19,6 @@ import net.neoforged.neoforge.event.level.BlockEvent
  * but takes 9x more damage from mining (every block counts)
  */
 class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MINEABLE_WITH_PICKAXE, props) {
-  /**
-   * Used in event
-   */
-  fun tryBreak3x3exceptOrigin(serverPlayer: ServerPlayer, level: LevelAccessor, itemStack: ItemStack) {
-    val hitResult = getServerHitResult(serverPlayer)
-    for (pos in this.getValid3x3PositionsExceptOrigin(hitResult, level, itemStack, serverPlayer)) serverPlayer.gameMode.destroyBlock(pos)
-  }
-
   fun getValid3x3PositionsExceptOrigin(hitResult: BlockHitResult, level: LevelAccessor, itemStack: ItemStack, entity: LivingEntity): MutableList<BlockPos> {
     val positions = mutableListOf<BlockPos>()
     val originBlockPos = hitResult.blockPos
@@ -54,10 +46,13 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
     return positions
   }
 
-  companion object{
+  companion object {
     private var allowHammerBreakEvents = true
 
     fun breakBlock(event: BlockEvent.BreakEvent) {
+      // disallow nested hammer break events, to avoid infinite recursion
+      if (!allowHammerBreakEvents) return
+
       val player = event.player
       if (player !is ServerPlayer) return
 
@@ -66,11 +61,12 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
       val level = event.level
 
       if (item is HammerItem) {
-        // disallow nested hammer break events, to avoid infinite recursion
-        if (!allowHammerBreakEvents) return
         allowHammerBreakEvents = false
 
-        item.tryBreak3x3exceptOrigin(player, level, itemStack)
+        val hitResult = player.pick(player.blockInteractionRange(), 0f, false)
+        if (hitResult is BlockHitResult && hitResult.type != HitResult.Type.MISS)
+          for (pos in item.getValid3x3PositionsExceptOrigin(hitResult, level, itemStack, player))
+            player.gameMode.destroyBlock(pos)
 
         allowHammerBreakEvents = true
       }

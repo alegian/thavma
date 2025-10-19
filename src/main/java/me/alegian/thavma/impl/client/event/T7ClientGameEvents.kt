@@ -5,10 +5,12 @@ import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.foci.FociScreen
+import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
+import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
@@ -16,8 +18,10 @@ import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
@@ -92,11 +96,17 @@ private fun wandTooltip(event: GatherComponents) {
 }
 
 private fun aspectTooltip(event: GatherComponents) {
-  if (!Screen.hasShiftDown() || event.itemStack.isEmpty) return
+  if (event.itemStack.isEmpty) return
   val player = Minecraft.getInstance().player ?: return
-  if (!player.isCreative && !player.hasScanned(event.itemStack)) return
+  val aspects = AspectHelper.getAspects(event.itemStack) ?: return
 
-  event.tooltipElements.addLast(Either.right(AspectTooltipComponent(event.itemStack)))
+  if (!player.isCreative && !player.hasScanned(event.itemStack)) {
+    event.tooltipElements.addLast(Either.left(Component.translatable(AspectClientTooltipComponent.I18n.NOT_SCANNED).withStyle(ChatFormatting.GRAY)))
+    return
+  }
+
+  if (!Screen.hasShiftDown()) return
+  event.tooltipElements.addLast(Either.right(AspectTooltipComponent(aspects)))
 }
 
 private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {

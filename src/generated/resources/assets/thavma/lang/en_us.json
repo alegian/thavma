@@ -207,5 +207,6 @@
   "tag.item.thavma.tree_felling": "Items that Fell Trees",
   "tag.item.thavma.wand_cores": "Wand Cores",
   "tag.item.thavma.wand_platings": "Wand Platings",
-  "thavma": "Thavma"
+  "thavma": "Thavma",
+  "tooltipthavma.not_scanned": "Not Scanned"
 }

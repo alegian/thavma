@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.tooltip
 
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.renderer.AspectRenderer.renderAspect
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
@@ -14,26 +15,25 @@ class AspectClientTooltipComponent(tooltip: AspectTooltipComponent) : ClientTool
   private val aspects = tooltip.aspectMap
 
   override fun getHeight(): Int {
-    if (numAspects == 0) return 0
+    if (aspects.size == 0) return 0
     return WIDTH + PADDING * 2
   }
 
   override fun getWidth(pFont: Font): Int {
-    if (numAspects == 0) return 0
-    return (WIDTH + PADDING) * numAspects
+    if (aspects.size == 0) return 0
+    return (WIDTH + PADDING) * aspects.size
   }
 
-  private val numAspects: Int
-    get() = aspects?.size ?: 0
-
   override fun renderImage(pFont: Font, pX: Int, pY: Int, guiGraphics: GuiGraphics) {
-    if (aspects == null) return
-
     for ((i, aspectStack) in aspects.withIndex()) {
       guiGraphics.usePose {
         translateXY(pX + i * (WIDTH + PADDING), pY + PADDING)
         renderAspect(guiGraphics, aspectStack)
       }
     }
+  }
+
+  object I18n {
+    val NOT_SCANNED = "tooltip" + Thavma.MODID + ".not_scanned"
   }
 }

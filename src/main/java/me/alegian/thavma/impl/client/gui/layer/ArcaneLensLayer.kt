@@ -5,8 +5,8 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.util.scaleXY
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.item.ArcaneLensItem
 import me.alegian.thavma.impl.common.scanning.getScanHitResult
 import me.alegian.thavma.impl.common.scanning.hasScanned
@@ -41,24 +41,24 @@ object ArcaneLensLayer : LayeredDraw.Layer {
     when (hitResult) {
       is BlockHitResult -> {
         val blockState = level.getBlockState(hitResult.blockPos)
-        val blockAspects = getAspects(blockState.block)
+        val blockAspects = AspectHelper.getAspects(blockState.block)
+        text = Component.translatable(blockState.block.descriptionId)
         if (!player.hasScanned(blockState)) {
           if (blockAspects == null || blockAspects.isEmpty)
             text = Component.translatable(NO_ASPECTS)
         } else {
-          text = Component.translatable(blockState.block.descriptionId)
           aspects = blockAspects
         }
       }
 
       is EntityHitResult -> {
         val entity = hitResult.entity
-        val entityAspects = getAspects(entity)
+        val entityAspects = AspectHelper.getAspects(entity)
+        text = entity.name
         if (!player.hasScanned(entity)) {
           if (entityAspects == null || entityAspects.isEmpty)
             text = Component.translatable(NO_ASPECTS)
         } else {
-          text = entity.name
           aspects = entityAspects
         }
       }

@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
+import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.book.TextPage
@@ -309,6 +310,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
     add(ResearchEntry.SCROLL_GIVEN_TRANSLATION, "You have received a research scroll")
     add(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION, "You are missing required knowledge for this research")
+
+    add(AspectClientTooltipComponent.I18n.NOT_SCANNED, "Not Scanned")
 
     add(RecipeType.CRAFTING.translationId, "Crafting")
     add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")

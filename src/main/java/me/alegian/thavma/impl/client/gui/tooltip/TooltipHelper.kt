@@ -6,12 +6,12 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 
 fun containedPrimalsComponent(contents: AspectMap): MutableComponent {
-    return Component.empty().also {
-        for (i in PRIMAL_ASPECTS.indices) {
-            val a = PRIMAL_ASPECTS[i].get()
-            val newPart = Component.literal(contents[a].toString()).withColor(a.color)
-            it.append(newPart)
-            if (i != PRIMAL_ASPECTS.size - 1) it.append(Component.literal(" | "))
-        }
+  return Component.empty().also {
+    for (i in PRIMAL_ASPECTS.indices) {
+      val a = PRIMAL_ASPECTS[i].get()
+      val newPart = Component.literal(contents[a].toString()).withColor(a.color)
+      it.append(newPart)
+      if (i != PRIMAL_ASPECTS.size - 1) it.append(Component.literal(" | "))
     }
+  }
 }

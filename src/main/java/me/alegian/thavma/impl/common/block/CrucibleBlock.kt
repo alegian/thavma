@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
-import me.alegian.thavma.impl.common.aspect.getAspects
+import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.entity.CrucibleBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
@@ -189,7 +189,7 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
         if (success) return  // if catalyst failed, try to melt item instead
       }
 
-      val itemAspects = getAspects(itemEntity)
+      val itemAspects = AspectHelper.getAspects(itemEntity)
       if (itemAspects == null || !hasWater(level, pPos)) return
       AspectContainer.at(level, pPos)?.insert(itemAspects)
       waterSplash(level, pPos)

@@ -1,8 +1,8 @@
 package me.alegian.thavma.impl.common.scanning
 
 import com.google.common.primitives.Doubles.max
+import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.aspect.getAspects
 import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.knowsAspect
 import me.alegian.thavma.impl.common.payload.ScanResultPayload
@@ -65,13 +65,13 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
 
 // itemEntities fall back to items
 fun ServerPlayer.tryScan(entity: Entity) {
-  if (entity is ItemEntity) return tryScan(itemKey(entity.item.item), getAspects(entity.item))
+  if (entity is ItemEntity) return tryScan(itemKey(entity.item.item), AspectHelper.getAspects(entity.item))
 
-  tryScan(entityKey(entity.type), getAspects(entity))
+  tryScan(entityKey(entity.type), AspectHelper.getAspects(entity))
 }
 
 fun ServerPlayer.tryScan(blockState: BlockState) {
-  tryScan(itemKey(blockState.block.asItem()), getAspects(blockState.block))
+  tryScan(itemKey(blockState.block.asItem()), AspectHelper.getAspects(blockState.block))
 }
 
 private fun entityKey(entityType: EntityType<*>) =

@@ -8,17 +8,19 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
-/**
- * Blocks fall back to their items
- */
-fun getAspects(itemLike: ItemLike) =
-  BuiltInRegistries.ITEM.wrapAsHolder(itemLike.asItem()).getData(ITEM)
+object AspectHelper {
+  /**
+   * Blocks fall back to their items
+   */
+  fun getAspects(itemLike: ItemLike) =
+    BuiltInRegistries.ITEM.wrapAsHolder(itemLike.asItem()).getData(ITEM)
 
-fun getAspects(entity: Entity): AspectMap? {
-  if (entity is ItemEntity) return getAspects(entity.item)
-  return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.type).getData(ENTITY)
-}
+  fun getAspects(entity: Entity): AspectMap? {
+    if (entity is ItemEntity) return getAspects(entity.item)
+    return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity.type).getData(ENTITY)
+  }
 
-fun getAspects(itemStack: ItemStack): AspectMap? {
-  return getAspects(itemStack.item)?.scale(itemStack.count)
+  fun getAspects(itemStack: ItemStack): AspectMap? {
+    return getAspects(itemStack.item)?.scale(itemStack.count)
+  }
 }

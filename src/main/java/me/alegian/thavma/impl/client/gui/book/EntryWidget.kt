@@ -1,8 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.clientPlayer
-import me.alegian.thavma.impl.client.clientRegistry
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
@@ -15,11 +14,9 @@ import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
-import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
-import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.client.resources.sounds.SimpleSoundInstance
 import net.minecraft.client.sounds.SoundManager
@@ -37,17 +34,19 @@ import net.neoforged.neoforge.network.PacketDistributor
 class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: Holder<ResearchEntry>) :
   AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.value().title) {
   private var gaveScroll = false
-  val knowsResearch by lazy {
-    val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
-    if (registry == null)
-      false
-    else
-      clientPlayer()?.knowsResearch(entry) ?: false
-  }
+  val knowsResearch =
+    ClientHelper.player()?.knowsResearch(entry) ?: false
+  val knowsParents =
+    ClientHelper.player()?.let { player ->
+      val parents = entry.value().parents(player.level())
+      parents.all { player.knowsResearch(it) }
+    } ?: false
   val children = entry.value().children
 
   init {
-    tooltip = Tooltip.create(entry.value().title)
+    val components = mutableListOf(entry.value().title)
+    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.))
+    tooltip = T7Tooltip(components)
   }
 
   private val pos = entry.value().position
@@ -98,12 +97,14 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-    if (!knowsResearch && !gaveScroll) {
+    if (!knowsResearch && knowsParents && !gaveScroll) {
       PacketDistributor.sendToServer(ResearchScrollPayload(entry))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
       tooltip = T7Tooltip(entry.value().title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
-    } else if (knowsResearch)
+      return
+    }
+    if (knowsResearch)
       pushScreen(EntryScreen(entry))
   }
 
@@ -125,7 +126,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
     guiGraphics.usePose {
       scaleXY(1f / CELL_SIZE) // back to pixel space
-      scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we dont want full size
+      scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we don't want full size
       guiGraphics.renderItem(entry.value().icon, -8, -8)
     }
 

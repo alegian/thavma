@@ -55,5 +55,6 @@ class ResearchEntry(
 
     val TOAST_TRANSLATION = "research." + Thavma.MODID + ".toast"
     val SCROLL_GIVEN_TRANSLATION = "research." + Thavma.MODID + ".scroll_given"
+    val PARENTS_UNKNOWN_TRANSLATION = "research." + Thavma.MODID + ".parents_unknown"
   }
 }

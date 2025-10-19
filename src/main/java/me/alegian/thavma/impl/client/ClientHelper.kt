@@ -25,8 +25,6 @@ fun setScreen(screen: Screen) =
 fun <T> clientRegistry(key: ResourceKey<Registry<T>>) =
   Minecraft.getInstance().level?.registry(key)
 
-fun clientPlayer() = Minecraft.getInstance().player
-
 fun pushScreen(screen: Screen) = Minecraft.getInstance().pushGuiLayer(screen)
 
 fun researchToast(entry: ResearchEntry) =
@@ -41,4 +39,5 @@ fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Fl
 
 object ClientHelper {
   fun hitResult() = Minecraft.getInstance().hitResult
+  fun player() = Minecraft.getInstance().player
 }

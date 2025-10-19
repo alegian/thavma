@@ -308,6 +308,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
     add(ResearchEntry.SCROLL_GIVEN_TRANSLATION, "You have received a research scroll")
+    add(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION, "You are missing required knowledge for this research")
 
     add(RecipeType.CRAFTING.translationId, "Crafting")
     add(T7RecipeTypes.WORKBENCH.get().translationId, "Arcane Workbench")

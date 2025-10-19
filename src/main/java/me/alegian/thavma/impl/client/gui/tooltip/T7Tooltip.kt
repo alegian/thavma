@@ -9,6 +9,8 @@ import net.minecraft.util.FormattedCharSequence
  * Allows multiple lines of text
  */
 class T7Tooltip(vararg components: Component): Tooltip(components.first(), components.first()) {
+  constructor(components: List<Component>) : this(*components.toTypedArray())
+
   val cache by lazy{
     val tooltip = mutableListOf<FormattedCharSequence>()
     for (component in components) {

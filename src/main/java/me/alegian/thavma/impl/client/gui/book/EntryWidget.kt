@@ -45,7 +45,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   init {
     val components = mutableListOf(entry.value().title)
-    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.))
+    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY))
     tooltip = T7Tooltip(components)
   }
 

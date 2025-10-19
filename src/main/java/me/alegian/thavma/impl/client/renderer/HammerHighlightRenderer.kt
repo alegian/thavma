@@ -19,7 +19,7 @@ object HammerHighlightRenderer {
     val levelRenderer = event.levelRenderer
     val camera = event.camera
 
-    for (blockPos in hammer.getValid3x3PositionsExceptOrigin(event.target.blockPos, event.target.direction, level, itemStack, player)) {
+    for (blockPos in hammer.getAoE(event.target.blockPos, event.target.direction, level, itemStack, player)) {
       val currHitResult = BlockHitResult(hitResult.getLocation(), hitResult.direction, blockPos, hitResult.isInside)
       if (!ClientHooks.onDrawHighlight(levelRenderer, camera, currHitResult, event.deltaTracker, event.poseStack, event.multiBufferSource)) levelRenderer.renderHitOutline(
         event.poseStack,

@@ -34,8 +34,8 @@ import net.neoforged.neoforge.network.PacketDistributor
  * entry.preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: ResearchEntry, val children: List<ResearchEntry>) :
-  AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.title) {
+class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: Holder<ResearchEntry>) :
+  AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.value().title) {
   private var gaveScroll = false
   val knowsResearch by lazy {
     val registry = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)
@@ -44,12 +44,13 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     else
       clientPlayer()?.knowsResearch(entry) ?: false
   }
+  val children = entry.value().children
 
   init {
-    tooltip = Tooltip.create(entry.title)
+    tooltip = Tooltip.create(entry.value().title)
   }
 
-  private val pos = entry.position
+  private val pos = entry.value().position
 
   override fun getX(): Int {
     return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
@@ -87,9 +88,9 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
-        val dv = child.position - pos
+        val dv = child.value().position - pos
         guiGraphics.usePose {
-          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.preferX, false)
+          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.value().preferX, false)
         }
       }
       RenderSystem.enableCull()
@@ -98,10 +99,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
     if (!knowsResearch && !gaveScroll) {
-      PacketDistributor.sendToServer(ResearchScrollPayload(Holder.direct(entry)))
+      PacketDistributor.sendToServer(ResearchScrollPayload(entry))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
-      tooltip = T7Tooltip(entry.title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+      tooltip = T7Tooltip(entry.value().title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
     } else if (knowsResearch)
       pushScreen(EntryScreen(entry))
   }
@@ -125,7 +126,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
     guiGraphics.usePose {
       scaleXY(1f / CELL_SIZE) // back to pixel space
       scaleXY(2 * 0.7) // items are 16x, nodes are 32x, but we dont want full size
-      guiGraphics.renderItem(entry.icon, -8, -8)
+      guiGraphics.renderItem(entry.value().icon, -8, -8)
     }
 
     resetRenderSystemColor()
@@ -137,8 +138,5 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   companion object {
     val TEXTURE = Texture("gui/book/node", 32, 32)
-
-    fun of(screen: BookScreen, tab: TabRenderable, entry: ResearchEntry) =
-      EntryWidget(screen, tab, entry, entry.children.map { it.value() })
   }
 }

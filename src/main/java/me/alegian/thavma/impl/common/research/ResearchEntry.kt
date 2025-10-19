@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import org.joml.Vector2i
 
-private val parentsMap = mutableMapOf<ResearchEntry, List<ResearchEntry>>()
+private val parentsMap = mutableMapOf<ResearchEntry, List<Holder<ResearchEntry>>>()
 
 class ResearchEntry(
   val category: Holder<ResearchCategory>,
@@ -33,7 +33,7 @@ class ResearchEntry(
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
       val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)
-      registry.filter { e -> e.children.map{it.value()}.contains(this) }
+      registry.holders().filter { e -> e.value().children.map{it.value()}.contains(this) }.toList()
     }
 
   companion object {

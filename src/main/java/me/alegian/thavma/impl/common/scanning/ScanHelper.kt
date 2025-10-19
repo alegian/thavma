@@ -3,12 +3,13 @@ package me.alegian.thavma.impl.common.scanning
 import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.aspect.getAspects
+import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.knowsAspect
-import me.alegian.thavma.impl.common.entity.tryLearnAspects
 import me.alegian.thavma.impl.common.payload.ScanResultPayload
 import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -23,61 +24,61 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.network.PacketDistributor
 
-private fun Player.hasScanned(key: String) = getData(T7Attachments.SCANNED).scanned.contains(key)
+private fun Player.hasScanned(key: ResourceKey<*>) = getData(T7Attachments.SCANNED).scanned.contains(key.serialize())
 
 // itemEntities fall back to items
 fun Player.hasScanned(entity: Entity): Boolean {
   if (entity is ItemEntity) return hasScanned(entity.item)
-  return hasScanned(entityScanKey(entity.type))
+  return hasScanned(entityKey(entity.type))
 }
 
 // blocks fall back to items
 fun Player.hasScanned(blockState: BlockState): Boolean {
-  return hasScanned(itemScanKey(blockState.block.asItem()))
+  return hasScanned(itemKey(blockState.block.asItem()))
 }
 
 fun Player.hasScanned(itemStack: ItemStack): Boolean {
-  return hasScanned(itemScanKey(itemStack.item))
+  return hasScanned(itemKey(itemStack.item))
 }
 
-fun ServerPlayer.handleScanResult(scanResult: ScanResult, newScans: List<String>) {
-  if (scanResult == ScanResult.SUCCESS) {
-    val old = getData(T7Attachments.SCANNED)
-    old.scanned.addAll(newScans)
-    setData(T7Attachments.SCANNED, old)
-
-    PacketDistributor.sendToPlayer(this, ScanResultPayload(scanResult))
-  }
-}
-
-fun ServerPlayer.tryScan(key: String, aspectMap: AspectMap?) {
+private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
   var scanResult = ScanResult.SUCCESS
   if (aspectMap == null || aspectMap.isEmpty) scanResult = ScanResult.UNSUPPORTED
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
   else {
     val aspects = aspectMap.map { it.aspect }
     if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) scanResult = ScanResult.LOCKED
-    else tryLearnAspects(aspects)
+    else
+      addKnowledge(
+        aspects
+          .filter { !knowsAspect(it) }
+          .map { it.resourceKey }
+      )
   }
-  handleScanResult(scanResult, listOf(key))
+  if (scanResult != ScanResult.SUCCESS) return
+  val old = getData(T7Attachments.SCANNED)
+  old.scanned.add(key.serialize())
+  setData(T7Attachments.SCANNED, old)
+
+  PacketDistributor.sendToPlayer(this, ScanResultPayload(scanResult))
 }
 
 // itemEntities fall back to items
 fun ServerPlayer.tryScan(entity: Entity) {
-  if (entity is ItemEntity) return tryScan(itemScanKey(entity.item.item), getAspects(entity.item))
+  if (entity is ItemEntity) return tryScan(itemKey(entity.item.item), getAspects(entity.item))
 
-  tryScan(entityScanKey(entity.type), getAspects(entity))
+  tryScan(entityKey(entity.type), getAspects(entity))
 }
 
 fun ServerPlayer.tryScan(blockState: BlockState) {
-  tryScan(itemScanKey(blockState.block.asItem()), getAspects(blockState.block))
+  tryScan(itemKey(blockState.block.asItem()), getAspects(blockState.block))
 }
 
-private fun entityScanKey(entityType: EntityType<*>): String =
-  BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).get().serialize()
+private fun entityKey(entityType: EntityType<*>) =
+  BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).get()
 
-private fun itemScanKey(item: Item): String =
-  BuiltInRegistries.ITEM.getResourceKey(item).get().serialize()
+private fun itemKey(item: Item) =
+  BuiltInRegistries.ITEM.getResourceKey(item).get()
 
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))

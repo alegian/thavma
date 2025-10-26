@@ -101,7 +101,8 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     blockEntity1x1x1(HUNGRY_CHEST.get(), blockTexture(GREATWOOD_PLANKS.get()))
     blockEntity1x2x1(PILLAR.get())
 
-    simpleBlockWithItem(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
+    simpleBlock(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
+    itemModels().withExistingParent(name(SEALING_JAR.get()), "item/chest")
     horizontalBlockWithItem(TABLE.get(), models().getExistingFile(key(TABLE.get())))
     horizontalBlockWithItem(RESEARCH_TABLE.get(), models().getExistingFile(key(RESEARCH_TABLE.get())))
 

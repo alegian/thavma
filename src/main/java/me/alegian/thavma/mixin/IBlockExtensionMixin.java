@@ -24,7 +24,7 @@ public interface IBlockExtensionMixin {
       Operation<Boolean> original
   ) {
     var out = original.call(state, level, pos, player, willHarvest, fluid);
-    if (out) HammerItem.Companion.destroyBlockMixin(pos);
+    if (out && level.isClientSide) HammerItem.Companion.destroyBlockMixin(pos);
     return out;
   }
 }

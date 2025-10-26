@@ -13,10 +13,7 @@ import net.minecraft.world.item.Tier
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.HitResult
-import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.network.PacketDistributor
-import java.util.UUID
-import kotlin.collections.set
 
 /**
  * Mining hammer for 3x3 mining.
@@ -56,14 +53,7 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
         PacketDistributor.sendToServer(HammerPayload(pos, hitResult.direction))
     }
 
-    /*
-     * Keep track of last hammered positions to avoid
-     * chain reactions of hammers causing hammers
-     */
-    private val hammerBlacklist = mutableMapOf<UUID, MutableList<BlockPos>>()
     fun breakAoE(pos: BlockPos, direction: Direction, player: ServerPlayer){
-      if (hammerBlacklist[player.uuid]?.contains(pos) ?: false) return
-
       val itemStack = player.mainHandItem
       val item = itemStack.item
 
@@ -73,17 +63,6 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
           player.gameMode.destroyBlock(pos)
 
         positions.add(pos)
-        hammerBlacklist[player.uuid] = positions
-      }
-    }
-
-    /*
-     * Allows place & break again.
-     * Would otherwise not work due to blacklist
-     */
-    fun placeBlock(event: BlockEvent.EntityPlaceEvent) {
-      event.entity?.let {
-        hammerBlacklist[it.uuid]?.clear()
       }
     }
   }

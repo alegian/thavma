@@ -2,8 +2,10 @@
   "package": "me.alegian.thavma.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "IBlockExtensionMixin",
     "HumanoidModelMixin",
     "ItemInHandRendererMixin"
+  ],
+  "mixins": [
+    "IBlockExtensionMixin"
   ]
 }

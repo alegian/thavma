@@ -1,11 +1,13 @@
 package me.alegian.thavma.impl.common.block.entity
 
+import me.alegian.thavma.impl.common.util.registry
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.PatchedDataComponentMap
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -45,6 +47,23 @@ abstract class DataComponentBE(pType: BlockEntityType<*>, pPos: BlockPos, pBlock
   }
 
   override fun getComponents() = componentMap
+
+  override fun collectImplicitComponents(components: DataComponentMap.Builder) {
+    super.collectImplicitComponents(components)
+    components.addAll(componentMap)
+  }
+
+  override fun applyImplicitComponents(componentInput: DataComponentInput) {
+    super.applyImplicitComponents(componentInput)
+    val componentTypes = level?.registry(Registries.DATA_COMPONENT_TYPE) ?: return
+    for (type in componentTypes) applyInput(type, componentInput)
+  }
+
+  // this function serves only to help compiler with generics
+  private fun <T> applyInput(type: DataComponentType<T>, input: DataComponentInput) {
+    val value = input.get(type) ?: return
+    componentMap.set(type, value)
+  }
 
   override fun loadAdditional(pTag: CompoundTag, pRegistries: HolderLookup.Provider) {
     super.loadAdditional(pTag, pRegistries)

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.model.WithTransformParentModel
 import me.alegian.thavma.impl.common.block.InfusedBlock
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
@@ -29,7 +30,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
@@ -101,7 +101,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     blockEntity1x1x1(HUNGRY_CHEST.get(), blockTexture(GREATWOOD_PLANKS.get()))
     blockEntity1x2x1(PILLAR.get())
 
-    simpleBlockWithItem(SEALING_JAR.get(), models().getExistingFile(key(SEALING_JAR.get())))
+    sealingJar(T7Blocks.SEALING_JAR.get())
     horizontalBlockWithItem(TABLE.get(), models().getExistingFile(key(TABLE.get())))
     horizontalBlockWithItem(RESEARCH_TABLE.get(), models().getExistingFile(key(RESEARCH_TABLE.get())))
 
@@ -172,7 +172,16 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
 
   fun blockEntity1x1x1(block: Block, particle: ResourceLocation) {
     this.simpleBlockWithItem(block, this.models().getBuilder(this.name(block)).texture("particle", particle))
-    this.itemModels().withExistingParent(this.name(block), "item/chest").texture("particle", particle)
+    blockEntityItem1x1x1(block, particle)
+  }
+
+  fun blockEntityItem1x1x1(block: Block, particle: ResourceLocation) {
+    itemModels().withExistingParent(name(block), "item/chest").texture("particle", particle)
+  }
+
+  fun sealingJar(block:Block){
+    simpleBlock(block, models().getExistingFile(key(block)))
+    blockEntityItem1x1x1(block, blockTexture(block))
   }
 
   fun blockEntity1x2x1(block: Block) {

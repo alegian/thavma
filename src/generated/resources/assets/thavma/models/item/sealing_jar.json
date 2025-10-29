@@ -1,3 +1,6 @@
 {
-  "parent": "thavma:block/sealing_jar"
+  "parent": "minecraft:item/chest",
+  "textures": {
+    "particle": "thavma:block/sealing_jar"
+  }
 }

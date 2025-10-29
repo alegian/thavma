@@ -1,13 +1,12 @@
 package me.alegian.thavma.impl.client.extension
 
-import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.BlockItemBEWLR
-import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 
 object BEWLRItemExtensionFactory {
-  fun create(be: BlockEntity): IClientItemExtensions {
+  fun create(bewlr: BlockEntityWithoutLevelRenderer): IClientItemExtensions {
     return object : IClientItemExtensions {
-      override fun getCustomRenderer() = BlockItemBEWLR(be)
+      override fun getCustomRenderer() = bewlr
     }
   }
 }

@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -13,7 +12,6 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.world.Containers
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -85,7 +83,7 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
       // check if slabs exist, and are bottom slabs
       for (pos in this.slabPositions) {
         val blockState = level.getBlockState(pos)
-        if (blockState.`is`(BlockTags.WOODEN_SLABS) || blockState.getValue(BlockStateProperties.SLAB_TYPE) != SlabType.BOTTOM) return false
+        if (!blockState.`is`(BlockTags.WOODEN_SLABS) || blockState.getValue(BlockStateProperties.SLAB_TYPE) != SlabType.BOTTOM) return false
       }
 
       if (!level.isClientSide() && level is ServerLevel) {
@@ -102,15 +100,16 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
 
   fun contain() {
     this.containingCountdown = -1
-    level?.removeBlock(this.blockPos, false)
     level?.let {
       val itemEntity = ItemEntity(
         it,
         blockPos.x + 0.5,
         blockPos.y + 0.5,
         blockPos.z + 0.5,
-        ItemStack(T7Blocks.AURA_NODE.get())
+        T7Items.NODE_JAR.toStack()
       )
+      AspectContainer.blockSourceItemSink(it, blockPos, itemEntity.item)?.transferAllAspects()
+      it.removeBlock(blockPos, false)
       it.addFreshEntity(itemEntity)
     }
   }
@@ -122,7 +121,7 @@ class AuraNodeBE(pos: BlockPos, blockState: BlockState) :
   fun dropItems() {
     AspectContainer.from(this)?.let {
       val container = SimpleContainer(it.aspects.size)
-      for (stack in it.aspects) {
+      for (stack in it.aspects.scale(0.25)) {
         // TODO: somehow clean this up
         val deferredAspect = T7Registries.ASPECT.wrapAsHolder(stack.aspect)
         T7Items.SHARDS[deferredAspect]?.toStack(min(stack.amount, 64))?.let(container::addItem)

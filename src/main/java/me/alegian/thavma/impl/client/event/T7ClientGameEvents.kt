@@ -20,6 +20,7 @@ import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
@@ -94,7 +95,7 @@ private fun wandTooltip(event: GatherComponents) {
 }
 
 private fun jarTooltip(event: GatherComponents) {
-  if (event.itemStack.item != T7Blocks.SEALING_JAR.asItem()) return
+  if (event.itemStack.item != T7Blocks.SEALING_JAR.asItem() && event.itemStack.item != T7Items.NODE_JAR.get()) return
   val player = Minecraft.getInstance().player ?: return
   if (!clientPlayerHasRevealing() && !player.isCreative) return
 

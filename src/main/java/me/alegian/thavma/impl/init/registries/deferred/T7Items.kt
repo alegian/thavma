@@ -212,6 +212,16 @@ object T7Items {
       { itemStack, _ -> AspectContainer(itemStack, wand.capacity()) },
       wand
     )
+    event.registerItem(
+      T7Capabilities.AspectContainer.ITEM,
+      { stack, _ -> AspectContainer(stack, 64, 1) },
+      T7Blocks.SEALING_JAR.asItem()
+    )
+    event.registerItem(
+      T7Capabilities.AspectContainer.ITEM,
+      { stack, _ -> AspectContainer(stack) },
+      NODE_JAR
+    )
   }
 
   /**

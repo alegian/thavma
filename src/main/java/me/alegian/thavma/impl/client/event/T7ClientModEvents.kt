@@ -19,6 +19,7 @@ import me.alegian.thavma.impl.client.particle.InfusionItemParticle
 import me.alegian.thavma.impl.client.particle.InfusionRuneParticle
 import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.BlockItemBEWLR
+import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.NodeJarBEWLR
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.SealingJarBEWLR
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
@@ -98,6 +99,7 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PedestalBE())), T7Blocks.PEDESTAL.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())), T7Blocks.HUNGRY_CHEST.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(SealingJarBEWLR), T7Blocks.SEALING_JAR.get().asItem())
+  event.registerItem(BEWLRItemExtensionFactory.create(NodeJarBEWLR), T7Items.NODE_JAR.get())
 }
 
 private fun registerReloadListenerEvent(event: RegisterClientReloadListenersEvent) {

@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.ANGRY_ZOMBIE_SPAWN_EGG
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
@@ -46,6 +47,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -125,10 +127,16 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     focus(T7Items.FOCUS_ENDERPEARL)
     focus(T7Items.FOCUS_EXCHANGE)
     focus(T7Items.FOCUS_LIGHTNING)
+
+    blockEntityItem1x1x1(T7Items.NODE_JAR.id)
   }
 
   private fun basicItem(itemLike: ItemLike) = basicItem(itemLike.asItem())
   private fun handheldItem(itemLike: ItemLike) = handheldItem(itemLike.asItem())
+
+  fun blockEntityItem1x1x1(item: ResourceLocation) {
+    withExistingParent(item.toString(), "item/chest")
+  }
 
   fun item(itemLike: ItemLike, textureRL: ResourceLocation): ItemModelBuilder {
     return getBuilder(BuiltInRegistries.ITEM.getKey(itemLike.asItem()).toString())

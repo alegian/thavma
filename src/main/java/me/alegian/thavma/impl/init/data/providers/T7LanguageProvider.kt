@@ -233,6 +233,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
 
     add(SEALING_JAR.get(), "Sealing Jar")
+    add(T7Items.NODE_JAR.get(), "Node in a Jar")
     add(ETERNAL_FLAME.get(), "Eternal Flame")
     add(HUNGRY_CHEST.get(), "Hungry Chest")
 

@@ -201,6 +201,8 @@ object T7Items {
   val FOCUS_EXCHANGE = REGISTRAR.registerItem("focus_exchange") { ExchangeFocus() }
   val FOCUS_LIGHTNING = REGISTRAR.registerItem("focus_lightning", ::Item)
 
+  val NODE_JAR = REGISTRAR.registerItem("node_jar") { NodeJarItem() }
+
   // (platingName, coreName)->wand. populated on Item Registry bake
   val WANDS = DoubleMap<String, String, WandItem>()
 

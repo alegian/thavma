@@ -103,25 +103,25 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
     if (!pState.`is`(pOldState.block)) pLevel.invalidateCapabilities(pPos)
   }
 
-  override fun useItemOn(pStack: ItemStack, pState: BlockState, pLevel: Level, pPos: BlockPos, pPlayer: Player, pHand: InteractionHand, pHitResult: BlockHitResult): ItemInteractionResult {
+  override fun useItemOn(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hitResult: BlockHitResult): ItemInteractionResult {
     // water buckets should be usable to top off, even if 1000 mB is too much
-    if (pPlayer.getItemInHand(pHand).`is`(Items.WATER_BUCKET) && fillUp(pLevel, pPos)) {
-      if (!pPlayer.isCreative) pPlayer.setItemInHand(pHand, ItemStack(Items.BUCKET))
-      pLevel.playSound(null, pPos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f)
+    if (player.getItemInHand(hand).`is`(Items.WATER_BUCKET) && fillUp(level, pos)) {
+      if (!player.isCreative) player.setItemInHand(hand, ItemStack(Items.BUCKET))
+      level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f)
 
       return ItemInteractionResult.SUCCESS
     }
 
     // generic fluid interaction
-    if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.direction))
+    if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction))
       return ItemInteractionResult.SUCCESS
 
-    if (pStack.item == T7Blocks.SEALING_JAR.asItem()) {
-      val result = AspectContainer.blockSourceItemSink(pLevel, pPos, pStack)?.transferAnyAspect()
+    if (stack.item == T7Blocks.SEALING_JAR.asItem()) {
+      val result = AspectContainer.blockSourceItemSink(level, pos, stack)?.transferAnyAspect()
       if (result != null) return ItemInteractionResult.SUCCESS
     }
 
-    return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult)
+    return super.useItemOn(stack, state, level, pos, player, hand, hitResult)
   }
 
   override fun getInteractionShape(pState: BlockState, pLevel: BlockGetter, pPos: BlockPos): VoxelShape {

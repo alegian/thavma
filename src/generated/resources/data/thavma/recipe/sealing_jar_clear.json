@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "thavma:sealing_jar"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:sealing_jar"
+  }
+}

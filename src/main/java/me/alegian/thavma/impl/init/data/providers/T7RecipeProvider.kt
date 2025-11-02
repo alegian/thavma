@@ -48,6 +48,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
+import me.alegian.thavma.impl.rl
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -326,6 +327,11 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy("has_wools", has(ItemTags.WOOL))
       .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
       .save(pRecipeOutput)
+
+    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, T7Blocks.SEALING_JAR)
+      .requires(T7Blocks.SEALING_JAR)
+      .unlockedBy(getHasName(T7Blocks.SEALING_JAR), has(T7Blocks.SEALING_JAR))
+      .save(pRecipeOutput, itemLoc(T7Blocks.SEALING_JAR) + "_clear")
   }
 
   companion object {

@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
+import me.alegian.thavma.impl.client.gui.tooltip.containedAspectsComponents
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.common.aspect.AspectHelper
@@ -17,6 +18,7 @@ import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -82,16 +84,22 @@ private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {
 }
 
 private fun wandTooltip(event: GatherComponents) {
-  if (event.itemStack.isEmpty) return
+  if (event.itemStack.item !is WandItem) return
   val player = Minecraft.getInstance().player ?: return
   if (!clientPlayerHasRevealing() && !player.isCreative) return
 
   AspectContainer.from(event.itemStack)?.aspects?.let {
-    event.tooltipElements.add(
-      Either.left(
-        containedPrimalsComponent(it)
-      )
-    )
+    event.tooltipElements.add(Either.left(containedPrimalsComponent(it)))
+  }
+}
+
+private fun jarTooltip(event: GatherComponents) {
+  if (event.itemStack.item != T7Blocks.SEALING_JAR.asItem()) return
+  val player = Minecraft.getInstance().player ?: return
+  if (!clientPlayerHasRevealing() && !player.isCreative) return
+
+  AspectContainer.from(event.itemStack)?.aspects?.let {
+    event.tooltipElements.addAll(containedAspectsComponents(it).map { Either.left(it) })
   }
 }
 
@@ -101,12 +109,12 @@ private fun aspectTooltip(event: GatherComponents) {
   val aspects = AspectHelper.getAspects(event.itemStack) ?: return
 
   if (!player.isCreative && !player.hasScanned(event.itemStack)) {
-    event.tooltipElements.addLast(Either.left(Component.translatable(AspectClientTooltipComponent.I18n.NOT_SCANNED).withStyle(ChatFormatting.GRAY)))
+    event.tooltipElements.add(Either.left(Component.translatable(AspectClientTooltipComponent.I18n.NOT_SCANNED).withStyle(ChatFormatting.GRAY)))
     return
   }
 
   if (!Screen.hasShiftDown()) return
-  event.tooltipElements.addLast(Either.right(AspectTooltipComponent(aspects)))
+  event.tooltipElements.add(Either.right(AspectTooltipComponent(aspects)))
 }
 
 private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
@@ -147,6 +155,7 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::renderBlockHighlight)
   KFF_GAME_BUS.addListener(::renderLevelAfterWeather)
   KFF_GAME_BUS.addListener(::wandTooltip)
+  KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
   KFF_GAME_BUS.addListener(::clientTick)

@@ -15,3 +15,12 @@ fun containedPrimalsComponent(contents: AspectMap): MutableComponent {
     }
   }
 }
+
+fun containedAspectsComponents(contents: AspectMap): List<MutableComponent> {
+  return contents.map {
+    Component.translatable(it.aspect.translationId).append(
+      Component.literal(" × " + contents[it.aspect].toString())
+    )
+      .withColor(it.aspect.color)
+  }
+}

@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client
 
 import me.alegian.thavma.impl.client.gui.toast.ResearchToast
-import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING

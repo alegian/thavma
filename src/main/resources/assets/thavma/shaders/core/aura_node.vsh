@@ -10,6 +10,7 @@ uniform mat4 ProjMat;
 
 out vec4 vertexColor;
 out vec3 fragPosition;
+flat out vec3 cornerPosition;
 flat out vec3 fragCenter;
 flat out float scale;
 
@@ -18,6 +19,7 @@ void main() {
 
     vertexColor = Color;
     fragPosition = Position;
+    cornerPosition = Position;
     fragCenter = Center;
     scale = Scale;
 }

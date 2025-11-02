@@ -35,7 +35,7 @@ class T7BufferBuilder(parent: VertexConsumer) {
 
   fun setCenter(): T7BufferBuilder {
     pose.let {
-      require(it != null) { "Thavma Exception: parent must be a BufferBuilder" }
+      require(it != null) { "Thavma Exception: no pose found" }
       val i = parent.beginElement(CENTER)
       val center = it.pose().transformPosition(0f, 0f, 0f, Vector3f())
       if (i != -1L) {

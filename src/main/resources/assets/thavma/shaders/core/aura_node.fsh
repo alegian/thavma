@@ -2,6 +2,7 @@
 
 in vec4 vertexColor;
 in vec3 fragPosition;
+flat in vec3 cornerPosition;
 flat in vec3 fragCenter;
 flat in float scale;
 
@@ -36,12 +37,13 @@ float noise(vec2 st) {
 
 void main() {
     vec3 diff = fragCenter - fragPosition;
+    vec3 maxDiff = fragCenter - cornerPosition;
     vec4 cameraDiff = ModelViewMat * vec4(diff, 1.0);
     float angle = atan(cameraDiff.y, cameraDiff.x);
     float phase = random(scale) * 2 * 3.14159;
     // wavy patterns only for nodes with a decent radius
-    if (length(diff) > scale * (1 - 0.2 * (sin(angle * 32 + phase) + 1)) && scale > 0.2) discard;
+    if (length(diff) > scale * length(maxDiff) * (1 - 0.2 * (sin(angle * 32 + phase) + 1)) && scale > 0.2) discard;
     // smaller ones are circular
-    if (length(diff) > scale) discard;
+    if (length(diff) > scale * length(maxDiff)) discard;
     fragColor = vertexColor;
 }

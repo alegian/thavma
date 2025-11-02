@@ -28,6 +28,10 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
     setupPose(poseStack, containingCountdown, partialTick)
 
     renderContainer(poseStack, bufferSource, combinedLight, combinedOverlay, containingCountdown)
+
+    // follows the camera like a particle
+    val rotation = Minecraft.getInstance().gameRenderer.mainCamera.rotation()
+    poseStack.mulPose(rotation)
     AspectContainer.from(be)?.aspects?.let {
       renderNode(it, poseStack, bufferSource)
     }
@@ -74,10 +78,6 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
 
     fun renderNode(aspectMap: AspectMap, poseStack: PoseStack, bufferSource: MultiBufferSource) {
       poseStack.use {
-        // follows the camera like a particle
-        val rotation = Minecraft.getInstance().gameRenderer.mainCamera.rotation()
-        poseStack.mulPose(rotation)
-
         var alpha = 0.1f
         if (clientPlayerHasRevealing()) alpha = MAX_ALPHA
 

@@ -21,6 +21,7 @@ object T7RenderTypes {
     false,
     true,
     CompositeState.builder()
+      .setCullState(RenderStateShard.NO_CULL)
       .setShaderState(T7RenderStateShards.AURA_NODE_SHADER)
       .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
       .setTextureState(RenderStateShard.NO_TEXTURE)

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.client.renderer.blockentity
 import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.client.clientPlayerHasRevealing
 import me.alegian.thavma.impl.client.util.scale
+import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.block.entity.AuraNodeBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.use
@@ -27,7 +28,9 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
     setupPose(poseStack, containingCountdown, partialTick)
 
     renderContainer(poseStack, bufferSource, combinedLight, combinedOverlay, containingCountdown)
-    renderNode(be, poseStack, bufferSource)
+    AspectContainer.from(be)?.aspects?.let {
+      renderNode(it, poseStack, bufferSource)
+    }
 
     poseStack.popPose()
   }
@@ -53,25 +56,6 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
     poseStack.scale(scale)
   }
 
-  private fun renderNode(be: AuraNodeBE, poseStack: PoseStack, bufferSource: MultiBufferSource) {
-    poseStack.use {
-      // follows the camera like a particle
-      val rotation = Minecraft.getInstance().gameRenderer.mainCamera.rotation()
-      poseStack.mulPose(rotation)
-
-      var alpha = 0.1f
-      if (clientPlayerHasRevealing()) alpha = MAX_ALPHA
-
-      // empty nodes look like small black circles
-      AspectContainer.from(be)?.aspects?.toSortedList()?.run {
-        if (this.isNotEmpty())
-          for (stack in this)
-            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
-        else renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
-      }
-    }
-  }
-
   companion object {
     private const val MIN_SCALE = 1f / 3 // for lerping containment animation
 
@@ -86,6 +70,25 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
       poseStack.translate(-0.5, -0.5, -0.5)
       Minecraft.getInstance().blockRenderer.renderSingleBlock(SEALING_JAR.get().defaultBlockState(), poseStack, bufferSource, combinedLight, combinedOverlay, ModelData.EMPTY, RenderType.translucent())
       poseStack.popPose()
+    }
+
+    fun renderNode(aspectMap: AspectMap, poseStack: PoseStack, bufferSource: MultiBufferSource) {
+      poseStack.use {
+        // follows the camera like a particle
+        val rotation = Minecraft.getInstance().gameRenderer.mainCamera.rotation()
+        poseStack.mulPose(rotation)
+
+        var alpha = 0.1f
+        if (clientPlayerHasRevealing()) alpha = MAX_ALPHA
+
+        // empty nodes look like small black circles
+        aspectMap.toSortedList().run {
+          if (this.isNotEmpty())
+            for (stack in this)
+              renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
+          else renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
+        }
+      }
     }
   }
 }

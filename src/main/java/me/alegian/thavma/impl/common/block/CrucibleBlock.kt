@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -114,6 +115,11 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
     // generic fluid interaction
     if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.direction))
       return ItemInteractionResult.SUCCESS
+
+    if (pStack.item == T7Blocks.SEALING_JAR.asItem()) {
+      val result = AspectContainer.blockSourceItemSink(pLevel, pPos, pStack)?.transferAnyAspect()
+      if (result != null) return ItemInteractionResult.SUCCESS
+    }
 
     return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult)
   }

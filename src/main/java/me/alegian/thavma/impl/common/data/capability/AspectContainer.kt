@@ -65,6 +65,17 @@ open class AspectContainer(
         .anyMatch { a -> simulateTransfer(a.get(), 1) > 0 }
     }
 
+    open fun transferAnyAspect(): AspectStack? {
+      for (a in source.aspects.map { it.aspect }) {
+        val amount = simulateTransfer(a, source.aspects[a])
+        if (amount == 0) continue
+        sink.insert(a, amount, false)
+        source.extract(a, amount, false)
+        return of(a, amount)
+      }
+      return null
+    }
+
     open fun transferPrimal(indexOffset: Int, idealAmount: Int): AspectStack? {
       val primals = PRIMAL_ASPECTS.size
       for (i in 0..<primals) {

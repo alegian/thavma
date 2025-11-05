@@ -9,8 +9,6 @@ import me.alegian.thavma.impl.init.registries.T7Capabilities.AspectContainer.ITE
 import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
 import net.minecraft.core.BlockPos
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -102,19 +100,6 @@ open class AspectContainer(
   companion object {
     fun at(level: Level?, pos: BlockPos): IAspectContainer? {
       return level?.getCapability(BLOCK, pos)
-    }
-
-    fun getAspectContainerInHand(player: Player?): IAspectContainer? {
-      if (player == null) return null
-      val mainHandItem = player.getItemInHand(InteractionHand.MAIN_HAND)
-      val offHandItem = player.getItemInHand(InteractionHand.OFF_HAND)
-
-      var aspectContainer: IAspectContainer? = null
-
-      if (!mainHandItem.isEmpty) aspectContainer = mainHandItem.getCapability(ITEM)
-      else if (!offHandItem.isEmpty) aspectContainer = offHandItem.getCapability(ITEM)
-
-      return aspectContainer
     }
 
     fun from(itemStack: ItemStack): IAspectContainer? {

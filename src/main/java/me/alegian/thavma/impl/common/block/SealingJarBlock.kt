@@ -4,6 +4,8 @@ import me.alegian.thavma.impl.common.block.entity.SealingJarBE
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
@@ -27,9 +29,15 @@ class SealingJarBlock : Block(Properties.ofFullCopy(Blocks.GLASS)), EntityBlock 
   override fun useItemOn(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hitResult: BlockHitResult): ItemInteractionResult {
     if (stack.item == T7Blocks.SEALING_JAR.asItem()) {
       var result = AspectContainer.itemSourceBlockSink(level, pos, stack)?.transferAnyAspect()
-      if (result != null) return ItemInteractionResult.SUCCESS
+      if (result != null) {
+        player.playSound(SoundEvents.BUCKET_EMPTY)
+        return ItemInteractionResult.SUCCESS
+      }
       result = AspectContainer.blockSourceItemSink(level, pos, stack)?.transferAnyAspect()
-      if (result != null) return ItemInteractionResult.SUCCESS
+      if (result != null) {
+        player.playSound(SoundEvents.BUCKET_FILL)
+        return ItemInteractionResult.SUCCESS
+      }
     }
 
     return super.useItemOn(stack, state, level, pos, player, hand, hitResult)

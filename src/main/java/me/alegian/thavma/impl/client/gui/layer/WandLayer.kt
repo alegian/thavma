@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.item.WandItem
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
@@ -16,8 +17,11 @@ private val BAR_CONTENT = Texture("gui/layer/bar_content", 45, 66)
 
 object WandLayer : LayeredDraw.Layer {
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
-    val aspectContainer = AspectContainer.getAspectContainerInHand(Minecraft.getInstance().player)
-    if (aspectContainer == null || Minecraft.getInstance().options.hideGui) return
+    val player = Minecraft.getInstance().player ?: return
+    val stack = player.mainHandItem
+    if (stack.item !is WandItem) return
+    val aspectContainer = AspectContainer.from(stack) ?: return
+    if (Minecraft.getInstance().options.hideGui) return
 
     val aspectMap = aspectContainer.aspects
     val maxAmount = aspectContainer.capacity

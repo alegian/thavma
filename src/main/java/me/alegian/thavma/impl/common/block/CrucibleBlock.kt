@@ -118,7 +118,10 @@ open class CrucibleBlock : Block(Properties.ofFullCopy(Blocks.CAULDRON)), Entity
 
     if (stack.item == T7Blocks.SEALING_JAR.asItem()) {
       val result = AspectContainer.blockSourceItemSink(level, pos, stack)?.transferAnyAspect()
-      if (result != null) return ItemInteractionResult.SUCCESS
+      if (result != null) {
+        player.playSound(SoundEvents.BUCKET_FILL)
+        return ItemInteractionResult.SUCCESS
+      }
     }
 
     return super.useItemOn(stack, state, level, pos, player, hand, hitResult)

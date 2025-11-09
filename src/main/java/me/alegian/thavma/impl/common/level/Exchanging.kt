@@ -6,28 +6,25 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.event.tick.LevelTickEvent
 import java.util.*
 
 class Exchanging(
   val player: ServerPlayer,
   val stack: ItemStack,
-  val blockState: BlockState,
+  val oldBlock: Block,
+  val newBlock: Block,
   val positions: Queue<BlockPos>
 ) {
   companion object {
-    val instances = mutableListOf<Exchanging>()
+    private val instances = mutableListOf<Exchanging>()
 
-    fun exchange(level: Level, player: ServerPlayer, pos: BlockPos) {
-      if (player.isShiftKeyDown) return
-
-      val state = level.getBlockState(pos)
-      instances.add(Exchanging(player, player.mainHandItem, state, exchangingPositions(level, pos, state)))
+    fun exchange(level: Level, player: ServerPlayer, pos: BlockPos, oldBlock: Block, newBlock: Block) {
+      instances.add(Exchanging(player, player.mainHandItem, oldBlock, newBlock, exchangingPositions(level, pos, oldBlock)))
     }
 
-    fun exchangingPositions(level: LevelAccessor, origin: BlockPos, state: BlockState): Queue<BlockPos> {
+    fun exchangingPositions(level: LevelAccessor, origin: BlockPos, block: Block): Queue<BlockPos> {
       val checking = mutableListOf<BlockPos>()
       checking.add(origin)
       val mutablePos = BlockPos.MutableBlockPos()
@@ -42,7 +39,7 @@ class Exchanging(
               if (i == 0 && j == 0 && k == 0) continue
               mutablePos.set(currPos.x + i, currPos.y + j, currPos.z + k)
               if (visited.contains(mutablePos)) continue
-              if (state.block != level.getBlockState(mutablePos).block) continue
+              if (block != level.getBlockState(mutablePos).block) continue
               val immutable = mutablePos.immutable()
               if (checking.contains(immutable)) continue
               checking.add(immutable)
@@ -69,8 +66,9 @@ class Exchanging(
           continue
         }
         val pos = instance.positions.remove()
-        if (event.level.getBlockState(pos).block != instance.blockState.block) continue
-        val newState = Blocks.QUARTZ_BLOCK.defaultBlockState()
+        if (event.level.getBlockState(pos).block != instance.oldBlock) continue
+        if (event.level.getBlockEntity(pos) != null) continue
+        val newState = instance.newBlock.defaultBlockState()
         event.level.setBlockAndUpdate(pos, newState)
         val soundType = newState.getSoundType(event.level, pos, instance.player)
         event.level.playSound(

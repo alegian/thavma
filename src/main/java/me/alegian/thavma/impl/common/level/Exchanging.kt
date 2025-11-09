@@ -43,9 +43,9 @@ class Exchanging(
               mutablePos.set(currPos.x + i, currPos.y + j, currPos.z + k)
               if (visited.contains(mutablePos)) continue
               if (block != level.getBlockState(mutablePos).block) continue
-              val immutable = mutablePos.immutable()
-              if (checking.contains(immutable)) continue
-              checking.add(immutable)
+              if (checking.contains(mutablePos)) continue
+              if (!anyAirAround(level, mutablePos)) continue
+              checking.add(mutablePos.immutable())
             }
       }
 
@@ -90,7 +90,7 @@ class Exchanging(
       }
     }
 
-    private fun anyAirAround(level: Level, pos: BlockPos) =
+    private fun anyAirAround(level: LevelAccessor, pos: BlockPos) =
       Direction.entries.any { level.getBlockState(pos.relative(it)).isAir }
   }
 }

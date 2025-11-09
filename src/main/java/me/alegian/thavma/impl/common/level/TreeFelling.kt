@@ -53,9 +53,8 @@ class TreeFelling(
               mutablePos.set(currPos.x + i, currPos.y + j, currPos.z + k)
               if (visited.contains(mutablePos)) continue
               if (state.block != level.getBlockState(mutablePos).block) continue
-              val immutable = mutablePos.immutable()
-              if (checking.contains(immutable)) continue
-              checking.add(immutable)
+              if (checking.contains(mutablePos)) continue
+              checking.add(mutablePos.immutable())
             }
       }
 

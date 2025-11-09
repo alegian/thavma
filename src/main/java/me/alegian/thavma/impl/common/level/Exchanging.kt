@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.level
 
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
@@ -8,6 +9,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.event.tick.LevelTickEvent
+import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.*
 
 class Exchanging(
@@ -50,13 +52,14 @@ class Exchanging(
     }
 
     fun levelTick(event: LevelTickEvent.Pre) {
-      if (event.level.isClientSide) return
+      val level = event.level
+      if (level !is ServerLevel) return
       if (event.level.gameTime % 3 != 0L) return
 
       val instanceIterator = instances.iterator()
       while (instanceIterator.hasNext()) {
         val instance = instanceIterator.next()
-        if (instance.player.level() != event.level) continue
+        if (instance.player.level() != level) continue
         if (
           instance.player.isRemoved ||
           instance.positions.isEmpty() ||
@@ -66,10 +69,14 @@ class Exchanging(
           continue
         }
         val pos = instance.positions.remove()
-        if (event.level.getBlockState(pos).block != instance.oldBlock) continue
-        if (event.level.getBlockEntity(pos) != null) continue
+        val oldState = level.getBlockState(pos)
+        if (oldState.block != instance.oldBlock) continue
+        if (level.getBlockEntity(pos) != null) continue
         val newState = instance.newBlock.defaultBlockState()
         event.level.setBlockAndUpdate(pos, newState)
+        Block.getDrops(oldState, level, pos, null).forEach {
+          ItemHandlerHelper.giveItemToPlayer(instance.player, it)
+        }
         val soundType = newState.getSoundType(event.level, pos, instance.player)
         event.level.playSound(
           null,

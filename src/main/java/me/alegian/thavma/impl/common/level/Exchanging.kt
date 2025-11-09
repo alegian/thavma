@@ -11,6 +11,7 @@ import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.event.tick.LevelTickEvent
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper
 import java.util.*
 
 class Exchanging(
@@ -33,7 +34,7 @@ class Exchanging(
       val mutablePos = BlockPos.MutableBlockPos()
       val visited = mutableSetOf<BlockPos>()
 
-      while (!checking.isEmpty() && visited.size < 64) {
+      while (!checking.isEmpty() && visited.size < 32) {
         val currPos = checking.removeFirst()
         visited.add(currPos)
         for (i in -1..1)
@@ -74,6 +75,22 @@ class Exchanging(
         if (oldState.block != instance.oldBlock) continue
         if (level.getBlockEntity(pos) != null) continue
         val newState = instance.newBlock.defaultBlockState()
+
+        val inventory = PlayerMainInvWrapper(instance.player.inventory)
+        var consumedItem = false
+        for (i in 0..<inventory.slots)
+          if (inventory.getStackInSlot(i).item == instance.newBlock.asItem()) {
+            val extracted = inventory.extractItem(i, 1, false)
+            if (!extracted.isEmpty) {
+              consumedItem = true
+              break
+            }
+          }
+        if (!consumedItem) {
+          instanceIterator.remove()
+          continue
+        }
+
         event.level.setBlockAndUpdate(pos, newState)
         Block.getDrops(oldState, level, pos, null).forEach {
           ItemHandlerHelper.giveItemToPlayer(instance.player, it)

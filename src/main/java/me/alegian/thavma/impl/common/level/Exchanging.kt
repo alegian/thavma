@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.common.level
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundSource
@@ -88,5 +89,8 @@ class Exchanging(
         )
       }
     }
+
+    private fun anyAirAround(level: Level, pos: BlockPos) =
+      Direction.entries.any { level.getBlockState(pos.relative(it)).isAir }
   }
 }

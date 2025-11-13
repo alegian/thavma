@@ -139,6 +139,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ARCANE_LENS.get(), "Arcane Lens")
     add(BOOK.get(), "Elements of Thavma")
 
+    add(T7Items.BASIC_AMULET.get(), "Basic Amulet")
+    add(T7Items.BASIC_BELT.get(), "Basic Belt")
+    add(T7Items.BASIC_RING.get(), "Basic Ring")
+
     add(GOGGLES.get(), "Goggles Of Revealing")
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
     add(DAWN_CHARM.get(), "Charm of the Dawn")

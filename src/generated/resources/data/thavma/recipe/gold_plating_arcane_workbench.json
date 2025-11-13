@@ -1,0 +1,26 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 24,
+    "thavma:aether": 24,
+    "thavma:aqua": 24,
+    "thavma:ignis": 24,
+    "thavma:terra": 24
+  },
+  "key": {
+    "i": {
+      "item": "minecraft:gold_ingot"
+    },
+    "n": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "pattern": [
+    " ni",
+    " in"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:gold_plating"
+  }
+}

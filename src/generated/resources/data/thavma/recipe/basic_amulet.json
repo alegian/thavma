@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "o": {
+      "item": "thavma:orichalcum_ingot"
+    },
+    "s": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    " s ",
+    "s s",
+    " o "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:basic_amulet"
+  }
+}

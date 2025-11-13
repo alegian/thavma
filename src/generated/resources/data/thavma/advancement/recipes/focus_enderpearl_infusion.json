@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iron_ingot"
+        "recipe": "thavma:focus_enderpearl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iron_ingot"
+      "thavma:focus_enderpearl"
     ]
   }
 }

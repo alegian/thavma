@@ -1,0 +1,24 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:lux": 40
+  },
+  "base": {
+    "item": "thavma:basic_amulet"
+  },
+  "components": [
+    {
+      "item": "thavma:eternal_flame"
+    },
+    {
+      "item": "minecraft:glowstone"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:charm_of_the_dawn"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:herba": 32,
+    "thavma:instrumentum": 32
+  },
+  "base": {
+    "item": "thavma:thavmite_axe"
+  },
+  "components": [
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "minecraft:blaze_rod"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:axe_of_the_forest"
+  }
+}

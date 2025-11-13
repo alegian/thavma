@@ -1,0 +1,25 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:instrumentum": 16,
+    "thavma:permutatio": 40
+  },
+  "base": {
+    "item": "minecraft:quartz_block"
+  },
+  "components": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:focus_exchange"
+  }
+}

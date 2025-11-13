@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": {
+      "tag": "c:leathers"
+    },
+    "o": {
+      "item": "thavma:orichalcum_ingot"
+    }
+  },
+  "pattern": [
+    "lll",
+    "l l",
+    " o "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:basic_belt"
+  }
+}

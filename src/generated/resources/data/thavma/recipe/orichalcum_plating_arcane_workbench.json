@@ -1,0 +1,26 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 8,
+    "thavma:aether": 8,
+    "thavma:aqua": 8,
+    "thavma:ignis": 8,
+    "thavma:terra": 8
+  },
+  "key": {
+    "i": {
+      "item": "thavma:orichalcum_ingot"
+    },
+    "n": {
+      "item": "thavma:orichalcum_nugget"
+    }
+  },
+  "pattern": [
+    " ni",
+    " in"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:orichalcum_plating"
+  }
+}

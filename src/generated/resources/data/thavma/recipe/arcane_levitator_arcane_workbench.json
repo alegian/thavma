@@ -1,0 +1,28 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 12,
+    "thavma:aether": 4,
+    "thavma:terra": 4
+  },
+  "key": {
+    "a": {
+      "item": "thavma:aer_shard"
+    },
+    "c": {
+      "item": "thavma:elemental_core"
+    },
+    "s": {
+      "item": "thavma:elemental_stone"
+    }
+  },
+  "pattern": [
+    "sas",
+    "scs",
+    "sas"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:arcane_levitator"
+  }
+}

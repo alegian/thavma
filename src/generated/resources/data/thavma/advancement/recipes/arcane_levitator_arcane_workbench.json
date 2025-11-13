@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_elemental_core": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:elemental_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_elemental_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:elemental_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_shards": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#thavma:shards"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:arcane_levitator"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_elemental_stone",
+      "has_elemental_core",
+      "has_shards"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:arcane_levitator"
+    ]
+  }
+}

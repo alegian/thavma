@@ -32,11 +32,12 @@ class WorkbenchEmiRecipe(private val recipe: RecipeHolder<WorkbenchRecipe>) :
       for (x in 0..2) {
         var emiIngredient: EmiIngredient = EmiStack.of(ItemStack.EMPTY)
 
-        if (y < recipe.value.pattern.height() && x < recipe.value.pattern.width())
+        if (y < recipe.value.pattern.height() && x < recipe.value.pattern.width()) {
           emiIngredient = inputs[i]
+          i++
+        }
 
         widgets.addSlot(emiIngredient, x * SLOT, y * SLOT)
-        i++
       }
     }
 

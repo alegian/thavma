@@ -68,6 +68,10 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     basicItem(GREATWOOD_CORE)
     basicItem(SILVERWOOD_CORE)
 
+    basicItem(T7Items.BASIC_AMULET)
+    basicItem(T7Items.BASIC_RING)
+    basicItem(T7Items.BASIC_BELT)
+
     basicItem(RUNE)
     basicItem(THAVMITE_INGOT)
     basicItem(THAVMITE_NUGGET)

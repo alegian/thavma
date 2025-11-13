@@ -38,6 +38,10 @@ object T7Items {
   val ORICHALCUM_NUGGET = REGISTRAR.registerSimpleItem("orichalcum_nugget")
   val RESEARCH_SCROLL = REGISTRAR.register("research_scroll", ::ResearchScrollItem)
 
+  val BASIC_AMULET = REGISTRAR.registerSimpleItem("basic_amulet")
+  val BASIC_RING = REGISTRAR.registerSimpleItem("basic_ring")
+  val BASIC_BELT = REGISTRAR.registerSimpleItem("basic_belt")
+
   val THAVMITE_SWORD = REGISTRAR.register("thavmite_sword") { ->
     SwordItem(
       T7Tiers.THAVMITE_TIER,

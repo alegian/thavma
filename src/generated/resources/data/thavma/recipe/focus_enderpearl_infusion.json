@@ -1,0 +1,26 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:alienis": 16,
+    "thavma:instrumentum": 16,
+    "thavma:motus": 32
+  },
+  "base": {
+    "item": "minecraft:ender_pearl"
+  },
+  "components": [
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "minecraft:dispenser"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:focus_enderpearl"
+  }
+}

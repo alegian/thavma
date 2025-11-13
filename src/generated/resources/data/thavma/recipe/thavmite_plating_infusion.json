@@ -1,0 +1,24 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:praecantatio": 32
+  },
+  "base": {
+    "item": "thavma:thavmite_ingot"
+  },
+  "components": [
+    {
+      "item": "thavma:thavmite_ingot"
+    },
+    {
+      "item": "thavma:thavmite_nugget"
+    },
+    {
+      "item": "thavma:thavmite_nugget"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_plating"
+  }
+}

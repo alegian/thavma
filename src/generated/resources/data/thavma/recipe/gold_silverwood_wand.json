@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "wand",
+  "key": {
+    "c": {
+      "item": "thavma:silverwood_core"
+    },
+    "p": {
+      "item": "thavma:gold_plating"
+    }
+  },
+  "pattern": [
+    " pp",
+    " cp",
+    "c  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:gold_silverwood_wand"
+  }
+}

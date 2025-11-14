@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "thavma:iron_plating"
+            "items": "thavma:thavmite_plating"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:iron_wood_wand"
+        "recipe": "thavma:thavmite_wood_wand"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:iron_wood_wand"
+      "thavma:thavmite_wood_wand"
     ]
   }
 }

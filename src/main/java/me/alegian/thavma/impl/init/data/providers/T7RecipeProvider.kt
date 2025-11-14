@@ -9,8 +9,10 @@ import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
+import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import net.minecraft.advancements.Criterion
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -30,7 +32,11 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
   override fun buildRecipes(pRecipeOutput: RecipeOutput) {
     planksFromLog(pRecipeOutput, T7Blocks.GREATWOOD_PLANKS, T7Blocks.GREATWOOD_LOG)
     planksFromLog(pRecipeOutput, T7Blocks.SILVERWOOD_PLANKS, T7Blocks.SILVERWOOD_LOG)
-    wand(pRecipeOutput, wandOrThrow(IRON.get(), WOOD.get()), T7Items.IRON_PLATING.get(), Tags.Items.RODS_WOODEN)
+
+    for (core in wandCoreIngredients)
+      for (plating in wandPlatingIngredients)
+        wand(pRecipeOutput, wandOrThrow(plating.key.get(), core.key.get()), plating.value, core.value)
+
     ingot(pRecipeOutput, T7Items.THAVMITE_INGOT.get(), T7Items.THAVMITE_NUGGET.get(), T7Blocks.THAVMITE_BLOCK.get())
     ingot(pRecipeOutput, T7Items.ORICHALCUM_INGOT.get(), T7Items.ORICHALCUM_NUGGET.get(), T7Blocks.ORICHALCUM_BLOCK.get())
     slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, T7Blocks.GREATWOOD_SLAB.get(), T7Blocks.GREATWOOD_PLANKS.get())
@@ -451,20 +457,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       )
     }
 
-    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, plating: ItemLike, core: ItemLike) {
-      ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
-        .define('p', plating)
-        .define('c', core)
-        .pattern("  c")
-        .pattern(" c ")
-        .pattern("p  ")
-        .group("wand")
-        .unlockedBy(getHasName(plating), has(plating))
-        .save(pRecipeOutput)
-    }
-
-    // for wooden cores
-    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, plating: ItemLike, core: TagKey<Item?>) {
+    protected fun wand(pRecipeOutput: RecipeOutput, wand: ItemLike, plating: Ingredient, core: Ingredient) {
       ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
         .define('p', plating)
         .define('c', core)
@@ -472,7 +465,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .pattern(" cp")
         .pattern("c  ")
         .group("wand")
-        .unlockedBy(getHasName(plating), has(plating))
+        .unlockedBy("has_plating", inventoryTrigger(ItemPredicate.Builder.item().of(*plating.items.map { it.item }.toTypedArray())))
+        .unlockedBy("has_core", inventoryTrigger(ItemPredicate.Builder.item().of(*core.items.map { it.item }.toTypedArray())))
         .save(pRecipeOutput)
     }
 
@@ -556,5 +550,18 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     protected fun itemLoc(itemLike: ItemLike): String {
       return BuiltInRegistries.ITEM.getKey(itemLike.asItem()).toString()
     }
+
+    private val wandCoreIngredients = mapOf(
+      WandCoreMaterials.WOOD to Ingredient.of(Tags.Items.RODS_WOODEN),
+      WandCoreMaterials.GREATWOOD to Ingredient.of(T7Items.GREATWOOD_CORE),
+      WandCoreMaterials.SILVERWOOD to Ingredient.of(T7Items.SILVERWOOD_CORE),
+    )
+
+    private val wandPlatingIngredients = mapOf(
+      WandPlatingMaterials.IRON to Ingredient.of(T7Items.IRON_PLATING),
+      WandPlatingMaterials.ORICHALCUM to Ingredient.of(T7Items.ORICHALCUM_PLATING),
+      WandPlatingMaterials.GOLD to Ingredient.of(T7Items.GOLD_PLATING),
+      WandPlatingMaterials.THAVMITE to Ingredient.of(T7Items.THAVMITE_PLATING),
+    )
   }
 }

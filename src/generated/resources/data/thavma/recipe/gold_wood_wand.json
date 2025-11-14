@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "wand",
+  "key": {
+    "c": {
+      "tag": "c:rods/wooden"
+    },
+    "p": {
+      "item": "thavma:gold_plating"
+    }
+  },
+  "pattern": [
+    " pp",
+    " cp",
+    "c  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:gold_wood_wand"
+  }
+}

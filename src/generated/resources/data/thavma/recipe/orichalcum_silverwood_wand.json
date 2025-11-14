@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "wand",
+  "key": {
+    "c": {
+      "item": "thavma:silverwood_core"
+    },
+    "p": {
+      "item": "thavma:orichalcum_plating"
+    }
+  },
+  "pattern": [
+    " pp",
+    " cp",
+    "c  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:orichalcum_silverwood_wand"
+  }
+}

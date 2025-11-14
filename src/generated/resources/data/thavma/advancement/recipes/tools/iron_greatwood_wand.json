@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:barrier"
+            "items": "thavma:greatwood_core"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "thavma:iron_wood_wand"
+        "recipe": "thavma:iron_greatwood_wand"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thavma:iron_wood_wand"
+      "thavma:iron_greatwood_wand"
     ]
   }
 }

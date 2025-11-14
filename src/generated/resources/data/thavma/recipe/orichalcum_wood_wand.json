@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "wand",
+  "key": {
+    "c": {
+      "tag": "c:rods/wooden"
+    },
+    "p": {
+      "item": "thavma:orichalcum_plating"
+    }
+  },
+  "pattern": [
+    " pp",
+    " cp",
+    "c  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:orichalcum_wood_wand"
+  }
+}

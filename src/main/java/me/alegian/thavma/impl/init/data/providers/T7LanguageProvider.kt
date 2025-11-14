@@ -169,8 +169,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(THAVMITE_HAMMER.get(), "Thavmite Hammer")
     add(THAVMITE_SHOVEL.get(), "Thavmite Shovel")
     add(THAVMITE_HOE.get(), "Thavmite Hoe")
-    add(THAVMITE_KATANA.get(), "Thavmite Katana")
-    add(ZEPHYR.get(), "Zephyr")
+    add(THAVMITE_KATANA.get(), "[WIP]Thavmite Katana")
+    add(ZEPHYR.get(), "[WIP]Zephyr")
     add(T7Items.AXE_OF_THE_FOREST.get(), "Axe of the Forest")
 
     val platingNames: MutableMap<WandPlatingMaterial, String> = HashMap()

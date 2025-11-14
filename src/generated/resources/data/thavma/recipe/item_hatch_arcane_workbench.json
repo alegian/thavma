@@ -1,0 +1,23 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:ignis": 12
+  },
+  "key": {
+    "i": {
+      "item": "thavma:iron_plating"
+    },
+    "t": {
+      "tag": "minecraft:trapdoors"
+    }
+  },
+  "pattern": [
+    "iii",
+    "iti",
+    "iii"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:item_hatch"
+  }
+}

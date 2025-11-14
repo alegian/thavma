@@ -1,0 +1,27 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:praecantatio": 16
+  },
+  "base": {
+    "item": "thavma:silverwood_log"
+  },
+  "components": [
+    {
+      "item": "thavma:aether_shard"
+    },
+    {
+      "item": "thavma:aether_shard"
+    },
+    {
+      "item": "thavma:aether_shard"
+    },
+    {
+      "item": "thavma:aether_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:silverwood_core"
+  }
+}

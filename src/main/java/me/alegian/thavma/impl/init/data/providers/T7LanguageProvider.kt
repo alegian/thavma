@@ -118,10 +118,10 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(Thavma.MODID, "Thavma")
 
-    add(IRON_PLATING.get(), "Iron Wand Plating")
-    add(GOLD_PLATING.get(), "Gold Wand Plating")
-    add(ORICHALCUM_PLATING.get(), "Orichalcum Wand Plating")
-    add(THAVMITE_PLATING.get(), "Thavmite Wand Plating")
+    add(IRON_PLATING.get(), "Iron Plating")
+    add(GOLD_PLATING.get(), "Gold Plating")
+    add(ORICHALCUM_PLATING.get(), "Orichalcum Plating")
+    add(THAVMITE_PLATING.get(), "Thavmite Plating")
 
     add(EYE_OF_WARDEN.get(), "Eye of Warden")
     add(ROTTEN_BRAIN.get(), "Rotten Brain")
@@ -146,19 +146,19 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(GOGGLES.get(), "Goggles Of Revealing")
     add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
     add(DAWN_CHARM.get(), "Charm of the Dawn")
-    add(APPRENTICE_BOOTS.get(), "Apprentice Boots")
-    add(APPRENTICE_CHESTPLATE.get(), "Apprentice Robes")
-    add(APPRENTICE_LEGGINGS.get(), "Apprentice Pants")
+    add(APPRENTICE_BOOTS.get(), "[WIP]Apprentice Boots")
+    add(APPRENTICE_CHESTPLATE.get(), "[WIP]Apprentice Robes")
+    add(APPRENTICE_LEGGINGS.get(), "[WIP]Apprentice Pants")
 
     add(THAVMITE_BOOTS.get(), "Thavmite Boots")
     add(THAVMITE_HELMET.get(), "Thavmite Helmet")
     add(THAVMITE_CHESTPLATE.get(), "Thavmite Chestplate")
     add(THAVMITE_LEGGINGS.get(), "Thavmite Leggings")
 
-    add(THAVMITE_VANGUARD_BOOTS.get(), "Thavmite Vanguard Boots")
-    add(THAVMITE_VANGUARD_HELMET.get(), "Thavmite Vanguard Helmet")
-    add(THAVMITE_VANGUARD_CHESTPLATE.get(), "Thavmite Vanguard Chestplate")
-    add(THAVMITE_VANGUARD_LEGGINGS.get(), "Thavmite Vanguard Leggings")
+    add(THAVMITE_VANGUARD_BOOTS.get(), "[WIP]Thavmite Vanguard Boots")
+    add(THAVMITE_VANGUARD_HELMET.get(), "[WIP]Thavmite Vanguard Helmet")
+    add(THAVMITE_VANGUARD_CHESTPLATE.get(), "[WIP]Thavmite Vanguard Chestplate")
+    add(THAVMITE_VANGUARD_LEGGINGS.get(), "[WIP]Thavmite Vanguard Leggings")
 
     for ((aspect, shard) in T7Items.SHARDS)
       add(shard.get(), aspectTranslations[aspect]!! + " Shard")
@@ -189,14 +189,14 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       add(wand, "$pName $cName Wand")
     }
 
-    add(T7Items.FOCUS_EMBERS.get(), "Focus: Embers")
-    add(T7Items.FOCUS_EXCAVATION.get(), "Focus: Excavation")
+    add(T7Items.FOCUS_EMBERS.get(), "[WIP]Focus: Embers")
+    add(T7Items.FOCUS_EXCAVATION.get(), "[WIP]Focus: Excavation")
     add(T7Items.FOCUS_ENDERCHEST.get(), "Focus: Enderchest")
     add(T7Items.FOCUS_LIGHT.get(), "Focus: Light")
-    add(T7Items.FOCUS_HOLE.get(), "Focus: Hole")
+    add(T7Items.FOCUS_HOLE.get(), "[WIP]Focus: Hole")
     add(T7Items.FOCUS_ENDERPEARL.get(), "Focus: Enderpearl")
     add(T7Items.FOCUS_EXCHANGE.get(), "Focus: Exchange")
-    add(T7Items.FOCUS_LIGHTNING.get(), "Focus: Lightning")
+    add(T7Items.FOCUS_LIGHTNING.get(), "[WIP]Focus: Lightning")
 
     add(AURA_NODE.get(), "Aura Node")
     add(CRUCIBLE.get(), "Crucible")

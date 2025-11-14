@@ -1,7 +1,7 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:praecantatio": 32
+    "thavma:praecantatio": 16
   },
   "base": {
     "item": "thavma:thavmite_ingot"

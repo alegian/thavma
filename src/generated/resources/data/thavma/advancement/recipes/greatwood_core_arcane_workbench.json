@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_greatwood_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:greatwood_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_shards": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#thavma:shards"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:greatwood_core"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_greatwood_log",
+      "has_shards"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:greatwood_core"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 12,
+    "thavma:terra": 12
+  },
+  "key": {
+    "b": {
+      "item": "minecraft:bundle"
+    },
+    "e": {
+      "item": "minecraft:ender_chest"
+    },
+    "o": {
+      "tag": "c:obsidians"
+    }
+  },
+  "pattern": [
+    "ooo",
+    "oeo",
+    "obo"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:focus_enderchest"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aether": 12,
+    "thavma:ignis": 12
+  },
+  "key": {
+    "b": {
+      "tag": "c:storage_blocks/coal"
+    },
+    "e": {
+      "item": "thavma:eternal_flame"
+    },
+    "o": {
+      "item": "thavma:orichalcum_plating"
+    }
+  },
+  "pattern": [
+    "oeo",
+    "ebe",
+    "oeo"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:focus_light"
+  }
+}

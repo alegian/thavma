@@ -8,19 +8,20 @@
     "thavma:terra": 8
   },
   "key": {
-    "i": {
-      "item": "minecraft:gold_ingot"
+    "d": {
+      "item": "minecraft:cobbled_deepslate"
     },
-    "n": {
-      "item": "minecraft:gold_nugget"
+    "s": {
+      "tag": "thavma:shards"
     }
   },
   "pattern": [
-    " ni",
-    " in"
+    "ddd",
+    "dsd",
+    "ddd"
   ],
   "result": {
-    "count": 1,
-    "id": "thavma:gold_plating"
+    "count": 4,
+    "id": "thavma:rune"
   }
 }

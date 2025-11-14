@@ -8,19 +8,20 @@
     "thavma:terra": 8
   },
   "key": {
-    "i": {
-      "item": "minecraft:gold_ingot"
+    "g": {
+      "item": "thavma:greatwood_log"
     },
-    "n": {
-      "item": "minecraft:gold_nugget"
+    "o": {
+      "item": "thavma:aether_shard"
     }
   },
   "pattern": [
-    " ni",
-    " in"
+    " og",
+    "ogo",
+    "go "
   ],
   "result": {
     "count": 1,
-    "id": "thavma:gold_plating"
+    "id": "thavma:greatwood_core"
   }
 }

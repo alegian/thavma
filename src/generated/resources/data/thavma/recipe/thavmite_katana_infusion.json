@@ -1,0 +1,28 @@
+{
+  "type": "thavma:infusion",
+  "aspects": {
+    "thavma:aversio": 16,
+    "thavma:praecantatio": 16
+  },
+  "base": {
+    "item": "thavma:thavmite_sword"
+  },
+  "components": [
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "thavma:thavmite_plating"
+    },
+    {
+      "item": "thavma:greatwood_core"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:thavmite_katana"
+  }
+}

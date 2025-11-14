@@ -11,15 +11,12 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
-import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.*
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -320,6 +317,15 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       AspectMap.builder()
         .add(Aspects.HERBA, 32)
         .add(Aspects.INSTRUMENTUM, 32)
+        .build(),
+    ).save(pRecipeOutput)
+    InfusionRecipeBuilder(
+      T7Items.THAVMITE_KATANA,
+      Ingredient.of(T7Items.THAVMITE_SWORD),
+      listOf(Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.GREATWOOD_CORE), Ingredient.of(Items.NETHERITE_INGOT)),
+      AspectMap.builder()
+        .add(Aspects.PRAECANTATIO, 16)
+        .add(Aspects.AVERSIO, 16)
         .build(),
     ).save(pRecipeOutput)
 

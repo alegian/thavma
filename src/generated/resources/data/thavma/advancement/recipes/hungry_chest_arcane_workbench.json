@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_greatwood_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "thavma:greatwood_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "thavma:hungry_chest"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_trapdoors": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:trapdoors"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_greatwood_planks",
+      "has_trapdoors"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thavma:hungry_chest"
+    ]
+  }
+}

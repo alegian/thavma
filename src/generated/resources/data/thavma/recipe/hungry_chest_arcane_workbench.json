@@ -1,0 +1,24 @@
+{
+  "type": "thavma:arcane_workbench",
+  "aspects": {
+    "thavma:aer": 8,
+    "thavma:aether": 4
+  },
+  "key": {
+    "t": {
+      "tag": "minecraft:trapdoors"
+    },
+    "w": {
+      "item": "thavma:greatwood_planks"
+    }
+  },
+  "pattern": [
+    "wtw",
+    "w w",
+    "www"
+  ],
+  "result": {
+    "count": 1,
+    "id": "thavma:hungry_chest"
+  }
+}

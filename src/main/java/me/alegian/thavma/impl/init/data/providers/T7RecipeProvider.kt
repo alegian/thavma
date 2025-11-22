@@ -373,6 +373,17 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy("has_obsidians", has(Tags.Items.OBSIDIANS))
       .save(pRecipeOutput)
 
+    WorkbenchRecipeBuilder.shaped(T7Blocks.HUNGRY_CHEST, 1)
+      .requireAspects(AspectMap.builder().add(Aspects.AER, 8).add(Aspects.AETHER, 4).build())
+      .define('t', ItemTags.TRAPDOORS)
+      .define('w', T7Blocks.GREATWOOD_PLANKS)
+      .pattern("wtw")
+      .pattern("w w")
+      .pattern("www")
+      .unlockedBy(getHasName(T7Blocks.GREATWOOD_PLANKS), has(T7Blocks.GREATWOOD_PLANKS))
+      .unlockedBy("has_trapdoors", has(ItemTags.TRAPDOORS))
+      .save(pRecipeOutput)
+
     WorkbenchRecipeBuilder.shaped(T7Blocks.ITEM_HATCH, 1)
       .requireAspects(AspectMap.builder().add(Aspects.IGNIS, 12).build())
       .define('i', T7Items.IRON_PLATING)

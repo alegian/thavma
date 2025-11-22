@@ -121,14 +121,14 @@ private fun aspectTooltip(event: GatherComponents) {
 private fun renderPlayerPre(event: RenderPlayerEvent.Pre) {
   val model = event.renderer.model
 
-  // if chestplate exists, disable sleeves & jacket to prevent clipping with thin armors
-  getClientPlayerEquipmentItem(EquipmentSlot.CHEST)?.let {
+  // if chestplate exists, disable sleeves & jacket to prevent clipping with thin armor
+  if (getClientPlayerEquipmentItem(EquipmentSlot.CHEST) == T7Items.THAVMITE_VANGUARD_CHESTPLATE.get()) {
     model.leftSleeve.visible = false
     model.rightSleeve.visible = false
     model.jacket.visible = false
   }
-  // if leggings exist, disable pants to prevent clipping with thin armors
-  getClientPlayerEquipmentItem(EquipmentSlot.LEGS)?.let {
+  // if leggings exist, disable pants to prevent clipping with thin armor
+  if (getClientPlayerEquipmentItem(EquipmentSlot.LEGS) == T7Items.THAVMITE_VANGUARD_LEGGINGS.get()) {
     model.leftPants.visible = false
     model.rightPants.visible = false
   }

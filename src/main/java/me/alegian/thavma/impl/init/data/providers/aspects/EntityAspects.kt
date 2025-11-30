@@ -3,19 +3,7 @@ package me.alegian.thavma.impl.init.data.providers.aspects
 import me.alegian.thavma.impl.init.data.providers.T7DataMapProvider
 import me.alegian.thavma.impl.init.data.providers.entity
 import me.alegian.thavma.impl.init.registries.T7DataMaps
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALIENIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.ALKIMIA
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.AQUA
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.BESTIA
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.DESIDERIUM
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.EXANIMIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.HERBA
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.HUMANUS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.IGNIS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.MOTUS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.TERRA
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.VICTUS
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.VINCULUM
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.entity.EntityType
@@ -38,30 +26,29 @@ object EntityAspects {
       entity(EntityType.CHICKEN) {}
       entity(EntityType.COD) {}
       entity(EntityType.COW) {
-        it.add(TERRA, 15)
-          .add(BESTIA, 15)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.VICTUS, 8)
       }
       entity(EntityType.CREEPER) {
-        it.add(IGNIS, 15)
-          .add(HERBA, 15)
+        it.add(Aspects.IGNIS, 15)
+          .add(Aspects.HERBA, 15)
       }
       entity(EntityType.DOLPHIN) {}
       entity(EntityType.DONKEY) {}
       entity(EntityType.DROWNED) {}
       entity(EntityType.ELDER_GUARDIAN) {}
       entity(EntityType.ENDERMAN) {
-        it.add(MOTUS, 12)
-          .add(ALIENIS, 8)
-          .add(HUMANUS, 4)
-          .add(DESIDERIUM, 4)
+        it.add(Aspects.TENEBRAE, 8)
+          .add(Aspects.HOSTILIS, 4)
+          .add(Aspects.CIVILIS, 4)
       }
       entity(EntityType.ENDERMITE) {}
       entity(EntityType.EVOKER) {}
       entity(EntityType.FOX) {}
       entity(EntityType.FROG) {}
       entity(EntityType.GHAST) {
-        it.add(EXANIMIS, 12)
-          .add(IGNIS, 8)
+        it.add(Aspects.HOSTILIS, 12)
+          .add(Aspects.IGNIS, 8)
       }
       entity(EntityType.GLOW_SQUID) {}
       entity(EntityType.GOAT) {}
@@ -79,9 +66,8 @@ object EntityAspects {
       entity(EntityType.PARROT) {}
       entity(EntityType.PHANTOM) {}
       entity(EntityType.PIG) {
-        it.add(DESIDERIUM, 5)
-          .add(TERRA, 10)
-          .add(BESTIA, 10)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.VICTUS, 8)
       }
       entity(EntityType.PIGLIN) {}
       entity(EntityType.PIGLIN_BRUTE) {}
@@ -92,27 +78,26 @@ object EntityAspects {
       entity(EntityType.RAVAGER) {}
       entity(EntityType.SALMON) {}
       entity(EntityType.SHEEP) {
-        it.add(TERRA, 10)
-          .add(BESTIA, 10)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.VICTUS, 8)
       }
       entity(EntityType.SHULKER) {}
       entity(EntityType.SILVERFISH) {}
       entity(EntityType.SKELETON) {
-        it.add(TERRA, 5)
-          .add(HUMANUS, 5)
-          .add(EXANIMIS, 20)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.HOSTILIS, 8)
       }
       entity(EntityType.SKELETON_HORSE) {}
       entity(EntityType.SLIME) {
-        it.add(ALKIMIA, 5)
-          .add(AQUA, 10)
-          .add(VICTUS, 10)
+        it.add(Aspects.ALKIMIA, 5)
+          .add(Aspects.AQUA, 10)
+          .add(Aspects.VICTUS, 10)
       }
       entity(EntityType.SNIFFER) {}
       entity(EntityType.SNOW_GOLEM) {}
       entity(EntityType.SPIDER) {
-        it.add(VINCULUM, 10)
-          .add(BESTIA, 10)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.HOSTILIS, 8)
       }
       entity(EntityType.SQUID) {}
       entity(EntityType.STRAY) {}
@@ -123,7 +108,7 @@ object EntityAspects {
       entity(EntityType.TURTLE) {}
       entity(EntityType.VEX) {}
       entity(EntityType.VILLAGER) {
-        it.add(HUMANUS, 15)
+        it.add(Aspects.CIVILIS, 12)
       }
       entity(EntityType.VINDICATOR) {}
       entity(EntityType.WANDERING_TRADER) {}
@@ -133,9 +118,8 @@ object EntityAspects {
       entity(EntityType.WOLF) {}
       entity(EntityType.ZOGLIN) {}
       entity(EntityType.ZOMBIE) {
-        it.add(TERRA, 5)
-          .add(HUMANUS, 10)
-          .add(EXANIMIS, 20)
+        it.add(Aspects.TERRA, 8)
+          .add(Aspects.HOSTILIS, 8)
       }
       entity(EntityType.ZOMBIE_HORSE) {}
       entity(EntityType.ZOMBIE_VILLAGER) {}

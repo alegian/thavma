@@ -117,7 +117,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.PRAECANTATIO))
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
@@ -136,13 +136,13 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.PRAECANTATIO), broken(2, 2))
+          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
@@ -152,7 +152,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_PROFICIENCY, Vector2i(-1, -1), false, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
@@ -160,15 +160,15 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.PRAECANTATIO), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.PRAECANTATIO))
+          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.HUMANUS))
+          .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.CIVILIS))
           .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)

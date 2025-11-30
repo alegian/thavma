@@ -2,7 +2,7 @@ package me.alegian.thavma.impl.common.entity
 
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
@@ -54,7 +54,7 @@ class VisEntity(pLevel: Level, player: Player?, blockPos: BlockPos = BlockPos(0,
       kill()
       return
     }
-    val transferred = pair.transferPrimal((this.tickCount / PERIOD_TICKS) % PRIMAL_ASPECTS.size, 1)
+    val transferred = pair.transferPrimal((this.tickCount / PERIOD_TICKS) % DATAGEN_PRIMALS.size, 1)
     if (transferred != null && transferred.amount > 0) level.updateBlockEntityS2C(blockPosition())
   }
 

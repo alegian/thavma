@@ -4,17 +4,10 @@ import me.alegian.thavma.impl.init.registries.T7Registries.ASPECT
 import net.minecraft.Util
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.resources.ResourceLocation
-import java.util.function.Supplier
 
-class Aspect(var id: String, var color: Int, var components: List<Supplier<Aspect>>) {
-  val isPrimal: Boolean
-    get() = components.isEmpty()
+class Aspect(var id: String, var color: Int, val isPrimal: Boolean){
   val translationId by lazy {
     Util.makeDescriptionId(ASPECT.key().location().path, ASPECT.getKey(this))
-  }
-  val rank: Int by lazy {
-    if (isPrimal) 1
-    else components.maxOf { a -> a.get().rank } + 1
   }
   val resourceKey
     get() = ASPECT.getResourceKey(this).get()

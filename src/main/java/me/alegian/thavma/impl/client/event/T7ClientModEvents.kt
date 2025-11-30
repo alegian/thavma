@@ -111,7 +111,7 @@ private fun registerGeometryLoaders(event: RegisterGeometryLoaders) {
 }
 
 private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
-  for (aspect in Aspects.PRIMAL_ASPECTS) {
+  for (aspect in Aspects.DATAGEN_PRIMALS) {
     event.register(
       { _, tintIndex ->
         when (tintIndex) {
@@ -156,7 +156,7 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
 }
 
 private fun registerBlockColorHandlers(event: RegisterColorHandlersEvent.Block) {
-  for (aspect in Aspects.PRIMAL_ASPECTS) {
+  for (aspect in Aspects.DATAGEN_PRIMALS) {
     event.register(
       { _, _, _, tintIndex ->
         when (tintIndex) {

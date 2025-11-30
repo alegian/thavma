@@ -47,8 +47,9 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
   else {
     val aspects = aspectMap.map { it.aspect }
-    if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) scanResult = ScanResult.LOCKED
-    else
+    // TODO: think of some other logic here
+//    if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) scanResult = ScanResult.LOCKED
+//    else
       addKnowledge(
         aspects
           .filter { !knowsAspect(it) }

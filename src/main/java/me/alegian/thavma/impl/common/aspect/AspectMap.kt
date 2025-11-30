@@ -1,7 +1,7 @@
 package me.alegian.thavma.impl.common.aspect
 
 import com.mojang.serialization.Codec
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
@@ -168,7 +168,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     fun randomPrimals(scale: Int): AspectMap {
       val random = Random()
       val map = LinkedHashMap<Aspect, Int>()
-      val primals = ArrayList(PRIMAL_ASPECTS)
+      val primals = ArrayList(DATAGEN_PRIMALS)
       primals.shuffle()
       val randomPrimals = primals.subList(0, random.nextInt(primals.size) + 1)
       for (a in randomPrimals) map[a.get()] = random.nextInt(scale) + 1
@@ -181,7 +181,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     fun ofPrimals(amount: Int): AspectMap {
       val builder = Builder()
-      for (a in PRIMAL_ASPECTS) {
+      for (a in DATAGEN_PRIMALS) {
         builder.add(a.get(), amount)
       }
       return builder.build()

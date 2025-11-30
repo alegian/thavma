@@ -72,11 +72,12 @@ private fun calculateCompleted(defaultStates: List<SocketState>, socketStates: M
 
     for (neighborIdx in idx.axialNeighbors) {
       if (explored.contains(neighborIdx)) continue
-      val neighbor = graph[neighborIdx] ?: continue
-      val neighborAspect = neighbor.aspect ?: continue
-      val connected = currAspect.components.map { it.get() }.contains(neighborAspect)
-          || neighborAspect.components.map { it.get() }.contains(currAspect)
-      if (!connected) continue
+      // TODO: think of some other logic here
+//      val neighbor = graph[neighborIdx] ?: continue
+//      val neighborAspect = neighbor.aspect ?: continue
+//      val connected = currAspect.components.map { it.get() }.contains(neighborAspect)
+//          || neighborAspect.components.map { it.get() }.contains(currAspect)
+//      if (!connected) continue
 
       connections.add(neighborIdx)
       toExplore.add(neighborIdx)

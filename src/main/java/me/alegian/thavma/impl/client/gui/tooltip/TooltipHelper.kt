@@ -1,17 +1,17 @@
 package me.alegian.thavma.impl.client.gui.tooltip
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 
 fun containedPrimalsComponent(contents: AspectMap): MutableComponent {
   return Component.empty().also {
-    for (i in PRIMAL_ASPECTS.indices) {
-      val a = PRIMAL_ASPECTS[i].get()
+    for (i in DATAGEN_PRIMALS.indices) {
+      val a = DATAGEN_PRIMALS[i].get()
       val newPart = Component.literal(contents[a].toString()).withColor(a.color)
       it.append(newPart)
-      if (i != PRIMAL_ASPECTS.size - 1) it.append(Component.literal(" | "))
+      if (i != DATAGEN_PRIMALS.size - 1) it.append(Component.literal(" | "))
     }
   }
 }

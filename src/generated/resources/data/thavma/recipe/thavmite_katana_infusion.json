@@ -1,8 +1,8 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:aversio": 16,
-    "thavma:praecantatio": 16
+    "thavma:aether": 16,
+    "thavma:instrumentum": 16
   },
   "base": {
     "item": "thavma:thavmite_sword"

@@ -1,7 +1,0 @@
-{
-  "parent": "thavma:block/cube_all_emissive_overlay",
-  "textures": {
-    "layer0": "minecraft:block/deepslate",
-    "layer1": "thavma:block/infused_stone"
-  }
-}

@@ -1,13 +1,12 @@
 {
   "type": "thavma:arcane_workbench",
   "aspects": {
-    "thavma:aer": 12,
-    "thavma:aether": 4,
-    "thavma:terra": 4
+    "thavma:aether": 8,
+    "thavma:terra": 8
   },
   "key": {
     "a": {
-      "item": "thavma:aer_shard"
+      "item": "thavma:terra_shard"
     },
     "c": {
       "item": "thavma:elemental_core"

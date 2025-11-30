@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_golds": {
+    "has_ingots/gold": {
       "conditions": {
         "items": [
           {
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_golds",
+      "has_ingots/gold",
       "has_shards"
     ]
   ],

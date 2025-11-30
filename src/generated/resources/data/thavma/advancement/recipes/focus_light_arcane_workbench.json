@@ -1,16 +1,6 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_coal_storage_blocks": {
-      "conditions": {
-        "items": [
-          {
-            "items": "#c:storage_blocks/coal"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_eternal_flame": {
       "conditions": {
         "items": [
@@ -31,6 +21,16 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_storage_blocks/coal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:storage_blocks/coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "thavma:focus_light"
@@ -43,7 +43,7 @@
       "has_the_recipe",
       "has_eternal_flame",
       "has_orichalcum_plating",
-      "has_coal_storage_blocks"
+      "has_storage_blocks/coal"
     ]
   ],
   "rewards": {

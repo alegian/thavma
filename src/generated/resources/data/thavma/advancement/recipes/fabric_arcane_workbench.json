@@ -17,7 +17,7 @@
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_wools": {
+    "has_wool": {
       "conditions": {
         "items": [
           {
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_wools",
+      "has_wool",
       "has_shards"
     ]
   ],

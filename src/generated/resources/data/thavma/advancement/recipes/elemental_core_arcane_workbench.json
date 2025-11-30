@@ -1,21 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_shards": {
+    "has_elemental_stone": {
       "conditions": {
         "items": [
           {
-            "items": "#thavma:shards"
+            "items": "thavma:elemental_stone"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_stones": {
+    "has_shards": {
       "conditions": {
         "items": [
           {
-            "items": "#c:stones"
+            "items": "#thavma:shards"
           }
         ]
       },
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_stones",
+      "has_elemental_stone",
       "has_shards"
     ]
   ],

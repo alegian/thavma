@@ -11,12 +11,16 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import net.minecraft.advancements.Criterion
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.*
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -52,7 +56,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" a ")
       .pattern(" a ")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.THAVMITE_PICKAXE.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -60,7 +64,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("aaa")
       .pattern(" s ")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.THAVMITE_HAMMER.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -68,7 +72,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("aaa")
       .pattern("aaa")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.THAVMITE_AXE.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -76,7 +80,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("aa ")
       .pattern("as ")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.THAVMITE_SHOVEL.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -84,7 +88,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" a ")
       .pattern(" s ")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.THAVMITE_HOE.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -92,11 +96,11 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("aa ")
       .pattern(" s ")
       .pattern(" s ")
-      .unlockedBy(getHasName(T7Items.THAVMITE_INGOT.get()), has(T7Items.THAVMITE_INGOT.get()))
+      .unlockedBy(T7Items.THAVMITE_INGOT)
       .save(pRecipeOutput)
     ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, T7Items.GOGGLES_CURIO)
       .requires(T7Items.GOGGLES)
-      .unlockedBy(getHasName(T7Items.GOGGLES), has(T7Items.GOGGLES))
+      .unlockedBy(T7Items.GOGGLES)
       .save(pRecipeOutput)
 
     simpleArmor(
@@ -120,7 +124,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .define('s', T7Blocks.ELEMENTAL_STONE)
       .pattern("ss")
       .pattern("ss")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_STONE), has(T7Blocks.ELEMENTAL_STONE))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
       .save(pRecipeOutput)
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Blocks.PEDESTAL)
@@ -130,14 +134,14 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" c ")
       .pattern(" s ")
       .pattern("-s-")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_CORE), has(T7Blocks.ELEMENTAL_CORE))
+      .unlockedBy(T7Blocks.ELEMENTAL_CORE)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Blocks.MATRIX)
       .define('c', T7Blocks.ELEMENTAL_CORE)
       .pattern("ccc")
       .pattern("c c")
       .pattern("ccc")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_CORE), has(T7Blocks.ELEMENTAL_CORE))
+      .unlockedBy(T7Blocks.ELEMENTAL_CORE)
       .save(pRecipeOutput)
 
     ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, T7Blocks.TABLE)
@@ -146,7 +150,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("sss")
       .pattern("p p")
       .pattern("p p")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_STONE), has(T7Blocks.ELEMENTAL_STONE))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
       .save(pRecipeOutput)
 
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Items.BASIC_AMULET)
@@ -155,8 +159,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" s ")
       .pattern("s s")
       .pattern(" o ")
-      .unlockedBy(getHasName(T7Items.ORICHALCUM_INGOT), has(T7Items.ORICHALCUM_INGOT))
-      .unlockedBy("has_strings", has(Tags.Items.STRINGS))
+      .unlockedBy(T7Items.ORICHALCUM_INGOT)
+      .unlockedBy(Tags.Items.STRINGS)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Items.BASIC_BELT)
       .define('o', T7Items.ORICHALCUM_INGOT)
@@ -164,15 +168,15 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("lll")
       .pattern("l l")
       .pattern(" o ")
-      .unlockedBy(getHasName(T7Items.ORICHALCUM_INGOT), has(T7Items.ORICHALCUM_INGOT))
-      .unlockedBy("has_leathers", has(Tags.Items.LEATHERS))
+      .unlockedBy(T7Items.ORICHALCUM_INGOT)
+      .unlockedBy(Tags.Items.LEATHERS)
       .save(pRecipeOutput)
     ShapedRecipeBuilder.shaped(RecipeCategory.MISC, T7Items.BASIC_RING)
       .define('o', T7Items.ORICHALCUM_INGOT)
       .pattern(" o ")
       .pattern("o o")
       .pattern(" o ")
-      .unlockedBy(getHasName(T7Items.ORICHALCUM_INGOT), has(T7Items.ORICHALCUM_INGOT))
+      .unlockedBy(T7Items.ORICHALCUM_INGOT)
       .save(pRecipeOutput)
 
     ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, T7Items.ARCANE_LENS)
@@ -182,8 +186,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("sgs")
       .pattern("gpg")
       .pattern("sgs")
-      .unlockedBy("has_golds", has(Tags.Items.INGOTS_GOLD))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(Tags.Items.INGOTS_GOLD)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
     WorkbenchRecipeBuilder.shaped(T7Items.GOGGLES, 1)
       .requireAspects(AspectMap.ofPrimals(4))
@@ -193,7 +197,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("lgl")
       .pattern("l l")
       .pattern("ogo")
-      .unlockedBy(getHasName(T7Items.ARCANE_LENS.get()), has(T7Items.ARCANE_LENS.get()))
+      .unlockedBy(T7Items.ARCANE_LENS.get())
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.SEALING_JAR, 1)
@@ -203,7 +207,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("psp")
       .pattern("p p")
       .pattern("ppp")
-      .unlockedBy(getHasName(T7Blocks.GREATWOOD_SLAB.get()), has(T7Blocks.GREATWOOD_SLAB.get()))
+      .unlockedBy(T7Blocks.GREATWOOD_SLAB.get())
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Items.GREATWOOD_CORE, 1)
@@ -213,8 +217,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" og")
       .pattern("ogo")
       .pattern("go ")
-      .unlockedBy(getHasName(T7Blocks.GREATWOOD_LOG.get()), has(T7Blocks.GREATWOOD_LOG.get()))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(T7Blocks.GREATWOOD_LOG.get())
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
     InfusionRecipeBuilder(
       T7Items.SILVERWOOD_CORE,
@@ -226,15 +230,15 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     ).save(pRecipeOutput)
 
     SimpleCookingRecipeBuilder.smelting(Ingredient.of(T7Blocks.ELEMENTAL_STONE), RecipeCategory.BUILDING_BLOCKS, T7Blocks.CRACKED_ELEMENTAL_STONE, 0.1f, 200)
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_STONE), has(T7Blocks.ELEMENTAL_STONE))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
       .save(pRecipeOutput)
 
     for (a in Aspects.PRIMAL_ASPECTS) {
       SimpleCookingRecipeBuilder.blasting(Ingredient.of(T7Blocks.INFUSED_STONES[a], T7Blocks.INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, T7Items.SHARDS[a]!!, 1f, 100)
-        .unlockedBy("has_infused_stones", has(T7Tags.Items.INFUSED_STONES))
+        .unlockedBy(T7Tags.Items.INFUSED_STONES)
         .save(pRecipeOutput, T7Items.SHARDS[a]!!.id.withSuffix("_blasting"))
       SimpleCookingRecipeBuilder.smelting(Ingredient.of(T7Blocks.INFUSED_STONES[a], T7Blocks.INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, T7Items.SHARDS[a]!!, 1f, 200)
-        .unlockedBy("has_infused_stones", has(T7Tags.Items.INFUSED_STONES))
+        .unlockedBy(T7Tags.Items.INFUSED_STONES)
         .save(pRecipeOutput, T7Items.SHARDS[a]!!.id.withSuffix("_smelting"))
     }
 
@@ -356,9 +360,9 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("oeo")
       .pattern("ebe")
       .pattern("oeo")
-      .unlockedBy(getHasName(T7Blocks.ETERNAL_FLAME), has(T7Blocks.ETERNAL_FLAME))
-      .unlockedBy(getHasName(T7Items.ORICHALCUM_PLATING), has(T7Items.ORICHALCUM_PLATING))
-      .unlockedBy("has_coal_storage_blocks", has(Tags.Items.STORAGE_BLOCKS_COAL))
+      .unlockedBy(T7Blocks.ETERNAL_FLAME)
+      .unlockedBy(T7Items.ORICHALCUM_PLATING)
+      .unlockedBy(Tags.Items.STORAGE_BLOCKS_COAL)
       .save(pRecipeOutput)
     WorkbenchRecipeBuilder.shaped(T7Items.FOCUS_ENDERCHEST, 1)
       .requireAspects(AspectMap.builder().add(Aspects.TERRA, 12).add(Aspects.AER, 12).build())
@@ -368,9 +372,9 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("ooo")
       .pattern("oeo")
       .pattern("obo")
-      .unlockedBy(getHasName(Blocks.ENDER_CHEST), has(Blocks.ENDER_CHEST))
-      .unlockedBy(getHasName(Items.BUNDLE), has(Items.BUNDLE))
-      .unlockedBy("has_obsidians", has(Tags.Items.OBSIDIANS))
+      .unlockedBy(Blocks.ENDER_CHEST)
+      .unlockedBy(Items.BUNDLE)
+      .unlockedBy(Tags.Items.OBSIDIANS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.HUNGRY_CHEST, 1)
@@ -380,8 +384,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("wtw")
       .pattern("w w")
       .pattern("www")
-      .unlockedBy(getHasName(T7Blocks.GREATWOOD_PLANKS), has(T7Blocks.GREATWOOD_PLANKS))
-      .unlockedBy("has_trapdoors", has(ItemTags.TRAPDOORS))
+      .unlockedBy(T7Blocks.GREATWOOD_PLANKS)
+      .unlockedBy(ItemTags.TRAPDOORS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.ITEM_HATCH, 1)
@@ -391,8 +395,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("iii")
       .pattern("iti")
       .pattern("iii")
-      .unlockedBy(getHasName(T7Items.IRON_PLATING), has(T7Items.IRON_PLATING))
-      .unlockedBy("has_trapdoors", has(ItemTags.TRAPDOORS))
+      .unlockedBy(T7Items.IRON_PLATING)
+      .unlockedBy(ItemTags.TRAPDOORS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Items.RUNE, 4)
@@ -402,8 +406,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("ddd")
       .pattern("dsd")
       .pattern("ddd")
-      .unlockedBy(getHasName(Blocks.COBBLED_DEEPSLATE), has(Blocks.COBBLED_DEEPSLATE))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(Blocks.COBBLED_DEEPSLATE)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.ELEMENTAL_STONE, 8)
@@ -413,8 +417,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("sss")
       .pattern("sos")
       .pattern("sss")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_STONE), has(T7Blocks.ELEMENTAL_STONE))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.ELEMENTAL_CORE, 1)
@@ -424,8 +428,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" o ")
       .pattern("oso")
       .pattern(" o ")
-      .unlockedBy("has_stones", has(Tags.Items.STONES))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Items.FABRIC, 4)
@@ -435,8 +439,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern(" w ")
       .pattern("wsw")
       .pattern(" w ")
-      .unlockedBy("has_wools", has(ItemTags.WOOL))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(ItemTags.WOOL)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.ARCANE_LEVITATOR, 1)
@@ -453,18 +457,27 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .pattern("sas")
       .pattern("scs")
       .pattern("sas")
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_STONE), has(T7Blocks.ELEMENTAL_STONE))
-      .unlockedBy(getHasName(T7Blocks.ELEMENTAL_CORE), has(T7Blocks.ELEMENTAL_CORE))
-      .unlockedBy("has_shards", has(T7Tags.Items.SHARDS))
+      .unlockedBy(T7Blocks.ELEMENTAL_STONE)
+      .unlockedBy(T7Blocks.ELEMENTAL_CORE)
+      .unlockedBy(T7Tags.Items.SHARDS)
       .save(pRecipeOutput)
 
     ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, T7Blocks.SEALING_JAR)
       .requires(T7Blocks.SEALING_JAR)
-      .unlockedBy(getHasName(T7Blocks.SEALING_JAR), has(T7Blocks.SEALING_JAR))
+      .unlockedBy(T7Blocks.SEALING_JAR)
       .save(pRecipeOutput, itemLoc(T7Blocks.SEALING_JAR) + "_clear")
   }
 
   companion object {
+    protected fun RecipeBuilder.unlockedBy(itemLike: ItemLike) =
+      unlockedBy(getHasName(itemLike), has(itemLike))
+
+    protected fun RecipeBuilder.unlockedBy(tag: TagKey<Item>) =
+      unlockedBy("has_" + tag.location.path, has(tag))
+
+    protected fun has(ingredient: Ingredient) =
+      inventoryTrigger(ItemPredicate.Builder.item().of(*ingredient.items.map { it.item }.toTypedArray()))
+
     protected fun ingot(pRecipeOutput: RecipeOutput, ingot: ItemLike, nugget: ItemLike, block: ItemLike) {
       nineBlockStorageRecipes(
         pRecipeOutput, RecipeCategory.MISC, ingot, RecipeCategory.BUILDING_BLOCKS, block, itemLoc(block), null, itemLoc(ingot) + "_from_block", null
@@ -482,8 +495,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .pattern(" cp")
         .pattern("c  ")
         .group("wand")
-        .unlockedBy("has_plating", inventoryTrigger(ItemPredicate.Builder.item().of(*plating.items.map { it.item }.toTypedArray())))
-        .unlockedBy("has_core", inventoryTrigger(ItemPredicate.Builder.item().of(*core.items.map { it.item }.toTypedArray())))
+        .unlockedBy("has_plating", has(plating))
+        .unlockedBy("has_core", has(core))
         .save(pRecipeOutput)
     }
 
@@ -494,7 +507,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .pattern(" ni")
         .pattern(" in")
         .group("wand_plating")
-        .unlockedBy(getHasName(ingot), has(ingot))
+        .unlockedBy(ingot)
         .save(pRecipeOutput)
     }
 
@@ -505,7 +518,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
         .define('n', nugget)
         .pattern(" ni")
         .pattern(" in")
-        .unlockedBy(getHasName(ingot), has(ingot))
+        .unlockedBy(ingot)
         .save(pRecipeOutput)
     }
 
@@ -522,13 +535,13 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, pPlanks, 4)
         .requires(pLog)
         .group("planks")
-        .unlockedBy("has_logs", has(pLog))
+        .unlockedBy(pLog)
         .save(pRecipeOutput)
     }
 
     protected fun stairs(recipeOutput: RecipeOutput, stairs: ItemLike, material: ItemLike) =
       stairBuilder(stairs, Ingredient.of(material))
-        .unlockedBy(getHasName(material), has(material))
+        .unlockedBy(material)
         .save(recipeOutput)
 
     protected fun simpleArmor(recipeOutput: RecipeOutput, material: ItemLike, helmet: ItemLike?, chestplate: ItemLike?, leggings: ItemLike?, boots: ItemLike?) {
@@ -537,7 +550,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
           .define('a', material)
           .pattern("aaa")
           .pattern("a a")
-          .unlockedBy(getHasName(material), has(material))
+          .unlockedBy(material)
           .save(recipeOutput)
       if (chestplate != null)
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, chestplate)
@@ -545,7 +558,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
           .pattern("a a")
           .pattern("aaa")
           .pattern("aaa")
-          .unlockedBy(getHasName(material), has(material))
+          .unlockedBy(material)
           .save(recipeOutput)
       if (leggings != null)
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, leggings)
@@ -553,14 +566,14 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
           .pattern("aaa")
           .pattern("a a")
           .pattern("a a")
-          .unlockedBy(getHasName(material), has(material))
+          .unlockedBy(material)
           .save(recipeOutput)
       if (boots != null)
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, boots)
           .define('a', material)
           .pattern("a a")
           .pattern("a a")
-          .unlockedBy(getHasName(material), has(material))
+          .unlockedBy(material)
           .save(recipeOutput)
     }
 

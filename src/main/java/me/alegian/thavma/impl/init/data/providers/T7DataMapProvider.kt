@@ -52,13 +52,13 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(Aspects.CORPUS, 2)
     }
     i.item(Tags.Items.RODS_BREEZE) {
-      it.add(Aspects.AER, 8)
-        .add(Aspects.MOTUS, 4)
+      it.add(Aspects.AETHER, 6)
         .add(Aspects.CORPUS, 2)
     }
     i.item(Items.WIND_CHARGE) {
-      it.add(Aspects.AER, 2)
-        .add(Aspects.MOTUS, 1)
+      it.add(Aspects.ALKIMIA, 4)
+        .add(Aspects.AETHER, 4)
+        .add(Aspects.INSTRUMENTUM, 2)
     }
     i.item(Items.FIRE_CHARGE) {
       it.add(Aspects.ALKIMIA, 4)
@@ -99,8 +99,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
         .add(Aspects.INSTRUMENTUM, 2)
     }
     i.item(Tags.Items.FEATHERS) {
-      it.add(Aspects.VOLATUS, 4)
-        .add(Aspects.AER, 4)
+      it.add(Aspects.INSTRUMENTUM, 1)
         .add(Aspects.CORPUS, 2)
     }
     i.item(Tags.Items.ENDER_PEARLS) {

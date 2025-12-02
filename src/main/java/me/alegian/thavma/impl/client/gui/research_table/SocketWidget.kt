@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.aspect.relatedTo
 import me.alegian.thavma.impl.common.payload.SocketStatePayload
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
@@ -78,8 +79,7 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
   private fun renderConnections(aspect: Aspect, guiGraphics: GuiGraphics) {
     for (neighborIdx in indices.axial.axialNeighbors) {
       val neighbor = screen.socketWidgets[neighborIdx] ?: continue
-      // TODO: think of some other logic here
-      //if (neighbor.state.aspect?.components?.map { it.get() }?.contains(aspect) != true) continue
+      if (neighbor.state.aspect?.wrapAsHolder()?.relatedTo(aspect.wrapAsHolder()) != true) continue
       val dx = neighbor.position.x - position.x
       val dy = neighbor.position.y - position.y
       val angleDegrees = atan2(dy, dx) * 180 / Math.PI

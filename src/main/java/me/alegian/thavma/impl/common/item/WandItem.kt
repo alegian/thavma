@@ -44,17 +44,10 @@ import software.bernie.geckolib.network.packet.SingletonAnimTriggerPacket
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
-private val CAST_ANIMATION: RawAnimation = RawAnimation.begin().thenPlay("casting")
-private val IDLE_ANIMATION: RawAnimation = RawAnimation.begin().thenPlay("idle")
-
 open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial, val coreMaterial: WandCoreMaterial) :
   Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)), GeoItem {
 
   private val cache = GeckoLibUtil.createInstanceCache(this)
-
-  init {
-    GeckoLibUtil.SYNCED_ANIMATABLES[this.syncableId()] = this
-  }
 
   /**
    * Use Wand on a Block. Has 3 main uses:
@@ -82,7 +75,6 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
         player.startUsingItem(context.hand)
         if (!level.isClientSide() && level is ServerLevel) {
           level.addFreshEntity(VisEntity(level, player, blockPos))
-          this.animateCircle(true, player, context.itemInHand, level)
         }
         return InteractionResult.CONSUME
       }
@@ -148,11 +140,6 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return 72000
   }
 
-  override fun onStopUsing(itemStack: ItemStack, entity: LivingEntity, count: Int) {
-    this.animateCircle(false, entity, itemStack, entity.level())
-    super.onStopUsing(itemStack, entity, count)
-  }
-
   /**
    * The normal implementation causes flickering in the wand animation
    * when aspects are synced from server. Therefore, we have to use a
@@ -162,46 +149,10 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return oldStack.item != newStack.item
   }
 
-  /**
-   * Only does things on the server
-   */
-  protected fun animateCircle(isCasting: Boolean, entity: Entity, itemStack: ItemStack, level: Level) {
-    if (!level.isClientSide() && level is ServerLevel) this.animateCircle(isCasting, entity, itemStack, level)
-  }
-
-  /**
-   * Faster variant, if we already have the serverLevel.
-   * Sends a gecko internal packet with custom syncableId, to avoid non-singleton bugs
-   */
-  protected fun animateCircle(isCasting: Boolean, entity: Entity, itemStack: ItemStack, level: ServerLevel) {
-    val animationName = if (isCasting) "casting" else "idle"
-    GeckoLibServices.NETWORK.sendToAllPlayersTrackingEntity(
-      SingletonAnimTriggerPacket(
-        this.syncableId(),
-        GeoItem.getOrAssignId(itemStack, level),
-        "Casting",
-        animationName
-      ), entity
-    )
-  }
-
   override fun registerControllers(controllers: AnimatableManager.ControllerRegistrar) {
-    controllers.add(
-      AnimationController(
-        this, "Casting", 0
-      ) { state ->
-        val controller = state.controller
-        if (controller.currentAnimation == null) controller.setAnimation(IDLE_ANIMATION)
-        PlayState.CONTINUE
-      }
-        .triggerableAnim("casting", CAST_ANIMATION)
-        .triggerableAnim("idle", IDLE_ANIMATION)
-    )
   }
 
-  override fun getAnimatableInstanceCache(): AnimatableInstanceCache {
-    return this.cache
-  }
+  override fun getAnimatableInstanceCache() = cache
 
   override fun createGeoRenderer(consumer: Consumer<GeoRenderProvider>) {
     consumer.accept(object : GeoRenderProvider {
@@ -222,17 +173,6 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
 
   open val name: String
     get() = name(this.platingMaterial, this.coreMaterial)
-
-  /**
-   * Custom Animatable Syncable ID, for Gecko. By default, Item classes
-   * in gecko are considered singletons, and therefore use classnames
-   * as identifiers, but this doesn't work for Wands, as the same class
-   * has multiple instances.
-   */
-  open fun syncableId(): String {
-    val location = rl(this.name)
-    return location.toString()
-  }
 
   companion object {
     fun name(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): String {

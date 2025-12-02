@@ -1,0 +1,63 @@
+{
+  "values": {
+    "thavma:aether": [
+      "thavma:alkimia",
+      "thavma:cognitio",
+      "thavma:tenebrae"
+    ],
+    "thavma:alkimia": [],
+    "thavma:aqua": [
+      "thavma:herba",
+      "thavma:victus",
+      "thavma:alkimia"
+    ],
+    "thavma:civilis": [],
+    "thavma:cognitio": [
+      "thavma:civilis"
+    ],
+    "thavma:corpus": [],
+    "thavma:fabrico": [
+      "thavma:cognitio",
+      "thavma:vas",
+      "thavma:ornatus"
+    ],
+    "thavma:herba": [],
+    "thavma:hostilis": [],
+    "thavma:ignis": [
+      "thavma:metallum",
+      "thavma:lux"
+    ],
+    "thavma:instrumentum": [
+      "thavma:fabrico",
+      "thavma:machina"
+    ],
+    "thavma:lux": [],
+    "thavma:machina": [],
+    "thavma:metallum": [
+      "thavma:metallum",
+      "thavma:praemunio"
+    ],
+    "thavma:ornatus": [
+      "thavma:civilis"
+    ],
+    "thavma:praemunio": [],
+    "thavma:tenebrae": [],
+    "thavma:terra": [
+      "thavma:vitreus",
+      "thavma:metallum",
+      "thavma:herba",
+      "thavma:victus"
+    ],
+    "thavma:vas": [],
+    "thavma:victus": [
+      "thavma:hostilis",
+      "thavma:civilis",
+      "thavma:corpus"
+    ],
+    "thavma:vitreus": [
+      "thavma:ornatus",
+      "thavma:instrumentum",
+      "thavma:praemunio"
+    ]
+  }
+}

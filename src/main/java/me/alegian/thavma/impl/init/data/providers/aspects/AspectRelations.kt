@@ -17,14 +17,14 @@ object AspectRelations {
 
       add(Aspects.LUX, listOf())
       add(Aspects.VITREUS, listOf(Aspects.ORNATUS, Aspects.INSTRUMENTUM, Aspects.PRAEMUNIO))
-      add(Aspects.METALLUM, listOf(Aspects.METALLUM, Aspects.PRAEMUNIO))
+      add(Aspects.METALLUM, listOf(Aspects.INSTRUMENTUM, Aspects.PRAEMUNIO, Aspects.MACHINA))
       add(Aspects.VICTUS, listOf(Aspects.HOSTILIS, Aspects.CIVILIS, Aspects.CORPUS))
       add(Aspects.HERBA, listOf())
 
       add(Aspects.ALKIMIA, listOf())
-      add(Aspects.TENEBRAE, listOf())
+      add(Aspects.TENEBRAE, listOf(Aspects.HOSTILIS))
       add(Aspects.INSTRUMENTUM, listOf(Aspects.FABRICO, Aspects.MACHINA))
-      add(Aspects.FABRICO, listOf(Aspects.COGNITIO, Aspects.VAS, Aspects.ORNATUS))
+      add(Aspects.FABRICO, listOf(Aspects.COGNITIO, Aspects.VAS, Aspects.ORNATUS, Aspects.PRAEMUNIO))
       add(Aspects.MACHINA, listOf())
       add(Aspects.VAS, listOf())
       add(Aspects.COGNITIO, listOf(Aspects.CIVILIS))

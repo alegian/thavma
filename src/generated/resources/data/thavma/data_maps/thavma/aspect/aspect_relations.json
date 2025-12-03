@@ -19,7 +19,8 @@
     "thavma:fabrico": [
       "thavma:cognitio",
       "thavma:vas",
-      "thavma:ornatus"
+      "thavma:ornatus",
+      "thavma:praemunio"
     ],
     "thavma:herba": [],
     "thavma:hostilis": [],
@@ -34,14 +35,17 @@
     "thavma:lux": [],
     "thavma:machina": [],
     "thavma:metallum": [
-      "thavma:metallum",
-      "thavma:praemunio"
+      "thavma:instrumentum",
+      "thavma:praemunio",
+      "thavma:machina"
     ],
     "thavma:ornatus": [
       "thavma:civilis"
     ],
     "thavma:praemunio": [],
-    "thavma:tenebrae": [],
+    "thavma:tenebrae": [
+      "thavma:hostilis"
+    ],
     "thavma:terra": [
       "thavma:vitreus",
       "thavma:metallum",

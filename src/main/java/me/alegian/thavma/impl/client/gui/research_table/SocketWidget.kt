@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.payload.SocketStatePayload
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
@@ -126,6 +127,6 @@ class SocketWidget(val position: Vec2, private val indices: Indices, private val
     private const val NAMESPACE = ".socketWidget"
     val TEXTURE = Texture("gui/research_table/socket", 22, 22, 22, 22)
     val BROKEN_TEXTURE = Texture("gui/research_table/broken_socket", 22, 22, 22, 22)
-    val removeTranslationId = ResearchScreen.translationId + NAMESPACE + ".remove"
+    val removeTranslationId = ResearchTableBlock.CONTAINER_TITLE + NAMESPACE + ".remove"
   }
 }

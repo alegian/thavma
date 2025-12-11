@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
+import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.recipe.translationId
@@ -244,7 +245,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
     add(HungryChestBlock.CONTAINER_TITLE, "Hungry Chest")
 
-    add(ResearchScreen.translationId, "Research Table")
+    add(ResearchTableBlock.CONTAINER_TITLE, "Research Table")
     add(AspectWidget.descriptionTranslationId, "Click and drag to use")
     add(AspectWidget.costTranslationId, "Rune Cost:")
     add(SocketWidget.removeTranslationId, "Click to remove")

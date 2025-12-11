@@ -1,6 +1,6 @@
 package me.alegian.thavma.impl.common.block
 
-import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
+import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.block.entity.ResearchTableBE
 import me.alegian.thavma.impl.common.menu.ResearchMenu
 import net.minecraft.core.BlockPos
@@ -42,7 +42,7 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
       { pContainerId, pPlayerInventory, player ->
         ResearchMenu(pContainerId, pPlayerInventory, ContainerLevelAccess.create(pLevel, pPos))
       },
-      Component.translatable(ResearchScreen.translationId)
+      Component.translatable(CONTAINER_TITLE)
     )
   }
 
@@ -125,6 +125,10 @@ class ResearchTableBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS).noOccl
   }
 
   override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos) = true
+
+  companion object {
+    val CONTAINER_TITLE = "container." + Thavma.MODID + ".research_table"
+  }
 }
 
 fun getNeighbourDirection(state: BlockState): Direction {

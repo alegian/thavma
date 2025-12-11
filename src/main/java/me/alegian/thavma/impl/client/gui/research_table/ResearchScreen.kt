@@ -26,7 +26,6 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     private val ASPECTS_BG = Texture("gui/research_table/aspects_bg", 72, 104, 72, 104)
     private val PUZZLE_BG = Texture("gui/research_table/puzzle_bg", 144, 144, 144, 144)
     const val HEX_GRID_GAP = 2
-    val translationId = "container." + Thavma.MODID + ".research_table"
   }
 
   private var page = 0

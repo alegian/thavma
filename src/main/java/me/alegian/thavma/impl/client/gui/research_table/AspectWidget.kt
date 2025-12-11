@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -41,7 +42,7 @@ class AspectWidget(position: Vec2, private val researchScreen: ResearchScreen, p
 
   companion object {
     private val namespace = ".aspectWidget"
-    val descriptionTranslationId = ResearchScreen.translationId + namespace + ".description"
-    val costTranslationId = ResearchScreen.translationId + namespace + ".cost"
+    val descriptionTranslationId = ResearchTableBlock.CONTAINER_TITLE + namespace + ".description"
+    val costTranslationId = ResearchTableBlock.CONTAINER_TITLE + namespace + ".cost"
   }
 }

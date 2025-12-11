@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
@@ -39,7 +40,7 @@ class ButtonWidget(position: Vec2, private val invert: Boolean, private val hand
     val LEFT_TEXTURE = Texture("gui/research_table/left_button", 35, 12, 35, 12)
     val RIGHT_TEXTURE = Texture("gui/research_table/right_button", 35, 12, 35, 12)
     private val namespace = ".buttonWidget"
-    val leftTranslationId = ResearchScreen.translationId + namespace + ".left"
-    val rightTranslationId = ResearchScreen.translationId + namespace + ".right"
+    val leftTranslationId = ResearchTableBlock.CONTAINER_TITLE + namespace + ".left"
+    val rightTranslationId = ResearchTableBlock.CONTAINER_TITLE + namespace + ".right"
   }
 }

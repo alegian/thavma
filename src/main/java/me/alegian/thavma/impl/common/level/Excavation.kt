@@ -8,12 +8,18 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.LevelEvent
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 
 object Excavation {
+  const val RANGE = 10.0
   private val instances = mutableMapOf<Int, ExcavationProgress>()
 
-  fun excavate(level: Level, player: Player, blockPos: BlockPos, speed: Int) {
+  fun excavate(level: Level, player: Player, hitResult: BlockHitResult, speed: Int) {
     if (level.isClientSide || player !is ServerPlayer) return
+    if (hitResult.type == HitResult.Type.MISS) return
+
+    val blockPos = hitResult.blockPos
     val blockState = level.getBlockState(blockPos)
 
     val progressObject = instances.compute(player.id) { _, v ->
@@ -29,6 +35,11 @@ object Excavation {
     player.gameMode.destroyBlock(blockPos)
     // due to the internals of the previous function, we need to separately send sound to the breaking player
     player.connection.send(ClientboundLevelEventPacket(LevelEvent.PARTICLES_DESTROY_BLOCK, blockPos, Block.getId(blockState), false))
+  }
+
+  fun stopExcavation(level: Level, player: Player) {
+    if (level.isClientSide) return
+    instances.remove(player.id)
   }
 }
 

@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.item
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.level.Excavation
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
@@ -11,16 +12,17 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.HitResult
 
 class ExcavationFocus : Item(
   Properties().stacksTo(1)
 ) {
+  fun aspectCost() = AspectMap.builder().add(Aspects.TERRA, 1).build()
+
   override fun getUseDuration(stack: ItemStack, entity: LivingEntity) = 72000
 
   override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
     val stack = player.getItemInHand(usedHand)
-    if (stack.item !is WandItem || !hasEnoughAspects(stack)) InteractionResultHolder.pass(stack)
+    if (stack.item !is WandItem || !hasEnoughAspects(stack)) return InteractionResultHolder.pass(stack)
 
     player.startUsingItem(usedHand)
     return InteractionResultHolder.consume(stack)
@@ -28,30 +30,32 @@ class ExcavationFocus : Item(
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
     if (
-      level.gameTime % 5 != 0L ||
+      level.gameTime % 4 != 0L ||
       level.isClientSide ||
       livingEntity !is Player
     ) return
 
     if (!hasEnoughAspects(stack)) return livingEntity.releaseUsingItem()
 
-    AspectContainer.from(stack)?.extract(aspectCost)
+    if (level.gameTime % 20 == 0L) AspectContainer.from(stack)?.extract(aspectCost())
     advanceBlockBreak(level, livingEntity)
+  }
+
+  override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
+    if (
+      level.isClientSide ||
+      livingEntity !is Player
+    ) return
+    Excavation.stopExcavation(level, livingEntity)
   }
 
   private fun advanceBlockBreak(level: Level, player: Player) {
     val from = player.eyePosition
-    val to = from.add(player.getViewVector(0f).scale(RANGE))
+    val to = from.add(player.getViewVector(0f).scale(Excavation.RANGE))
     val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
-    if (hitresult.type != HitResult.Type.MISS)
-      Excavation.excavate(level, player, hitresult.blockPos, 4)
+    Excavation.excavate(level, player, hitresult, 4)
   }
 
   private fun hasEnoughAspects(stack: ItemStack) =
-    AspectContainer.from(stack)?.aspects?.contains(aspectCost) ?: false
-
-  companion object {
-    val RANGE = 10.0
-    val aspectCost = AspectMap.builder().build()
-  }
+    AspectContainer.from(stack)?.aspects?.contains(aspectCost()) ?: false
 }

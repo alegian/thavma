@@ -50,8 +50,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
    * 4. Creating "Elements of Thavma" books from Bookcases
    */
   override fun useOn(context: UseOnContext): InteractionResult {
-    val focusResult = context.itemInHand.equippedFocus?.item?.useOn(context) ?: InteractionResult.PASS
-    if (focusResult != InteractionResult.PASS) return focusResult
+    val focus = context.itemInHand.equippedFocus
+    if (focus != null) return focus.item.useOn(context)
 
     val level = context.level
     val blockPos = context.clickedPos
@@ -109,22 +109,28 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return InteractionResult.PASS
   }
 
-  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
-    val itemInHand = player.getItemInHand(usedHand)
-    val focusResult = itemInHand.equippedFocus?.item?.use(level, player, usedHand) ?: InteractionResultHolder.pass(itemInHand)
-    if (focusResult.result != InteractionResult.PASS) return focusResult
+  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+    val focus = player.getItemInHand(usedHand).equippedFocus
+    if (focus != null) return focus.item.use(level, player, usedHand)
 
     return super.use(level, player, usedHand)
   }
 
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
-    stack.equippedFocus?.item?.onUseTick(level, livingEntity, stack, remainingUseDuration)
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.onUseTick(level, livingEntity, stack, remainingUseDuration)
     super.onUseTick(level, livingEntity, stack, remainingUseDuration)
   }
 
+  override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.releaseUsing(stack, level, livingEntity, timeCharged)
+    super.releaseUsing(stack, level, livingEntity, timeCharged)
+  }
+
   override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
-    val focusResult = stack.equippedFocus?.item?.interactLivingEntity(stack, player, interactionTarget, usedHand) ?: InteractionResult.PASS
-    if (focusResult != InteractionResult.PASS) return focusResult
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.interactLivingEntity(stack, player, interactionTarget, usedHand)
 
     return super.interactLivingEntity(stack, player, interactionTarget, usedHand)
   }
@@ -133,8 +139,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return UseAnim.CUSTOM
   }
 
-  override fun getUseDuration(pStack: ItemStack, pEntity: LivingEntity): Int {
-    val focusDuration = pStack.equippedFocus?.item?.getUseDuration(pStack, pEntity)
+  override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int {
+    val focusDuration = stack.equippedFocus?.item?.getUseDuration(stack, entity)
     return focusDuration ?: 72000
   }
 

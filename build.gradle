@@ -5,7 +5,7 @@ plugins {
   id 'eclipse'
   id 'idea'
   id 'maven-publish'
-  id 'net.neoforged.gradle.userdev' version '7.0.192'
+  id 'net.neoforged.gradle.userdev' version '7.1.20'
   id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
 }
 

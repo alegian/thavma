@@ -6,7 +6,7 @@ import me.alegian.thavma.impl.common.aspect.AspectStack
 import me.alegian.thavma.impl.common.aspect.AspectStack.Companion.of
 import me.alegian.thavma.impl.init.registries.T7Capabilities.AspectContainer.BLOCK
 import me.alegian.thavma.impl.init.registries.T7Capabilities.AspectContainer.ITEM
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents.ASPECTS
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
@@ -59,7 +59,7 @@ open class AspectContainer(
     }
 
     open fun canTransferPrimals(): Boolean {
-      return PRIMAL_ASPECTS.stream()
+      return DATAGEN_PRIMALS.stream()
         .anyMatch { a -> simulateTransfer(a.get(), 1) > 0 }
     }
 
@@ -84,9 +84,9 @@ open class AspectContainer(
     }
 
     open fun transferPrimal(indexOffset: Int, idealAmount: Int): AspectStack? {
-      val primals = PRIMAL_ASPECTS.size
+      val primals = DATAGEN_PRIMALS.size
       for (i in 0..<primals) {
-        val a = PRIMAL_ASPECTS[(i + indexOffset) % primals].get()
+        val a = DATAGEN_PRIMALS[(i + indexOffset) % primals].get()
         val amount = simulateTransfer(a, idealAmount)
         if (amount == 0) continue
         sink.insert(a, amount, false)

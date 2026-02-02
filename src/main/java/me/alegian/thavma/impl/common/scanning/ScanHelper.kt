@@ -3,8 +3,10 @@ package me.alegian.thavma.impl.common.scanning
 import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.aspect.relatedAspects
 import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.knowsAspect
+import me.alegian.thavma.impl.common.item.itemResourceKey
 import me.alegian.thavma.impl.common.payload.ScanResultPayload
 import me.alegian.thavma.impl.common.util.serialize
 import me.alegian.thavma.impl.init.registries.deferred.T7Attachments
@@ -34,11 +36,11 @@ fun Player.hasScanned(entity: Entity): Boolean {
 
 // blocks fall back to items
 fun Player.hasScanned(blockState: BlockState): Boolean {
-  return hasScanned(itemKey(blockState.block.asItem()))
+  return hasScanned(blockState.block.itemResourceKey)
 }
 
 fun Player.hasScanned(itemStack: ItemStack): Boolean {
-  return hasScanned(itemKey(itemStack.item))
+  return hasScanned(itemStack.item.itemResourceKey)
 }
 
 private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
@@ -47,7 +49,7 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
   else {
     val aspects = aspectMap.map { it.aspect }
-    if (aspects.flatMap { it.components }.any { !knowsAspect(it.get()) }) scanResult = ScanResult.LOCKED
+    if (aspects.any { it.wrapAsHolder().relatedAspects().none { !knowsAspect(it) } }) scanResult = ScanResult.LOCKED
     else
       addKnowledge(
         aspects
@@ -65,20 +67,17 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
 
 // itemEntities fall back to items
 fun ServerPlayer.tryScan(entity: Entity) {
-  if (entity is ItemEntity) return tryScan(itemKey(entity.item.item), AspectHelper.getAspects(entity.item))
+  if (entity is ItemEntity) return tryScan(entity.item.item.itemResourceKey, AspectHelper.getAspects(entity.item))
 
   tryScan(entityKey(entity.type), AspectHelper.getAspects(entity))
 }
 
 fun ServerPlayer.tryScan(blockState: BlockState) {
-  tryScan(itemKey(blockState.block.asItem()), AspectHelper.getAspects(blockState.block))
+  tryScan(blockState.block.itemResourceKey, AspectHelper.getAspects(blockState.block))
 }
 
 private fun entityKey(entityType: EntityType<*>) =
   BuiltInRegistries.ENTITY_TYPE.getResourceKey(entityType).get()
-
-private fun itemKey(item: Item) =
-  BuiltInRegistries.ITEM.getResourceKey(item).get()
 
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))

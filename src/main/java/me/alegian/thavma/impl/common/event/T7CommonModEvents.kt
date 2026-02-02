@@ -74,6 +74,7 @@ private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
 private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
   event.register(T7DataMaps.AspectContent.ITEM)
   event.register(T7DataMaps.AspectContent.ENTITY)
+  event.register(T7DataMaps.ASPECT_RELATIONS)
 }
 
 private fun gatherData(event: GatherDataEvent) {

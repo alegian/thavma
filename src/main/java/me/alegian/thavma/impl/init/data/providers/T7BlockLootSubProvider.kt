@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.common.block.InfusedBlock
 import me.alegian.thavma.impl.common.item.ShardItem
 import me.alegian.thavma.impl.init.registries.T7BlockStateProperties
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
@@ -92,7 +92,7 @@ class T7BlockLootSubProvider(lookupProvider: HolderLookup.Provider) : BlockLootS
 
     add(T7Blocks.SEALING_JAR.get()) { b -> createJarTable(b) }
 
-    for (aspect in PRIMAL_ASPECTS) {
+    for (aspect in DATAGEN_PRIMALS) {
       infusedBlock(INFUSED_STONES[aspect], SHARDS[aspect])
       infusedBlock(INFUSED_DEEPSLATES[aspect], SHARDS[aspect])
     }

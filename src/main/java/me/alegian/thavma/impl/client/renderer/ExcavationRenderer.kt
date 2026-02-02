@@ -6,7 +6,6 @@ import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.client.util.translate
-import me.alegian.thavma.impl.common.entity.lerpedPosition
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.item.WandItem.Companion.wandMode
 import me.alegian.thavma.impl.common.item.WandMode
@@ -41,7 +40,7 @@ object ExcavationRenderer {
       val playerRenderer = ClientHelper.entityRenderDispatcher().getRenderer(player)
       if (playerRenderer !is PlayerRenderer) return
 
-      val from = player.lerpedPosition(partialTick).add(0.0, player.eyeHeight.toDouble(), 0.0)
+      val from = player.getPosition(partialTick).add(0.0, player.eyeHeight.toDouble(), 0.0)
       val to = from.add(player.getViewVector(partialTick).scale(Excavation.RANGE))
       val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
       val hitPos = hitresult.location.toVector3f()
@@ -54,7 +53,7 @@ object ExcavationRenderer {
   }
 
   private fun PoseStack.setUpWandPose(player: AbstractClientPlayer, playerRenderer: PlayerRenderer, partialTick: Float) {
-    translate(player.lerpedPosition(partialTick) - ClientHelper.camera().position)
+    translate(player.getPosition(partialTick) - ClientHelper.camera().position)
     if (player == ClientHelper.player() && ClientHelper.firstPerson()) {
       translate(0f, player.eyeHeight, 0f)
       mulPose(ClientHelper.camera().rotation())
@@ -65,7 +64,7 @@ object ExcavationRenderer {
       // go to the tip of the wand
       translate(-0.4, 0.1, -0.2)
     } else {
-      mulPose(Axis.YP.rotationDegrees(-player.yBodyRot))
+      mulPose(Axis.YP.rotationDegrees(-player.getPreciseBodyRotation(partialTick)))
       // go to arm pivot point (hours of reverse engineering led to this constant)
       translate(0.0, 19 / 16.0, 0.0)
       playerRenderer.model.translateToHand(player.mainArm, this)

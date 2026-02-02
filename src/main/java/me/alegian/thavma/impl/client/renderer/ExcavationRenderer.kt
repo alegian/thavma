@@ -2,11 +2,9 @@ package me.alegian.thavma.impl.client.renderer
 
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.util.setUpWandPose
 import me.alegian.thavma.impl.client.util.transformOrigin
-import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.item.WandItem.Companion.wandMode
 import me.alegian.thavma.impl.common.item.WandMode
@@ -16,11 +14,9 @@ import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.client.Minecraft
-import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.client.renderer.entity.player.PlayerRenderer
-import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.level.ClipContext
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import org.joml.Matrix4f

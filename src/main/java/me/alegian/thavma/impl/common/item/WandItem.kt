@@ -66,8 +66,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
       val canTransfer = transferPair?.canTransferPrimals() ?: false
       if (player != null && canTransfer) {
         context.itemInHand.wandMode = WandMode.ABSORB_NODE
+        context.itemInHand.interactingBlockPos = blockPos
         player.startUsingItem(context.hand)
-        // todo: set node pos data component
         return InteractionResult.CONSUME
       }
     }

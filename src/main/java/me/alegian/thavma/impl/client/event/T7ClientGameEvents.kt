@@ -17,6 +17,7 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -143,7 +144,7 @@ private fun clientTick(event: ClientTickEvent.Post) {
   val wandStack = player.mainHandItem
   if (!T7KeyMappings.FOCI.isDown || wandStack.item !is WandItem) return
 
-  val focus = wandStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+  val focus = wandStack.equippedFocus
   if (player.isShiftKeyDown && focus != null && cooldownTicks <= 0) {
     PacketDistributor.sendToServer(FocusPayload(null))
     cooldownTicks = 10

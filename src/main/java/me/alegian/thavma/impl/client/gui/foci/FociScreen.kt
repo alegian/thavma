@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
@@ -74,7 +75,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
       if (mouseRadius <= deadRadius) selectedIndex = null
     }
 
-    val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+    val equippedFocus = Minecraft.getInstance().player?.mainHandItem?.equippedFocus
     var tooltipFocus = equippedFocus
 
     guiGraphics.usePose {

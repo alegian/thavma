@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.client.renderer.geo
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
@@ -50,7 +51,7 @@ class WandRenderer(handleMaterial: WandPlatingMaterial, coreMaterial: WandCoreMa
 private class FocusRenderLayer(val wandRenderer: WandRenderer) : GeoRenderLayer<WandItem>(wandRenderer) {
   override fun render(poseStack: PoseStack, wand: WandItem, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val mc = Minecraft.getInstance()
-    val focus = wandRenderer.currentItemStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull() ?: return
+    val focus = wandRenderer.currentItemStack.equippedFocus ?: return
     val focusModel = mc.itemRenderer.getModel(focus, null, null, 0)
     val vc = bufferSource.getBuffer(RenderType.cutout())
     poseStack.run {

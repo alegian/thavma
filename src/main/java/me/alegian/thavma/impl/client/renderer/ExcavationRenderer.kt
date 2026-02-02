@@ -8,6 +8,8 @@ import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.entity.lerpedPosition
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
+import me.alegian.thavma.impl.common.item.WandItem.Companion.wandMode
+import me.alegian.thavma.impl.common.item.WandMode
 import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
@@ -34,6 +36,7 @@ object ExcavationRenderer {
     val partialTick = event.partialTick.gameTimeDeltaTicks
 
     for (player in players) {
+      if (player.useItem.wandMode != WandMode.EXCAVATE) return
       if (player.useItem.equippedFocus?.item != T7Items.FOCUS_EXCAVATION.get()) return
       val playerRenderer = ClientHelper.entityRenderDispatcher().getRenderer(player)
       if (playerRenderer !is PlayerRenderer) return

@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.item
 
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.common.item.WandItem.Companion.wandMode
 import me.alegian.thavma.impl.common.level.Excavation
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import net.minecraft.world.InteractionHand
@@ -25,6 +26,7 @@ class ExcavationFocus : Item(
     if (stack.item !is WandItem || !hasEnoughAspects(stack)) return InteractionResultHolder.pass(stack)
 
     player.startUsingItem(usedHand)
+    stack.wandMode = WandMode.EXCAVATE
     return InteractionResultHolder.consume(stack)
   }
 

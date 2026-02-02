@@ -14,6 +14,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.NonNullList
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -26,6 +27,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.UseAnim
+import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
@@ -64,6 +66,7 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
       val transferPair = AspectContainer.blockSourceItemSink(level, blockPos, context.itemInHand)
       val canTransfer = transferPair?.canTransferPrimals() ?: false
       if (player != null && canTransfer) {
+        context.itemInHand.wandMode = WandMode.ABSORB_NODE
         player.startUsingItem(context.hand)
         if (!level.isClientSide() && level is ServerLevel) {
           level.addFreshEntity(VisEntity(level, player, blockPos))
@@ -183,7 +186,19 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
       return platingMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
     }
 
-    val ItemStack.equippedFocus
+    var ItemStack.equippedFocus
       get() = get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+      set(value) {
+        set(T7DataComponents.FOCUS,
+          if(value == null) ItemContainerContents.EMPTY
+          else ItemContainerContents.fromItems(
+            NonNullList.copyOf(listOf(value)))
+        )
+      }
+    var ItemStack.wandMode
+      get() = get(T7DataComponents.WAND_MODE)
+      set(value) {
+        set(T7DataComponents.WAND_MODE, value)
+      }
   }
 }

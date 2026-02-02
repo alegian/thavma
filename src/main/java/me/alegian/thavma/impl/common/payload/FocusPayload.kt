@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.common.payload
 
 import me.alegian.thavma.impl.common.codec.nullable
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import me.alegian.thavma.impl.rl
@@ -31,12 +32,12 @@ class FocusPayload(val itemStack: ItemStack?) : CustomPacketPayload {
       val player = context.player()
       val wand = player.mainHandItem
       if (wand.item !is WandItem) return
-      val oldFocus = wand.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+      val oldFocus = wand.equippedFocus
       val newFocus = payload.itemStack
 
       if (newFocus == null) {
         if (oldFocus != null) giveItemToPlayer(player, oldFocus)
-        wand.set(T7DataComponents.FOCUS, ItemContainerContents.EMPTY)
+        wand.equippedFocus = null
         return
       }
 
@@ -46,8 +47,7 @@ class FocusPayload(val itemStack: ItemStack?) : CustomPacketPayload {
           val stack = getItem(i)
           if (ItemStack.isSameItemSameComponents(stack, newFocus)) {
             if (oldFocus != null) giveItemToPlayer(player, oldFocus)
-            val removed = removeItem(i, 1)
-            wand.set(T7DataComponents.FOCUS, ItemContainerContents.fromItems(NonNullList.copyOf(listOf(removed))))
+            wand.equippedFocus = removeItem(i, 1)
             return
           }
         }

@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.renderer.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
-import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.T7Colors
 import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
@@ -56,7 +55,7 @@ private fun preparePlayerHandPosition(pPartialTick: Float, player: Player): Vec3
   val arm = player.mainArm
 
   // for first person, if it is the client player, we follow the camera
-  if (player === ClientHelper.player() && ClientHelper.firstPerson()) {
+  if (player === Minecraft.getInstance().player && Minecraft.getInstance().options.cameraType.isFirstPerson) {
     val angle = Math.PI / 2 - player.getViewYRot(pPartialTick) / 360f * 2 * Math.PI
     val translation = player.getViewVector(pPartialTick).normalize().scale(.1)
     position += Vec3(0.0, player.eyeHeight + 0.01, 0.0)

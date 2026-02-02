@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.common.research
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import me.alegian.thavma.impl.common.aspect.relatedTo
 import me.alegian.thavma.impl.common.util.Indices
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.core.Holder
@@ -75,7 +74,9 @@ private fun calculateCompleted(defaultStates: List<SocketState>, socketStates: M
       if (explored.contains(neighborIdx)) continue
       val neighbor = graph[neighborIdx] ?: continue
       val neighborAspect = neighbor.aspect ?: continue
-      if (!currAspect.wrapAsHolder().relatedTo(neighborAspect.wrapAsHolder())) continue
+      val connected = currAspect.components.map { it.get() }.contains(neighborAspect)
+          || neighborAspect.components.map { it.get() }.contains(currAspect)
+      if (!connected) continue
 
       connections.add(neighborIdx)
       toExplore.add(neighborIdx)

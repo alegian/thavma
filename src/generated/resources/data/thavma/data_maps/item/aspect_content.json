@@ -4,11 +4,12 @@
       "thavma:terra": 2
     },
     "#c:concrete_powders": {
-      "thavma:terra": 2
+      "thavma:terra": 3
     },
     "#c:concretes": {
+      "thavma:aether": 1,
       "thavma:aqua": 1,
-      "thavma:terra": 2
+      "thavma:terra": 3
     },
     "#c:crops/wheat": {
       "thavma:herba": 2,
@@ -19,33 +20,35 @@
       "thavma:terra": 1
     },
     "#c:dusts/redstone": {
-      "thavma:machina": 1,
+      "thavma:potentia": 4,
       "thavma:terra": 1
     },
     "#c:eggs": {
-      "thavma:corpus": 2,
+      "thavma:bestia": 2,
       "thavma:victus": 4
     },
     "#c:ender_pearls": {
-      "thavma:corpus": 2,
-      "thavma:instrumentum": 4,
-      "thavma:tenebrae": 4
+      "thavma:alienis": 4,
+      "thavma:motus": 4
     },
     "#c:feathers": {
-      "thavma:corpus": 2,
-      "thavma:instrumentum": 1
+      "thavma:aer": 4,
+      "thavma:volatus": 4
     },
     "#c:gems/amethyst": {
+      "thavma:sensus": 1,
       "thavma:vitreus": 4
     },
     "#c:gems/diamond": {
+      "thavma:desiderium": 8,
       "thavma:vitreus": 8
     },
     "#c:gems/emerald": {
+      "thavma:desiderium": 4,
       "thavma:vitreus": 8
     },
     "#c:gems/lapis": {
-      "thavma:cognitio": 1,
+      "thavma:sensus": 2,
       "thavma:vitreus": 4
     },
     "#c:gems/quartz": {
@@ -63,24 +66,27 @@
     },
     "#c:gunpowders": {
       "thavma:alkimia": 2,
-      "thavma:ignis": 4,
+      "thavma:potentia": 4,
       "thavma:terra": 1
     },
     "#c:ingots/copper": {
-      "thavma:metallum": 4
+      "thavma:metallum": 4,
+      "thavma:permutatio": 4
     },
     "#c:ingots/gold": {
+      "thavma:desiderium": 8,
       "thavma:metallum": 4
     },
     "#c:ingots/iron": {
       "thavma:metallum": 8
     },
     "#c:ingots/netherite": {
+      "thavma:desiderium": 8,
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
     "#c:leathers": {
-      "thavma:corpus": 3
+      "thavma:bestia": 8
     },
     "#c:netherracks": {
       "thavma:ignis": 1,
@@ -90,53 +96,60 @@
       "thavma:terra": 1
     },
     "#c:ores/coal": {
-      "thavma:ignis": 2,
+      "thavma:ignis": 8,
+      "thavma:potentia": 8,
       "thavma:terra": 4
     },
     "#c:ores/copper": {
       "thavma:metallum": 4,
-      "thavma:terra": 2
+      "thavma:permutatio": 4,
+      "thavma:terra": 4
     },
     "#c:ores/diamond": {
-      "thavma:terra": 2,
+      "thavma:desiderium": 8,
+      "thavma:terra": 4,
       "thavma:vitreus": 8
     },
     "#c:ores/emerald": {
-      "thavma:terra": 2,
+      "thavma:desiderium": 4,
+      "thavma:terra": 4,
       "thavma:vitreus": 8
     },
     "#c:ores/gold": {
+      "thavma:desiderium": 8,
       "thavma:metallum": 4,
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "#c:ores/iron": {
       "thavma:metallum": 8,
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "#c:ores/lapis": {
-      "thavma:cognitio": 1,
-      "thavma:terra": 2,
+      "thavma:sensus": 2,
+      "thavma:terra": 4,
       "thavma:vitreus": 4
     },
     "#c:ores/netherite_scrap": {
       "thavma:metallum": 2,
       "thavma:tenebrae": 1,
-      "thavma:terra": 4
+      "thavma:terra": 6
     },
     "#c:ores/quartz": {
       "thavma:ignis": 1,
-      "thavma:terra": 2,
+      "thavma:terra": 4,
       "thavma:vitreus": 4
     },
     "#c:ores/redstone": {
-      "thavma:machina": 1,
-      "thavma:terra": 3
+      "thavma:potentia": 4,
+      "thavma:terra": 4
     },
     "#c:raw_materials/copper": {
       "thavma:metallum": 2,
+      "thavma:permutatio": 2,
       "thavma:terra": 2
     },
     "#c:raw_materials/gold": {
+      "thavma:desiderium": 4,
       "thavma:metallum": 2,
       "thavma:terra": 2
     },
@@ -145,16 +158,15 @@
       "thavma:terra": 2
     },
     "#c:rods/blaze": {
-      "thavma:alkimia": 2,
-      "thavma:corpus": 2,
-      "thavma:ignis": 4
+      "thavma:ignis": 8,
+      "thavma:potentia": 4
     },
     "#c:rods/breeze": {
-      "thavma:aether": 6,
-      "thavma:corpus": 2
+      "thavma:aer": 8,
+      "thavma:motus": 4
     },
     "#c:rods/wooden": {
-      "thavma:herba": 1
+      "thavma:herba": 2
     },
     "#c:sands": {
       "thavma:terra": 2
@@ -163,37 +175,44 @@
       "thavma:terra": 2
     },
     "#c:storage_blocks/coal": {
-      "thavma:ignis": 18,
-      "thavma:terra": 18
+      "thavma:ignis": 72,
+      "thavma:potentia": 72
     },
     "#c:storage_blocks/copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "#c:storage_blocks/diamond": {
+      "thavma:desiderium": 72,
       "thavma:vitreus": 72
     },
     "#c:storage_blocks/emerald": {
+      "thavma:desiderium": 36,
       "thavma:vitreus": 72
     },
     "#c:storage_blocks/gold": {
+      "thavma:desiderium": 72,
       "thavma:metallum": 36
     },
     "#c:storage_blocks/iron": {
       "thavma:metallum": 72
     },
     "#c:storage_blocks/lapis": {
-      "thavma:cognitio": 9,
+      "thavma:sensus": 18,
       "thavma:vitreus": 36
     },
     "#c:storage_blocks/netherite": {
+      "thavma:desiderium": 72,
       "thavma:metallum": 144,
       "thavma:tenebrae": 36
     },
     "#c:storage_blocks/raw_copper": {
       "thavma:metallum": 18,
+      "thavma:permutatio": 18,
       "thavma:terra": 18
     },
     "#c:storage_blocks/raw_gold": {
+      "thavma:desiderium": 36,
       "thavma:metallum": 18,
       "thavma:terra": 18
     },
@@ -202,36 +221,33 @@
       "thavma:terra": 18
     },
     "#c:storage_blocks/redstone": {
-      "thavma:machina": 9,
+      "thavma:potentia": 36,
       "thavma:terra": 9
     },
     "#c:strings": {
-      "thavma:corpus": 1,
+      "thavma:bestia": 1,
       "thavma:fabrico": 1
     },
     "#c:tools/bow": {
-      "thavma:fabrico": 3,
-      "thavma:herba": 3,
-      "thavma:instrumentum": 8
+      "thavma:aversio": 8,
+      "thavma:fabrico": 2,
+      "thavma:herba": 2
     },
     "#c:tools/crossbow": {
+      "thavma:aversio": 8,
       "thavma:fabrico": 2,
-      "thavma:herba": 5,
-      "thavma:instrumentum": 8,
-      "thavma:machina": 2,
-      "thavma:metallum": 12
+      "thavma:metallum": 4
     },
     "#minecraft:arrows": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 2,
-      "thavma:terra": 1
+      "thavma:aversio": 2,
+      "thavma:motus": 1
     },
     "#minecraft:bamboo_blocks": {
       "thavma:herba": 4
     },
     "#minecraft:coals": {
-      "thavma:ignis": 2,
-      "thavma:terra": 2
+      "thavma:ignis": 8,
+      "thavma:potentia": 8
     },
     "#minecraft:dirt": {
       "thavma:terra": 1
@@ -252,18 +268,18 @@
     },
     "#minecraft:terracotta": {
       "thavma:ignis": 4,
-      "thavma:ornatus": 1,
+      "thavma:sensus": 1,
       "thavma:terra": 4
     },
     "#minecraft:wool": {
-      "thavma:corpus": 4,
+      "thavma:bestia": 8,
       "thavma:fabrico": 4
     },
     "#thavma:goggles": {
-      "thavma:aether": 8,
-      "thavma:instrumentum": 8,
-      "thavma:metallum": 40,
-      "thavma:vitreus": 2
+      "thavma:desiderium": 32,
+      "thavma:metallum": 32,
+      "thavma:praecantatio": 4,
+      "thavma:vitreus": 4
     },
     "minecraft:acacia_button": {
       "thavma:herba": 2
@@ -296,6 +312,7 @@
       "thavma:herba": 6
     },
     "minecraft:amethyst_block": {
+      "thavma:sensus": 4,
       "thavma:vitreus": 16
     },
     "minecraft:andesite": {
@@ -311,7 +328,7 @@
       "thavma:terra": 2
     },
     "minecraft:armadillo_scute": {
-      "thavma:corpus": 2,
+      "thavma:bestia": 2,
       "thavma:praemunio": 1
     },
     "minecraft:bamboo": {
@@ -358,7 +375,8 @@
     },
     "minecraft:bedrock": {
       "thavma:tenebrae": 25,
-      "thavma:terra": 25
+      "thavma:terra": 25,
+      "thavma:vacuos": 25
     },
     "minecraft:birch_button": {
       "thavma:herba": 2
@@ -407,8 +425,9 @@
       "thavma:terra": 2
     },
     "minecraft:blaze_powder": {
-      "thavma:alkimia": 1,
-      "thavma:ignis": 2
+      "thavma:alkimia": 2,
+      "thavma:ignis": 2,
+      "thavma:potentia": 1
     },
     "minecraft:brick": {
       "thavma:ignis": 1,
@@ -481,7 +500,8 @@
       "thavma:herba": 6
     },
     "minecraft:chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:chiseled_deepslate": {
       "thavma:terra": 2
@@ -499,10 +519,10 @@
       "thavma:vitreus": 16
     },
     "minecraft:chiseled_red_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:chiseled_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:chiseled_stone_bricks": {
       "thavma:terra": 2
@@ -514,16 +534,16 @@
       "thavma:terra": 2
     },
     "minecraft:chorus_flower": {
-      "thavma:herba": 4,
-      "thavma:tenebrae": 4
+      "thavma:alienis": 4,
+      "thavma:herba": 4
     },
     "minecraft:chorus_fruit": {
-      "thavma:herba": 2,
-      "thavma:tenebrae": 2
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:chorus_plant": {
-      "thavma:herba": 2,
-      "thavma:tenebrae": 2
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:clay": {
       "thavma:aqua": 4,
@@ -534,7 +554,7 @@
       "thavma:terra": 1
     },
     "minecraft:coarse_dirt": {
-      "thavma:terra": 2
+      "thavma:terra": 1
     },
     "minecraft:cobbled_deepslate": {
       "thavma:terra": 2
@@ -561,7 +581,8 @@
       "thavma:terra": 2
     },
     "minecraft:copper_block": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:cracked_deepslate_bricks": {
       "thavma:terra": 2
@@ -581,8 +602,8 @@
       "thavma:terra": 2
     },
     "minecraft:crafting_table": {
-      "thavma:fabrico": 4,
-      "thavma:herba": 8
+      "thavma:fabrico": 8,
+      "thavma:herba": 4
     },
     "minecraft:crimson_button": {
       "thavma:herba": 2,
@@ -625,25 +646,28 @@
       "thavma:ignis": 6
     },
     "minecraft:cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:cut_red_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:cut_red_sandstone_slab": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "minecraft:cut_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:cut_sandstone_slab": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "minecraft:dark_oak_button": {
       "thavma:herba": 2
@@ -676,19 +700,16 @@
       "thavma:herba": 6
     },
     "minecraft:dark_prismarine": {
-      "thavma:aqua": 10,
-      "thavma:corpus": 2,
-      "thavma:terra": 8
-    },
-    "minecraft:dark_prismarine_slab": {
-      "thavma:aqua": 5,
-      "thavma:corpus": 1,
+      "thavma:aqua": 4,
       "thavma:terra": 4
     },
+    "minecraft:dark_prismarine_slab": {
+      "thavma:aqua": 2,
+      "thavma:terra": 2
+    },
     "minecraft:dark_prismarine_stairs": {
-      "thavma:aqua": 10,
-      "thavma:corpus": 2,
-      "thavma:terra": 8
+      "thavma:aqua": 4,
+      "thavma:terra": 4
     },
     "minecraft:deepslate": {
       "thavma:terra": 2
@@ -718,48 +739,54 @@
       "thavma:terra": 2
     },
     "minecraft:diamond_axe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 24
     },
     "minecraft:diamond_boots": {
+      "thavma:desiderium": 32,
       "thavma:praemunio": 8,
       "thavma:vitreus": 32
     },
     "minecraft:diamond_chestplate": {
+      "thavma:desiderium": 64,
       "thavma:praemunio": 18,
       "thavma:vitreus": 64
     },
     "minecraft:diamond_helmet": {
+      "thavma:desiderium": 40,
       "thavma:praemunio": 8,
       "thavma:vitreus": 40
     },
     "minecraft:diamond_hoe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 16,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 16
     },
     "minecraft:diamond_horse_armor": {
+      "thavma:bestia": 8,
+      "thavma:desiderium": 16,
       "thavma:praemunio": 12,
-      "thavma:vitreus": 56
+      "thavma:vitreus": 16
     },
     "minecraft:diamond_leggings": {
+      "thavma:desiderium": 56,
       "thavma:praemunio": 14,
       "thavma:vitreus": 56
     },
     "minecraft:diamond_pickaxe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 24
     },
     "minecraft:diamond_shovel": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 8,
       "thavma:instrumentum": 4,
       "thavma:vitreus": 8
     },
     "minecraft:diamond_sword": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 4,
+      "thavma:aversio": 4,
+      "thavma:desiderium": 16,
       "thavma:vitreus": 16
     },
     "minecraft:diorite": {
@@ -775,125 +802,126 @@
       "thavma:terra": 2
     },
     "minecraft:end_crystal": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 5,
-      "thavma:hostilis": 4,
-      "thavma:ignis": 2,
-      "thavma:instrumentum": 4,
-      "thavma:tenebrae": 4,
+      "thavma:alienis": 4,
+      "thavma:ignis": 4,
+      "thavma:potentia": 8,
       "thavma:vitreus": 14
     },
     "minecraft:end_stone_brick_slab": {
-      "thavma:tenebrae": 1,
+      "thavma:alienis": 1,
       "thavma:terra": 1
     },
     "minecraft:end_stone_brick_stairs": {
-      "thavma:tenebrae": 2,
+      "thavma:alienis": 2,
       "thavma:terra": 2
     },
     "minecraft:end_stone_brick_wall": {
-      "thavma:tenebrae": 2,
+      "thavma:alienis": 2,
       "thavma:terra": 2
     },
     "minecraft:end_stone_bricks": {
-      "thavma:tenebrae": 2,
+      "thavma:alienis": 2,
       "thavma:terra": 2
     },
     "minecraft:ender_eye": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 1,
-      "thavma:ignis": 2,
-      "thavma:instrumentum": 4,
-      "thavma:tenebrae": 4
+      "thavma:alienis": 4,
+      "thavma:motus": 4,
+      "thavma:praecantatio": 2
     },
     "minecraft:exposed_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:exposed_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:exposed_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:exposed_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:exposed_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:fire_charge": {
-      "thavma:alkimia": 4,
+      "thavma:aversio": 2,
       "thavma:ignis": 4,
-      "thavma:instrumentum": 2
+      "thavma:potentia": 4
     },
     "minecraft:firework_rocket": {
-      "thavma:ignis": 1,
-      "thavma:ornatus": 1
+      "thavma:potentia": 1,
+      "thavma:sensus": 1
     },
     "minecraft:firework_star": {
-      "thavma:ignis": 1,
-      "thavma:ornatus": 2
+      "thavma:potentia": 1,
+      "thavma:sensus": 2
     },
     "minecraft:flint": {
-      "thavma:instrumentum": 1,
-      "thavma:terra": 1
+      "thavma:instrumentum": 2,
+      "thavma:terra": 4
     },
     "minecraft:ghast_tear": {
       "thavma:alkimia": 4,
-      "thavma:hostilis": 4
-    },
-    "minecraft:glow_ink_sac": {
-      "thavma:aqua": 2,
-      "thavma:corpus": 2,
-      "thavma:lux": 2
+      "thavma:exanimis": 4
     },
     "minecraft:glowstone": {
       "thavma:lux": 16,
       "thavma:terra": 4
     },
     "minecraft:golden_axe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 2,
       "thavma:metallum": 12
     },
     "minecraft:golden_boots": {
+      "thavma:desiderium": 32,
       "thavma:metallum": 16,
       "thavma:praemunio": 2
     },
     "minecraft:golden_chestplate": {
+      "thavma:desiderium": 64,
       "thavma:metallum": 32,
       "thavma:praemunio": 10
     },
     "minecraft:golden_helmet": {
+      "thavma:desiderium": 40,
       "thavma:metallum": 20,
       "thavma:praemunio": 4
     },
     "minecraft:golden_hoe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 16,
       "thavma:instrumentum": 2,
       "thavma:metallum": 8
     },
     "minecraft:golden_horse_armor": {
-      "thavma:metallum": 28,
+      "thavma:bestia": 8,
+      "thavma:desiderium": 16,
+      "thavma:metallum": 8,
       "thavma:praemunio": 8
     },
     "minecraft:golden_leggings": {
+      "thavma:desiderium": 56,
       "thavma:metallum": 28,
       "thavma:praemunio": 6
     },
     "minecraft:golden_pickaxe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 2,
       "thavma:metallum": 12
     },
     "minecraft:golden_shovel": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 8,
       "thavma:instrumentum": 2,
       "thavma:metallum": 4
     },
     "minecraft:golden_sword": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 2,
+      "thavma:aversio": 2,
+      "thavma:desiderium": 16,
       "thavma:metallum": 8
     },
     "minecraft:granite": {
@@ -913,15 +941,11 @@
       "thavma:terra": 1
     },
     "minecraft:heavy_core": {
-      "thavma:instrumentum": 6,
-      "thavma:metallum": 16
-    },
-    "minecraft:ink_sac": {
-      "thavma:aqua": 2,
-      "thavma:corpus": 2
+      "thavma:desiderium": 8,
+      "thavma:metallum": 16,
+      "thavma:vacuos": 2
     },
     "minecraft:iron_axe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 3,
       "thavma:metallum": 24
     },
@@ -938,12 +962,12 @@
       "thavma:praemunio": 4
     },
     "minecraft:iron_hoe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 3,
       "thavma:metallum": 16
     },
     "minecraft:iron_horse_armor": {
-      "thavma:metallum": 56,
+      "thavma:bestia": 8,
+      "thavma:metallum": 16,
       "thavma:praemunio": 6
     },
     "minecraft:iron_leggings": {
@@ -951,18 +975,15 @@
       "thavma:praemunio": 10
     },
     "minecraft:iron_pickaxe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 3,
       "thavma:metallum": 24
     },
     "minecraft:iron_shovel": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 3,
       "thavma:metallum": 8
     },
     "minecraft:iron_sword": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 3,
+      "thavma:aversio": 3,
       "thavma:metallum": 16
     },
     "minecraft:jungle_button": {
@@ -996,29 +1017,29 @@
       "thavma:herba": 6
     },
     "minecraft:leather_boots": {
-      "thavma:corpus": 12,
+      "thavma:bestia": 32,
       "thavma:praemunio": 2
     },
     "minecraft:leather_chestplate": {
-      "thavma:corpus": 24,
+      "thavma:bestia": 64,
       "thavma:praemunio": 6
     },
     "minecraft:leather_helmet": {
-      "thavma:corpus": 15,
+      "thavma:bestia": 40,
       "thavma:praemunio": 2
     },
     "minecraft:leather_horse_armor": {
-      "thavma:corpus": 21,
+      "thavma:bestia": 16,
       "thavma:praemunio": 4
     },
     "minecraft:leather_leggings": {
-      "thavma:corpus": 21,
+      "thavma:bestia": 56,
       "thavma:praemunio": 4
     },
     "minecraft:mace": {
-      "thavma:aether": 6,
-      "thavma:instrumentum": 6,
-      "thavma:metallum": 16
+      "thavma:aer": 8,
+      "thavma:metallum": 16,
+      "thavma:motus": 8
     },
     "minecraft:mangrove_button": {
       "thavma:herba": 2
@@ -1051,52 +1072,55 @@
       "thavma:herba": 6
     },
     "minecraft:mossy_cobblestone": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mossy_cobblestone_slab": {
+      "thavma:herba": 1,
       "thavma:terra": 1
     },
     "minecraft:mossy_cobblestone_stairs": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mossy_cobblestone_wall": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mossy_stone_brick_slab": {
+      "thavma:herba": 1,
       "thavma:terra": 1
     },
     "minecraft:mossy_stone_brick_stairs": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mossy_stone_brick_wall": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mossy_stone_bricks": {
-      "thavma:herba": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mud": {
       "thavma:aqua": 1,
-      "thavma:terra": 2
+      "thavma:terra": 1
     },
     "minecraft:mud_brick_slab": {
+      "thavma:herba": 1,
       "thavma:terra": 1
     },
     "minecraft:mud_brick_stairs": {
-      "thavma:aqua": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mud_brick_wall": {
-      "thavma:aqua": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:mud_bricks": {
-      "thavma:aqua": 1,
+      "thavma:herba": 2,
       "thavma:terra": 2
     },
     "minecraft:nether_brick": {
@@ -1128,43 +1152,43 @@
       "thavma:ignis": 2
     },
     "minecraft:netherite_axe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 6,
       "thavma:metallum": 48,
       "thavma:tenebrae": 12
     },
     "minecraft:netherite_boots": {
-      "thavma:metallum": 16,
+      "thavma:desiderium": 32,
+      "thavma:metallum": 32,
       "thavma:praemunio": 9,
-      "thavma:tenebrae": 4,
-      "thavma:vitreus": 32
+      "thavma:tenebrae": 4
     },
     "minecraft:netherite_chestplate": {
-      "thavma:metallum": 16,
+      "thavma:desiderium": 64,
+      "thavma:metallum": 64,
       "thavma:praemunio": 19,
-      "thavma:tenebrae": 4,
-      "thavma:vitreus": 64
+      "thavma:tenebrae": 4
     },
     "minecraft:netherite_helmet": {
-      "thavma:metallum": 16,
+      "thavma:desiderium": 40,
+      "thavma:metallum": 40,
       "thavma:praemunio": 9,
-      "thavma:tenebrae": 4,
-      "thavma:vitreus": 40
+      "thavma:tenebrae": 4
     },
     "minecraft:netherite_hoe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 16,
       "thavma:instrumentum": 6,
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
     },
     "minecraft:netherite_leggings": {
-      "thavma:metallum": 16,
+      "thavma:desiderium": 56,
+      "thavma:metallum": 56,
       "thavma:praemunio": 15,
-      "thavma:tenebrae": 4,
-      "thavma:vitreus": 56
+      "thavma:tenebrae": 4
     },
     "minecraft:netherite_pickaxe": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 24,
       "thavma:instrumentum": 6,
       "thavma:metallum": 48,
       "thavma:tenebrae": 12
@@ -1175,14 +1199,14 @@
       "thavma:terra": 2
     },
     "minecraft:netherite_shovel": {
-      "thavma:herba": 2,
+      "thavma:desiderium": 8,
       "thavma:instrumentum": 6,
       "thavma:metallum": 16,
       "thavma:tenebrae": 4
     },
     "minecraft:netherite_sword": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 6,
+      "thavma:aversio": 6,
+      "thavma:desiderium": 16,
       "thavma:metallum": 32,
       "thavma:tenebrae": 8
     },
@@ -1217,25 +1241,28 @@
       "thavma:herba": 6
     },
     "minecraft:oxidized_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:oxidized_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:oxidized_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:oxidized_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:oxidized_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:packed_mud": {
-      "thavma:aqua": 1,
       "thavma:herba": 2,
-      "thavma:terra": 2,
-      "thavma:victus": 2
+      "thavma:terra": 2
     },
     "minecraft:paper": {
       "thavma:cognitio": 1,
@@ -1337,11 +1364,11 @@
       "thavma:terra": 2
     },
     "minecraft:popped_chorus_fruit": {
-      "thavma:herba": 2,
-      "thavma:tenebrae": 2
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:powder_snow_bucket": {
-      "thavma:aqua": 2
+      "thavma:gelum": 2
     },
     "minecraft:prismarine": {
       "thavma:aqua": 4,
@@ -1352,21 +1379,21 @@
       "thavma:terra": 4
     },
     "minecraft:prismarine_brick_stairs": {
-      "thavma:aqua": 9,
-      "thavma:terra": 9
+      "thavma:aqua": 8,
+      "thavma:terra": 8
     },
     "minecraft:prismarine_bricks": {
-      "thavma:aqua": 9,
-      "thavma:terra": 9
+      "thavma:aqua": 8,
+      "thavma:terra": 8
     },
     "minecraft:prismarine_crystals": {
-      "thavma:aqua": 1,
-      "thavma:lux": 1,
-      "thavma:vitreus": 2
+      "thavma:aqua": 4,
+      "thavma:lux": 2,
+      "thavma:vitreus": 4
     },
     "minecraft:prismarine_shard": {
-      "thavma:aqua": 1,
-      "thavma:terra": 1
+      "thavma:aqua": 2,
+      "thavma:terra": 2
     },
     "minecraft:prismarine_slab": {
       "thavma:aqua": 2,
@@ -1381,16 +1408,16 @@
       "thavma:terra": 4
     },
     "minecraft:purpur_block": {
-      "thavma:herba": 2,
-      "thavma:tenebrae": 2
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:purpur_slab": {
-      "thavma:herba": 1,
-      "thavma:tenebrae": 1
+      "thavma:alienis": 1,
+      "thavma:herba": 1
     },
     "minecraft:purpur_stairs": {
-      "thavma:herba": 2,
-      "thavma:tenebrae": 2
+      "thavma:alienis": 2,
+      "thavma:herba": 2
     },
     "minecraft:quartz_block": {
       "thavma:ignis": 4,
@@ -1405,60 +1432,55 @@
       "thavma:vitreus": 16
     },
     "minecraft:red_nether_brick_slab": {
-      "thavma:herba": 2,
-      "thavma:ignis": 3,
+      "thavma:herba": 1,
+      "thavma:ignis": 1,
       "thavma:terra": 1
     },
     "minecraft:red_nether_brick_stairs": {
-      "thavma:herba": 4,
-      "thavma:ignis": 6,
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
       "thavma:terra": 2
     },
     "minecraft:red_nether_brick_wall": {
-      "thavma:herba": 4,
-      "thavma:ignis": 6,
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
       "thavma:terra": 2
     },
     "minecraft:red_nether_bricks": {
-      "thavma:herba": 4,
-      "thavma:ignis": 6,
+      "thavma:herba": 2,
+      "thavma:ignis": 2,
       "thavma:terra": 2
     },
     "minecraft:red_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:red_sandstone_slab": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "minecraft:red_sandstone_stairs": {
-      "thavma:terra": 8
-    },
-    "minecraft:red_sandstone_wall": {
-      "thavma:terra": 8
-    },
-    "minecraft:rotten_flesh": {
-      "thavma:corpus": 2,
-      "thavma:hostilis": 2
-    },
-    "minecraft:sandstone": {
-      "thavma:terra": 8
-    },
-    "minecraft:sandstone_slab": {
       "thavma:terra": 4
     },
+    "minecraft:red_sandstone_wall": {
+      "thavma:terra": 4
+    },
+    "minecraft:rotten_flesh": {
+      "thavma:exanimis": 2,
+      "thavma:humanus": 2
+    },
+    "minecraft:sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:sandstone_slab": {
+      "thavma:terra": 2
+    },
     "minecraft:sandstone_stairs": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:sandstone_wall": {
-      "thavma:terra": 8
-    },
-    "minecraft:sea_lantern": {
-      "thavma:aqua": 41,
-      "thavma:lux": 5,
-      "thavma:terra": 36,
-      "thavma:vitreus": 10
+      "thavma:terra": 4
     },
     "minecraft:short_grass": {
+      "thavma:aer": 1,
       "thavma:herba": 1
     },
     "minecraft:smooth_quartz": {
@@ -1474,31 +1496,31 @@
       "thavma:vitreus": 16
     },
     "minecraft:smooth_red_sandstone": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:smooth_red_sandstone_slab": {
-      "thavma:terra": 4
+      "thavma:terra": 2
     },
     "minecraft:smooth_red_sandstone_stairs": {
-      "thavma:terra": 8
-    },
-    "minecraft:smooth_sandstone": {
-      "thavma:terra": 8
-    },
-    "minecraft:smooth_sandstone_slab": {
       "thavma:terra": 4
     },
+    "minecraft:smooth_sandstone": {
+      "thavma:terra": 4
+    },
+    "minecraft:smooth_sandstone_slab": {
+      "thavma:terra": 2
+    },
     "minecraft:smooth_sandstone_stairs": {
-      "thavma:terra": 8
+      "thavma:terra": 4
     },
     "minecraft:snow": {
-      "thavma:aqua": 1
+      "thavma:gelum": 1
     },
     "minecraft:snow_block": {
-      "thavma:aqua": 4
+      "thavma:gelum": 4
     },
     "minecraft:snowball": {
-      "thavma:aqua": 1
+      "thavma:gelum": 1
     },
     "minecraft:spruce_button": {
       "thavma:herba": 2
@@ -1534,9 +1556,8 @@
       "thavma:terra": 2
     },
     "minecraft:stone_axe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 2,
-      "thavma:terra": 6
+      "thavma:terra": 12
     },
     "minecraft:stone_brick_slab": {
       "thavma:terra": 1
@@ -1554,22 +1575,19 @@
       "thavma:terra": 2
     },
     "minecraft:stone_hoe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 2,
-      "thavma:terra": 4
+      "thavma:terra": 8
     },
     "minecraft:stone_pickaxe": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 2,
-      "thavma:terra": 6
+      "thavma:terra": 12
     },
     "minecraft:stone_pressure_plate": {
       "thavma:terra": 4
     },
     "minecraft:stone_shovel": {
-      "thavma:herba": 2,
       "thavma:instrumentum": 2,
-      "thavma:terra": 2
+      "thavma:terra": 4
     },
     "minecraft:stone_slab": {
       "thavma:terra": 1
@@ -1578,41 +1596,42 @@
       "thavma:terra": 2
     },
     "minecraft:stone_sword": {
-      "thavma:herba": 1,
-      "thavma:instrumentum": 2,
-      "thavma:terra": 4
+      "thavma:aversio": 2,
+      "thavma:terra": 8
     },
     "minecraft:sugar": {
       "thavma:herba": 2,
       "thavma:victus": 1
     },
     "minecraft:sugar_cane": {
+      "thavma:aer": 1,
       "thavma:aqua": 1,
       "thavma:herba": 2
     },
     "minecraft:tall_grass": {
+      "thavma:aer": 1,
       "thavma:herba": 1
     },
     "minecraft:tnt": {
-      "thavma:alkimia": 10,
-      "thavma:ignis": 20,
-      "thavma:terra": 13
+      "thavma:potentia": 20,
+      "thavma:terra": 1
     },
     "minecraft:torch": {
       "thavma:lux": 4
     },
     "minecraft:totem_of_undying": {
-      "thavma:aether": 8,
+      "thavma:desiderium": 8,
+      "thavma:praecantatio": 8,
       "thavma:victus": 16
     },
     "minecraft:trident": {
       "thavma:aqua": 8,
-      "thavma:metallum": 12
+      "thavma:metallum": 12,
+      "thavma:motus": 8
     },
     "minecraft:tripwire_hook": {
-      "thavma:herba": 2,
-      "thavma:machina": 2,
-      "thavma:metallum": 4
+      "thavma:metallum": 2,
+      "thavma:vinculum": 2
     },
     "minecraft:tuff": {
       "thavma:terra": 2
@@ -1640,12 +1659,12 @@
     },
     "minecraft:turtle_helmet": {
       "thavma:aqua": 5,
-      "thavma:corpus": 10,
-      "thavma:praemunio": 5
+      "thavma:bestia": 10,
+      "thavma:praemunio": 4
     },
     "minecraft:turtle_scute": {
       "thavma:aqua": 1,
-      "thavma:corpus": 2,
+      "thavma:bestia": 2,
       "thavma:praemunio": 1
     },
     "minecraft:warped_button": {
@@ -1689,99 +1708,123 @@
       "thavma:ignis": 6
     },
     "minecraft:waxed_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_copper_block": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:waxed_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_exposed_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_exposed_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_exposed_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_exposed_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:waxed_exposed_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_oxidized_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_oxidized_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_oxidized_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_oxidized_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:waxed_oxidized_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_weathered_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_weathered_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_weathered_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:waxed_weathered_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:waxed_weathered_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:weathered_chiseled_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:weathered_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:weathered_cut_copper": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:weathered_cut_copper_slab": {
-      "thavma:metallum": 18
+      "thavma:metallum": 18,
+      "thavma:permutatio": 18
     },
     "minecraft:weathered_cut_copper_stairs": {
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36
     },
     "minecraft:wind_charge": {
-      "thavma:aether": 4,
-      "thavma:alkimia": 4,
-      "thavma:instrumentum": 2
+      "thavma:aer": 2,
+      "thavma:motus": 1
     },
     "minecraft:wolf_armor": {
-      "thavma:corpus": 12,
+      "thavma:bestia": 8,
       "thavma:praemunio": 6
     },
     "minecraft:wooden_axe": {
-      "thavma:herba": 8,
+      "thavma:herba": 12,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_hoe": {
-      "thavma:herba": 6,
+      "thavma:herba": 8,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_pickaxe": {
-      "thavma:herba": 8,
+      "thavma:herba": 12,
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_shovel": {
@@ -1789,8 +1832,17 @@
       "thavma:instrumentum": 1
     },
     "minecraft:wooden_sword": {
-      "thavma:herba": 5,
-      "thavma:instrumentum": 1
+      "thavma:aversio": 1,
+      "thavma:herba": 8
+    },
+    "thavma:aer_infused_deepslate": {
+      "thavma:aer": 4
+    },
+    "thavma:aer_infused_stone": {
+      "thavma:aer": 4
+    },
+    "thavma:aer_shard": {
+      "thavma:aer": 4
     },
     "thavma:aether_infused_deepslate": {
       "thavma:aether": 4
@@ -1802,18 +1854,18 @@
       "thavma:aether": 4
     },
     "thavma:apprentice_boots": {
-      "thavma:aether": 4,
       "thavma:fabrico": 16,
+      "thavma:praecantatio": 4,
       "thavma:praemunio": 2
     },
     "thavma:apprentice_chestplate": {
-      "thavma:aether": 8,
       "thavma:fabrico": 32,
+      "thavma:praecantatio": 8,
       "thavma:praemunio": 2
     },
     "thavma:apprentice_leggings": {
-      "thavma:aether": 7,
       "thavma:fabrico": 28,
+      "thavma:praecantatio": 7,
       "thavma:praemunio": 2
     },
     "thavma:aqua_infused_deepslate": {
@@ -1826,52 +1878,55 @@
       "thavma:aqua": 4
     },
     "thavma:arcane_lens": {
-      "thavma:aether": 4,
+      "thavma:desiderium": 32,
       "thavma:metallum": 16,
-      "thavma:vitreus": 1
+      "thavma:praecantatio": 2,
+      "thavma:vitreus": 2
     },
     "thavma:arcane_workbench": {
-      "thavma:aether": 2,
-      "thavma:fabrico": 8,
-      "thavma:herba": 8
+      "thavma:fabrico": 12,
+      "thavma:herba": 4,
+      "thavma:praecantatio": 2
     },
     "thavma:cracked_elemental_stone": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:crucible": {
-      "thavma:aether": 2,
       "thavma:alkimia": 8,
-      "thavma:metallum": 56
+      "thavma:metallum": 56,
+      "thavma:praecantatio": 2
     },
     "thavma:elemental_core": {
-      "thavma:aether": 2,
+      "thavma:praecantatio": 2,
       "thavma:terra": 6
     },
     "thavma:elemental_stone": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:elemental_stone_bricks": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:elemental_stone_slab": {
       "thavma:terra": 2
     },
     "thavma:elemental_stone_stairs": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:eternal_flame": {
       "thavma:ignis": 8,
-      "thavma:lux": 12
+      "thavma:lux": 12,
+      "thavma:potentia": 8
     },
     "thavma:fabric": {
-      "thavma:aether": 1,
-      "thavma:fabrico": 4
+      "thavma:fabrico": 4,
+      "thavma:praecantatio": 1
     },
     "thavma:gold_plating": {
+      "thavma:desiderium": 16,
       "thavma:metallum": 8
     },
     "thavma:greatwood_planks": {
@@ -1896,34 +1951,35 @@
       "thavma:metallum": 16
     },
     "thavma:orichalcum_block": {
-      "thavma:instrumentum": 36,
-      "thavma:metallum": 36
+      "thavma:metallum": 36,
+      "thavma:permutatio": 36,
+      "thavma:praecantatio": 36
     },
     "thavma:orichalcum_ingot": {
       "thavma:instrumentum": 4,
-      "thavma:metallum": 4
+      "thavma:metallum": 4,
+      "thavma:permutatio": 4
     },
     "thavma:orichalcum_plating": {
       "thavma:instrumentum": 8,
-      "thavma:metallum": 8
+      "thavma:metallum": 8,
+      "thavma:permutatio": 8
     },
     "thavma:research_table": {
-      "thavma:aether": 2,
-      "thavma:herba": 12
+      "thavma:herba": 12,
+      "thavma:praecantatio": 2
     },
     "thavma:rotten_brain": {
-      "thavma:cognitio": 12,
-      "thavma:corpus": 2,
-      "thavma:hostilis": 2
+      "thavma:cognitio": 16,
+      "thavma:exanimis": 8
     },
     "thavma:sealing_jar": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 2,
+      "thavma:praecantatio": 2,
+      "thavma:vacuos": 2,
       "thavma:vitreus": 4
     },
     "thavma:table": {
-      "thavma:fabrico": 2,
-      "thavma:herba": 11
+      "thavma:herba": 12
     },
     "thavma:terra_infused_deepslate": {
       "thavma:terra": 4
@@ -1935,72 +1991,66 @@
       "thavma:terra": 4
     },
     "thavma:thavmite_axe": {
-      "thavma:aether": 12,
-      "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 24
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
     },
     "thavma:thavmite_block": {
-      "thavma:aether": 36,
-      "thavma:metallum": 72
+      "thavma:metallum": 72,
+      "thavma:praecantatio": 36
     },
     "thavma:thavmite_boots": {
-      "thavma:aether": 16,
       "thavma:metallum": 32,
+      "thavma:praecantatio": 16,
       "thavma:praemunio": 5
     },
     "thavma:thavmite_chestplate": {
-      "thavma:aether": 32,
       "thavma:metallum": 64,
+      "thavma:praecantatio": 32,
       "thavma:praemunio": 13
     },
     "thavma:thavmite_hammer": {
-      "thavma:aether": 24,
-      "thavma:herba": 1,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 48
+      "thavma:metallum": 48,
+      "thavma:praecantatio": 24
     },
     "thavma:thavmite_helmet": {
-      "thavma:aether": 20,
       "thavma:metallum": 40,
+      "thavma:praecantatio": 20,
       "thavma:praemunio": 7
     },
     "thavma:thavmite_hoe": {
-      "thavma:aether": 8,
-      "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 16
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     },
     "thavma:thavmite_ingot": {
-      "thavma:aether": 4,
-      "thavma:metallum": 8
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
     },
     "thavma:thavmite_leggings": {
-      "thavma:aether": 28,
       "thavma:metallum": 56,
+      "thavma:praecantatio": 28,
       "thavma:praemunio": 11
     },
     "thavma:thavmite_pickaxe": {
-      "thavma:aether": 12,
-      "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 24
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
     },
     "thavma:thavmite_plating": {
-      "thavma:aether": 8,
-      "thavma:metallum": 16
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     },
     "thavma:thavmite_shovel": {
-      "thavma:aether": 4,
-      "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 8
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
     },
     "thavma:thavmite_sword": {
-      "thavma:aether": 8,
-      "thavma:herba": 1,
-      "thavma:instrumentum": 4,
-      "thavma:metallum": 16
+      "thavma:aversio": 4,
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     }
   }
 }

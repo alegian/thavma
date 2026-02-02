@@ -1,9 +1,9 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:aether": 20,
+    "thavma:alienis": 16,
     "thavma:instrumentum": 16,
-    "thavma:tenebrae": 16
+    "thavma:motus": 32
   },
   "base": {
     "item": "minecraft:ender_pearl"

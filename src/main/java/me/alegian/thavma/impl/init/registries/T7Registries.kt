@@ -17,8 +17,7 @@ object T7Registries {
     .maxId(Int.MAX_VALUE)
     .create()
 
-  val ASPECT_KEY = ResourceKey.createRegistryKey<Aspect>(rl("aspect"))
-  val ASPECT = RegistryBuilder(ASPECT_KEY)
+  val ASPECT = RegistryBuilder(ResourceKey.createRegistryKey<Aspect>(rl("aspect")))
     .maxId(Int.MAX_VALUE)
     .create()
 

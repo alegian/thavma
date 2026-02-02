@@ -20,13 +20,13 @@ object InfusedOre {
     }
 
     fun registerConfigured(context: BootstrapContext<ConfiguredFeature<*, *>>) {
-        Aspects.DATAGEN_PRIMALS.forEach {
+        Aspects.PRIMAL_ASPECTS.forEach {
             registerConfiguredInfusedStone(context, CONFIGURED_FEATURES[it], T7Blocks.INFUSED_STONES[it]!!.get().defaultBlockState(), T7Blocks.INFUSED_DEEPSLATES[it]!!.get().defaultBlockState())
         }
     }
 
     fun registerPlaced(context: BootstrapContext<PlacedFeature>) {
-        Aspects.DATAGEN_PRIMALS.forEach {
+        Aspects.PRIMAL_ASPECTS.forEach {
             registerPlacedInfusedStone(context, CONFIGURED_FEATURES[it], PLACED_FEATURES[it])
         }
     }

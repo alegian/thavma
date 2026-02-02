@@ -3,6 +3,7 @@
   "config": {
     "features": [
       "thavma:ore_ignis",
+      "thavma:ore_aer",
       "thavma:ore_terra",
       "thavma:ore_aqua",
       "thavma:ore_aether"

@@ -19,7 +19,7 @@ class AspectWidget(position: Vec2, private val researchScreen: ResearchScreen, p
     tooltip = T7Tooltip(
       message,
       Component.translatable(descriptionTranslationId).withStyle(ChatFormatting.GRAY),
-      Component.translatable(costTranslationId).append(" 1").withStyle(ChatFormatting.GRAY)
+      Component.translatable(costTranslationId).append(" ${aspect.rank}").withStyle(ChatFormatting.GRAY)
     )
   }
 

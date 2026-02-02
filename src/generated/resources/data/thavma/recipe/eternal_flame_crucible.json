@@ -2,7 +2,8 @@
   "type": "thavma:crucible",
   "aspects": {
     "thavma:ignis": 8,
-    "thavma:lux": 8
+    "thavma:lux": 8,
+    "thavma:potentia": 8
   },
   "catalyst": {
     "item": "minecraft:glowstone_dust"

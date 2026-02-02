@@ -197,7 +197,7 @@ object T7Items {
   val ANGRY_ZOMBIE_SPAWN_EGG = REGISTRAR.registerItem("angry_zombie_spawn_egg") { p -> DeferredSpawnEggItem(T7EntityTypes.ANGRY_ZOMBIE, 0x00AFAF, 0x9e2323, p) }
 
   val FOCUS_EMBERS = REGISTRAR.registerItem("focus_embers", ::Item)
-  val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation") { ExcavationFocus() }
+  val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation", ::Item)
   val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest") { EnderChestFocus() }
   val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light") { LightFocus() }
   val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)

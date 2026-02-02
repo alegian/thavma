@@ -1,15 +1,12 @@
 package me.alegian.thavma.impl.common.aspect
 
 import com.mojang.serialization.Codec
-import me.alegian.thavma.impl.init.registries.deferred.Aspects.DATAGEN_PRIMALS
-import net.minecraft.core.Holder
+import me.alegian.thavma.impl.init.registries.deferred.Aspects.PRIMAL_ASPECTS
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.*
 import java.util.function.Consumer
 import java.util.function.Supplier
-import kotlin.math.round
-import kotlin.math.roundToInt
 
 /**
  * Immutable.
@@ -36,8 +33,6 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return builder().copyOf(this).add(aspect, amount).build()
   }
 
-  fun add(aspectHolder: Holder<Aspect>, amount: Int) = add(aspectHolder.value(), amount)
-
   fun add(other: AspectMap): AspectMap {
     val builder = builder().copyOf(this)
     other.forEach(Consumer { aspectStack: AspectStack -> builder.add(aspectStack) })
@@ -48,17 +43,9 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     return builder().copyOf(this).subtract(aspect, amount).build()
   }
 
-  fun subtract(aspectHolder: Holder<Aspect>, amount: Int) = subtract(aspectHolder.value(), amount)
-
   fun subtract(other: AspectMap): AspectMap {
     val builder = builder().copyOf(this)
     other.forEach(Consumer { aspectStack: AspectStack -> builder.subtract(aspectStack) })
-    return builder.build()
-  }
-
-  fun remove(aspectHolder: Holder<Aspect>): AspectMap {
-    val builder = builder().copyOf(this)
-    builder.remove(aspectHolder.value())
     return builder.build()
   }
 
@@ -151,13 +138,8 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
       return this.subtract(aspectStack.aspect, aspectStack.amount)
     }
 
-    fun remove(aspect: Aspect): Builder {
-      map.remove(aspect)
-      return this
-    }
-
     fun scale(multiplier: Number): Builder {
-      map.forEach { (k: Aspect, v: Int) -> map[k] = round(v * multiplier.toDouble()).toInt() }
+      map.forEach { (k: Aspect, v: Int) -> map[k] = (v * multiplier.toDouble()).toInt() }
       map = LinkedHashMap(map.filterValues { it > 0 })
       return this
     }
@@ -186,7 +168,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
     fun randomPrimals(scale: Int): AspectMap {
       val random = Random()
       val map = LinkedHashMap<Aspect, Int>()
-      val primals = ArrayList(DATAGEN_PRIMALS)
+      val primals = ArrayList(PRIMAL_ASPECTS)
       primals.shuffle()
       val randomPrimals = primals.subList(0, random.nextInt(primals.size) + 1)
       for (a in randomPrimals) map[a.get()] = random.nextInt(scale) + 1
@@ -199,7 +181,7 @@ class AspectMap(map: Map<Aspect, Int> = LinkedHashMap()) : Iterable<AspectStack>
 
     fun ofPrimals(amount: Int): AspectMap {
       val builder = Builder()
-      for (a in DATAGEN_PRIMALS) {
+      for (a in PRIMAL_ASPECTS) {
         builder.add(a.get(), amount)
       }
       return builder.build()

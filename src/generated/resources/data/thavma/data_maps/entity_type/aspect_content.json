@@ -17,8 +17,8 @@
     "minecraft:chicken": {},
     "minecraft:cod": {},
     "minecraft:cow": {
-      "thavma:terra": 8,
-      "thavma:victus": 8
+      "thavma:bestia": 15,
+      "thavma:terra": 15
     },
     "minecraft:creeper": {
       "thavma:herba": 15,
@@ -30,16 +30,17 @@
     "minecraft:elder_guardian": {},
     "minecraft:ender_dragon": {},
     "minecraft:enderman": {
-      "thavma:civilis": 4,
-      "thavma:hostilis": 4,
-      "thavma:tenebrae": 8
+      "thavma:alienis": 8,
+      "thavma:desiderium": 4,
+      "thavma:humanus": 4,
+      "thavma:motus": 12
     },
     "minecraft:endermite": {},
     "minecraft:evoker": {},
     "minecraft:fox": {},
     "minecraft:frog": {},
     "minecraft:ghast": {
-      "thavma:hostilis": 12,
+      "thavma:exanimis": 12,
       "thavma:ignis": 8
     },
     "minecraft:glow_squid": {},
@@ -58,8 +59,9 @@
     "minecraft:parrot": {},
     "minecraft:phantom": {},
     "minecraft:pig": {
-      "thavma:terra": 8,
-      "thavma:victus": 8
+      "thavma:bestia": 10,
+      "thavma:desiderium": 5,
+      "thavma:terra": 10
     },
     "minecraft:piglin": {},
     "minecraft:piglin_brute": {},
@@ -70,14 +72,15 @@
     "minecraft:ravager": {},
     "minecraft:salmon": {},
     "minecraft:sheep": {
-      "thavma:terra": 8,
-      "thavma:victus": 8
+      "thavma:bestia": 10,
+      "thavma:terra": 10
     },
     "minecraft:shulker": {},
     "minecraft:silverfish": {},
     "minecraft:skeleton": {
-      "thavma:hostilis": 8,
-      "thavma:terra": 8
+      "thavma:exanimis": 20,
+      "thavma:humanus": 5,
+      "thavma:terra": 5
     },
     "minecraft:skeleton_horse": {},
     "minecraft:slime": {
@@ -89,8 +92,8 @@
     "minecraft:snow_golem": {},
     "minecraft:spectral_arrow": {},
     "minecraft:spider": {
-      "thavma:hostilis": 8,
-      "thavma:terra": 8
+      "thavma:bestia": 10,
+      "thavma:vinculum": 10
     },
     "minecraft:squid": {},
     "minecraft:stray": {},
@@ -101,7 +104,7 @@
     "minecraft:turtle": {},
     "minecraft:vex": {},
     "minecraft:villager": {
-      "thavma:civilis": 12
+      "thavma:humanus": 15
     },
     "minecraft:vindicator": {},
     "minecraft:wandering_trader": {},
@@ -112,8 +115,9 @@
     "minecraft:wolf": {},
     "minecraft:zoglin": {},
     "minecraft:zombie": {
-      "thavma:hostilis": 8,
-      "thavma:terra": 8
+      "thavma:exanimis": 20,
+      "thavma:humanus": 10,
+      "thavma:terra": 5
     },
     "minecraft:zombie_horse": {},
     "minecraft:zombie_villager": {},

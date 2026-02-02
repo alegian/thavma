@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyBookEntity
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
@@ -119,7 +120,19 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
   override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
     val focus = stack.equippedFocus
     if (focus != null) return focus.item.onUseTick(level, livingEntity, stack, remainingUseDuration)
-    super.onUseTick(level, livingEntity, stack, remainingUseDuration)
+
+    if (livingEntity.tickCount % ABSORB_TICKS != 0) return
+    if (stack.wandMode != WandMode.ABSORB_NODE) return
+    val blockPos = stack.interactingBlockPos ?: return
+    val transferPair = AspectContainer.blockSourceItemSink(level, blockPos, stack)
+    if (transferPair == null || !transferPair.canTransferPrimals()) {
+      livingEntity.stopUsingItem()
+      return
+    }
+
+    if (level.isClientSide || level !is ServerLevel) return
+    val transferred = transferPair.transferPrimal(livingEntity.tickCount / ABSORB_TICKS, 1)
+    if (transferred != null && transferred.amount > 0) level.updateBlockEntityS2C(blockPos)
   }
 
   override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
@@ -179,6 +192,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     get() = name(this.platingMaterial, this.coreMaterial)
 
   companion object {
+    private const val ABSORB_TICKS = 4
+
     fun name(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): String {
       return platingMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
     }
@@ -186,10 +201,12 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     var ItemStack.equippedFocus
       get() = get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
       set(value) {
-        set(T7DataComponents.FOCUS,
-          if(value == null) ItemContainerContents.EMPTY
+        set(
+          T7DataComponents.FOCUS,
+          if (value == null) ItemContainerContents.EMPTY
           else ItemContainerContents.fromItems(
-            NonNullList.copyOf(listOf(value)))
+            NonNullList.copyOf(listOf(value))
+          )
         )
       }
     var ItemStack.wandMode

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.ClientHelper
+import me.alegian.thavma.impl.client.util.setUpWandPose
 import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
@@ -49,27 +50,6 @@ object ExcavationRenderer {
         setUpWandPose(player, playerRenderer, partialTick)
         render(event.poseStack, ClientHelper.bufferSource(), partialTick, player.level().gameTime, hitPos)
       }
-    }
-  }
-
-  private fun PoseStack.setUpWandPose(player: AbstractClientPlayer, playerRenderer: PlayerRenderer, partialTick: Float) {
-    translate(player.getPosition(partialTick) - ClientHelper.camera().position)
-    if (player == ClientHelper.player() && ClientHelper.firstPerson()) {
-      translate(0f, player.eyeHeight, 0f)
-      mulPose(ClientHelper.camera().rotation())
-
-      // go to first person hand
-      val sideMultiplier = if (player.mainArm == HumanoidArm.RIGHT) 1.0 else -1.0
-      translate(0.6 * sideMultiplier, -0.3, -0.5)
-      // go to the tip of the wand
-      translate(-0.4, 0.1, -0.2)
-    } else {
-      mulPose(Axis.YP.rotationDegrees(-player.getPreciseBodyRotation(partialTick)))
-      // go to arm pivot point (hours of reverse engineering led to this constant)
-      translate(0.0, 19 / 16.0, 0.0)
-      playerRenderer.model.translateToHand(player.mainArm, this)
-      // go to the tip of the wand
-      translate(0.0, -0.6, 0.8)
     }
   }
 

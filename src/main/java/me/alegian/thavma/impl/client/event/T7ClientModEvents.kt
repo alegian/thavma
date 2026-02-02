@@ -23,7 +23,6 @@ import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.NodeJarBE
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.SealingJarBEWLR
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
-import me.alegian.thavma.impl.client.renderer.entity.VisER
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
 import me.alegian.thavma.impl.common.block.entity.*
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
@@ -65,7 +64,6 @@ private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.PEDESTAL.get()) { _ -> PedestalBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.HUNGRY_CHEST.get()) { ctx -> HungryChestBER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.FANCY_ITEM.get()) { ctx -> FancyItemER(ctx) }
-  event.registerEntityRenderer(T7EntityTypes.VIS.get()) { ctx -> VisER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.ANGRY_ZOMBIE.get()) { ctx -> AngryZombieER(ctx) }
 }
 

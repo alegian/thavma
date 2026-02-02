@@ -12,6 +12,7 @@ import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
 import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
+import me.alegian.thavma.impl.client.renderer.NodeAbsorbRenderer
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
@@ -162,5 +163,6 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
   KFF_GAME_BUS.addListener(ExcavationRenderer::renderLevelAfterEntities)
+  KFF_GAME_BUS.addListener(NodeAbsorbRenderer::renderLevelAfterEntities)
   KFF_GAME_BUS.addListener(::clientTick)
 }

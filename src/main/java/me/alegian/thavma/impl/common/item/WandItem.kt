@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyBookEntity
-import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.util.getBE
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
@@ -68,9 +67,7 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
       if (player != null && canTransfer) {
         context.itemInHand.wandMode = WandMode.ABSORB_NODE
         player.startUsingItem(context.hand)
-        if (!level.isClientSide() && level is ServerLevel) {
-          level.addFreshEntity(VisEntity(level, player, blockPos))
-        }
+        // todo: set node pos data component
         return InteractionResult.CONSUME
       }
     }

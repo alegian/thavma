@@ -9,7 +9,6 @@ import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
@@ -26,7 +25,7 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     private const val SCALE = 0.5f
     private const val DEGREES_PER_TICK = 0.5f
     private val MAX_RADIUS = SCALE * BACKGROUND.width / 2
-    private val ANIMATION_DURATION = 5
+    private const val ANIMATION_DURATION = 5
   }
 
   var ticks = 0
@@ -68,7 +67,8 @@ class FociScreen : Screen(Component.translatable(TITLE_ID)) {
     val mouseRadius = hypot(centeredMouseX, centeredMouseY)
     val anglePerItem = 2 * PI / foci.size
     var mouseAngle = atan2(centeredMouseY, centeredMouseX) + anglePerItem / 2
-    if (mouseAngle < 0) mouseAngle += 2 * PI
+    mouseAngle += 2 * PI
+    mouseAngle %= 2 * PI
 
     if (T7KeyMappings.FOCI.isDown) {
       selectedIndex = floor(mouseAngle / anglePerItem).toInt()

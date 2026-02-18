@@ -229,19 +229,6 @@ object T7Items {
   }
 
   /**
-   * Registers a wand with the given plating and core materials
-   */
-  fun registerWand(registry: Registry<Item>, platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial) {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    val wandName = WandItem.name(platingMaterial, coreMaterial)
-
-    val newWand = WandItem(Item.Properties(), platingMaterial, coreMaterial)
-    Registry.register(registry, rl(wandName), newWand)
-    WANDS.put(platingName, coreName, newWand)
-  }
-
-  /**
    * Helper that gets a wand from the DoubleMap of registered wands.
    * WARNING: cannot get wands from addons, these have to be accessed manually.
    */
@@ -258,11 +245,5 @@ object T7Items {
     }
 
     return wand
-  }
-
-  fun isWandRegistered(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): Boolean {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    return WANDS[platingName, coreName] != null
   }
 }

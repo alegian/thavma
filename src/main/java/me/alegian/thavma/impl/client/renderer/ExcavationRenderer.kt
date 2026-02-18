@@ -4,12 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.util.setUpWandPose
-import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.item.WandItem.Companion.wandMode
 import me.alegian.thavma.impl.common.item.WandMode
 import me.alegian.thavma.impl.common.level.Excavation
-import me.alegian.thavma.impl.common.util.minus
 import me.alegian.thavma.impl.common.util.use
 import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.init.registries.deferred.T7Items
@@ -17,7 +15,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.client.renderer.entity.player.PlayerRenderer
-import net.minecraft.world.level.ClipContext
+import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import org.joml.Matrix4f
 import org.joml.Quaternionf
@@ -37,25 +35,18 @@ object ExcavationRenderer {
       val playerRenderer = ClientHelper.entityRenderDispatcher().getRenderer(player)
       if (playerRenderer !is PlayerRenderer) return
 
-      val from = player.getPosition(partialTick).add(0.0, player.eyeHeight.toDouble(), 0.0)
-      val to = from.add(player.getViewVector(partialTick).scale(Excavation.RANGE))
-      val hitresult = level.clip(ClipContext(from, to, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player))
-      val hitPos = hitresult.location.toVector3f()
-
       event.poseStack.use {
         setUpWandPose(player, playerRenderer, partialTick)
-        render(event.poseStack, ClientHelper.bufferSource(), partialTick, player.level().gameTime, hitPos)
+        render(player, event.poseStack, ClientHelper.bufferSource(), partialTick, player.level().gameTime)
       }
     }
   }
 
-  fun render(handPose: PoseStack, bufferSource: MultiBufferSource, partialTick: Float, gameTime: Long, hitPos: Vector3f) {
+  fun render(player: Player, handPose: PoseStack, bufferSource: MultiBufferSource, partialTick: Float, gameTime: Long) {
     handPose.use {
       // rotate towards target block
-      val targetPos = hitPos - ClientHelper.camera().position.toVector3f()
-      val wandTipPos = transformOrigin()
       val currentUp = Vector3f(0f, 1f, 0f)
-      val localDiff = (targetPos - wandTipPos).mulDirection(handPose.last().pose().invert(Matrix4f()))
+      val localDiff = (player.getViewVector(partialTick).scale(Excavation.RANGE).toVector3f()).mulDirection(handPose.last().pose().invert(Matrix4f()))
       val correctUp = localDiff.normalize(Vector3f())
       mulPose(Quaternionf().rotationTo(currentUp, correctUp))
 

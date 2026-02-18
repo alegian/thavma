@@ -9,8 +9,6 @@ import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Capabilities
 import me.alegian.thavma.impl.init.registries.T7Tiers
 import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.THAVMITE
-import me.alegian.thavma.impl.rl
-import net.minecraft.core.Registry
 import net.minecraft.world.item.*
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.DeferredSpawnEggItem
@@ -207,8 +205,8 @@ object T7Items {
 
   val NODE_JAR = REGISTRAR.registerItem("node_jar") { NodeJarItem() }
 
-  // (platingName, coreName)->wand. populated on Item Registry bake
-  val WANDS = DoubleMap<String, String, WandItem>()
+  // (plating, core) -> wand. populated with Registry callbacks
+  val WANDS = DoubleMap<WandPlatingMaterial, WandCoreMaterial, WandItem>()
 
   fun registerCapabilities(event: RegisterCapabilitiesEvent) {
     for (wand in WANDS.values()) event.registerItem(
@@ -232,16 +230,11 @@ object T7Items {
    * Helper that gets a wand from the DoubleMap of registered wands.
    * WARNING: cannot get wands from addons, these have to be accessed manually.
    */
-  fun wandOrThrow(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): WandItem {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    val wand = WANDS[platingName, coreName]
+  fun wandOrThrow(plating: WandPlatingMaterial, core: WandCoreMaterial): WandItem {
+    val wand = WANDS[plating, core]
 
     requireNotNull(wand) {
-      "Thavma Exception: Trying to Access Unregistered Wand Combination" + WandItem.name(
-        platingMaterial,
-        coreMaterial
-      )
+      "Thavma Exception: Trying to Access Unregistered Wand Combination"
     }
 
     return wand

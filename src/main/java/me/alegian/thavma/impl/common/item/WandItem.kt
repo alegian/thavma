@@ -12,6 +12,7 @@ import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.NonNullList
@@ -40,6 +41,10 @@ import java.util.function.Consumer
 
 open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial, val coreMaterial: WandCoreMaterial) :
   Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)), GeoItem {
+
+  init {
+    T7Items.WANDS.put(platingMaterial, coreMaterial, this)
+  }
 
   private val cache = GeckoLibUtil.createInstanceCache(this)
 
@@ -188,15 +193,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return coreMaterial.capacity
   }
 
-  open val name: String
-    get() = name(this.platingMaterial, this.coreMaterial)
-
   companion object {
     private const val ABSORB_TICKS = 4
-
-    fun name(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): String {
-      return platingMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
-    }
 
     var ItemStack.equippedFocus
       get() = get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()

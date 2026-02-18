@@ -119,7 +119,8 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     for (shard in SHARDS.values) item(shard, rl("item/shard"))
 
-    for (wand in WANDS.values()) withExistingParent(wand.name, rl("wand"))
+    for (wand in WANDS.values())
+      withExistingParent(BuiltInRegistries.ITEM.getKey(wand).path, rl("wand"))
 
     withExistingParent(ANGRY_ZOMBIE_SPAWN_EGG.id.path, "template_spawn_egg")
 

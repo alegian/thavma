@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
 import me.alegian.thavma.impl.client.renderer.NodeAbsorbRenderer
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
+import me.alegian.thavma.impl.common.block.HoleBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
@@ -59,8 +60,10 @@ private fun renderBlockHighlight(event: RenderHighlightEvent.Block) {
     allowHammerOutlineEvents = true
   }
 
-  // aura nodes have no outline
-  if (level.getBlockState(targetPos).block is AuraNodeBlock) event.isCanceled = true
+  if (
+    level.getBlockState(targetPos).block === T7Blocks.AURA_NODE.get() ||
+    level.getBlockState(targetPos).block === T7Blocks.HOLE.get()
+  ) event.isCanceled = true
 }
 
 private fun renderLevelAfterWeather(event: RenderLevelStageEvent) {

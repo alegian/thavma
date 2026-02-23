@@ -1,17 +1,22 @@
 package me.alegian.thavma.impl.common.block
 
 import me.alegian.thavma.impl.common.block.entity.HoleBE
+import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.common.util.TriState
@@ -33,4 +38,7 @@ class HoleBlock : Block(
   override fun canSustainPlant(state: BlockState, level: BlockGetter, soilPosition: BlockPos, facing: Direction, plant: BlockState) = TriState.TRUE
 
   override fun getCloneItemStack(state: BlockState, target: HitResult, level: LevelReader, pos: BlockPos, player: Player) = ItemStack.EMPTY
+
+  override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>) =
+    BaseEntityBlock.createTickerHelper(type, T7BlockEntities.HOLE.get()) { _, _, _, be -> be.serverTick() }
 }

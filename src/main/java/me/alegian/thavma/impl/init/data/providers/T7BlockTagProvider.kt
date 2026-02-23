@@ -82,5 +82,9 @@ class T7BlockTagProvider(output: PackOutput, lookupProvider: CompletableFuture<H
       T7Blocks.PILLAR.get(),
       T7Blocks.HOLE.get(),
     )
+
+    tag(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).add(
+      T7Blocks.HOLE.get()
+    )
   }
 }

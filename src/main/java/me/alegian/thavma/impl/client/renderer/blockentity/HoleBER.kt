@@ -23,6 +23,7 @@ class HoleBER : BlockEntityRenderer<HoleBE> {
 
   private fun renderQuad(be: HoleBE, vertexConsumer: VertexConsumer, poseStack: PoseStack, direction: Direction) {
     val level = be.level ?: return
+    if (direction == be.direction) return
     if (Block.shouldRenderFace(be.blockState, level, be.blockPos, direction, be.blockPos.relative(direction)))
       return
 

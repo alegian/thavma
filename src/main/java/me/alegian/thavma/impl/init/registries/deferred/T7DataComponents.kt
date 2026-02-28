@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.block.entity.HoleBE
 import me.alegian.thavma.impl.common.infusion.InfusionState
 import me.alegian.thavma.impl.common.item.WandMode
 import me.alegian.thavma.impl.common.research.ResearchState
@@ -53,5 +54,9 @@ object T7DataComponents {
   val EXCHANGE_BLOCK = REGISTRAR.registerComponentType("exchange_block") {
     it.persistent(BuiltInRegistries.BLOCK.byNameCodec())
       .networkSynchronized(ByteBufCodecs.registry(Registries.BLOCK))
+  }
+
+  val HOLE_STATE = REGISTRAR.registerComponentType("hole_state") {
+    it.persistent(HoleBE.Companion.HoleState.CODEC)
   }
 }

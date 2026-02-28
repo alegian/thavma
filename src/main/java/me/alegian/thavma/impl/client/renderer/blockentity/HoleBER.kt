@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import me.alegian.thavma.impl.common.block.entity.HoleBE
 import me.alegian.thavma.impl.common.util.use
+import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
@@ -23,7 +24,7 @@ class HoleBER : BlockEntityRenderer<HoleBE> {
 
   private fun renderQuad(be: HoleBE, vertexConsumer: VertexConsumer, poseStack: PoseStack, direction: Direction) {
     val level = be.level ?: return
-    if (direction == be.direction) return
+    if (direction == be.get(T7DataComponents.HOLE_STATE)?.direction) return
     if (Block.shouldRenderFace(be.blockState, level, be.blockPos, direction, be.blockPos.relative(direction)))
       return
 

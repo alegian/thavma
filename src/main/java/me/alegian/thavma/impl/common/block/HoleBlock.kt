@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
@@ -17,7 +18,9 @@ import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.PushReaction
+import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
@@ -44,6 +47,11 @@ class HoleBlock : Block(
   override fun getVisualShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext) = Shapes.block()
 
   override fun canSustainPlant(state: BlockState, level: BlockGetter, soilPosition: BlockPos, facing: Direction, plant: BlockState) = TriState.TRUE
+
+  override fun canBeReplaced(state: BlockState, fluid: Fluid) = false
+  override fun canBeReplaced(state: BlockState, useContext: BlockPlaceContext) = false
+
+  override fun isPathfindable(state: BlockState, pathComputationType: PathComputationType) = false
 
   override fun getCloneItemStack(state: BlockState, target: HitResult, level: LevelReader, pos: BlockPos, player: Player) = ItemStack.EMPTY
 

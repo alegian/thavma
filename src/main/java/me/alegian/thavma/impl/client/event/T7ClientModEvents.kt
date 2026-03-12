@@ -17,6 +17,7 @@ import me.alegian.thavma.impl.client.particle.CrucibleBubbleParticle
 import me.alegian.thavma.impl.client.particle.EternalFlameParticle
 import me.alegian.thavma.impl.client.particle.InfusionItemParticle
 import me.alegian.thavma.impl.client.particle.InfusionRuneParticle
+import me.alegian.thavma.impl.client.particle.VisTrailParticle
 import me.alegian.thavma.impl.client.renderer.blockentity.*
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.BlockItemBEWLR
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.NodeJarBEWLR
@@ -77,6 +78,10 @@ private fun registerParticleProviders(event: RegisterParticleProvidersEvent) {
   event.registerSpriteSet(
     T7ParticleTypes.ETERNAL_FLAME.get(),
     EternalFlameParticle::Provider
+  )
+  event.registerSpriteSet(
+    T7ParticleTypes.VIS_TRAIL.get(),
+    VisTrailParticle::Provider
   )
   event.registerSpriteSet(
     T7ParticleTypes.INFUSION_ITEM.get(),

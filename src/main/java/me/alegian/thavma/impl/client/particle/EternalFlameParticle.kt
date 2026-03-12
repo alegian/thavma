@@ -11,6 +11,10 @@ class EternalFlameParticle(level: ClientLevel, private val centerX: Double, priv
   private var initialSize = 0f
   private val initialAlpha = 1f
 
+  companion object {
+    var spriteSet: SpriteSet? = null
+  }
+
   init {
     // add randomness to position
     xo += random.nextDouble() * 0.2 - 0.1
@@ -50,6 +54,10 @@ class EternalFlameParticle(level: ClientLevel, private val centerX: Double, priv
   override fun getRenderType() = T7ParticleRenderTypes.ETERNAL_FLAME
 
   class Provider(private val sprite: SpriteSet) : ParticleProvider<SimpleParticleType> {
+    init {
+      spriteSet = sprite
+    }
+
     override fun createParticle(type: SimpleParticleType, level: ClientLevel, x: Double, y: Double, z: Double, xSpeed: Double, ySpeed: Double, zSpeed: Double) =
       EternalFlameParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprite)
   }

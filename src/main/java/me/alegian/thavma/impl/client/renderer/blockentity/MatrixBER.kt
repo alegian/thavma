@@ -2,9 +2,9 @@ package me.alegian.thavma.impl.client.renderer.blockentity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
+import me.alegian.thavma.impl.client.particle.VisTrailParticles
 import me.alegian.thavma.impl.client.renderer.geo.layer.EmissiveGeoLayer
 import me.alegian.thavma.impl.client.renderer.geo.layer.ItemRenderLayer
-import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
 import me.alegian.thavma.impl.client.util.translate
 import me.alegian.thavma.impl.common.block.entity.MatrixBE
 import me.alegian.thavma.impl.common.infusion.trajectoryLength
@@ -42,6 +42,9 @@ private class FlyingAspectsRenderLayer(renderer: MatrixBER) : GeoRenderLayer<Mat
   override fun render(poseStack: PoseStack, be: MatrixBE, bakedModel: BakedGeoModel, renderType: RenderType?, bufferSource: MultiBufferSource, buffer: VertexConsumer?, partialTick: Float, packedLight: Int, packedOverlay: Int) {
     val flyingAspects = be.get(INFUSION_STATE)?.flyingAspects
     if (flyingAspects?.isEmpty() ?: true) return
+    val tick = Minecraft.getInstance().levelRenderer.ticks
+    if (matrixParticleTicks[be.blockPos.asLong()] == tick) return
+    matrixParticleTicks[be.blockPos.asLong()] = tick
 
     poseStack.use {
       translate(-be.blockPos.center)
@@ -57,10 +60,12 @@ private class FlyingAspectsRenderLayer(renderer: MatrixBER) : GeoRenderLayer<Mat
         val head = f.value - 1 - firstIndex
         val length = 1 + flyingAspects.indexOfLast { f.key == it?.blockPos?.center } - firstIndex
         val aspect = flyingAspects[firstIndex]?.aspectStack?.aspect ?: continue
-        val colorWithAlpha = 0x44000000 or (aspect.color and 0xffffff)
         if (head < 0) continue
-        renderFlyingAspects(f.key, be.drainPos, 1.2, head, length, poseStack, Minecraft.getInstance().renderBuffers().bufferSource(), ticks, colorWithAlpha, 0.12)
+        val count = if (length > 20) 3 else 2
+        VisTrailParticles.spawnBurst(f.key, be.drainPos, listOf(aspect.color and 0x00FFFFFF), ticks.toInt() + firstIndex, count, 0.078f)
       }
     }
   }
 }
+
+private val matrixParticleTicks = mutableMapOf<Long, Int>()

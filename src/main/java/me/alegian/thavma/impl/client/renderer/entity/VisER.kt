@@ -1,14 +1,11 @@
 package me.alegian.thavma.impl.client.renderer.entity
 
 import com.mojang.blaze3d.vertex.PoseStack
-import me.alegian.thavma.impl.client.T7Colors
-import me.alegian.thavma.impl.client.renderer.renderFlyingAspects
-import me.alegian.thavma.impl.client.util.translate
+import me.alegian.thavma.impl.client.particle.VisTrailParticles
+import me.alegian.thavma.impl.common.data.capability.AspectContainer
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
 import me.alegian.thavma.impl.common.entity.VisEntity
-import me.alegian.thavma.impl.common.infusion.trajectoryLength
-import me.alegian.thavma.impl.common.util.unaryMinus
 import me.alegian.thavma.impl.common.util.plus
-import me.alegian.thavma.impl.common.util.use
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.culling.Frustum
@@ -23,14 +20,11 @@ import net.minecraft.world.phys.Vec3
 class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity>(pContext) {
   override fun render(visEntity: VisEntity, pEntityYaw: Float, pPartialTick: Float, poseStack: PoseStack, pBufferSource: MultiBufferSource, pPackedLight: Int) {
     val player = visEntity.player ?: return
-
-    poseStack.use {
-      translate(-visEntity.position()) // we are inside an entity renderer
-      val playerHandPos = preparePlayerHandPosition(pPartialTick, player)
-      val length = trajectoryLength(visEntity.position(), playerHandPos)
-      val colorWithAlpha = 0x44000000 or (T7Colors.PURPLE and 0xffffff)
-      renderFlyingAspects(visEntity.position(), playerHandPos, 0.2, length - 1, length, this, pBufferSource, visEntity.tickCount + pPartialTick, colorWithAlpha, 0.06)
-    }
+    val playerHandPos = preparePlayerHandPosition(pPartialTick, player)
+    val colors = AspectContainer.at(visEntity.level(), visEntity.blockPosition())?.aspects?.toSortedList()?.map { it.aspect.color and 0x00FFFFFF }
+      ?.takeIf { it.isNotEmpty() }
+      ?: Aspects.PRIMAL_ASPECTS.map { it.get().color and 0x00FFFFFF }
+    spawnTrailParticles(visEntity, playerHandPos, colors)
   }
 
   override fun getTextureLocation(pEntity: VisEntity) =
@@ -42,6 +36,23 @@ class VisER(pContext: EntityRendererProvider.Context) : EntityRenderer<VisEntity
    * of the screen.
    */
   override fun shouldRender(pLivingEntity: VisEntity, pCamera: Frustum, pCamX: Double, pCamY: Double, pCamZ: Double) = true
+}
+
+private val visParticleTicks = mutableMapOf<Int, Int>()
+
+private fun spawnTrailParticles(visEntity: VisEntity, target: Vec3, colors: List<Int>) {
+  val tick = visEntity.tickCount
+  if (visParticleTicks[visEntity.id] == tick) return
+  visParticleTicks[visEntity.id] = tick
+
+  val start = visEntity.position()
+  val distance = start.distanceTo(target)
+  val count = when {
+    distance < 1.5 -> 2
+    distance < 3.0 -> 3
+    else -> 4
+  }
+  VisTrailParticles.spawnBurst(start, target, colors, tick + visEntity.id, count, 0.095f)
 }
 
 /**
@@ -56,11 +67,13 @@ private fun preparePlayerHandPosition(pPartialTick: Float, player: Player): Vec3
 
   // for first person, if it is the client player, we follow the camera
   if (player === Minecraft.getInstance().player && Minecraft.getInstance().options.cameraType.isFirstPerson) {
+    val cameraPos = Minecraft.getInstance().gameRenderer.mainCamera.position
+    val view = player.getViewVector(pPartialTick).normalize().scale(.45)
     val angle = Math.PI / 2 - player.getViewYRot(pPartialTick) / 360f * 2 * Math.PI
-    val translation = player.getViewVector(pPartialTick).normalize().scale(.1)
-    position += Vec3(0.0, player.eyeHeight + 0.01, 0.0)
-    position += translation
-    val horizontalOffset = Vec3(0.0, 0.0, (if (arm == HumanoidArm.RIGHT) -.06f else .06f).toDouble())
+    position = cameraPos
+    position += view
+    position += Vec3(0.0, -0.16, 0.0)
+    val horizontalOffset = Vec3(0.0, 0.0, (if (arm == HumanoidArm.RIGHT) -.14f else .14f).toDouble())
     position += horizontalOffset.yRot(angle.toFloat())
   } else { // for third person, we follow body rotation
     val angle = Math.PI / 2 - player.getPreciseBodyRotation(pPartialTick) / 360f * 2 * Math.PI

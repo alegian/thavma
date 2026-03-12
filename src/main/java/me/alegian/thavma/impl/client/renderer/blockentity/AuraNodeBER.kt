@@ -78,15 +78,17 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
 
     fun renderNode(aspectMap: AspectMap, poseStack: PoseStack, bufferSource: MultiBufferSource) {
       poseStack.use {
-        var alpha = 0.1f
+        var alpha = 0.15f
         if (clientPlayerHasRevealing()) alpha = MAX_ALPHA
 
-        // empty nodes look like small black circles
-        aspectMap.toSortedList().run {
-          if (this.isNotEmpty())
-            for (stack in this)
-              renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
-          else renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
+        val sorted = aspectMap.toSortedList()
+        if (sorted.isNotEmpty()) {
+          for (stack in sorted.reversed())
+            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS + 0.08f)
+
+          renderAuraNodeLayer(poseStack, bufferSource, 0xFFFFFF, alpha * 0.7f, 0.06f)
+        } else {
+          renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
         }
       }
     }

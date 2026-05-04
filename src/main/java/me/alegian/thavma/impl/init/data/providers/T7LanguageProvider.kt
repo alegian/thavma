@@ -100,9 +100,12 @@ import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.ORIC
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
+import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.item.crafting.RecipeType
@@ -270,6 +273,30 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
+
+    addCategory(ResearchCategories.STORY, "???")
+    addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
+
+    addTextPage(
+        ResearchEntries.Story.TEST, 0,
+        "A Courtesy Call",
+        "Lorem ipsum %s sit amet,",
+            "this story a great meaning haveth."
+    )
+
+    addTextPage(
+        ResearchEntries.Story.TEST, 1,
+        "A Courtesy Call",
+        "Lorem ipsum dolor sit amet,",
+        "this story a great meaning haveth."
+    )
+
+    addTextPage(
+        ResearchEntries.Story.TEST, 2,
+        "A Courtesy Call",
+        "Lorem ipsum dolor sit amet,",
+        "this story a great meaning haveth."
+    )
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,

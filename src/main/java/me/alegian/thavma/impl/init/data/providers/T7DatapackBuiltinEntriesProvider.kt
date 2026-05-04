@@ -36,6 +36,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.ConditionalEffect
 import net.minecraft.world.item.enchantment.Enchantment
@@ -114,6 +115,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.registerCategory(ResearchCategories.THAVMA, T7Items.BOOK.get().defaultInstance, 0f)
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
+        ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
@@ -124,6 +126,14 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addChild(ResearchEntries.Thavma.ORES)
           .defaultKnown()
           .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, -3), false, Items.TURTLE_HELMET.defaultInstance)
+            .research()
+            .addPage(simpleTextPage(2, true))
+            .addPage(simpleTextPage(2, true))
+            .addPage(simpleTextPage(2, true))
+            .defaultKnown()
+            .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
           .research(lockedAspect(2, 0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))

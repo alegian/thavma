@@ -41,6 +41,10 @@ class PageTurningWidget(position: Vec2, private val invert: Boolean, private val
     }
 
     override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
+        //handleClick()
+    }
+
+    override fun onRelease(mouseX: Double, mouseY: Double) {
         handleClick()
     }
 

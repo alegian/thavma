@@ -40,21 +40,23 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
           paddingBottom = 42
           gap = 48
         }) {
-        //for (doublepage in 0..ceil(entry.value().pages.size/2.0).toInt()){
           Row({
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage))
+              if (currentPage != 0) {
               Box({
                   width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
                   height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
               }) {
                   afterLayout {
-                      if (currentPage != 0) {
+
                       addRenderableWidget(PageTurningWidget(position, false) {
                           // reinitiate the screen for this research entry when clicked
                           // with an updated page
+                          // clearWidgets() is essential, also clears underline formatting!
                           currentPage -= 2
+                          clearWidgets()
                           init()
                       })}
                   }
@@ -65,22 +67,24 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage + 1))
+              if ((entry.value().pages.getOrNull(currentPage + 2) ?: 1) is Page) {
               Box({
                   width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
                   height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
               }) {
                   afterLayout {
-                      if ((entry.value().pages.getOrNull(currentPage + 2) ?: 1) is Page) {
+
                       addRenderableWidget(PageTurningWidget(position, true) {
                           // reinitiate the screen for this research entry when clicked
                           // with an updated page
+                          // clearWidgets() is essential, also clears underline formatting!
                           currentPage += 2
+                          clearWidgets()
                           init()
                       })}
                   }
               }
           }
-        //  }
         }
       }
     }

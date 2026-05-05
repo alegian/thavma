@@ -279,22 +279,23 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addTextPage(
         ResearchEntries.Story.TEST, 0,
-        "A Courtesy Call",
-        "Lorem ipsum %s sit amet,",
+        "A Courtesy Call 1",
+        "Lorem ipsum %s 1 sit amet,",
             "this story a great meaning haveth."
     )
 
     addTextPage(
         ResearchEntries.Story.TEST, 1,
-        "A Courtesy Call",
-        "Lorem ipsum dolor sit amet,",
-        "this story a great meaning haveth."
+        "A Courtesy Call 2",
+        "Lorem dolor 2 sit amet,",
+        "this story a great meaning haveth.",
+        ""
     )
 
     addTextPage(
         ResearchEntries.Story.TEST, 2,
-        "A Courtesy Call",
-        "Lorem ipsum dolor sit amet,",
+        "A Courtesy Call 3",
+        "Lorem lotrumatum dolor 3 sit amet,",
         "this story a great meaning haveth."
     )
 

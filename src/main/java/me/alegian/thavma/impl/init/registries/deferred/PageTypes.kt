@@ -2,6 +2,8 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.book.CraftingPage
+import me.alegian.thavma.impl.common.book.DynamicPage
+import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.book.PageType
 import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.init.registries.T7Registries
@@ -13,4 +15,5 @@ object PageTypes {
 
   val TEXT = REGISTRAR.register("text") { -> PageType<TextPage>(rl("text"), TextPage.CODEC) }
   val CRAFTING = REGISTRAR.register("crafting") { -> PageType<CraftingPage>(rl("crafting"), CraftingPage.CODEC) }
+  //val DYNAMIC = REGISTRAR.register("dynamic") { -> PageType<DynamicPage>(rl("dynamic"), DynamicPage.CODEC) }
 }

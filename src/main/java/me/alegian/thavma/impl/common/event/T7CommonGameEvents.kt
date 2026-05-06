@@ -3,6 +3,8 @@ package me.alegian.thavma.impl.common.event
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance
 import me.alegian.thavma.impl.common.entity.isWearingStepHeightBoots
 import me.alegian.thavma.impl.common.item.EnderpearlFocus
+import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.level.Exchanging
 import me.alegian.thavma.impl.common.level.TreeFelling
 import me.alegian.thavma.impl.init.registries.T7AttributeModifiers
@@ -18,9 +20,11 @@ import net.minecraft.world.damagesource.DamageTypes
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import kotlin.math.max
 import thedarkcolour.kotlinforforge.neoforge.forge.FORGE_BUS as KFF_GAME_BUS
@@ -94,12 +98,23 @@ fun entityFall(event: LivingFallEvent) {
   event.entity.setData(T7Attachments.LEVITATES, false)
 }
 
+fun harvestCheck(event: PlayerEvent.HarvestCheck) {
+  val stack = event.entity.mainHandItem
+  if (stack.item !is WandItem) return
+  if (stack.equippedFocus?.item != T7Items.FOCUS_EXCAVATION.asItem()) return
+
+  // excavation focus is the same as a netherite pickaxe
+  val netheritePick = Items.NETHERITE_PICKAXE.defaultInstance
+  event.setCanHarvest(event.canHarvest() || netheritePick.isCorrectToolForDrops(event.targetBlock))
+}
+
 fun registerCommonGameEvents() {
   KFF_GAME_BUS.addListener(::entityTickPre)
   KFF_GAME_BUS.addListener(::livingDamagePost)
   KFF_GAME_BUS.addListener(::mobEffectApplicable)
   KFF_GAME_BUS.addListener(::preLivingDamage)
   KFF_GAME_BUS.addListener(::entityFall)
+  KFF_GAME_BUS.addListener(::harvestCheck)
   KFF_GAME_BUS.addListener(TreeFelling::blockBreak)
   KFF_GAME_BUS.addListener(TreeFelling::levelTick)
   KFF_GAME_BUS.addListener(Exchanging::levelTick)

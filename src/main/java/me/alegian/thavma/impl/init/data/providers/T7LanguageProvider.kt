@@ -194,7 +194,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     }
 
     add(T7Items.FOCUS_EMBERS.get(), "[WIP]Focus: Embers")
-    add(T7Items.FOCUS_EXCAVATION.get(), "[WIP]Focus: Excavation")
+    add(T7Items.FOCUS_EXCAVATION.get(), "Focus: Excavation")
     add(T7Items.FOCUS_ENDERCHEST.get(), "Focus: Enderchest")
     add(T7Items.FOCUS_LIGHT.get(), "Focus: Light")
     add(T7Items.FOCUS_HOLE.get(), "[WIP]Focus: Hole")

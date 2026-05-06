@@ -4,7 +4,7 @@
   "defaultKnown": false,
   "defaultResearchState": [
     {
-      "aspect": "thavma:praecantatio",
+      "aspect": "thavma:aether",
       "broken": false,
       "indices": {
         "col": 0,

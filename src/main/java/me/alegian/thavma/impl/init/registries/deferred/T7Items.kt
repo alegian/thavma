@@ -9,8 +9,6 @@ import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Capabilities
 import me.alegian.thavma.impl.init.registries.T7Tiers
 import me.alegian.thavma.impl.init.registries.deferred.T7ArmorMaterials.THAVMITE
-import me.alegian.thavma.impl.rl
-import net.minecraft.core.Registry
 import net.minecraft.world.item.*
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.common.DeferredSpawnEggItem
@@ -197,7 +195,7 @@ object T7Items {
   val ANGRY_ZOMBIE_SPAWN_EGG = REGISTRAR.registerItem("angry_zombie_spawn_egg") { p -> DeferredSpawnEggItem(T7EntityTypes.ANGRY_ZOMBIE, 0x00AFAF, 0x9e2323, p) }
 
   val FOCUS_EMBERS = REGISTRAR.registerItem("focus_embers", ::Item)
-  val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation", ::Item)
+  val FOCUS_EXCAVATION = REGISTRAR.registerItem("focus_excavation") { ExcavationFocus() }
   val FOCUS_ENDERCHEST = REGISTRAR.registerItem("focus_enderchest") { EnderChestFocus() }
   val FOCUS_LIGHT = REGISTRAR.registerItem("focus_light") { LightFocus() }
   val FOCUS_HOLE = REGISTRAR.registerItem("focus_hole", ::Item)
@@ -207,8 +205,8 @@ object T7Items {
 
   val NODE_JAR = REGISTRAR.registerItem("node_jar") { NodeJarItem() }
 
-  // (platingName, coreName)->wand. populated on Item Registry bake
-  val WANDS = DoubleMap<String, String, WandItem>()
+  // (plating, core) -> wand. populated with Registry callbacks
+  val WANDS = DoubleMap<WandPlatingMaterial, WandCoreMaterial, WandItem>()
 
   fun registerCapabilities(event: RegisterCapabilitiesEvent) {
     for (wand in WANDS.values()) event.registerItem(
@@ -229,40 +227,16 @@ object T7Items {
   }
 
   /**
-   * Registers a wand with the given plating and core materials
-   */
-  fun registerWand(registry: Registry<Item>, platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial) {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    val wandName = WandItem.name(platingMaterial, coreMaterial)
-
-    val newWand = WandItem(Item.Properties(), platingMaterial, coreMaterial)
-    Registry.register(registry, rl(wandName), newWand)
-    WANDS.put(platingName, coreName, newWand)
-  }
-
-  /**
    * Helper that gets a wand from the DoubleMap of registered wands.
    * WARNING: cannot get wands from addons, these have to be accessed manually.
    */
-  fun wandOrThrow(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): WandItem {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    val wand = WANDS[platingName, coreName]
+  fun wandOrThrow(plating: WandPlatingMaterial, core: WandCoreMaterial): WandItem {
+    val wand = WANDS[plating, core]
 
     requireNotNull(wand) {
-      "Thavma Exception: Trying to Access Unregistered Wand Combination" + WandItem.name(
-        platingMaterial,
-        coreMaterial
-      )
+      "Thavma Exception: Trying to Access Unregistered Wand Combination"
     }
 
     return wand
-  }
-
-  fun isWandRegistered(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): Boolean {
-    val platingName = platingMaterial.registeredName
-    val coreName = coreMaterial.registeredName
-    return WANDS[platingName, coreName] != null
   }
 }

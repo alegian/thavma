@@ -3,7 +3,9 @@ package me.alegian.thavma.impl.init.registries.deferred
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.common.infusion.InfusionState
+import me.alegian.thavma.impl.common.item.WandMode
 import me.alegian.thavma.impl.common.research.ResearchState
+import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
@@ -34,6 +36,18 @@ object T7DataComponents {
     builder
       .persistent(ItemContainerContents.CODEC)
       .networkSynchronized(ItemContainerContents.STREAM_CODEC)
+  }
+
+  val WAND_MODE = REGISTRAR.registerComponentType("wand_mode") { builder ->
+    builder
+      .persistent(WandMode.CODEC)
+      .networkSynchronized(WandMode.STREAM_CODEC)
+  }
+
+  val INTERACTING_BLOCKPOS = REGISTRAR.registerComponentType("interacting_blockpos") { builder ->
+    builder
+      .persistent(BlockPos.CODEC)
+      .networkSynchronized(BlockPos.STREAM_CODEC)
   }
 
   val EXCHANGE_BLOCK = REGISTRAR.registerComponentType("exchange_block") {

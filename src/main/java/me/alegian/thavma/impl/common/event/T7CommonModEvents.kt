@@ -9,8 +9,7 @@ import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Registries
 import me.alegian.thavma.impl.init.registries.deferred.*
-import me.alegian.thavma.impl.init.registries.deferred.callback.WandCoreCombinations
-import me.alegian.thavma.impl.init.registries.deferred.callback.WandPlatingCombinations
+import me.alegian.thavma.impl.init.registries.deferred.callback.WandCallbacks
 import me.alegian.thavma.impl.integration.curios.CuriosIntegration
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
@@ -52,9 +51,10 @@ private fun modifyRegistries(event: ModifyRegistriesEvent) {
   val itemRegistry = event.getRegistry(Registries.ITEM)
   val coreRegistry = event.getRegistry(T7Registries.WAND_CORE.key())
   val platingRegistry = event.getRegistry(T7Registries.WAND_PLATING.key())
+  val callbacks = WandCallbacks(itemRegistry, platingRegistry, coreRegistry)
 
-  coreRegistry.addCallback(WandCoreCombinations(itemRegistry, platingRegistry))
-  platingRegistry.addCallback(WandPlatingCombinations(itemRegistry, coreRegistry))
+  coreRegistry.addCallback(callbacks.coreCallback)
+  platingRegistry.addCallback(callbacks.platingCallback)
 }
 
 private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
@@ -74,6 +74,7 @@ private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
 private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
   event.register(T7DataMaps.AspectContent.ITEM)
   event.register(T7DataMaps.AspectContent.ENTITY)
+  event.register(T7DataMaps.ASPECT_RELATIONS)
 }
 
 private fun gatherData(event: GatherDataEvent) {

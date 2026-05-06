@@ -7,15 +7,18 @@ import me.alegian.thavma.impl.client.getClientPlayerEquipmentItem
 import me.alegian.thavma.impl.client.gui.foci.FociScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.client.gui.tooltip.AspectTooltipComponent
-import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.gui.tooltip.containedAspectsComponents
+import me.alegian.thavma.impl.client.gui.tooltip.containedPrimalsComponent
 import me.alegian.thavma.impl.client.renderer.AspectRenderer
+import me.alegian.thavma.impl.client.renderer.ExcavationRenderer
 import me.alegian.thavma.impl.client.renderer.HammerHighlightRenderer
+import me.alegian.thavma.impl.client.renderer.NodeAbsorbRenderer
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.item.HammerItem
 import me.alegian.thavma.impl.common.item.WandItem
+import me.alegian.thavma.impl.common.item.WandItem.Companion.equippedFocus
 import me.alegian.thavma.impl.common.payload.FocusPayload
 import me.alegian.thavma.impl.common.scanning.hasScanned
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
@@ -142,7 +145,7 @@ private fun clientTick(event: ClientTickEvent.Post) {
   val wandStack = player.mainHandItem
   if (!T7KeyMappings.FOCI.isDown || wandStack.item !is WandItem) return
 
-  val focus = wandStack.get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+  val focus = wandStack.equippedFocus
   if (player.isShiftKeyDown && focus != null && cooldownTicks <= 0) {
     PacketDistributor.sendToServer(FocusPayload(null))
     cooldownTicks = 10
@@ -159,5 +162,7 @@ fun registerClientGameEvents() {
   KFF_GAME_BUS.addListener(::jarTooltip)
   KFF_GAME_BUS.addListener(::aspectTooltip)
   KFF_GAME_BUS.addListener(::renderPlayerPre)
+  KFF_GAME_BUS.addListener(ExcavationRenderer::renderLevelAfterEntities)
+  KFF_GAME_BUS.addListener(NodeAbsorbRenderer::renderLevelAfterEntities)
   KFF_GAME_BUS.addListener(::clientTick)
 }

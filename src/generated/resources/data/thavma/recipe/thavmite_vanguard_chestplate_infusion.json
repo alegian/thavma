@@ -1,7 +1,7 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:praecantatio": 16,
+    "thavma:aether": 16,
     "thavma:praemunio": 32
   },
   "base": {

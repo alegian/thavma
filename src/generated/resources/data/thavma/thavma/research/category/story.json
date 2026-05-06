@@ -1,0 +1,10 @@
+{
+  "icon": {
+    "count": 1,
+    "id": "minecraft:writable_book"
+  },
+  "index": 2.0,
+  "title": {
+    "translate": "research/category.thavma.story"
+  }
+}

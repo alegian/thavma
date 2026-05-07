@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -21,15 +20,15 @@ import org.joml.Vector2i
 private val parentsMap = mutableMapOf<ResearchEntry, List<Holder<ResearchEntry>>>()
 
 class ResearchEntry(
-    val category: Holder<ResearchCategory>,
-    val position: Vector2i,
-    val preferX: Boolean,
-    val children: List<Holder<ResearchEntry>>,
-    val pageFeatures: List<PageFeature>,
-    val icon: ItemStack,
-    val title: Component,
-    val defaultResearchState: List<SocketState>,
-    val defaultKnown: Boolean
+  val category: Holder<ResearchCategory>,
+  val position: Vector2i,
+  val preferX: Boolean,
+  val children: List<Holder<ResearchEntry>>,
+  val pages: List<Page>,
+  val icon: ItemStack,
+  val title: Component,
+  val defaultResearchState: List<SocketState>,
+  val defaultKnown: Boolean
 ) {
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
@@ -44,7 +43,7 @@ class ResearchEntry(
         T7ExtraCodecs.VECTOR2I.fieldOf("position").forGetter(ResearchEntry::position),
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
         RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_ENTRY, CODEC).listOf().fieldOf("children").forGetter(ResearchEntry::children),
-        PageFeature.CODEC.listOf().fieldOf("pageFeatures").forGetter(ResearchEntry::pageFeatures),
+        Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
         ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
         ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title),
         SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState),

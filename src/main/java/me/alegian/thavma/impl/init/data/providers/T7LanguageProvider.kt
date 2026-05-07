@@ -401,12 +401,4 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     for (parIndex in paragraphs.indices)
       add(TextPage.paragraphTranslationId(baseId, pageIndex, parIndex), paragraphs[parIndex].trimIndent().replace("\n", " "))
   }
-
-    private fun addParagraphFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String?){
-
-    }
-
-    private fun addTitleFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String?){
-
-    }
 }

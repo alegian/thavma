@@ -1,20 +1,13 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.*
-import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.rl
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.Level
-import kotlin.math.ceil
 
 class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
@@ -44,46 +37,47 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage))
-              if (currentPage != 0) {
+            if (currentPage != 0) {
               Box({
-                  width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
-                  height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
+                width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
+                height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
               }) {
-                  afterLayout {
+                afterLayout {
 
-                      addRenderableWidget(PageTurningWidget(position, false) {
-                          // reinitiate the screen for this research entry when clicked
-                          // with an updated page
-                          // clearWidgets() is essential, also clears underline formatting!
-                          currentPage -= 2
-                          clearWidgets()
-                          init()
-                      })}
-                  }
+                  addRenderableWidget(PageTurningWidget(position, false) {
+                    // reinitiate the screen for this research entry when clicked
+                    // with an updated page
+                    // clearWidgets() is essential, also clears underline formatting!
+                    currentPage -= 2
+                    clearWidgets()
+                    init()
+                  })
+                }
               }
+            }
           }
 
           Row({
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage + 1))
-              if ((entry.value().pages.getOrNull(currentPage + 2) ?: 1) is Page) {
+            if (entry.value().pages.getOrNull(currentPage + 2) != null) {
               Box({
-                  width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
-                  height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+                width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
+                height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
               }) {
-                  afterLayout {
-
-                      addRenderableWidget(PageTurningWidget(position, true) {
-                          // reinitiate the screen for this research entry when clicked
-                          // with an updated page
-                          // clearWidgets() is essential, also clears underline formatting!
-                          currentPage += 2
-                          clearWidgets()
-                          init()
-                      })}
-                  }
+                afterLayout {
+                  addRenderableWidget(PageTurningWidget(position, true) {
+                    // reinitiate the screen for this research entry when clicked
+                    // with an updated page
+                    // clearWidgets() is essential, also clears underline formatting!
+                    currentPage += 2
+                    clearWidgets()
+                    init()
+                  })
+                }
               }
+            }
           }
         }
       }

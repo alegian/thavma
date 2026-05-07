@@ -278,25 +278,24 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
 
     addTextPage(
-        ResearchEntries.Story.TEST, 0,
-        "A Courtesy Call 1",
-        "Lorem ipsum %s 1 sit amet,",
-            "this story a great meaning haveth."
+      ResearchEntries.Story.TEST, 0,
+      "A Courtesy Call 1",
+      "Lorem ipsum %s 1 sit amet,",
+      "this story a great meaning haveth."
     )
 
     addTextPage(
-        ResearchEntries.Story.TEST, 1,
-        "A Courtesy Call 2",
-        "Lorem dolor 2 sit amet,",
-        "this story a great meaning haveth.",
-        ""
+      ResearchEntries.Story.TEST, 1,
+      "A Courtesy Call 2",
+      "Lorem dolor 2 sit amet,",
+      "this story a great meaning haveth."
     )
 
     addTextPage(
-        ResearchEntries.Story.TEST, 2,
-        "A Courtesy Call 3",
-        "Lorem lotrumatum dolor 3 sit amet,",
-        "this story a great meaning haveth."
+      ResearchEntries.Story.TEST, 2,
+      "A Courtesy Call 3",
+      "Lorem lotrumatum dolor 3 sit amet,",
+      "this story a great meaning haveth."
     )
 
     addTextPage(
@@ -354,14 +353,35 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(RecipeViewerDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
     add(RecipeViewerDescriptions.BOOK, "Right click a bookcase with a wand to obtain!")
-    add(RecipeViewerDescriptions.ARCANE_WORKBENCH, "Right click a crafting table with a wand to convert it to an arcane workbench.")
+    add(
+      RecipeViewerDescriptions.ARCANE_WORKBENCH,
+      "Right click a crafting table with a wand to convert it to an arcane workbench."
+    )
     add(RecipeViewerDescriptions.CRUCIBLE, "Right click a cauldron with a wand to convert it to a crucible.")
-    add(RecipeViewerDescriptions.RESEARCH_TABLE, "Can be formed by placing 2 tables next to each other, and right clicking one with a wand.")
-    add(RecipeViewerDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
-    add(RecipeViewerDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
-    add(RecipeViewerDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
-    add(RecipeViewerDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
-    add(RecipeViewerDescriptions.RESEARCH_SCROLL, "Obtained by clicking any unknown entry in the \"Elements of Thavma\"")
+    add(
+      RecipeViewerDescriptions.RESEARCH_TABLE,
+      "Can be formed by placing 2 tables next to each other, and right clicking one with a wand."
+    )
+    add(
+      RecipeViewerDescriptions.INFUSED_STONES,
+      "A piece of stone, infused with a primal element. Found in the overworld, at any height."
+    )
+    add(
+      RecipeViewerDescriptions.GREATWOOD,
+      "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes."
+    )
+    add(
+      RecipeViewerDescriptions.SILVERWOOD,
+      "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes."
+    )
+    add(
+      RecipeViewerDescriptions.PILLAR,
+      "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock."
+    )
+    add(
+      RecipeViewerDescriptions.RESEARCH_SCROLL,
+      "Obtained by clicking any unknown entry in the \"Elements of Thavma\""
+    )
 
     add(RecipeViewerAliases.BOOK, "Book")
     add(RecipeViewerAliases.ORE, "Ore")
@@ -395,10 +415,18 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchCategory.translationId(key), name)
   }
 
-  private fun addTextPage(entryKey: ResourceKey<ResearchEntry>, pageIndex: Int, title: String?, vararg paragraphs: String) {
+  private fun addTextPage(
+    entryKey: ResourceKey<ResearchEntry>,
+    pageIndex: Int,
+    title: String?,
+    vararg paragraphs: String
+  ) {
     val baseId = ResearchEntry.translationId(entryKey)
     if (title != null) add(TextPage.titleTranslationId(baseId, pageIndex), title)
     for (parIndex in paragraphs.indices)
-      add(TextPage.paragraphTranslationId(baseId, pageIndex, parIndex), paragraphs[parIndex].trimIndent().replace("\n", " "))
+      add(
+        TextPage.paragraphTranslationId(baseId, pageIndex, parIndex),
+        paragraphs[parIndex].trimIndent().replace("\n", " ")
+      )
   }
 }

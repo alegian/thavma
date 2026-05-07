@@ -52,7 +52,8 @@ import org.joml.Vector2i
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
-class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : DatapackBuiltinEntriesProvider(output, registries, builder, setOf(Thavma.MODID)) {
+class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
+  DatapackBuiltinEntriesProvider(output, registries, builder, setOf(Thavma.MODID)) {
   companion object {
     private val builder: RegistrySetBuilder = RegistrySetBuilder()
       .add(Registries.CONFIGURED_FEATURE) { ctx ->
@@ -103,7 +104,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
                     AddValue(LevelBasedValue.perLevel(2.0f)),
                     Optional.of(
                       DamageSourceCondition.hasDamageSource(
-                        DamageSourcePredicate.Builder.damageType().tag(TagPredicate.`is`(T7Tags.DamageTypes.SONIC))
+                        DamageSourcePredicate.Builder.damageType()
+                          .tag(TagPredicate.`is`(T7Tags.DamageTypes.SONIC))
                       ).build()
                     )
                   )
@@ -118,7 +120,12 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.THAVMA,
+          Vector2i(0, -6),
+          false,
+          T7Items.BOOK.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
@@ -127,31 +134,56 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .defaultKnown()
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, -3), false, Items.TURTLE_HELMET.defaultInstance)
-            .research()
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
-            .defaultKnown()
-            .build(ctx)
+        ResearchEntryBuilder(
+          ResearchEntries.Story.TEST,
+          Vector2i(0, -3),
+          false,
+          Items.TURTLE_HELMET.defaultInstance
+        )
+          .research()
+          .addPage(simpleTextPage(2, true))
+          .addPage(simpleTextPage(2, true))
+          .addPage(simpleTextPage(2, true))
+          .defaultKnown()
+          .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.TREES,
+          Vector2i(0, -3),
+          false,
+          T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ORES,
+          Vector2i(2, -4),
+          false,
+          T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ARCANE_LENS,
+          Vector2i(2, -2),
+          false,
+          T7Items.ARCANE_LENS.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.RESEARCH_TABLE,
+          Vector2i(0, 0),
+          true,
+          T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
@@ -161,27 +193,60 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_PROFICIENCY, Vector2i(-1, -1), false, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.RESEARCH_PROFICIENCY,
+          Vector2i(-1, -1),
+          false,
+          T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ALCHEMY,
+          Vector2i(-2, 2),
+          true,
+          T7Blocks.CRUCIBLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.WANDS,
+          Vector2i(-2, 4),
+          true,
+          T7Items.wandOrThrow(
+            WandPlatingMaterials.THAVMITE.get(),
+            WandCoreMaterials.SILVERWOOD.get()
+          ).defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.INFUSION,
+          Vector2i(2, 2),
+          true,
+          T7Blocks.MATRIX.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.TECHNOLOGY,
+          Vector2i(2, 4),
+          true,
+          T7Items.GOGGLES.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.CIVILIS))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Alchemy.ALCHEMY,
+          Vector2i(0, 0),
+          false,
+          T7Blocks.CRUCIBLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .defaultKnown()
           .build(ctx)
@@ -225,11 +290,28 @@ private class ResearchEntryBuilder(
     val entryRegistry = ctx.lookup(T7DatapackRegistries.RESEARCH_ENTRY)
     val categoryHolder = categoryRegistry.getOrThrow(cat)
     val childrenHolders = children.map { entryRegistry.getOrThrow(it) }
-    ctx.register(key, ResearchEntry(categoryHolder, pos, preferX, childrenHolders, pages, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates, defaultKnown))
+    ctx.register(
+      key,
+      ResearchEntry(
+        categoryHolder,
+        pos,
+        preferX,
+        childrenHolders,
+        pages,
+        icon,
+        Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
+        socketStates,
+        defaultKnown
+      )
+    )
   }
 }
 
-private fun BootstrapContext<ResearchCategory>.registerCategory(key: ResourceKey<ResearchCategory>, icon: ItemStack, sortIndex: Float) {
+private fun BootstrapContext<ResearchCategory>.registerCategory(
+  key: ResourceKey<ResearchCategory>,
+  icon: ItemStack,
+  sortIndex: Float
+) {
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
 
@@ -246,7 +328,10 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
 private fun simpleTitle(pageIndex: Int, baseId: String) =
   Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
 
-private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
+private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) =
+  List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
 
-private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) = SocketState(Indices(row, col), a.get(), false, true)
+private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =
+  SocketState(Indices(row, col), a.get(), false, true)
+
 private fun broken(row: Int, col: Int) = SocketState(Indices(row, col), null, true, true)

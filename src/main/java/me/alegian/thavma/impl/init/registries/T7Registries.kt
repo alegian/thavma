@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.init.registries
 
 import me.alegian.thavma.impl.common.aspect.Aspect
+import me.alegian.thavma.impl.common.book.PageFeatureType
 import me.alegian.thavma.impl.common.book.PageType
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
@@ -25,4 +26,8 @@ object T7Registries {
   val PAGE_TYPE = RegistryBuilder(ResourceKey.createRegistryKey<PageType<*>>(rl("page_type")))
     .maxId(Int.MAX_VALUE)
     .create()
+
+  val PAGE_FEATURE_TYPE = RegistryBuilder(ResourceKey.createRegistryKey<PageFeatureType<*>>(rl("page_feature")))
+      .maxId(Int.MAX_VALUE)
+      .create()
 }

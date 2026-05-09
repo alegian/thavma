@@ -10,7 +10,7 @@ interface PageFeature {
         get() = 1
     val renderedHeight: Int
     val pageWidth: Int
-        get() = 256
+        get() = 256 - 25
 
     val type: PageFeatureType<*>
 

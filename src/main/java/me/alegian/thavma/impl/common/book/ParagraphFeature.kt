@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.book
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.init.data.worldgen.tree.trunk.SilverwoodTrunkPlacer
@@ -13,32 +14,34 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer.trunkPlacerParts
 import java.util.Optional
 
-class ParagraphFeature(val text: Component): PageFeature {
-    override val type: PageFeatureType<*>
-        get() = PageFeatureTypes.PARAGRAPH.get()
+class ParagraphFeature(val text: Component, override val mustStartPage: Boolean = false) : PageFeature {
+  override val type: PageFeatureType<*>
+    get() = PageFeatureTypes.PARAGRAPH.get()
 
-    override val coversWholePage = false
-    override val mustStartPage = false
-    override val mustOccupySetPage = false
+  override val coversWholePage = false
+  override val mustOccupySetPage = false
+  val font: Font = Minecraft.getInstance().font
 
-    val font: Font = Minecraft.getInstance().font
-    // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
-    val LINE_HEIGHT = font.lineHeight + 2
-    val lines = font.splitter.splitLines(text, pageWidth, Style.EMPTY)
 
-    override val renderedHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 2 / 3
+  // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
+  val LINE_HEIGHT = font.lineHeight + 2
+  val lines = font.splitter.splitLines(text, pageWidth, Style.EMPTY)
 
-    companion object {
-        val CODEC = RecordCodecBuilder.mapCodec { builder ->
-            builder.group(
-                ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text)
-            ).apply(builder, ::ParagraphFeature)
-        }
+  override val renderedHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 2 / 3
 
-        fun translationId(baseId: String, featureIndex: Int) = "$baseId.paragraphFeature$featureIndex"
+  companion object {
+    val CODEC = RecordCodecBuilder.mapCodec { builder ->
+      builder.group(
+        ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
+        //ResourceLocation.CODEC.optionalFieldOf("font", ResourceLocation.withDefaultNamespace("default")).forGetter(ParagraphFeature::font),
+        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::mustStartPage)
+      ).apply(builder, ::ParagraphFeature)
     }
 
-    //fun titleTranslationId(baseId: String, pageIndex: Int) = Page.translationId(baseId, pageIndex) + ".title"
-    //fun paragraphFeatureTranslationId(baseId: String, index: Int) = Page.translationId(baseId, pageIndex) + ".paragraph$index"
+    fun translationId(baseId: String, featureIndex: Int) = "$baseId.paragraph_feature$featureIndex"
+  }
+
+  //fun titleTranslationId(baseId: String, pageIndex: Int) = Page.translationId(baseId, pageIndex) + ".title"
+  //fun paragraphFeatureTranslationId(baseId: String, index: Int) = Page.translationId(baseId, pageIndex) + ".paragraph$index"
 
 }

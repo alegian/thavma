@@ -16,9 +16,6 @@ import net.minecraft.util.FormattedCharSequence
 object TextPageRenderer : PageRenderer<TextPage> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
-    val dolor = Component.literal("dolor")
-        .withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE)
-
   override fun initPage(screen: EntryScreen, page: TextPage) {
     val font = Minecraft.getInstance().font
     val LINE_HEIGHT = font.lineHeight + 2
@@ -37,16 +34,11 @@ object TextPageRenderer : PageRenderer<TextPage> {
         relativeRenderable { guiGraphics, _, _, _ ->
           guiGraphics.usePose {
             for (paragraph in page.paragraphs) {
-              //for (line in font.split(paragraph, size.x.toInt())) {
               for (line in font.splitter.splitLines(paragraph, size.x.toInt(), Style.EMPTY)) {
-                if ("ipsum" in line.string) {
-                    guiGraphics.drawString(Minecraft.getInstance().font, Component.translatable("research/entry.thavma.story.story_test.page0.paragraph0", dolor))
-                        //.withStyle(ChatFormatting.RED, ChatFormatting.BOLD))
-                }
-                else guiGraphics.drawString(Minecraft.getInstance().font, Component.literal(line.string))
+                guiGraphics.drawString(Minecraft.getInstance().font, Component.literal(line.string))
                 translateXY(0, LINE_HEIGHT)
               }
-              translateXY(0, LINE_HEIGHT*2/3)
+              translateXY(0, LINE_HEIGHT * 2 / 3)
             }
           }
         }

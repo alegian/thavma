@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
 import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
+import me.alegian.thavma.impl.client.gui.book.DynamicFeaturesRenderer
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
@@ -219,6 +220,10 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
 }
 
+private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent){
+  event.register(DynamicFeaturesRenderer)
+}
+
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
   event.register(T7KeyMappings.FOCI)
 }
@@ -244,6 +249,7 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
   KFF_MOD_BUS.addListener(::registerPageRenderers)
+  KFF_MOD_BUS.addListener(::registerPageFeatureRenderers)
   KFF_MOD_BUS.addListener(::registerKeyMappings)
   KFF_MOD_BUS.addListener(::registerRenderBuffers)
 }

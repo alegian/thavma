@@ -31,6 +31,6 @@ class TitleFeature(val text: Component, ): PageFeature {
             ).apply(builder, ::TitleFeature)
         }
 
-        fun translationId(baseId: String, featureIndex: Int) = "$baseId.titleFeature$featureIndex"
+        fun translationId(baseId: String, featureIndex: Int) = "$baseId.title_feature$featureIndex"
     }
 }

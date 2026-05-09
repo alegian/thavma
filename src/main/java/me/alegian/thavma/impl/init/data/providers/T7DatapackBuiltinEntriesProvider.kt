@@ -250,6 +250,8 @@ private fun simpleDynamicPages(vararg features: PageFeature): (ResourceKey<Resea
     // tady prostě mám přístup k těm jednotlivejm features, z nich poskládám seznam
     // dynamických stránek a ty renderuju pomocí zvláštního DynamicPageRenderer (TODO)
     // zahrnout nejlépe všechnu tu logiku co mám v těch Features
+  // nebo taky vůbec ne? logika bude až v rendereru (nějakou zvláštní metodu tam na konec (třeba do companion objektu)
+  // kterou budu volat nahoře kterou se to rozkouskuje na části
 
     return { entryKey ->
         val baseId = ResearchEntry.translationId(entryKey)

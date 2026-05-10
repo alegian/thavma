@@ -10,7 +10,7 @@ class RecipeFeature(
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.RECIPE.get()
 
-  override val coversWholePage: Boolean
+  override val coversOneWholePage: Boolean
     get() = true
   override val mustStartPage: Boolean
     get() = true

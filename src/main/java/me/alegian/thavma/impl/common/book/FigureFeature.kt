@@ -15,7 +15,7 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.FIGURE.get()
 
-  override val coversWholePage = false
+  override val coversOneWholePage = false
   override val mustOccupySetPage = false
   override val preferredPageIndex: Int
     get() = 1
@@ -29,8 +29,10 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
   // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
   val LINE_HEIGHT = font.lineHeight + 2
   val lines = font.splitter.splitLines(caption, pageWidth - 25, Style.EMPTY)
-  override val renderedHeight = image.canvasHeight + LINE_HEIGHT * lines.size + LINE_HEIGHT * 4 / 3
 
+  val textureHeight = image.height
+  val captionHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 4 / 3
+  override val renderedHeight = textureHeight + captionHeight
 
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->

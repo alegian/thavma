@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.book
 import me.alegian.thavma.impl.init.registries.T7Registries
 
 interface PageFeature {
-    val coversWholePage: Boolean
+    val coversOneWholePage: Boolean
     val mustStartPage: Boolean
     val mustOccupySetPage: Boolean
     val preferredPageIndex: Int

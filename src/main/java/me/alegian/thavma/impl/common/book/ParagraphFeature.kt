@@ -18,7 +18,7 @@ class ParagraphFeature(val text: Component, override val mustStartPage: Boolean 
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.PARAGRAPH.get()
 
-  override val coversWholePage = false
+  override val coversOneWholePage = false
   override val mustOccupySetPage = false
   val font: Font = Minecraft.getInstance().font
 

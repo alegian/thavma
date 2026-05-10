@@ -280,27 +280,27 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
 
-//    addTextPage(
-//      ResearchEntries.Story.TEST, 0,
-//      "A Courtesy Call 1",
-//      "Lorem ipsum %s 1 sit amet,",
-//      "this story a great meaning haveth."
-//    )
-//
-//    addTextPage(
-//      ResearchEntries.Story.TEST, 1,
-//      "A Courtesy Call 2",
-//      "Lorem dolor 2 sit amet,",
-//      "this story a great meaning haveth.",
-//      ""
-//    )
-//
-//    addTextPage(
-//      ResearchEntries.Story.TEST, 2,
-//      "A Courtesy Call 3",
-//      "Lorem lotrumatum dolor 3 sit amet,",
-//      "this story a great meaning haveth."
-//    )
+    addTextPage(
+      ResearchEntries.Story.TEST, 0,
+      "A Courtesy Call 1",
+      "Lorem ipsum %s 1 sit amet,",
+      "this story a great meaning haveth."
+    )
+
+    addTextPage(
+      ResearchEntries.Story.TEST, 1,
+      "A Courtesy Call 2",
+      "Lorem dolor 2 sit amet,",
+      "this story a great meaning haveth.",
+      ""
+    )
+
+    addTextPage(
+      ResearchEntries.Story.TEST, 2,
+      "A Courtesy Call 3",
+      "Lorem lotrumatum dolor 3 sit amet,",
+      "this story a great meaning haveth."
+    )
 
     addTitleFeature(ResearchEntries.Story.TEST, 0,"A courtesy call starts the page")
     addParagraphFeature(ResearchEntries.Story.TEST, 0, """

@@ -128,14 +128,14 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-//        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
-//          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-//          .addPage(simpleTextPage(3, true))
-//          .addPage(simpleTextPage(1, false))
-//          .addChild(ResearchEntries.Thavma.TREES)
-//          .addChild(ResearchEntries.Thavma.ORES)
-//          .defaultKnown()
-//          .build(ctx)
+        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
+          .addPage(simpleTextPage(3, true))
+          .addPage(simpleTextPage(1, false))
+          .addChild(ResearchEntries.Thavma.TREES)
+          .addChild(ResearchEntries.Thavma.ORES)
+          .defaultKnown()
+          .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, -3), false, Items.TURTLE_HELMET.defaultInstance)
           .research()
@@ -147,9 +147,9 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeTitleFeature(true))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
+            .addPage(simpleTextPage(2, true))
+            .addPage(simpleTextPage(2, true))
+            .addPage(simpleTextPage(2, true))
           .defaultKnown()
           .build(ctx)
 
@@ -173,21 +173,21 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
-//        ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
-//          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
-//          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-//          .addPage(simpleTextPage(3, true))
-//          .build(ctx)
+        ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
+          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
+          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
+          .addPage(simpleTextPage(3, true))
+          .build(ctx)
 
-//        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
-//          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
-//          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
-//          .addChild(ResearchEntries.Thavma.WANDS)
-//          .addChild(ResearchEntries.Thavma.TECHNOLOGY)
-//          .addChild(ResearchEntries.Thavma.ALCHEMY)
-//          .addChild(ResearchEntries.Thavma.INFUSION)
-//          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
-//          .build(ctx)
+        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
+          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
+          .addChild(ResearchEntries.Thavma.WANDS)
+          .addChild(ResearchEntries.Thavma.TECHNOLOGY)
+          .addChild(ResearchEntries.Thavma.ALCHEMY)
+          .addChild(ResearchEntries.Thavma.INFUSION)
+          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
+          .build(ctx)
 
         ResearchEntryBuilder(
           ResearchEntries.Thavma.RESEARCH_PROFICIENCY,

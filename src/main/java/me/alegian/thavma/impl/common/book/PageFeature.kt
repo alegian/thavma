@@ -17,6 +17,6 @@ interface PageFeature {
     companion object{
         val CODEC = T7Registries.PAGE_FEATURE_TYPE.byNameCodec().dispatch({ pageFeature -> pageFeature.type }, { type -> type.codec })
 
-        fun translationId(baseId: String, featureIndex: Int) = "$baseId.pageFeature$featureIndex"
+        //fun translationId(baseId: String, featureIndex: Int) = "$baseId.page_feature$featureIndex"
     }
 }

@@ -4,12 +4,10 @@ import me.alegian.thavma.impl.common.book.FigureFeature
 import me.alegian.thavma.impl.common.book.FormattedTextFeature
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.book.ParagraphFeature
-import net.minecraft.network.chat.Style
-import kotlin.collections.plusAssign
 
 /**
- *   Return a list of PageFeatures containing a list of lines - FormattedText
- *   or possibly a Figure with just the image and its processed caption - FormattedText,
+ *   Return a list of PageFeatures containing a list of lines - FormattedCharSequence
+ *   or possibly a Figure with just the image and its processed caption - FormattedCharSequence,
  *   so that they all fit on their
  *   respective pages (represented by list indices)
  */
@@ -35,7 +33,7 @@ fun spliceParagraphOrFigure(
 
     val maxLinesPerPage = maxPageHeight / lineHeight
     val numOfFullPagesCovered = numOfLinesCoveringFullPages / maxLinesPerPage
-    val lines = input.font.splitter.splitLines(input.text, input.pageWidth, Style.EMPTY)
+    val lines = input.font.split(input.text, input.pageWidth)
 
     when {
       lines.size == 1 && currentHeight + lineHeight <= maxPageHeight -> result += FormattedTextFeature(lines)
@@ -85,7 +83,7 @@ fun spliceParagraphOrFigure(
           result += this
         }
 
-        caption != null && currentHeight + textureHeight <= maxPageHeight -> {
+        currentHeight + textureHeight <= maxPageHeight -> {
           result += FigureFeature(image, null)
           result.addAll(
             spliceParagraphOrFigure(
@@ -96,7 +94,7 @@ fun spliceParagraphOrFigure(
           )
         }
 
-        caption != null -> {
+        else -> {
           result += FormattedTextFeature(listOf())
           result += FigureFeature(image, null)
           result.addAll(spliceParagraphOrFigure(ParagraphFeature(caption), maxPageHeight, textureHeight))
@@ -119,6 +117,10 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
   val pages = mutableListOf<List<PageFeature>>()
   val buffer = mutableListOf<PageFeature>()
   fun currentHeight() = buffer.sumOf { it.renderedHeight }
+  fun submitBufferAndClear() {
+    pages += buffer
+    buffer.clear()
+  }
 
   // deal with elements without predetermined order (bulk of the logic)
   for (feature in partition.first) {
@@ -129,26 +131,31 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
         )
 
         coversOneWholePage -> {
-          if (buffer.isNotEmpty()) {
-            pages += buffer
-            buffer.clear()
-          }
+          if (buffer.isNotEmpty()) submitBufferAndClear()
           pages += listOf(this)
         }
 
         mustStartPage -> {
-          if (buffer.isNotEmpty()) {
-            pages += buffer
-            buffer.clear()
-          }
+          if (buffer.isNotEmpty()) submitBufferAndClear()
           if (this is ParagraphFeature || this is FigureFeature) {
             val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight())
-            if (processed.size == 1) buffer += processed.first()
+            if (processed.size < 2) buffer += processed.first()
             // only need to check this much since buffer is empty (starts page)
-            // applies to both Paragraph and Figure
-            else {
+            else if (this is ParagraphFeature) {
               processed.slice(0 until processed.size - 1).forEach { pages += listOf(it) }
               buffer += processed.last()
+            }
+            // we are dealing with figure features now
+            else {
+              buffer += processed.first()
+              buffer += processed[1]
+              if (processed.size > 2) {
+                submitBufferAndClear()
+                for (j in 2 until processed.size - 1) {
+                  pages += listOf(processed[j])
+                }
+                buffer += processed.last()
+              }
             }
           } else buffer += this
         }
@@ -158,8 +165,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
           if (processed.size < 2) buffer += processed.first()
           else if (this is ParagraphFeature) {
             buffer += processed.first()
-            pages += buffer
-            buffer.clear()
+            submitBufferAndClear()
             if (processed.size > 2) processed.slice(1 until processed.size - 1).forEach { pages += listOf(it) }
             buffer += processed.last()
           } else {
@@ -170,8 +176,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
               // it's an empty one to signify end of page. Size 2 means
               // there is only this emptiness + image.
               processed.first() is FormattedTextFeature && processed.size == 2 -> {
-                pages += buffer
-                buffer.clear()
+                submitBufferAndClear()
                 buffer += processed.last()
               }
               // Now there are either exactly 2 elements and the first one is an image
@@ -181,8 +186,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
                 var i = 0
                 // address possible page break
                 if (processed.first() is FormattedTextFeature) {
-                  pages += buffer
-                  buffer.clear()
+                  submitBufferAndClear()
                   i++
                 }
                 // always takes the image next
@@ -192,12 +196,11 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
                 // all that remains
                 buffer += processed[i + 1]
                 if (processed.size > 2 + i) {
-                  pages += buffer
-                  buffer.clear()
+                  submitBufferAndClear()
                   for (j in 2 + i until processed.size - 1) {
                     pages += listOf(processed[j])
                   }
-                  buffer += processed[processed.size - 1]
+                  buffer += processed.last()
                 }
               }
             }
@@ -208,8 +211,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
         // the next check might be redundant:
         buffer.isEmpty() -> throw IllegalArgumentException("The size of the element ${this::class.simpleName} is too large at $renderedHeight while allowed $maxHeight.")
         else -> {
-          pages += buffer
-          buffer.clear()
+          submitBufferAndClear()
           buffer += this
         }
       }
@@ -217,7 +219,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int): List<List<PageF
   }
 
   // add anything left over in the buffer
-  if (buffer.isNotEmpty()) pages += buffer
+  if (buffer.isNotEmpty()) submitBufferAndClear()
 
   // finally add features with pre-determined positions (cannot be paragraphs)
   // these features have to be ordered correctly in the Research Entry builder

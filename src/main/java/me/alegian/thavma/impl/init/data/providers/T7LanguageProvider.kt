@@ -11,7 +11,10 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
+import me.alegian.thavma.impl.common.book.FigureFeature
+import me.alegian.thavma.impl.common.book.ParagraphFeature
 import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.book.TitleFeature
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -277,27 +280,48 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
 
-    addTextPage(
-        ResearchEntries.Story.TEST, 0,
-        "A Courtesy Call 1",
-        "Lorem ipsum %s 1 sit amet,",
-            "this story a great meaning haveth."
-    )
+//    addTextPage(
+//      ResearchEntries.Story.TEST, 0,
+//      "A Courtesy Call 1",
+//      "Lorem ipsum %s 1 sit amet,",
+//      "this story a great meaning haveth."
+//    )
+//
+//    addTextPage(
+//      ResearchEntries.Story.TEST, 1,
+//      "A Courtesy Call 2",
+//      "Lorem dolor 2 sit amet,",
+//      "this story a great meaning haveth.",
+//      ""
+//    )
+//
+//    addTextPage(
+//      ResearchEntries.Story.TEST, 2,
+//      "A Courtesy Call 3",
+//      "Lorem lotrumatum dolor 3 sit amet,",
+//      "this story a great meaning haveth."
+//    )
 
-    addTextPage(
-        ResearchEntries.Story.TEST, 1,
-        "A Courtesy Call 2",
-        "Lorem dolor 2 sit amet,",
-        "this story a great meaning haveth.",
-        ""
-    )
-
-    addTextPage(
-        ResearchEntries.Story.TEST, 2,
-        "A Courtesy Call 3",
-        "Lorem lotrumatum dolor 3 sit amet,",
-        "this story a great meaning haveth."
-    )
+    addTitleFeature(ResearchEntries.Story.TEST, 0,"A courtesy call starts the page")
+    addParagraphFeature(ResearchEntries.Story.TEST, 0, """
+      As fate would have it, this paragraph will probably not start a page because it does not
+      have the mustStartPage flag set to true, which is actually rather a worrisome tragedy.
+      Somebody had better do something about it soon.
+    """)
+    addParagraphFeature(ResearchEntries.Story.TEST, 1, """
+      This is an experiment simply due to the fact that I am testing out double-trim-indent behaviour!
+      If this fails and I am left to contemplate my existence in the bottomless abyss that my mind is, 
+      I will be making phone calls real fast real soon. No manager is safe from this bad birch.
+      (I got my Karen haircut done yesterday so while you mongrels crawl about and lick your "gracious" masters' fingers,
+      I will bee the queen out of every damn bastard who makes me think badly of me, myself included.)
+    """.trimIndent())
+    addTitleFeature(ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
+    addParagraphFeature(ResearchEntries.Story.TEST, 2, """
+      On the other (also doubly trimmed hand), this paragraph should start a new page always.
+    """.trimIndent())
+    addTitleFeature(ResearchEntries.Story.TEST, 2,"(start of page)")
+    addTitleFeature(ResearchEntries.Story.TEST, 3, "this is page number 1! Surprise!")
+    addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,
@@ -354,14 +378,35 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(RecipeViewerDescriptions.ROTTEN_BRAIN, "Sometimes dropped by angry zombies.")
     add(RecipeViewerDescriptions.BOOK, "Right click a bookcase with a wand to obtain!")
-    add(RecipeViewerDescriptions.ARCANE_WORKBENCH, "Right click a crafting table with a wand to convert it to an arcane workbench.")
+    add(
+      RecipeViewerDescriptions.ARCANE_WORKBENCH,
+      "Right click a crafting table with a wand to convert it to an arcane workbench."
+    )
     add(RecipeViewerDescriptions.CRUCIBLE, "Right click a cauldron with a wand to convert it to a crucible.")
-    add(RecipeViewerDescriptions.RESEARCH_TABLE, "Can be formed by placing 2 tables next to each other, and right clicking one with a wand.")
-    add(RecipeViewerDescriptions.INFUSED_STONES, "A piece of stone, infused with a primal element. Found in the overworld, at any height.")
-    add(RecipeViewerDescriptions.GREATWOOD, "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes.")
-    add(RecipeViewerDescriptions.SILVERWOOD, "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes.")
-    add(RecipeViewerDescriptions.PILLAR, "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock.")
-    add(RecipeViewerDescriptions.RESEARCH_SCROLL, "Obtained by clicking any unknown entry in the \"Elements of Thavma\"")
+    add(
+      RecipeViewerDescriptions.RESEARCH_TABLE,
+      "Can be formed by placing 2 tables next to each other, and right clicking one with a wand."
+    )
+    add(
+      RecipeViewerDescriptions.INFUSED_STONES,
+      "A piece of stone, infused with a primal element. Found in the overworld, at any height."
+    )
+    add(
+      RecipeViewerDescriptions.GREATWOOD,
+      "Greatwoods are very tall, ancient trees. They are somewhat rare, but they can spawn in all overworld biomes."
+    )
+    add(
+      RecipeViewerDescriptions.SILVERWOOD,
+      "Silverwoods are magical trees, with uniquely blue leaves. They are very rare, but they can spawn in all overworld biomes."
+    )
+    add(
+      RecipeViewerDescriptions.PILLAR,
+      "Formed by right clicking the Infusion Matrix, after completing the Infusion Multiblock."
+    )
+    add(
+      RecipeViewerDescriptions.RESEARCH_SCROLL,
+      "Obtained by clicking any unknown entry in the \"Elements of Thavma\""
+    )
 
     add(RecipeViewerAliases.BOOK, "Book")
     add(RecipeViewerAliases.ORE, "Ore")
@@ -395,18 +440,33 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchCategory.translationId(key), name)
   }
 
-  private fun addTextPage(entryKey: ResourceKey<ResearchEntry>, pageIndex: Int, title: String?, vararg paragraphs: String) {
+  private fun addTextPage(
+    entryKey: ResourceKey<ResearchEntry>,
+    pageIndex: Int,
+    title: String?,
+    vararg paragraphs: String
+  ) {
     val baseId = ResearchEntry.translationId(entryKey)
     if (title != null) add(TextPage.titleTranslationId(baseId, pageIndex), title)
     for (parIndex in paragraphs.indices)
-      add(TextPage.paragraphTranslationId(baseId, pageIndex, parIndex), paragraphs[parIndex].trimIndent().replace("\n", " "))
+      add(
+        TextPage.paragraphTranslationId(baseId, pageIndex, parIndex),
+        paragraphs[parIndex].trimIndent().replace("\n", " ")
+      )
   }
 
-    private fun addParagraphFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String?){
+  private fun addParagraphFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
+    val baseId = ResearchEntry.translationId(entryKey)
+    add(ParagraphFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+  }
 
-    }
+  private fun addTitleFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
+    val baseId = ResearchEntry.translationId(entryKey)
+    add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+  }
 
-    private fun addTitleFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String?){
-
-    }
+  private fun addFigureFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String){
+    val baseId = ResearchEntry.translationId(entryKey)
+    add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+  }
 }

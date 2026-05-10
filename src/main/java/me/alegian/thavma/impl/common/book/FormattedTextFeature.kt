@@ -3,14 +3,14 @@ package me.alegian.thavma.impl.common.book
 import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
-import net.minecraft.network.chat.FormattedText
+import net.minecraft.util.FormattedCharSequence
 
 /**
  * Is only ever used in EntryScreen.kt to break ParagraphFeatures into segments
  * so that they fit in their respective pages
  */
 
-class FormattedTextFeature(val text: List<FormattedText>, val font: Font = Minecraft.getInstance().font) : PageFeature {
+class FormattedTextFeature(val text: List<FormattedCharSequence>, val font: Font = Minecraft.getInstance().font) : PageFeature {
   override val coversOneWholePage: Boolean
     get() = false
   override val mustStartPage: Boolean

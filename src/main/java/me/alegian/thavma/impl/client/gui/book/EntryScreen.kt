@@ -105,11 +105,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
 //    renderer.initPageFeatures(this, features, currentPage)
 //  }
 
-  val renderer = DynamicFeaturesRenderer
 
   private fun initPageFeatures(features: List<PageFeature>?) {
-    if (features != null)
-      renderer.initPageFeatures(this, features, currentPage)
+    if (features != null) {
+      val renderer = DynamicFeaturesRenderer
+      renderer.initPageFeatures(this, features)
+    }
   }
 
   override fun isPauseScreen() = false

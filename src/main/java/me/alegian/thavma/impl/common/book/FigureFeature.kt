@@ -11,14 +11,13 @@ import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.chat.Style
 import java.util.Optional
 
-class FigureFeature(val image: Texture, val caption: Component?, override val mustStartPage: Boolean = false) : PageFeature {
+class FigureFeature(val image: Texture, val caption: Component?, override val mustStartPage: Boolean = false, override val mustOccupySetPage: Boolean = false, override val preferredPageIndex: Int = 1) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.FIGURE.get()
 
   override val coversOneWholePage = false
-  override val mustOccupySetPage = false
-  override val preferredPageIndex: Int
-    get() = 1
+
+
 
   override val pageWidth: Int
     get() = 256
@@ -28,7 +27,8 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
 
   // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
   val LINE_HEIGHT = font.lineHeight + 2
-  val lines = font.splitter.splitLines(caption, pageWidth - 25, Style.EMPTY)
+
+  val lines = if (caption != null) font.splitter.splitLines(caption, pageWidth - 25, Style.EMPTY) else listOf()
 
   val textureHeight = image.height
   val captionHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 4 / 3
@@ -39,9 +39,11 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
       builder.group(
         Texture.CODEC.fieldOf("image").forGetter(FigureFeature::image),
         ComponentSerialization.CODEC.optionalFieldOf("caption").forGetter { p -> Optional.ofNullable(p.caption) },
-        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(FigureFeature::mustStartPage)
-      ).apply(builder) { img, cap, start ->
-        FigureFeature(img, cap.orElse(null), start)
+        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(FigureFeature::mustStartPage),
+        Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(FigureFeature::mustOccupySetPage),
+        Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(FigureFeature::preferredPageIndex)
+      ).apply(builder) { img, cap, start, index, pref ->
+        FigureFeature(img, cap.orElse(null), start, index, pref)
       }
     }
 

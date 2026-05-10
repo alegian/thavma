@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.book
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
@@ -9,13 +10,14 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.chat.Style
 
-class TitleFeature(val text: Component, ): PageFeature {
+class TitleFeature(val text: Component, override val mustStartPage: Boolean = false, override val mustOccupySetPage: Boolean = false,
+                   override val preferredPageIndex: Int = 1): PageFeature {
     override val type: PageFeatureType<*>
         get() = PageFeatureTypes.TITLE.get()
 
     override val coversOneWholePage = false
-    override val mustStartPage = false
-    override val mustOccupySetPage = false
+
+
 
     val font: Font = Minecraft.getInstance().font
     // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
@@ -27,7 +29,10 @@ class TitleFeature(val text: Component, ): PageFeature {
     companion object {
         val CODEC = RecordCodecBuilder.mapCodec { builder ->
             builder.group(
-                ComponentSerialization.CODEC.fieldOf("text").forGetter(TitleFeature::text)
+                ComponentSerialization.CODEC.fieldOf("text").forGetter(TitleFeature::text),
+              Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(TitleFeature::mustStartPage),
+              Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(TitleFeature::mustStartPage),
+              Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(TitleFeature::preferredPageIndex)
             ).apply(builder, ::TitleFeature)
         }
 

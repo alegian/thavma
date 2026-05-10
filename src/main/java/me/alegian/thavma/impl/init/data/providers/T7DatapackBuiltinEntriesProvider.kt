@@ -1,12 +1,18 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.book.CraftingPage
 import me.alegian.thavma.impl.common.book.DynamicPage
+import me.alegian.thavma.impl.common.book.FigureFeature
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
+import me.alegian.thavma.impl.common.book.PageFeatureType
+import me.alegian.thavma.impl.common.book.ParagraphFeature
+import me.alegian.thavma.impl.common.book.RecipeFeature
 import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.book.TitleFeature
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -35,6 +41,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
@@ -54,7 +61,8 @@ import org.joml.Vector2i
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
-class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : DatapackBuiltinEntriesProvider(output, registries, builder, setOf(Thavma.MODID)) {
+class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
+  DatapackBuiltinEntriesProvider(output, registries, builder, setOf(Thavma.MODID)) {
   companion object {
     private val builder: RegistrySetBuilder = RegistrySetBuilder()
       .add(Registries.CONFIGURED_FEATURE) { ctx ->
@@ -130,19 +138,37 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 //          .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, -3), false, Items.TURTLE_HELMET.defaultInstance)
-            .research()
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
-            .defaultKnown()
-            .build(ctx)
+          .research()
+          .addPageFeature(makeTitleFeature(true, false))
+          .addPageFeature(makeParagraphFeature(false, false))
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature(true))
+          .addPageFeature(makeTitleFeature(true))
+          .addPageFeature(makeTitleFeature(true, true, 0))
+          .addPageFeature(makeParagraphFeature())
+//            .addPage(simpleTextPage(2, true))
+//            .addPage(simpleTextPage(2, true))
+//            .addPage(simpleTextPage(2, true))
+          .defaultKnown()
+          .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.TREES, Vector2i(0, -3), false, T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.TREES,
+          Vector2i(0, -3),
+          false,
+          T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ORES, Vector2i(2, -4), false, T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ORES,
+          Vector2i(2, -4),
+          false,
+          T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
@@ -163,27 +189,57 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 //          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
 //          .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_PROFICIENCY, Vector2i(-1, -1), false, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.RESEARCH_PROFICIENCY,
+          Vector2i(-1, -1),
+          false,
+          T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ALCHEMY, Vector2i(-2, 2), true, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ALCHEMY,
+          Vector2i(-2, 2),
+          true,
+          T7Blocks.CRUCIBLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.WANDS, Vector2i(-2, 4), true, T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.WANDS,
+          Vector2i(-2, 4),
+          true,
+          T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.INFUSION, Vector2i(2, 2), true, T7Blocks.MATRIX.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.INFUSION,
+          Vector2i(2, 2),
+          true,
+          T7Blocks.MATRIX.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.TECHNOLOGY, Vector2i(2, 4), true, T7Items.GOGGLES.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.TECHNOLOGY,
+          Vector2i(2, 4),
+          true,
+          T7Items.GOGGLES.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.CIVILIS))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Alchemy.ALCHEMY, Vector2i(0, 0), false, T7Blocks.CRUCIBLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Alchemy.ALCHEMY,
+          Vector2i(0, 0),
+          false,
+          T7Blocks.CRUCIBLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
           .defaultKnown()
           .build(ctx)
@@ -199,6 +255,7 @@ private class ResearchEntryBuilder(
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
   private val pageFeatures = mutableListOf<PageFeature>()
+  private val pages = mutableListOf<Page>()
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
 
@@ -209,6 +266,11 @@ private class ResearchEntryBuilder(
 
   fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
     pages.add(makePage(key, pages.size))
+    return this
+  }
+
+  inline fun <reified T : PageFeature> addPageFeature(crossinline makeFeature: (ResourceKey<ResearchEntry>, Int) -> T): ResearchEntryBuilder {
+    pageFeatures.add(makeFeature(key, pageFeatures.filterIsInstance<T>().size))
     return this
   }
 
@@ -227,11 +289,28 @@ private class ResearchEntryBuilder(
     val entryRegistry = ctx.lookup(T7DatapackRegistries.RESEARCH_ENTRY)
     val categoryHolder = categoryRegistry.getOrThrow(cat)
     val childrenHolders = children.map { entryRegistry.getOrThrow(it) }
-    ctx.register(key, ResearchEntry(categoryHolder, pos, preferX, childrenHolders, pageFeatures, icon, Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier), socketStates, defaultKnown))
+    ctx.register(
+      key,
+      ResearchEntry(
+        categoryHolder,
+        pos,
+        preferX,
+        childrenHolders,
+        pageFeatures,
+        icon,
+        Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
+        socketStates,
+        defaultKnown
+      )
+    )
   }
 }
 
-private fun BootstrapContext<ResearchCategory>.registerCategory(key: ResourceKey<ResearchCategory>, icon: ItemStack, sortIndex: Float) {
+private fun BootstrapContext<ResearchCategory>.registerCategory(
+  key: ResourceKey<ResearchCategory>,
+  icon: ItemStack,
+  sortIndex: Float
+) {
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
 
@@ -245,27 +324,50 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
   }
 }
 
-private fun simpleDynamicPages(vararg features: PageFeature): (ResourceKey<ResearchEntry>) -> List<Page> {
+private fun makeParagraphFeature(mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
+  return { entryKey, paragraphIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    ParagraphFeature(Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
+      mustStartPage, mustOccupySetPage, preferredPageIndex
+    )
+  }
+}
 
-    // tady prostě mám přístup k těm jednotlivejm features, z nich poskládám seznam
-    // dynamických stránek a ty renderuju pomocí zvláštního DynamicPageRenderer (TODO)
-    // zahrnout nejlépe všechnu tu logiku co mám v těch Features
-  // nebo taky vůbec ne? logika bude až v rendereru (nějakou zvláštní metodu tam na konec (třeba do companion objektu)
-  // kterou budu volat nahoře kterou se to rozkouskuje na části
+private fun makeTitleFeature(mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> TitleFeature{
+  return { entryKey, titleIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    TitleFeature(Component.translatable(TitleFeature.translationId(baseId, titleIndex)),
+      mustStartPage, mustOccupySetPage, preferredPageIndex
+    )
+  }
+}
 
-    return { entryKey ->
-        val baseId = ResearchEntry.translationId(entryKey)
-        DynamicPage(
-            features.toList()
-        )
+private fun makeFigureFeature(image: Texture, giveCaption: Boolean, mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> FigureFeature{
+  return if (giveCaption) { entryKey, figureIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    FigureFeature(image, Component.translatable(FigureFeature.translationId(baseId, figureIndex)),
+      mustStartPage, mustOccupySetPage, preferredPageIndex
+    )
+  } else { entryKey, figureIndex ->
+    FigureFeature(image, null, mustStartPage, mustOccupySetPage)
+  }
+}
 
-    }
+private fun makeRecipeFeature(recipeRL: ResourceLocation, coversOneWholePage: Boolean = true, mustStartPage: Boolean = true, mustOccupySetPage: Boolean = true, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature{
+  return { entryKey, titleIndex ->
+    RecipeFeature(recipeRL, coversOneWholePage, mustStartPage, mustOccupySetPage,
+      preferredPageIndex
+    )
+  }
 }
 
 private fun simpleTitle(pageIndex: Int, baseId: String) =
   Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
 
-private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) = List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
+private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) =
+  List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
 
-private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) = SocketState(Indices(row, col), a.get(), false, true)
+private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =
+  SocketState(Indices(row, col), a.get(), false, true)
+
 private fun broken(row: Int, col: Int) = SocketState(Indices(row, col), null, true, true)

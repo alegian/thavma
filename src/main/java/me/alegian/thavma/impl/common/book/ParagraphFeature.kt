@@ -2,24 +2,19 @@ package me.alegian.thavma.impl.common.book
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import me.alegian.thavma.impl.common.book.PageFeature
-import me.alegian.thavma.impl.init.data.worldgen.tree.trunk.SilverwoodTrunkPlacer
 import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.network.chat.Style
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer.trunkPlacerParts
-import java.util.Optional
 
-class ParagraphFeature(val text: Component, override val mustStartPage: Boolean = false) : PageFeature {
+class ParagraphFeature(val text: Component, override val mustStartPage: Boolean = false, override val mustOccupySetPage: Boolean = false, override val preferredPageIndex: Int = 1) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.PARAGRAPH.get()
 
   override val coversOneWholePage = false
-  override val mustOccupySetPage = false
+
   val font: Font = Minecraft.getInstance().font
 
 
@@ -34,7 +29,9 @@ class ParagraphFeature(val text: Component, override val mustStartPage: Boolean 
       builder.group(
         ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
         //ResourceLocation.CODEC.optionalFieldOf("font", ResourceLocation.withDefaultNamespace("default")).forGetter(ParagraphFeature::font),
-        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::mustStartPage)
+        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::mustStartPage),
+        Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(ParagraphFeature::mustOccupySetPage),
+        Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(ParagraphFeature::preferredPageIndex)
       ).apply(builder, ::ParagraphFeature)
     }
 

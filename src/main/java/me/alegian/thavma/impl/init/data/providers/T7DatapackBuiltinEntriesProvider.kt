@@ -137,19 +137,19 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .defaultKnown()
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, -3), false, Items.TURTLE_HELMET.defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, 0), false, Items.TURTLE_HELMET.defaultInstance)
           .research()
-          .addPageFeature(makeTitleFeature(true, false))
+          .addPageFeature(makeTitleFeature(true))
           .addPageFeature(makeParagraphFeature(false, false))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeTitleFeature(false))
           .addPageFeature(makeParagraphFeature(true))
-          .addPageFeature(makeTitleFeature(true))
+          .addPageFeature(makeTitleFeature(true, false))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
-            .addPage(simpleTextPage(2, true))
+//            .addPage(simpleTextPage(2, true))
+//            .addPage(simpleTextPage(2, true))
+//            .addPage(simpleTextPage(2, true))
           .defaultKnown()
           .build(ctx)
 
@@ -336,7 +336,7 @@ private fun makeParagraphFeature(mustStartPage: Boolean = false, mustOccupySetPa
 private fun makeTitleFeature(mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> TitleFeature{
   return { entryKey, titleIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    TitleFeature(Component.translatable(TitleFeature.translationId(baseId, titleIndex)),
+    TitleFeature(Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD),
       mustStartPage, mustOccupySetPage, preferredPageIndex
     )
   }

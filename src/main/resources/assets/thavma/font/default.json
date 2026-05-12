@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "thavma:default.ttf",
+      "shift": [0, 0],
+      "size": 11.0,
+      "oversample": 2.0
+    }
+  ]
+}

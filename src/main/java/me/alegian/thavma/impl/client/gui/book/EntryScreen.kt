@@ -5,20 +5,24 @@ import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 
-class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
+class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
 
   private var currentPage = 0
+  private val fontify = Minecraft.getInstance().font
+
+  private var maxWidth = BG.width/2 - 80
 
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
-  var pages = pagifyFeatures(entry.value().pageFeatures, this.height - 74)
+  var pages = pagifyFeatures(entry.value().pageFeatures, BG.height - 74, maxWidth, fontify)
 
   override fun init() {
     super.init()
@@ -100,16 +104,10 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
     renderer.initPage(this, page)
   }
 
-//  private fun initPageFeatures(features: List<PageFeature>) {
-//    val renderer = DynamicFeaturesRenderer as PageFeatureRenderer<PageFeature>
-//    renderer.initPageFeatures(this, features, currentPage)
-//  }
-
-
   private fun initPageFeatures(features: List<PageFeature>?) {
     if (features != null) {
       val renderer = DynamicFeaturesRenderer
-      renderer.initPageFeatures(this, features)
+      renderer.initPageFeatures(this, features, maxWidth)
     }
   }
 

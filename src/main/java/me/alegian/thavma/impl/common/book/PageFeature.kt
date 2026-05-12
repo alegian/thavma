@@ -8,9 +8,9 @@ interface PageFeature {
     val mustOccupySetPage: Boolean
     val preferredPageIndex: Int
         get() = 1
-    val renderedHeight: Int
-    val pageWidth: Int
-        get() = 256 - 25
+    //val renderedHeight: Int
+    //val pageWidth: Int
+        //get() = 256 - 25
 
     val type: PageFeatureType<*>
 

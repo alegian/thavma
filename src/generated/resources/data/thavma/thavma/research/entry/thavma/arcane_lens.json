@@ -36,26 +36,7 @@
     "count": 1,
     "id": "thavma:arcane_lens"
   },
-  "pages": [
-    {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.thavma.arcane_lens.page0.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.arcane_lens.page0.paragraph1"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.arcane_lens.page0.paragraph2"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.thavma.arcane_lens.page0.title"
-      }
-    }
-  ],
+  "pageFeatures": [],
   "position": [
     2,
     -2

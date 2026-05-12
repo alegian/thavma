@@ -7,56 +7,69 @@
     "count": 1,
     "id": "minecraft:turtle_helmet"
   },
-  "pages": [
+  "pageFeatures": [
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story_test.page0.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story_test.page0.paragraph1"
-        }
-      ],
-      "title": {
+      "type": "thavma:title",
+      "starts_page": true,
+      "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story_test.page0.title"
+        "translate": "research/entry.thavma.story.story_test.title_feature0"
       }
     },
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story_test.page1.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story_test.page1.paragraph1"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.story.story_test.page1.title"
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story_test.paragraph_feature0"
       }
     },
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story_test.page2.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story_test.page2.paragraph1"
-        }
-      ],
-      "title": {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story_test.paragraph_feature1"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story_test.page2.title"
+        "translate": "research/entry.thavma.story.story_test.title_feature1"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "starts_page": true,
+      "text": {
+        "translate": "research/entry.thavma.story.story_test.paragraph_feature2"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "starts_page": true,
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.story.story_test.title_feature2"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "has_set_page": true,
+      "preferred_page": 0,
+      "starts_page": true,
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.story.story_test.title_feature3"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story_test.paragraph_feature3"
       }
     }
   ],
   "position": [
     0,
-    -3
+    0
   ],
   "preferX": false,
   "title": {

@@ -4,12 +4,9 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Font
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
-import net.minecraft.network.chat.Style
-import java.util.Optional
+import java.util.*
 
 class FigureFeature(val image: Texture, val caption: Component?, override val mustStartPage: Boolean = false, override val mustOccupySetPage: Boolean = false, override val preferredPageIndex: Int = 1) : PageFeature {
   override val type: PageFeatureType<*>
@@ -18,21 +15,24 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
   override val coversOneWholePage = false
 
 
+//
+//  override val pageWidth: Int
+//    get() = 256
 
-  override val pageWidth: Int
-    get() = 256
 
-
-  val font: Font = Minecraft.getInstance().font
+  //val font: Font = Minecraft.getInstance().font
 
   // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
-  val LINE_HEIGHT = font.lineHeight + 2
+  //val LINE_HEIGHT = font.lineHeight + 2
+  //val LINE_HEIGHT = 11
 
-  val lines = if (caption != null) font.splitter.splitLines(caption, pageWidth - 25, Style.EMPTY) else listOf()
+  //val lines = if (caption != null) font.splitter.splitLines(caption, pageWidth - 25, Style.EMPTY) else listOf()
 
   val textureHeight = image.height
-  val captionHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 4 / 3
-  override val renderedHeight = textureHeight + captionHeight
+  //val captionHeight = LINE_HEIGHT * lines.size + LINE_HEIGHT * 4 / 3
+
+  //val captionHeight = if (caption != null) LINE_HEIGHT * caption.string.length*5/115 + LINE_HEIGHT * 4 / 3 else 0
+  //override val renderedHeight = textureHeight + captionHeight
 
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->

@@ -29,34 +29,7 @@
     "count": 1,
     "id": "thavma:book"
   },
-  "pages": [
-    {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph1"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph2"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.thavma.thavma.page0.title"
-      }
-    },
-    {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page1.paragraph0"
-        }
-      ]
-    }
-  ],
+  "pageFeatures": [],
   "position": [
     0,
     -6

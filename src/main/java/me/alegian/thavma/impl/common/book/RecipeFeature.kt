@@ -11,8 +11,10 @@ class RecipeFeature(
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.RECIPE.get()
 
-  override val renderedHeight: Int
-    get() = 96
+  //val font: Font = Minecraft.getInstance().font
+
+//  override val renderedHeight: Int
+//    get() = 96
 
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->

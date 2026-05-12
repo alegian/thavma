@@ -5,7 +5,6 @@ import me.alegian.thavma.impl.client.T7KeyMappings
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
-import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
@@ -103,12 +102,9 @@ import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.ORIC
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
-import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.item.crafting.RecipeType

@@ -15,7 +15,10 @@ import net.minecraft.client.Minecraft
 object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
-  override fun initPageFeatures(screen: EntryScreen, features: List<PageFeature>) {
+  override fun initPageFeatures(screen: EntryScreen, features: List<PageFeature>, maxWidth: Int) {
+
+    val font = Minecraft.getInstance().font
+    val LINE_HEIGHT = font.lineHeight + 2
 
     Column({
       size = grow()
@@ -24,7 +27,7 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
       for (feature in features) {
         when (feature) {
           is TitleFeature -> {
-            Title(feature)
+            Title(feature, maxWidth)
             Separator()
           }
 
@@ -34,44 +37,23 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
             relativeRenderable { guiGraphics, _, _, _ ->
               guiGraphics.usePose {
                 for (line in feature.text) {
-                  guiGraphics.drawString(feature.font, line)
-                  translateXY(0, feature.font.lineHeight)
+                  //guiGraphics.drawString(feature.font, line)
+                  guiGraphics.drawString(font, line)
+                  //translateXY(0, feature.font.lineHeight)
+                  translateXY(0, LINE_HEIGHT)
                 }
-                translateXY(0, feature.font.lineHeight * 2 / 3)
+                //translateXY(0, feature.font.lineHeight * 2 / 3)
+                translateXY(0, LINE_HEIGHT * 2 / 3)
               }
             }
           }
+
           is FigureFeature -> Image(feature)
         }
       }
     }
   }
 
-//    Column({
-//      size = grow()
-//      gap = 4
-//    }) {
-//      if (page.title != null) {
-//        Title(page.title)
-//        Separator()
-//      }
-//      Row({
-//        size = grow()
-//      }) {
-//        relativeRenderable { guiGraphics, _, _, _ ->
-//          guiGraphics.usePose {
-//            for (paragraph in page.paragraphs) {
-//              for (line in font.splitter.splitLines(paragraph, size.x.toInt(), Style.EMPTY)) {
-//                guiGraphics.drawString(Minecraft.getInstance().font, Component.literal(line.string))
-//                translateXY(0, LINE_HEIGHT)
-//              }
-//              translateXY(0, LINE_HEIGHT * 2 / 3)
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
 
   private fun Separator() {
     Row({
@@ -82,15 +64,21 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
     }
   }
 
-  private fun Title(title: TitleFeature) {
+  private fun Title(title: TitleFeature, maxWidth: Int) {
     val font = Minecraft.getInstance().font
+    val lines = font.split(title.text, maxWidth)
 
     Row({
       width = grow()
-      height = fixed(font.lineHeight)
+      height = fixed((font.lineHeight + 2) * lines.size)
     }) {
       relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.drawCenteredString(font, title.text, size.x / 2)
+        guiGraphics.usePose {
+          for (line in lines) {
+            guiGraphics.drawCenteredString(font, line, size.x / 2)
+            translateXY(0, font.lineHeight)
+          }
+        }
       }
     }
   }
@@ -101,9 +89,9 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
       height = fixed(figure.textureHeight)
     }) {
       TextureBox(figure.image) {}
-      }
     }
   }
+}
 
 
 

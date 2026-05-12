@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
+import net.minecraft.world.phys.Vec2
 
 class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
@@ -19,10 +20,11 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private var currentPage = 0
   private val fontify = Minecraft.getInstance().font
 
-  private var maxWidth = BG.width/2 - 80
+  private var maxWidth = BG.width/2 - 65
+  private var maxHeight = BG.height - 90
 
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
-  var pages = pagifyFeatures(entry.value().pageFeatures, BG.height - 74, maxWidth, fontify)
+  var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify)
 
   override fun init() {
     super.init()
@@ -52,7 +54,8 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
               }) {
                 afterLayout {
 
-                  addRenderableWidget(PageTurningWidget(position, false) {
+                  //addRenderableWidget(PageTurningWidget(position, false) {
+                  addRenderableWidget(PageTurningWidget(Vec2(position.x - maxWidth + 40, position.y + maxHeight + 30), false) {
                     // reinitiate the screen for this research entry when clicked
                     // with an updated page
                     // clearWidgets() is essential, also clears underline formatting!
@@ -76,7 +79,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
               }) {
                 afterLayout {
 
-                  addRenderableWidget(PageTurningWidget(position, true) {
+                  addRenderableWidget(PageTurningWidget(Vec2(position.x - 10, position.y + maxHeight + 30), true) {
                     // reinitiate the screen for this research entry when clicked
                     // with an updated page
                     // clearWidgets() is essential, also clears underline formatting!

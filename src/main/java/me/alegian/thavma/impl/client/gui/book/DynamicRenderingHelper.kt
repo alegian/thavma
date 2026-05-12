@@ -74,13 +74,6 @@ fun spliceParagraphOrFigure(
     println("given the length of the text, this many lines are at the start: ${realLinesRemaining}")
 
     when {
-//      lines.size == 1 && currentHeight + lineHeight <= maxPageHeight -> result += FormattedTextFeature(lines)
-//
-//      lines.size == 1 -> result += listOf(
-//        FormattedTextFeature(listOf()),
-//        FormattedTextFeature(lines)
-//      )
-
       lines.size <= linesRemainingAtStart && currentHeight + lineHeight * lines.size <= maxPageHeight -> result += FormattedTextFeature(
         lines
       )
@@ -98,7 +91,6 @@ fun spliceParagraphOrFigure(
 
         val end =
           lines.slice(lines.size - linesCroppingOutAtEnd until lines.size)
-        //lines.slice(linesRemainingAtStart + numOfFullPagesCovered * maxLinesPerPage until lines.size - 1)
         result += FormattedTextFeature(end)
       }
 
@@ -127,7 +119,7 @@ fun spliceParagraphOrFigure(
         }
 
         currentHeight + textureHeight <= maxPageHeight -> {
-          result += FigureFeature(image, null)
+          result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
           result.addAll(
             spliceParagraphOrFigure(
               ParagraphFeature(caption),
@@ -140,7 +132,7 @@ fun spliceParagraphOrFigure(
 
         else -> {
           result += FormattedTextFeature(listOf())
-          result += FigureFeature(image, null)
+          result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
           result.addAll(
             spliceParagraphOrFigure(
               ParagraphFeature(caption),
@@ -163,8 +155,6 @@ fun spliceParagraphOrFigure(
  *  Features in the same list belong together on one page.
  */
 fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, font: Font): List<List<PageFeature>> {
-  // maxHeight is height of background texture minus padding (32 top 42 bottom)
-  //val maxHeight = this@EntryScreen.height - 74
   println("maxHeight is $maxHeight, pageWidth is $pageWidth")
   val partition = features.partition { !it.mustOccupySetPage }
   val pages = mutableListOf<List<PageFeature>>()
@@ -305,6 +295,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
 
   // finally add features with pre-determined positions (cannot be paragraphs)
   // these features have to be ordered correctly in the Research Entry builder
+  println("The grouping of the second partition is ${partition.second.groupBy { it.preferredPageIndex }}")
   partition.second.groupBy { it.preferredPageIndex }.forEach { pages.add(it.key, it.value) }
 
   println("the final state of pages is")

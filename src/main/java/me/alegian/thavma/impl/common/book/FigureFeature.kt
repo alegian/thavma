@@ -14,6 +14,10 @@ class FigureFeature(val image: Texture, val caption: Component?, override val mu
 
   override val coversOneWholePage = false
 
+  override fun toString(): String {
+    return "FigureFeature with caption $caption, mustOccupySetPage set to $mustOccupySetPage and preferred page index $preferredPageIndex"
+  }
+
 
 //
 //  override val pageWidth: Int

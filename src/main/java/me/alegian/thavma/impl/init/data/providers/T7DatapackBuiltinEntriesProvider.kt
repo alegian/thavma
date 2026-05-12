@@ -57,6 +57,7 @@ import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.NeoForgeRegistries
+import org.apache.logging.log4j.core.tools.picocli.CommandLine.Help.Ansi.Style
 import org.joml.Vector2i
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -142,11 +143,14 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeTitleFeature(true))
           .addPageFeature(makeParagraphFeature(false, false))
           .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image", 180, 101, 180, 101), true))
           .addPageFeature(makeTitleFeature(false))
           .addPageFeature(makeParagraphFeature(true))
           .addPageFeature(makeTitleFeature(true, false))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image2", 87, 77, 87, 77),false,false,true,5))
+          .addPageFeature(makeParagraphFeature(false,true,5))
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
@@ -345,11 +349,12 @@ private fun makeTitleFeature(mustStartPage: Boolean = false, mustOccupySetPage: 
 private fun makeFigureFeature(image: Texture, giveCaption: Boolean, mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> FigureFeature{
   return if (giveCaption) { entryKey, figureIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    FigureFeature(image, Component.translatable(FigureFeature.translationId(baseId, figureIndex)),
+    FigureFeature(image, Component.translatable(FigureFeature.translationId(baseId, figureIndex)).withStyle(
+      ChatFormatting.ITALIC).withStyle(ChatFormatting.DARK_AQUA),
       mustStartPage, mustOccupySetPage, preferredPageIndex
     )
   } else { entryKey, figureIndex ->
-    FigureFeature(image, null, mustStartPage, mustOccupySetPage)
+    FigureFeature(image, null, mustStartPage, mustOccupySetPage, preferredPageIndex)
   }
 }
 

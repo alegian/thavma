@@ -52,12 +52,34 @@ fun relativeRenderable(renderable: Renderable) {
   }
 }
 
+fun relativeCenteredRenderable(renderable: Renderable, maxWidth: Int, texture: Texture) {
+  val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
+  afterLayout {
+    screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
+      guiGraphics.usePose {
+        translateXY(position.x + (maxWidth - texture.width)/2, position.y)
+        renderable.render(guiGraphics, mouseX, mouseY, partialTick)
+      }
+    })
+  }
+}
+
+
 fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
   Row({
     width = fixed(texture.width)
     height = fixed(texture.height)
   }) {
     relativeRenderable(renderableTexture(texture))
+    children()
+  }
+
+fun CenteredTextureBox(texture: Texture, maxWidth: Int ,children: T7LayoutElement.() -> Unit) =
+  Row({
+    width = fixed(texture.width)
+    height = fixed(texture.height)
+  }) {
+    relativeCenteredRenderable(renderableTexture(texture), maxWidth, texture)
     children()
   }
 

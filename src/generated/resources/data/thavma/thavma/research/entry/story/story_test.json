@@ -29,6 +29,21 @@
       }
     },
     {
+      "type": "thavma:figure",
+      "caption": {
+        "color": "dark_aqua",
+        "italic": true,
+        "translate": "research/entry.thavma.story.story_test.figure_feature0"
+      },
+      "image": {
+        "canvas_height": 101,
+        "canvas_width": 180,
+        "height": 101,
+        "location": "thavma:textures/gui/images/important_image.png",
+        "width": 180
+      }
+    },
+    {
       "type": "thavma:title",
       "text": {
         "bold": true,
@@ -64,6 +79,26 @@
       "type": "thavma:paragraph",
       "text": {
         "translate": "research/entry.thavma.story.story_test.paragraph_feature3"
+      }
+    },
+    {
+      "type": "thavma:figure",
+      "has_set_page": true,
+      "image": {
+        "canvas_height": 77,
+        "canvas_width": 87,
+        "height": 77,
+        "location": "thavma:textures/gui/images/important_image2.png",
+        "width": 87
+      },
+      "preferred_page": 5
+    },
+    {
+      "type": "thavma:paragraph",
+      "has_set_page": true,
+      "preferred_page": 5,
+      "text": {
+        "translate": "research/entry.thavma.story.story_test.paragraph_feature4"
       }
     }
   ],

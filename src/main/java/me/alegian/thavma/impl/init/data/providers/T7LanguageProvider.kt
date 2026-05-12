@@ -298,26 +298,112 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       "this story a great meaning haveth."
     )
 
-    addTitleFeature(ResearchEntries.Story.TEST, 0,"A courtesy call starts the page")
-    addParagraphFeature(ResearchEntries.Story.TEST, 0, """
+    addTitleFeature(ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
+    addParagraphFeature(
+      ResearchEntries.Story.TEST, 0, """
       As fate would have it, this paragraph will probably not start a page because it does not
       have the mustStartPage flag set to true, which is actually rather a worrisome tragedy.
       Somebody had better do something about it soon.
-    """)
-    addParagraphFeature(ResearchEntries.Story.TEST, 1, """
+    """
+    )
+    addParagraphFeature(
+      ResearchEntries.Story.TEST, 1, """
       This is an experiment simply due to the fact that I am testing out double-trim-indent behaviour!
       If this fails and I am left to contemplate my existence in the bottomless abyss that my mind is, 
-      I will be making phone calls real fast real soon. No manager is safe from this bad birch.
-      (I got my Karen haircut done yesterday so while you mongrels crawl about and lick your "gracious" masters' fingers,
+      I will be making phone calls real fast real soon.
+      (I got my Karen haircut done yesterday so while you mongrels crawl about,
       I will bee the queen out of every damn bastard who makes me think badly of me, myself included.)
-    """.trimIndent())
+    """.trimIndent()
+    )
+    addFigureFeature(
+      ResearchEntries.Story.TEST, 0, """
+We're no strangers to love
+You know the rules and so do I
+A full commitment's what I'm thinking of
+You wouldn't get this from any other guy
+I just wanna tell you how I'm feeling
+Gotta make you understand
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+We've known each other for so long
+Your heart's been aching, but you're too shy to say it
+Inside, we both know what's been going on
+We know the game, and we're gonna play it
+And if you ask me how I'm feeling
+Don't tell me you're too blind to see
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+Ooh (Give you up)
+Ooh-ooh (Give you up)
+Ooh (Never gonna give, never gonna give)
+Give you up
+Ooh-ooh (Never gonna give, never gonna give)
+Give you up
+We've known each other for so long
+Your heart's been aching, but you're too shy to say it
+Inside, we both know what's been going on
+We know the game, and we're gonna play it
+I just wanna tell you how I'm feeling
+Gotta make you understand
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+Never gonna give you up
+Never gonna let you down
+Never gonna run around and desert you
+Never gonna make you cry
+Never gonna say goodbye
+Never gonna tell a lie and hurt you
+    """.trimIndent()
+    )
     addTitleFeature(ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
-    addParagraphFeature(ResearchEntries.Story.TEST, 2, """
-      On the other (also doubly trimmed hand), this paragraph should start a new page always.
+    addParagraphFeature(
+      ResearchEntries.Story.TEST, 2, """
+      On the other hand, this paragraph should start a new page always. It has the mustStartPage property set to true :3
+    """.trimIndent()
+    )
+    addTitleFeature(ResearchEntries.Story.TEST, 2, "(start of page)")
+    addTitleFeature(ResearchEntries.Story.TEST, 3, """
+      this is page number 1! Surprise! Even though this Title is added as the 
+      fourth one in the DataPackBuiltinEntriesProvider and LanguageProvider
+      after a ton of paragraphs and titles and figures etc., 
+      it has a preferred page index 0!
     """.trimIndent())
-    addTitleFeature(ResearchEntries.Story.TEST, 2,"(start of page)")
-    addTitleFeature(ResearchEntries.Story.TEST, 3, "this is page number 1! Surprise!")
     addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
+    addParagraphFeature(ResearchEntries.Story.TEST, 4, """
+            And BAM! smack that paragraph right in the middle without it 
+            being an image caption! (Both the image and this have a 
+            preferred page index set to 5 -> always page number 6)
+    """.trimIndent())
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,
@@ -461,7 +547,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
   }
 
-  private fun addFigureFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String){
+  private fun addFigureFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
     val baseId = ResearchEntry.translationId(entryKey)
     add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
   }

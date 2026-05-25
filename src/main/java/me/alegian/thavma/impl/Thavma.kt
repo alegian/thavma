@@ -16,6 +16,8 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 object Thavma {
   const val MODID: String = "thavma"
 
+  //modContainer.registerConfig(ModConfig.Type.COMMON, MyModConfig.SPEC)
+
   init {
     T7ArmorMaterials.REGISTRAR.register(KFF_MOD_BUS)
     T7Blocks.REGISTRAR.register(KFF_MOD_BUS)

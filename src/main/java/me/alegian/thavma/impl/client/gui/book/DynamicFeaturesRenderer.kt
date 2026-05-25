@@ -12,14 +12,23 @@ import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.book.ParagraphFeature
 import me.alegian.thavma.impl.common.book.TitleFeature
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.Font
+import net.minecraft.util.Mth.ceil
+import javax.sound.sampled.Line
 
 object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
-  override fun initPageFeatures(screen: EntryScreen, features: List<PageFeature>, maxWidth: Int) {
+  override fun initPageFeatures(
+    screen: EntryScreen,
+    features: List<PageFeature>,
+    maxWidth: Int,
+    font: Font,
+    scale: Float
+  ) {
 
-    val font = Minecraft.getInstance().font
-    val LINE_HEIGHT = font.lineHeight + 2
+    //val font = Minecraft.getInstance().font
+    val LINE_HEIGHT = ceil((font.lineHeight * scale + 2))
 
 
     Column({
@@ -31,7 +40,7 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
       for (feature in features) {
         when (feature) {
           is TitleFeature -> {
-            Title(feature, maxWidth)
+            Title(feature, maxWidth, font, scale)
             Separator()
           }
 
@@ -39,42 +48,53 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
             //println("size before setting row of FormattedTextFeature is $size")
             //size = grow()
             width = grow()
-            height = fixed((font.lineHeight + 2) * feature.text.size + (font.lineHeight + 2) * 2 / 3)
+            //height = fixed(LINE_HEIGHT * feature.text.size + ceil(LINE_HEIGHT.toFloat() * (scale+1)) * 2f / 3)
+            height = fixed(LINE_HEIGHT * (feature.text.size + 0.5f))
             //println("size after FormattedTextFeature is $size")
           }) {
             relativeRenderable { guiGraphics, _, _, _ ->
+              //guiGraphics.pose().pushPose()
+              guiGraphics.pose().scale(scale, scale, 1.0f)
               guiGraphics.usePose {
                 for (line in feature.text) {
                   //guiGraphics.drawString(feature.font, line)
                   guiGraphics.drawString(font, line)
                   //translateXY(0, feature.font.lineHeight)
-                  translateXY(0, LINE_HEIGHT)
+                  translateXY(0, LINE_HEIGHT/scale)
                 }
                 //translateXY(0, feature.font.lineHeight * 2 / 3)
+                //guiGraphics.pose().popPose()
                 translateXY(0, LINE_HEIGHT * 2 / 3)
               }
+
             }
           }
+
 
           is FigureFeature -> Image(feature, maxWidth)
 
           is ParagraphFeature -> Row({
             //println("size before setting row of FormattedTextFeature is $size")
             //size = grow()
-            val lines = font.split(feature.text, maxWidth)
+            val lines = font.split(feature.text, (maxWidth / scale).toInt())
             width = grow()
-            height = fixed((font.lineHeight + 2) * lines.size + (font.lineHeight + 2) * 2 / 3)
+            //height = fixed(LINE_HEIGHT * lines.size + ceil(LINE_HEIGHT.toFloat() * (scale+1)) * 2f  / 3)
+            height = fixed(LINE_HEIGHT * (lines.size + 0.5f))
             //println("size after FormattedTextFeature is $size")
           }) {
             relativeRenderable { guiGraphics, _, _, _ ->
+              //guiGraphics.pose().pushPose()
+              //val scale = 1f
+              guiGraphics.pose().scale(scale, scale, 1.0f)
               guiGraphics.usePose {
-                for (line in font.split(feature.text, maxWidth)) {
+                for (line in font.split(feature.text, (maxWidth / scale).toInt())) {
                   //guiGraphics.drawString(feature.font, line)
                   guiGraphics.drawString(font, line)
                   //translateXY(0, feature.font.lineHeight)
-                  translateXY(0, LINE_HEIGHT)
+                  translateXY(0, LINE_HEIGHT/scale)
                 }
                 //translateXY(0, feature.font.lineHeight * 2 / 3)
+              //guiGraphics.pose().popPose()
                 translateXY(0, LINE_HEIGHT * 2 / 3)
               }
             }
@@ -96,21 +116,21 @@ object DynamicFeaturesRenderer : PageFeatureRenderer<PageFeature> {
     }
   }
 
-  private fun Title(title: TitleFeature, maxWidth: Int) {
-    val font = Minecraft.getInstance().font
-    val lines = font.split(title.text, maxWidth)
+  private fun Title(title: TitleFeature, maxWidth: Int, font: Font, scale: Float) {
+    val lines = font.split(title.text, (maxWidth / scale).toInt())
 
     Row({
       //println("width before setting row of TitleFeature is $width")
       width = grow()
       //println("width after TitleFeature is $width")
-      height = fixed((font.lineHeight + 2) * lines.size)
+      height = fixed(ceil((font.lineHeight * scale + 2)) * lines.size)
     }) {
       relativeRenderable { guiGraphics, _, _, _ ->
+        guiGraphics.pose().scale(scale, scale, 1.0f)
         guiGraphics.usePose {
           for ((index, line) in lines.withIndex()) {
-            guiGraphics.drawCenteredString(font, line, size.x / 2)
-            if (index != lines.size - 1) translateXY(0, font.lineHeight)
+            guiGraphics.drawCenteredString(font, line, size.x/scale / 2)
+            if (index != lines.size - 1) translateXY(0, ceil((font.lineHeight * scale + 2))/scale)
           }
         }
       }

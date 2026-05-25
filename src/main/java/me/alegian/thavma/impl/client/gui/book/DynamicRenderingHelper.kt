@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.config.Config
 import me.alegian.thavma.impl.common.book.FigureFeature
 import me.alegian.thavma.impl.common.book.FormattedTextFeature
 import me.alegian.thavma.impl.common.book.PageFeature
@@ -7,22 +8,22 @@ import me.alegian.thavma.impl.common.book.ParagraphFeature
 import me.alegian.thavma.impl.common.book.RecipeFeature
 import me.alegian.thavma.impl.common.book.TitleFeature
 import net.minecraft.client.gui.Font
-import net.minecraft.network.chat.Component
+import net.minecraft.util.Mth.ceil
+import net.minecraft.util.Mth.floor
 import kotlin.math.min
 
-private fun PageFeature.renderedHeight(pageWidth: Int, font: Font): Int {
-  val lineHeight = font.lineHeight + 2
+private fun PageFeature.renderedHeight(pageWidth: Int, font: Font, scale: Float): Int {
+  val lineHeight = ceil((font.lineHeight * scale) + 2)
   return when (this) {
-    is ParagraphFeature -> font.split(this.text, pageWidth).size * lineHeight
-    is TitleFeature -> font.split(this.text, pageWidth).size * lineHeight + 16
+    is ParagraphFeature -> font.split(this.text, floor(pageWidth/scale)).size * lineHeight
+    is TitleFeature -> font.split(this.text, (pageWidth/scale).toInt()).size * lineHeight + 16
     is FigureFeature -> if (caption != null) font.split(
       this.caption,
-      pageWidth
+      (pageWidth/scale).toInt()
     ).size * lineHeight + this.textureHeight else this.textureHeight
-
     is RecipeFeature -> 96
     is FormattedTextFeature -> text.size * lineHeight
-    else -> throw IllegalArgumentException("This PageFeature $this does not have renderedHeight implemented yet")
+    else -> throw IllegalArgumentException("This PageFeature $this does not have renderedHeight() implemented yet")
   }
 }
 
@@ -34,14 +35,14 @@ private fun PageFeature.renderedHeight(pageWidth: Int, font: Font): Int {
  */
 fun spliceParagraphOrFigure(
   input: PageFeature, maxPageHeight: Int,
-  currentHeight: Int, maxPageWidth: Int, font: Font
+  currentHeight: Int, maxPageWidth: Int, font: Font, scale: Float
 ): List<PageFeature> {
   val result = mutableListOf<PageFeature>()
   println("maxHeight is $maxPageHeight, pageWidth is $maxPageWidth, processing page feature $input, current height is $currentHeight")
 
   if (input is ParagraphFeature) {
     // how many lines fit in the current page
-    val lineHeight = font.lineHeight + 2
+    val lineHeight = ceil((font.lineHeight  * scale + 2)) //* Config.FONT_SIZE_MULTIPLIER.get()
     println("lineheight is $lineHeight")
 
     // so that we get at least 2 lines at the end of the first page
@@ -54,13 +55,15 @@ fun spliceParagraphOrFigure(
     val numOfLinesCoveringFullPages: Int =
       (input.renderedHeight(
         maxPageWidth,
-        font
+        font,
+        scale
       ) - linesRemainingAtStart * lineHeight) / maxPageHeight * maxPageHeight / lineHeight
     println("number of lines covering whole pages is $numOfLinesCoveringFullPages")
     var linesCroppingOutAtEnd: Int =
       (input.renderedHeight(
         maxPageWidth,
-        font
+        font,
+        scale
       ) - linesRemainingAtStart * lineHeight - numOfLinesCoveringFullPages * lineHeight) / lineHeight
     if (linesCroppingOutAtEnd < 0) linesCroppingOutAtEnd = 0
     println("number of lines cropping out at end are $linesCroppingOutAtEnd")
@@ -68,7 +71,7 @@ fun spliceParagraphOrFigure(
     println("max lines per page is $maxLinesPerPage")
     val numOfFullPagesCovered = numOfLinesCoveringFullPages / maxLinesPerPage
     println("number of full pages is $numOfFullPagesCovered")
-    val lines = font.split(input.text, maxPageWidth)
+    val lines = font.split(input.text, (maxPageWidth/scale).toInt())
     println("the text was split into this number of lines: ${lines.size}")
     val realLinesRemaining: Int = min(linesRemainingAtStart, lines.size)
     println("given the length of the text, this many lines are at the start: ${realLinesRemaining}")
@@ -119,27 +122,30 @@ fun spliceParagraphOrFigure(
         }
 
         currentHeight + textureHeight <= maxPageHeight -> {
-          result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
+          //result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
+          result += this
           result.addAll(
             spliceParagraphOrFigure(
               ParagraphFeature(caption),
               maxPageHeight,
               currentHeight + textureHeight,
-              maxPageWidth, font
+              maxPageWidth, font, scale
             )
           )
         }
 
         else -> {
           result += FormattedTextFeature(listOf())
-          result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
+          //result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
+          result += this
           result.addAll(
             spliceParagraphOrFigure(
               ParagraphFeature(caption),
               maxPageHeight,
               textureHeight,
               maxPageWidth,
-              font
+              font,
+              scale
             )
           )
         }
@@ -154,12 +160,12 @@ fun spliceParagraphOrFigure(
  *  Returns a list of lists of features where every index represents a page.
  *  Features in the same list belong together on one page.
  */
-fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, font: Font): List<List<PageFeature>> {
+fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, font: Font, scale: Float): List<List<PageFeature>> {
   println("maxHeight is $maxHeight, pageWidth is $pageWidth")
   val partition = features.partition { !it.mustOccupySetPage }
   val pages = mutableListOf<List<PageFeature>>()
   val buffer = mutableListOf<PageFeature>()
-  fun currentHeight() = buffer.sumOf { it.renderedHeight(pageWidth, font) }
+  fun currentHeight() = buffer.sumOf { it.renderedHeight(pageWidth, font, scale) }
   fun submitBufferAndClear() {
     pages.add(buffer.toList())
     println("===== Just submitted from buffer =====")
@@ -180,12 +186,14 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
       when {
         (this !is ParagraphFeature && this !is FigureFeature) && renderedHeight(
           pageWidth,
-          font
+          font,
+          scale
         ) > maxHeight -> throw IllegalArgumentException(
           "The size of the element ${this::class.simpleName} is too large at ${
             renderedHeight(
               pageWidth,
-              font
+              font,
+              scale
             )
           } while allowed $maxHeight."
         )
@@ -199,7 +207,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
           if (buffer.isNotEmpty()) submitBufferAndClear()
           if (this is ParagraphFeature || this is FigureFeature) {
             println("Currently have this in the result: $pages")
-            val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight(), pageWidth, font)
+            val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight(), pageWidth, font, scale)
             if (processed.size < 2) buffer += processed.first()
             // only need to check this much since buffer is empty (starts page)
             else if (this is ParagraphFeature) {
@@ -222,7 +230,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
         }
 
         (this is ParagraphFeature || this is FigureFeature) -> {
-          val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight(), pageWidth, font)
+          val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight(), pageWidth, font, scale)
           if (processed.size < 2) buffer += processed.first()
           else if (this is ParagraphFeature) {
             buffer += processed.first()
@@ -268,13 +276,14 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
           }
         }
 
-        currentHeight() + renderedHeight(pageWidth, font) <= maxHeight -> buffer += this
+        currentHeight() + renderedHeight(pageWidth, font, scale) <= maxHeight -> buffer += this
         // the next check might be redundant:
         buffer.isEmpty() -> throw IllegalArgumentException(
           "The size of the element ${this::class.simpleName} is too large at ${
             renderedHeight(
               pageWidth,
-              font
+              font,
+              scale
             )
           } while allowed $maxHeight."
         )
@@ -293,7 +302,7 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
   println("current state of pages before adding predetermined stuff is")
   for (i in pages) println(i)
 
-  // finally add features with pre-determined positions (cannot be paragraphs)
+  // finally add features with pre-determined positions (cannot be long paragraphs)
   // these features have to be ordered correctly in the Research Entry builder
   println("The grouping of the second partition is ${partition.second.groupBy { it.preferredPageIndex }}")
   partition.second.groupBy { it.preferredPageIndex }.forEach { pages.add(it.key, it.value) }

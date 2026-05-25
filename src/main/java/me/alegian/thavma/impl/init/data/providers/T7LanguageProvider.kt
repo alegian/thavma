@@ -140,7 +140,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(RESEARCH_SCROLL.get(), "Research Scroll")
     add(ARCANE_LENS.get(), "Arcane Lens")
-    add(BOOK.get(), "Elements of Thavma")
+    add(BOOK.get(), "Elements")
 
     add(T7Items.BASIC_AMULET.get(), "Basic Amulet")
     add(T7Items.BASIC_BELT.get(), "Basic Belt")
@@ -413,7 +413,7 @@ Never gonna tell a lie and hurt you
         flew into my hands! I can sense great power within it.
       """,
       """
-        The cover reads "Elements of Thavma", but a lot of its pages appear blank, sealed by some magic.
+        The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
       """,
       """
         To read them, I will first need to break that seal. It won't be easy... but

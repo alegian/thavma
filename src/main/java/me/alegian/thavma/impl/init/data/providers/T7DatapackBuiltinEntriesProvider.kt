@@ -4,11 +4,9 @@ import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.book.CraftingPage
-import me.alegian.thavma.impl.common.book.DynamicPage
 import me.alegian.thavma.impl.common.book.FigureFeature
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
-import me.alegian.thavma.impl.common.book.PageFeatureType
 import me.alegian.thavma.impl.common.book.ParagraphFeature
 import me.alegian.thavma.impl.common.book.RecipeFeature
 import me.alegian.thavma.impl.common.book.TextPage
@@ -57,7 +55,6 @@ import net.minecraft.world.item.enchantment.effects.AddValue
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.NeoForgeRegistries
-import org.apache.logging.log4j.core.tools.picocli.CommandLine.Help.Ansi.Style
 import org.joml.Vector2i
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -140,17 +137,17 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
         ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, 0), false, Items.TURTLE_HELMET.defaultInstance)
           .research()
-          .addPageFeature(makeTitleFeature(true))
+          .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature(false, false))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image", 180, 101, 180, 101), true))
+          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image", 180, 101, 180, 101), true, false, false, 1, ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC))
           .addPageFeature(makeTitleFeature(false))
           .addPageFeature(makeParagraphFeature(true))
           .addPageFeature(makeTitleFeature(true, false))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image2", 87, 77, 87, 77),false,false,true,5))
-          .addPageFeature(makeParagraphFeature(false,true,5))
+          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image2", 87, 77, 87, 77), false, false, true, 5))
+          .addPageFeature(makeParagraphFeature(false, true, 5))
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
@@ -177,13 +174,23 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.ARCANE_LENS, Vector2i(2, -2), false, T7Items.ARCANE_LENS.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.ARCANE_LENS,
+          Vector2i(2, -2),
+          false,
+          T7Items.ARCANE_LENS.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .addPage(simpleTextPage(3, true))
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.RESEARCH_TABLE, Vector2i(0, 0), true, T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.RESEARCH_TABLE,
+          Vector2i(0, 0),
+          true,
+          T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
@@ -328,39 +335,88 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
   }
 }
 
-private fun makeParagraphFeature(mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
+private fun makeParagraphFeature(
+  mustStartPage: Boolean = false,
+  mustOccupySetPage: Boolean = false,
+  preferredPageIndex: Int = 1
+): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
   return { entryKey, paragraphIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    ParagraphFeature(Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
+    ParagraphFeature(
+      Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
       mustStartPage, mustOccupySetPage, preferredPageIndex
     )
   }
 }
 
-private fun makeTitleFeature(mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> TitleFeature{
+private fun makeStyledParagraphFeature(
+  mustStartPage: Boolean = false,
+  mustOccupySetPage: Boolean = false,
+  preferredPageIndex: Int = 1,
+  vararg styles: ChatFormatting?
+): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
+  return { entryKey, paragraphIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    val content = Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex))
+    for (i in styles) {
+      content.apply {
+        if (i != null) {
+          this.withStyle(i)
+        }
+      }
+    }
+    ParagraphFeature(content, mustStartPage, mustOccupySetPage, preferredPageIndex)
+  }
+}
+
+private fun makeTitleFeature(
+  mustStartPage: Boolean = true,
+  mustOccupySetPage: Boolean = false,
+  preferredPageIndex: Int = 1
+): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
   return { entryKey, titleIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    TitleFeature(Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD),
+    TitleFeature(
+      Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD),
       mustStartPage, mustOccupySetPage, preferredPageIndex
     )
   }
 }
 
-private fun makeFigureFeature(image: Texture, giveCaption: Boolean, mustStartPage: Boolean = false, mustOccupySetPage: Boolean = false, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> FigureFeature{
+private fun makeFigureFeature(
+  image: Texture,
+  giveCaption: Boolean,
+  mustStartPage: Boolean = false,
+  mustOccupySetPage: Boolean = false,
+  preferredPageIndex: Int = 1,
+  vararg styles: ChatFormatting?
+): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
   return if (giveCaption) { entryKey, figureIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    FigureFeature(image, Component.translatable(FigureFeature.translationId(baseId, figureIndex)).withStyle(
-      ChatFormatting.ITALIC).withStyle(ChatFormatting.DARK_AQUA),
-      mustStartPage, mustOccupySetPage, preferredPageIndex
-    )
-  } else { entryKey, figureIndex ->
+    val content = Component.translatable(FigureFeature.translationId(baseId, figureIndex))
+    for (i in styles) {
+      content.apply {
+        if (i != null) {
+          this.withStyle(i)
+        }
+      }
+    }
+    FigureFeature(image, content, mustStartPage, mustOccupySetPage, preferredPageIndex)
+  } else { _, _ ->
     FigureFeature(image, null, mustStartPage, mustOccupySetPage, preferredPageIndex)
   }
 }
 
-private fun makeRecipeFeature(recipeRL: ResourceLocation, coversOneWholePage: Boolean = true, mustStartPage: Boolean = true, mustOccupySetPage: Boolean = true, preferredPageIndex: Int = 1): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature{
+private fun makeRecipeFeature(
+  recipeRL: ResourceLocation,
+  coversOneWholePage: Boolean = true,
+  mustStartPage: Boolean = true,
+  mustOccupySetPage: Boolean = true,
+  preferredPageIndex: Int = 1
+): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
   return { entryKey, titleIndex ->
-    RecipeFeature(recipeRL, coversOneWholePage, mustStartPage, mustOccupySetPage,
+    RecipeFeature(
+      recipeRL, coversOneWholePage, mustStartPage, mustOccupySetPage,
       preferredPageIndex
     )
   }

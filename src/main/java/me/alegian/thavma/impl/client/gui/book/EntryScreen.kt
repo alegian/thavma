@@ -23,8 +23,10 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private var maxWidth = BG.width/2 - 65
   private var maxHeight = BG.height - 90
 
+  private val scale = 1.75f
+
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
-  var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify)
+  var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify, scale)
 
   override fun init() {
     super.init()
@@ -110,7 +112,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private fun initPageFeatures(features: List<PageFeature>?) {
     if (features != null) {
       val renderer = DynamicFeaturesRenderer
-      renderer.initPageFeatures(this, features, maxWidth)
+      renderer.initPageFeatures(this, features, maxWidth, fontify, scale)
     }
   }
 

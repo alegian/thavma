@@ -2,12 +2,18 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.entity.knowsResearch
+import me.alegian.thavma.impl.common.research.ResearchCategory
+import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.core.Holder
+import net.minecraft.world.entity.player.Player
 import kotlin.math.pow
 
 // represents the renderable content of a tab in the book
-class TabRenderable(val screen: BookScreen) : Renderable {
+class TabRenderable(val screen: BookScreen, val category: ResearchCategory, val entries: List<Holder.Reference<ResearchEntry>>?, val player: Player) : Renderable {
   companion object{
     private const val ZOOM_MULTIPLIER = 1.25
     private const val maxScrollX = 300.0
@@ -15,6 +21,16 @@ class TabRenderable(val screen: BookScreen) : Renderable {
     private const val minZoom = 0.0
     private const val maxZoom = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
+  }
+
+  val entryWidgets = mutableListOf<EntryWidget>()
+
+  val haha = entries?.forEach {
+    var shown = player.knowsResearch(it)
+    for (p in it.value().parents(player.level()))
+      if (player.knowsResearch(p)) shown = true
+    if (shown)
+      entryWidgets.add(EntryWidget(screen, this, it))
   }
 
   var scrollX = 0.0

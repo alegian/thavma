@@ -31,6 +31,10 @@ class ResearchEntry(
     val defaultResearchState: List<SocketState>,
     val defaultKnown: Boolean
 ) {
+  override fun toString(): String {
+    return "Entry ${title.string} in ${this.category}"
+  }
+
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
       val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)

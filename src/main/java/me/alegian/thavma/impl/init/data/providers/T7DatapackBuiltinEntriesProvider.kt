@@ -52,6 +52,7 @@ import net.minecraft.world.item.enchantment.Enchantment.EnchantmentDefinition
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -126,14 +127,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-          .addPage(simpleTextPage(3, true))
-          .addPage(simpleTextPage(1, false))
-          .addChild(ResearchEntries.Thavma.TREES)
-          .addChild(ResearchEntries.Thavma.ORES)
-          .defaultKnown()
-          .build(ctx)
 
         ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, 0), false, Items.TURTLE_HELMET.defaultInstance)
           .research()
@@ -151,6 +144,22 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
 //            .addPage(simpleTextPage(2, true))
+          .defaultKnown()
+          .addChild(ResearchEntries.Story.TEST2)
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Story.TEST2, Vector2i(0,3), false, Items.FISHING_ROD.defaultInstance)
+          .research()
+          .addPageFeature(makeParagraphFeature())
+          //.defaultKnown()
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
+          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
+          .addPage(simpleTextPage(3, true))
+          .addPage(simpleTextPage(1, false))
+          //.addChild(ResearchEntries.Thavma.TREES)
+          //.addChild(ResearchEntries.Thavma.ORES)
           .defaultKnown()
           .build(ctx)
 
@@ -193,11 +202,11 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
-          .addChild(ResearchEntries.Thavma.WANDS)
-          .addChild(ResearchEntries.Thavma.TECHNOLOGY)
-          .addChild(ResearchEntries.Thavma.ALCHEMY)
-          .addChild(ResearchEntries.Thavma.INFUSION)
-          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
+          //.addChild(ResearchEntries.Thavma.WANDS)
+          //.addChild(ResearchEntries.Thavma.TECHNOLOGY)
+          //.addChild(ResearchEntries.Thavma.ALCHEMY)
+          //.addChild(ResearchEntries.Thavma.INFUSION)
+          //.addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -207,6 +216,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -216,6 +226,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.CRUCIBLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -225,6 +236,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -234,6 +246,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.MATRIX.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -243,6 +256,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.GOGGLES.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.CIVILIS))
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(

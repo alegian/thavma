@@ -1,12 +1,6 @@
 {
   "category": "thavma:thavma",
-  "children": [
-    "thavma:thavma/wands",
-    "thavma:thavma/technology",
-    "thavma:thavma/alchemy",
-    "thavma:thavma/infusion",
-    "thavma:thavma/research_proficiency"
-  ],
+  "children": [],
   "defaultKnown": false,
   "defaultResearchState": [
     {

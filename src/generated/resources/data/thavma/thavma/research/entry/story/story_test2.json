@@ -1,0 +1,27 @@
+{
+  "category": "thavma:story",
+  "children": [],
+  "defaultKnown": false,
+  "defaultResearchState": [],
+  "icon": {
+    "count": 1,
+    "id": "minecraft:fishing_rod"
+  },
+  "pageFeatures": [
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story_test2.paragraph_feature0"
+      }
+    }
+  ],
+  "position": [
+    0,
+    3
+  ],
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.story.story_test2"
+  }
+}

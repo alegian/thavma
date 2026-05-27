@@ -13,11 +13,16 @@ import net.minecraft.world.entity.player.Player
 import kotlin.math.pow
 
 // represents the renderable content of a tab in the book
-class TabRenderable(val screen: BookScreen, val category: ResearchCategory, val entries: List<Holder.Reference<ResearchEntry>>?, val player: Player) : Renderable {
-  companion object{
+class TabRenderable(
+  val screen: BookScreen,
+  val category: ResearchCategory,
+  val entries: List<Holder.Reference<ResearchEntry>>?,
+  val player: Player
+) : Renderable {
+  companion object {
     private const val ZOOM_MULTIPLIER = 1.25
-    private const val maxScrollX = 300.0
-    private const val maxScrollY = 300.0
+    const val maxScrollX = 600.0
+    const val maxScrollY = 300.0
     private const val minZoom = 0.0
     private const val maxZoom = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
@@ -25,12 +30,14 @@ class TabRenderable(val screen: BookScreen, val category: ResearchCategory, val 
 
   val entryWidgets = mutableListOf<EntryWidget>()
 
-  val haha = entries?.forEach {
-    var shown = player.knowsResearch(it)
-    for (p in it.value().parents(player.level()))
-      if (player.knowsResearch(p)) shown = true
-    if (shown)
-      entryWidgets.add(EntryWidget(screen, this, it))
+  init {
+    entries?.forEach {
+      var shown = player.knowsResearch(it)
+      for (p in it.value().parents(player.level()))
+        if (player.knowsResearch(p)) shown = true
+      if (shown)
+        entryWidgets.add(EntryWidget(screen, this, it, player))
+    }
   }
 
   var scrollX = 0.0
@@ -39,9 +46,13 @@ class TabRenderable(val screen: BookScreen, val category: ResearchCategory, val 
     private set
   private var zoom = 2.0 // TODO: this is actually inverse zoom
 
+  val dimensionX = entryWidgets.maxOf { it.x } - entryWidgets.minOf { it.x }
+  val dimensionY = entryWidgets.maxOf { it.y } - entryWidgets.minOf { it.y }
+  val average = (dimensionY + dimensionX) / 2
+
   fun drag(x: Double, y: Double) {
-    val rawScrollX = scrollX - zoomFactor() * x
-    val rawScrollY = scrollY - zoomFactor() * y
+    val rawScrollX = scrollX - zoomFactor() * x * 1200 / (average * 7 + 50)
+    val rawScrollY = scrollY - zoomFactor() * y * 1200 / (average * 7 + 50)
 
     scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
     scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)

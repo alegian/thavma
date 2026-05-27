@@ -392,18 +392,25 @@ Never gonna tell a lie and hurt you
     """.trimIndent()
     )
     addTitleFeature(ResearchEntries.Story.TEST, 2, "(start of page)")
-    addTitleFeature(ResearchEntries.Story.TEST, 3, """
+    addTitleFeature(
+      ResearchEntries.Story.TEST, 3, """
       this is page number 1! Surprise! Even though this Title is added as the 
       fourth one in the DataPackBuiltinEntriesProvider and LanguageProvider
       after a ton of paragraphs and titles and figures etc., 
       it has a preferred page index 0!
-    """.trimIndent())
+    """.trimIndent()
+    )
     addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
-    addParagraphFeature(ResearchEntries.Story.TEST, 4, """
+    addParagraphFeature(
+      ResearchEntries.Story.TEST, 4, """
             And BAM! smack that paragraph right in the middle without it 
             being an image caption! (Both the image and this have a 
             preferred page index set to 5 -> always page number 6)
-    """.trimIndent())
+    """.trimIndent()
+    )
+
+    addEntry(ResearchEntries.Story.TEST2, "I will not be denied")
+    addParagraphFeature(ResearchEntries.Story.TEST2, 0, "When faced with setback, we must challenge our assumptions.")
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,

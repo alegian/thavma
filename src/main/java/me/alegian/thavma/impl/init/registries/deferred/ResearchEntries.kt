@@ -4,7 +4,6 @@ import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 
 object ResearchEntries {
   // used in datagen
@@ -28,7 +27,8 @@ object ResearchEntries {
   }
 
   object Story {
-      val TEST = register("story_test", ResearchCategories.STORY)
+    val TEST = register("story_test", ResearchCategories.STORY)
+    val TEST2 = register("story_test2", ResearchCategories.STORY)
   }
 
 }

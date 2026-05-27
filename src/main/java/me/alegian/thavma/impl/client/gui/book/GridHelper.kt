@@ -34,7 +34,7 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
   val preference = if (preferX) -1f else 1f
 
   if (absDx + absDy <= 1f) return
-  else if (absDx > 2 && absDy > 2) throw IllegalStateException("Yup the problem is here in GridHelper.kt")
+  else if (absDx > 2 && absDy > 2) return //throw IllegalStateException("Yup the problem is here in GridHelper.kt")
   else if (!invert && (preferX && absDx > absDy && absDy > 0 || !preferX && absDy > absDx && absDx > 0)) {
     translateXY(dx, dy)
     renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true)

@@ -3,13 +3,12 @@ package me.alegian.thavma.impl.client.gui.book
 import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientSound
+import me.alegian.thavma.impl.client.gui.book.TabRenderable.Companion.maxScrollX
+import me.alegian.thavma.impl.client.gui.book.TabRenderable.Companion.maxScrollY
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.resetRenderSystemColor
-import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -24,14 +23,22 @@ import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.network.PacketDistributor
+import kotlin.math.abs
+import kotlin.math.sin
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
  * entry.preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: Holder<ResearchEntry>) :
+class EntryWidget(
+  private val screen: BookScreen,
+  val tab: TabRenderable,
+  val entry: Holder<ResearchEntry>,
+  val player: Player
+) :
   AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.value().title) {
   private var gaveScroll = false
   val knowsResearch =
@@ -45,18 +52,20 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   init {
     val components = mutableListOf(entry.value().title)
-    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+    if (!knowsParents) components.add(
+      Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+    )
     tooltip = T7Tooltip(components)
   }
 
   private val pos = entry.value().position
 
   override fun getX(): Int {
-    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
+    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX / (300 / (tab.average + 1))) / tab.zoomFactor() + screen.width / 2).toInt()
   }
 
   override fun getY(): Int {
-    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY) / tab.zoomFactor() + screen.height / 2).toInt()
+    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY / (300 / (tab.average + 1))) / tab.zoomFactor() + screen.height / 2).toInt()
   }
 
   override fun getWidth(): Int {
@@ -69,15 +78,22 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     this.isHovered = guiGraphics.containsPointInScissor(mouseX, mouseY)
-        && mouseX >= x
-        && mouseY >= y
-        && mouseX < x + getWidth()
-        && mouseY < y + getHeight()
+            && mouseX >= x
+            && mouseY >= y
+            && mouseX < x + getWidth()
+            && mouseY < y + getHeight()
+
+    val corner = FrameRenderable.CORNER_TEXTURE
+    val edge = FrameRenderable.EDGE_TEXTURE
+    guiGraphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)
 
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
       scaleXY(1 / tab.zoomFactor())
-      translateXY(-tab.scrollX, -tab.scrollY)
+      translateXY(
+        -tab.scrollX / (300 / (tab.average + 10)),
+        -tab.scrollY / (300 / (tab.average + 10))
+      )
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
@@ -94,6 +110,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       }
       RenderSystem.enableCull()
     }
+    guiGraphics.disableCrop()
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
@@ -101,7 +118,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       PacketDistributor.sendToServer(ResearchScrollPayload(entry))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
-      tooltip = T7Tooltip(entry.value().title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+      tooltip = T7Tooltip(
+        entry.value().title,
+        Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+      )
       return
     }
     if (knowsResearch)
@@ -113,8 +133,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   private fun renderEntry(guiGraphics: GuiGraphics) {
     var brightness = 1f
-    if (!knowsResearch) brightness = 0.4f
-    RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
+    var alpha = 1f
+    if (!knowsResearch) brightness = 0.55f
+    if (!knowsResearch) alpha = (abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f)
+    RenderSystem.setShaderColor(brightness, brightness, brightness, alpha)
 
     renderGridElement(
       guiGraphics,

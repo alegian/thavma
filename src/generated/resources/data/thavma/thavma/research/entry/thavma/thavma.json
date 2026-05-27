@@ -1,9 +1,6 @@
 {
   "category": "thavma:thavma",
-  "children": [
-    "thavma:thavma/trees",
-    "thavma:thavma/ores"
-  ],
+  "children": [],
   "defaultKnown": true,
   "defaultResearchState": [
     {

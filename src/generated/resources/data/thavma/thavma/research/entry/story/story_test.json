@@ -1,6 +1,8 @@
 {
   "category": "thavma:story",
-  "children": [],
+  "children": [
+    "thavma:story/story_test2"
+  ],
   "defaultKnown": true,
   "defaultResearchState": [],
   "icon": {

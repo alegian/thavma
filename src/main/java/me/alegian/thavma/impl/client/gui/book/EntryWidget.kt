@@ -3,8 +3,6 @@ package me.alegian.thavma.impl.client.gui.book
 import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientSound
-import me.alegian.thavma.impl.client.gui.book.TabRenderable.Companion.maxScrollX
-import me.alegian.thavma.impl.client.gui.book.TabRenderable.Companion.maxScrollY
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
@@ -12,7 +10,6 @@ import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
-import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
@@ -139,7 +136,6 @@ class EntryWidget(
     var alpha = 1f
     if (!knowsResearch) brightness = 0.55f
     if (!knowsResearch) alpha = (abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f)
-    //RenderSystem.setShaderColor(brightness, brightness, brightness, alpha)
 
     renderGridElement(
       guiGraphics,
@@ -163,7 +159,6 @@ class EntryWidget(
 
     guiGraphics.setColor(1f, 1f, 1f, 1f)
     RenderSystem.disableBlend()
-    //resetRenderSystemColor()
   }
 
   override fun playDownSound(handler: SoundManager) {

@@ -3,12 +3,9 @@ package me.alegian.thavma.impl.client.gui.book
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
-import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.resetRenderSystemColor
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
-import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.Holder
@@ -49,7 +46,6 @@ fun PoseStack.renderConnectionRecursive(
   val signY = dy.sign
   val inversion = if (invert) -1f else 1f
   val preference = if (preferX) -1f else 1f
-  //val knowsResearch = ClientHelper.player()?.knowsResearch(entry) ?: false
 
   if (absDx + absDy <= 1f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException("Yup the problem is here in GridHelper.kt")
@@ -84,14 +80,6 @@ private fun renderLine(
   player: Player,
   knowsChild: Boolean
 ) {
-  var brightness = 1f
-  var alpha = 1f
-  if (!knowsChild) brightness = 0.55f
-  if (!knowsChild) alpha = (abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f)
-  RenderSystem.enableBlend()
-  RenderSystem.defaultBlendFunc()
-  guiGraphics.setColor(brightness, brightness, brightness, alpha)
-
   renderGridElement(
     guiGraphics,
     signX,
@@ -101,9 +89,6 @@ private fun renderLine(
     player,
     knowsChild
   )
-
-  guiGraphics.setColor(1f, 1f, 1f, 1f)
-  RenderSystem.disableBlend()
 }
 
 

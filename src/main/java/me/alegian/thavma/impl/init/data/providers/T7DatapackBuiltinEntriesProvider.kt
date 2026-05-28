@@ -3,14 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.book.CraftingPage
-import me.alegian.thavma.impl.common.book.FigureFeature
-import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.book.PageFeature
-import me.alegian.thavma.impl.common.book.ParagraphFeature
-import me.alegian.thavma.impl.common.book.RecipeFeature
-import me.alegian.thavma.impl.common.book.TextPage
-import me.alegian.thavma.impl.common.book.TitleFeature
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -52,7 +45,6 @@ import net.minecraft.world.item.enchantment.Enchantment.EnchantmentDefinition
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.item.enchantment.effects.AddValue
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -455,7 +447,7 @@ private fun makeRecipeFeature(
   mustOccupySetPage: Boolean = true,
   preferredPageIndex: Int = 1
 ): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
-  return { entryKey, titleIndex ->
+  return { _, _ ->
     RecipeFeature(
       recipeRL, coversOneWholePage, mustStartPage, mustOccupySetPage,
       preferredPageIndex

@@ -17,17 +17,12 @@ class BookScreen : Screen(Component.literal("book")) {
   private var isScrolling = false
   private var currentCategory: ResearchCategory? = null
   private val tabs = mutableMapOf<ResearchCategory, TabRenderable>()
-  private val backgrounds = mutableListOf<TabRenderable>()
   val currentTab get() = tabs[currentCategory] ?: tabs.toList().first().second
   private var selectorOffset = 0
   private val entryWidgets = mutableListOf<EntryWidget>()
 
   private val entries = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.toList()
-  val haha = entries.apply { println(this) }
   private var currentEntries = entries?.filter { it.value().category.value() == currentCategory }
-
-  //actualEntries[currentCategory] ?: actualEntries.toList().first().second
-  private val hehe = currentEntries.apply { println(this) }
   var currentWidgets = entryWidgets.filter { entryWidget ->
     currentEntries?.map { it.value() }?.contains(entryWidget.entry.value()) == true
   }
@@ -60,15 +55,6 @@ class BookScreen : Screen(Component.literal("book")) {
         )
       )
     }
-//    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.forEach {
-//      val tab = tabs[it.value().category.value()]
-//      var shown = player.knowsResearch(it)
-//      for (p in it.value().parents(player.level()))
-//        if (player.knowsResearch(p)) shown = true
-//
-//      if (tab != null && shown)
-//        entryWidgets.add(addRenderableWidget(EntryWidget(this, tab, it)))
-//    }
 
     // moved EntryWidget creation logic into TabRenderable.kt, here only adding them via
     // the protected method addRenderableWidget

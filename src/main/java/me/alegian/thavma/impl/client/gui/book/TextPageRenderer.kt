@@ -34,8 +34,8 @@ object TextPageRenderer : PageRenderer<TextPage> {
         relativeRenderable { guiGraphics, _, _, _ ->
           guiGraphics.usePose {
             for (paragraph in page.paragraphs) {
-              for (line in font.splitter.splitLines(paragraph, size.x.toInt(), Style.EMPTY)) {
-                guiGraphics.drawString(Minecraft.getInstance().font, Component.literal(line.string))
+              for (line in font.split(paragraph, size.x.toInt())) {
+                guiGraphics.drawString(Minecraft.getInstance().font, line)
                 translateXY(0, LINE_HEIGHT)
               }
               translateXY(0, LINE_HEIGHT * 2 / 3)

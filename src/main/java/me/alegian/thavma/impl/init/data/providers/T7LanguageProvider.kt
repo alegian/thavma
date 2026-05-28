@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.T7KeyMappings
+import me.alegian.thavma.impl.client.gui.book.PageTurningWidget
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
@@ -254,6 +255,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SocketWidget.removeTranslationId, "Click to remove")
     add(ButtonWidget.leftTranslationId, "Previous Page")
     add(ButtonWidget.rightTranslationId, "Next Page")
+    add(PageTurningWidget.leftTranslationId, "Previous Page")
+    add(PageTurningWidget.rightTranslationId, "Next Page")
 
     add(REVEALING, "Revealing")
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")

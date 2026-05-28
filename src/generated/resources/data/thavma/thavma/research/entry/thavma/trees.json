@@ -1,7 +1,7 @@
 {
   "category": "thavma:thavma",
   "children": [
-    "thavma:thavma/research_table"
+    "thavma:thavma/research_proficiency"
   ],
   "defaultKnown": false,
   "defaultResearchState": [
@@ -30,8 +30,8 @@
   },
   "pageFeatures": [],
   "position": [
-    0,
-    -3
+    -2,
+    -4
   ],
   "preferX": false,
   "title": {

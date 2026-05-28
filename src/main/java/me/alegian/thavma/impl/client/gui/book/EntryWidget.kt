@@ -61,11 +61,11 @@ class EntryWidget(
   private val pos = entry.value().position
 
   override fun getX(): Int {
-    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX / (300 / (tab.average + 1))) / tab.zoomFactor() + screen.width / 2).toInt()
+    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX / (300 / (tab.average * 1.5 + 10))) / tab.zoomFactor() + screen.width / 2).toInt()
   }
 
   override fun getY(): Int {
-    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY / (300 / (tab.average + 1))) / tab.zoomFactor() + screen.height / 2).toInt()
+    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY / (300 / (tab.average * 1.5 + 10))) / tab.zoomFactor() + screen.height / 2).toInt()
   }
 
   override fun getWidth(): Int {
@@ -91,8 +91,8 @@ class EntryWidget(
       translateXY(screen.width / 2, screen.height / 2)
       scaleXY(1 / tab.zoomFactor())
       translateXY(
-        -tab.scrollX / (300 / (tab.average + 10)),
-        -tab.scrollY / (300 / (tab.average + 10))
+        -tab.scrollX / (300 / (tab.average * 1.5 + 10)),
+        -tab.scrollY / (300 / (tab.average * 1.5 + 10))
       )
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
@@ -103,11 +103,14 @@ class EntryWidget(
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
-        val dv = child.value().position - pos
+        val dvx = child.value().position.x - pos.x
+        val dvy = child.value().position.y - pos.y
+        val knowsChild = ClientHelper.player()?.knowsResearch(child) ?: false
         guiGraphics.usePose {
-          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.value().preferX, false)
+          renderConnectionRecursive(dvx, dvy, guiGraphics, child.value().preferX, false, player, entry, knowsChild)
         }
       }
+      guiGraphics.flush()
       RenderSystem.enableCull()
     }
     guiGraphics.disableCrop()
@@ -136,15 +139,21 @@ class EntryWidget(
     var alpha = 1f
     if (!knowsResearch) brightness = 0.55f
     if (!knowsResearch) alpha = (abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f)
-    RenderSystem.setShaderColor(brightness, brightness, brightness, alpha)
+    //RenderSystem.setShaderColor(brightness, brightness, brightness, alpha)
 
     renderGridElement(
       guiGraphics,
       1f,
       1f,
       TEXTURE.location,
-      false
+      false,
+      player,
+      knowsResearch
     )
+
+    RenderSystem.enableBlend()
+    RenderSystem.defaultBlendFunc()
+    guiGraphics.setColor(brightness, brightness, brightness, alpha)
 
     guiGraphics.usePose {
       scaleXY(1f / CELL_SIZE) // back to pixel space
@@ -152,7 +161,9 @@ class EntryWidget(
       guiGraphics.renderItem(entry.value().icon, -8, -8)
     }
 
-    resetRenderSystemColor()
+    guiGraphics.setColor(1f, 1f, 1f, 1f)
+    RenderSystem.disableBlend()
+    //resetRenderSystemColor()
   }
 
   override fun playDownSound(handler: SoundManager) {

@@ -1,7 +1,12 @@
 {
   "category": "thavma:thavma",
-  "children": [],
-  "defaultKnown": false,
+  "children": [
+    "thavma:thavma/wands",
+    "thavma:thavma/technology",
+    "thavma:thavma/alchemy",
+    "thavma:thavma/infusion"
+  ],
+  "defaultKnown": true,
   "defaultResearchState": [
     {
       "aspect": "thavma:aether",

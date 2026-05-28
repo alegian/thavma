@@ -33,7 +33,7 @@
     2,
     -4
   ],
-  "preferX": false,
+  "preferX": true,
   "title": {
     "color": "yellow",
     "translate": "research/entry.thavma.thavma.ores"

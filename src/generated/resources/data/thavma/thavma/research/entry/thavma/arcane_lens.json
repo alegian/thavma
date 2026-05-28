@@ -3,7 +3,7 @@
   "children": [
     "thavma:thavma/research_table"
   ],
-  "defaultKnown": false,
+  "defaultKnown": true,
   "defaultResearchState": [
     {
       "aspect": "thavma:lux",
@@ -36,7 +36,34 @@
     "count": 1,
     "id": "thavma:arcane_lens"
   },
-  "pageFeatures": [],
+  "pageFeatures": [
+    {
+      "type": "thavma:title",
+      "starts_page": true,
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.thavma.arcane_lens.title_feature0"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.arcane_lens.paragraph_feature0"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.arcane_lens.paragraph_feature1"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.arcane_lens.paragraph_feature2"
+      }
+    }
+  ],
   "position": [
     2,
     -2

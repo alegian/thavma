@@ -133,50 +133,70 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature(false, false))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image", 180, 101, 180, 101), true, false, false, 1, ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC))
+          .addPageFeature(
+            makeFigureFeature(
+              Texture("gui/images/important_image", 180, 101, 180, 101),
+              true,
+              false,
+              false,
+              1,
+              ChatFormatting.DARK_AQUA,
+              ChatFormatting.ITALIC
+            )
+          )
           .addPageFeature(makeTitleFeature(false))
           .addPageFeature(makeParagraphFeature(true))
           .addPageFeature(makeTitleFeature(true, false))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image2", 87, 77, 87, 77), false, false, true, 5))
+          .addPageFeature(
+            makeFigureFeature(
+              Texture("gui/images/important_image2", 87, 77, 87, 77),
+              false,
+              false,
+              true,
+              5
+            )
+          )
           .addPageFeature(makeParagraphFeature(false, true, 5))
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
           .defaultKnown()
           .addChild(ResearchEntries.Story.TEST2)
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Story.TEST2, Vector2i(0,3), false, Items.FISHING_ROD.defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Story.TEST2, Vector2i(0, 3), false, Items.FISHING_ROD.defaultInstance)
           .research()
           .addPageFeature(makeParagraphFeature())
           //.defaultKnown()
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -5), false, T7Items.BOOK.get().defaultInstance)
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-          .addPage(simpleTextPage(3, true))
-          .addPage(simpleTextPage(1, false))
-          //.addChild(ResearchEntries.Thavma.TREES)
-          //.addChild(ResearchEntries.Thavma.ORES)
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature(true))
+          //.addPage(simpleTextPage(3, true))
+          //.addPage(simpleTextPage(1, false))
+          .addChild(ResearchEntries.Thavma.TREES)
+          .addChild(ResearchEntries.Thavma.ORES)
           .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
           ResearchEntries.Thavma.TREES,
-          Vector2i(0, -3),
+          Vector2i(-2, -4),
           false,
           T7Blocks.GREATWOOD_LOG.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.HERBA), lockedAspect(2, 4, Aspects.HERBA))
-          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
+          .addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
           .build(ctx)
 
         ResearchEntryBuilder(
           ResearchEntries.Thavma.ORES,
           Vector2i(2, -4),
-          false,
+          true,
           T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
@@ -190,8 +210,13 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.ARCANE_LENS.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .defaultKnown()
+          //.addPage(simpleTextPage(3, true))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-          .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -202,20 +227,22 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
           .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
-          //.addChild(ResearchEntries.Thavma.WANDS)
-          //.addChild(ResearchEntries.Thavma.TECHNOLOGY)
-          //.addChild(ResearchEntries.Thavma.ALCHEMY)
-          //.addChild(ResearchEntries.Thavma.INFUSION)
+          .addChild(ResearchEntries.Thavma.WANDS)
+          .addChild(ResearchEntries.Thavma.TECHNOLOGY)
+          .addChild(ResearchEntries.Thavma.ALCHEMY)
+          .addChild(ResearchEntries.Thavma.INFUSION)
           //.addChild(ResearchEntries.Thavma.RESEARCH_PROFICIENCY)
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
           ResearchEntries.Thavma.RESEARCH_PROFICIENCY,
-          Vector2i(-1, -1),
+          Vector2i(-2, -2),
           false,
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
+          .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .defaultKnown()
           .build(ctx)
 

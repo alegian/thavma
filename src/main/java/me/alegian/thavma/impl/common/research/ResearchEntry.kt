@@ -32,7 +32,7 @@ class ResearchEntry(
     val defaultKnown: Boolean
 ) {
   override fun toString(): String {
-    return "Entry ${title.string} in ${this.category}"
+    return "Entry ${title.string} in ${this.category.value().title}"
   }
 
   fun parents(level: Level) =

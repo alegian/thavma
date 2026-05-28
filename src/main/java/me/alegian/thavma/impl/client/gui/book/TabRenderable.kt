@@ -51,8 +51,8 @@ class TabRenderable(
   val average = (dimensionY + dimensionX) / 2
 
   fun drag(x: Double, y: Double) {
-    val rawScrollX = scrollX - zoomFactor() * x * 1200 / (average * 7 + 50)
-    val rawScrollY = scrollY - zoomFactor() * y * 1200 / (average * 7 + 50)
+    val rawScrollX = scrollX - zoomFactor() * x * 1200 / (average * 10 + 50)
+    val rawScrollY = scrollY - zoomFactor() * y * 1200 / (average * 10 + 50)
 
     scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
     scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)

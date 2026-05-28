@@ -1,6 +1,9 @@
 {
   "category": "thavma:thavma",
-  "children": [],
+  "children": [
+    "thavma:thavma/trees",
+    "thavma:thavma/ores"
+  ],
   "defaultKnown": true,
   "defaultResearchState": [
     {
@@ -26,10 +29,44 @@
     "count": 1,
     "id": "thavma:book"
   },
-  "pageFeatures": [],
+  "pageFeatures": [
+    {
+      "type": "thavma:title",
+      "starts_page": true,
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.thavma.thavma.title_feature0"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.paragraph_feature0"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.paragraph_feature1"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.paragraph_feature2"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "starts_page": true,
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.paragraph_feature3"
+      }
+    }
+  ],
   "position": [
     0,
-    -6
+    -5
   ],
   "preferX": false,
   "title": {

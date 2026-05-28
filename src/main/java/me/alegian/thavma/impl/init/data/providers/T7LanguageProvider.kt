@@ -412,46 +412,76 @@ Never gonna tell a lie and hurt you
     addEntry(ResearchEntries.Story.TEST2, "I will not be denied")
     addParagraphFeature(ResearchEntries.Story.TEST2, 0, "When faced with setback, we must challenge our assumptions.")
 
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 0,
-      "Thavma",
-      """
+    addTitleFeature(ResearchEntries.Thavma.THAVMA, 0, "Thavma")
+    addParagraphFeature(ResearchEntries.Thavma.THAVMA, 0, """
         I was merely toying with that wand -if it can even be called that- when this tome
         flew into my hands! I can sense great power within it.
-      """,
-      """
+      """)
+    addParagraphFeature(ResearchEntries.Thavma.THAVMA, 1, """
         The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
-      """,
-      """
+      """)
+    addParagraphFeature(ResearchEntries.Thavma.THAVMA, 2, """
         To read them, I will first need to break that seal. It won't be easy... but
         I have a feeling it will be worth my efforts.
-      """
-    )
-
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 1,
-      null,
-      """
+      """)
+    addParagraphFeature(ResearchEntries.Thavma.THAVMA, 3, """
         I will document all my findings inside the book, so that I can recall them later.
-      """
-    )
+      """)
 
-    addTextPage(
-      ResearchEntries.Thavma.ARCANE_LENS, 0,
-      "The Arcane Lens",
-      """
+//    addTextPage(
+//      ResearchEntries.Thavma.THAVMA, 0,
+//      "Thavma",
+//      """
+//        I was merely toying with that wand -if it can even be called that- when this tome
+//        flew into my hands! I can sense great power within it.
+//      """,
+//      """
+//        The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
+//      """,
+//      """
+//        To read them, I will first need to break that seal. It won't be easy... but
+//        I have a feeling it will be worth my efforts.
+//      """
+//    )
+
+//    addTextPage(
+//      ResearchEntries.Thavma.THAVMA, 1,
+//      null,
+//      """
+//        I will document all my findings inside the book, so that I can recall them later.
+//      """
+//    )
+
+    addTitleFeature(ResearchEntries.Thavma.ARCANE_LENS,0,"The Arcane Lens")
+    addParagraphFeature(ResearchEntries.Thavma.ARCANE_LENS, 0, """
         The part of the book I can read describes an arcane tool that "allows the user
         to see", whatever that might mean. I have a feeling that crafting it could assist
         my work in unsealing the other pages.
-      """,
-      """
+      """)
+    addParagraphFeature(ResearchEntries.Thavma.ARCANE_LENS, 1, """
         The blueprint describes a hexagonal device, much like a prism,
         made with those colorful crystals I found lying in a cave.
-      """,
-      """
+      """)
+    addParagraphFeature(ResearchEntries.Thavma.ARCANE_LENS, 2, """
         I should look at the world through its lens, maybe it will uncover something useful.
-      """
-    )
+      """)
+
+//    addTextPage(
+//      ResearchEntries.Thavma.ARCANE_LENS, 0,
+//      "The Arcane Lens",
+//      """
+//        The part of the book I can read describes an arcane tool that "allows the user
+//        to see", whatever that might mean. I have a feeling that crafting it could assist
+//        my work in unsealing the other pages.
+//      """,
+//      """
+//        The blueprint describes a hexagonal device, much like a prism,
+//        made with those colorful crystals I found lying in a cave.
+//      """,
+//      """
+//        I should look at the world through its lens, maybe it will uncover something useful.
+//      """
+//    )
 
     add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")

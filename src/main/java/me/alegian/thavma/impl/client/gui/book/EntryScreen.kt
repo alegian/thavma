@@ -18,6 +18,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
 
   override fun init() {
     super.init()
+    clearWidgets()
 
     LayoutExtensions.currScreen = this
     Row({
@@ -43,13 +44,9 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                 height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
               }) {
                 afterLayout {
-
                   addRenderableWidget(PageTurningWidget(position, false) {
-                    // reinitiate the screen for this research entry when clicked
-                    // with an updated page
-                    // clearWidgets() is essential, also clears underline formatting!
+                    // rerender the screen for the new page(s)
                     currentPage -= 2
-                    clearWidgets()
                     init()
                   })
                 }
@@ -68,11 +65,8 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
               }) {
                 afterLayout {
                   addRenderableWidget(PageTurningWidget(position, true) {
-                    // reinitiate the screen for this research entry when clicked
-                    // with an updated page
-                    // clearWidgets() is essential, also clears underline formatting!
+                    // rerender the screen for the new page(s)
                     currentPage += 2
-                    clearWidgets()
                     init()
                   })
                 }

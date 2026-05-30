@@ -87,9 +87,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
-        val dv = child.value().position - pos
+        val dvx = child.value().position.x - pos.x
+        val dvy = child.value().position.y - pos.y
         guiGraphics.usePose {
-          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.value().preferX, false)
+          renderConnectionRecursive(dvx, dvy, guiGraphics, child.value().preferX, false)
         }
       }
       RenderSystem.enableCull()

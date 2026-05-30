@@ -135,7 +135,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .build(ctx)
 
         ResearchEntryBuilder(
-          ResearchEntries.Story.TEST,
+          ResearchEntries.Story.STORY1,
           Vector2i(0, -3),
           false,
           Items.TURTLE_HELMET.defaultInstance

@@ -6,7 +6,6 @@ import me.alegian.thavma.impl.client.gui.book.PageTurningWidget
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
-import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.research_table.SocketWidget
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
@@ -101,12 +100,9 @@ import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.ORIC
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
-import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.item.crafting.RecipeType
@@ -278,24 +274,24 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
     addCategory(ResearchCategories.STORY, "???")
-    addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
+    addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
 
     addTextPage(
-      ResearchEntries.Story.TEST, 0,
+      ResearchEntries.Story.STORY1, 0,
       "A Courtesy Call 1",
       "Lorem ipsum %s 1 sit amet,",
       "this story a great meaning haveth."
     )
 
     addTextPage(
-      ResearchEntries.Story.TEST, 1,
+      ResearchEntries.Story.STORY1, 1,
       "A Courtesy Call 2",
       "Lorem dolor 2 sit amet,",
       "this story a great meaning haveth."
     )
 
     addTextPage(
-      ResearchEntries.Story.TEST, 2,
+      ResearchEntries.Story.STORY1, 2,
       "A Courtesy Call 3",
       "Lorem lotrumatum dolor 3 sit amet,",
       "this story a great meaning haveth."

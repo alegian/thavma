@@ -7,4 +7,5 @@ import net.minecraft.resources.ResourceKey
 object ResearchCategories {
   val THAVMA = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("thavma"))
   val ALCHEMY = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("alchemy"))
+  val STORY = ResourceKey.create(T7DatapackRegistries.RESEARCH_CATEGORY, rl("story"))
 }

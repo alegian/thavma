@@ -91,11 +91,17 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
     event.registerItem(WandItemExtensions(), wand)
 
   event.registerItem(ArcaneLensItemExtensions(), T7Items.ARCANE_LENS.get())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())), T7Blocks.ARCANE_WORKBENCH.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())),
+    T7Blocks.ARCANE_WORKBENCH.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(MatrixBE())), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PillarBE())), T7Blocks.PILLAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PedestalBE())), T7Blocks.PEDESTAL.get().asItem())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())), T7Blocks.HUNGRY_CHEST.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())),
+    T7Blocks.HUNGRY_CHEST.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(SealingJarBEWLR), T7Blocks.SEALING_JAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(NodeJarBEWLR), T7Items.NODE_JAR.get())
 }

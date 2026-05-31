@@ -35,7 +35,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
                 guiGraphics.drawString(Minecraft.getInstance().font, line)
                 translateXY(0, LINE_HEIGHT)
               }
-              translateXY(0, LINE_HEIGHT)
+              translateXY(0, LINE_HEIGHT * 2 / 3)
             }
           }
         }

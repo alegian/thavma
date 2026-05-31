@@ -14,10 +14,11 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
 
-  private val currentPage = 0
+  private var currentPage = 0
 
   override fun init() {
     super.init()
+    clearWidgets()
 
     LayoutExtensions.currScreen = this
     Row({
@@ -37,16 +38,48 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage))
+            if (currentPage != 0) {
+              Box({
+                width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
+                height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
+              }) {
+                afterLayout {
+                  addRenderableWidget(PageTurningWidget(position, false) {
+                    // rerender the screen for the new page(s)
+                    turnPage(false)
+                  })
+                }
+              }
+            }
           }
 
           Row({
             size = grow()
           }) {
             initPage(entry.value().pages.getOrNull(currentPage + 1))
+            if (entry.value().pages.getOrNull(currentPage + 2) != null) {
+              Box({
+                width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
+                height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+              }) {
+                afterLayout {
+                  addRenderableWidget(PageTurningWidget(position, true) {
+                    // rerender the screen for the new page(s)
+                    turnPage(true)
+                  })
+                }
+              }
+            }
           }
         }
       }
     }
+  }
+
+  fun turnPage(right: Boolean){
+    if (right) currentPage += 2
+    else currentPage -= 2
+    init()
   }
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

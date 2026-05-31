@@ -46,8 +46,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                 afterLayout {
                   addRenderableWidget(PageTurningWidget(position, false) {
                     // rerender the screen for the new page(s)
-                    currentPage -= 2
-                    init()
+                    turnPage(false)
                   })
                 }
               }
@@ -66,8 +65,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                 afterLayout {
                   addRenderableWidget(PageTurningWidget(position, true) {
                     // rerender the screen for the new page(s)
-                    currentPage += 2
-                    init()
+                    turnPage(true)
                   })
                 }
               }
@@ -76,6 +74,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
         }
       }
     }
+  }
+
+  fun turnPage(right: Boolean){
+    if (right) currentPage += 2
+    else currentPage -= 2
+    init()
   }
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

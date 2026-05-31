@@ -48,8 +48,8 @@ class PageTurningWidget(position: Vec2, private val pointsRight: Boolean, privat
   }
 
   companion object {
-    val LEFT_TEXTURE = Texture("gui/book/alpha_arrows4best", 36, 22, 36, 22)
-    val RIGHT_TEXTURE = Texture("gui/book/omega_arrows2best", 36, 22, 36, 22)
+    val LEFT_TEXTURE = Texture("gui/book/page_turner_left", 41, 20, 41, 20)
+    val RIGHT_TEXTURE = Texture("gui/book/page_turner_right", 41, 20, 41, 20)
     private val namespace = ".page_turning_widget"
     val leftTranslationId = "book$namespace.left"
     val rightTranslationId = "book$namespace.right"

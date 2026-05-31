@@ -15,7 +15,7 @@ fun GuiGraphics.usePose(block: PoseStack.() -> Unit) {
 }
 
 fun GuiGraphics.drawCenteredString(font: Font, text: Component, centerX: Float, color: Int = 0) {
-  drawString(font, text, (centerX - font.width(text) / 2f).toInt(), 0, color, false)
+  drawString(font, text, (centerX - font.width(text.visualOrderText) / 2f).toInt(), 0, color, false)
 }
 
 fun GuiGraphics.drawCenteredString(font: Font, text: FormattedCharSequence, centerX: Float, color: Int = 0) {

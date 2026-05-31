@@ -52,7 +52,7 @@ fun relativeRenderable(renderable: Renderable) {
   }
 }
 
-fun relativeCenteredRenderable(renderable: Renderable, maxWidth: Int, texture: Texture) {
+inline fun relativeCenteredRenderable(renderable: Renderable, maxWidth: Int, texture: Texture) {
   val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   afterLayout {
     screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->

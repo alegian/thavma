@@ -12,8 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister
 
 object PageTypes {
   val REGISTRAR = DeferredRegister.create(T7Registries.PAGE_TYPE.key(), Thavma.MODID)
-
   val TEXT = REGISTRAR.register("text") { -> PageType<TextPage>(rl("text"), TextPage.CODEC) }
   val CRAFTING = REGISTRAR.register("crafting") { -> PageType<CraftingPage>(rl("crafting"), CraftingPage.CODEC) }
-  //val DYNAMIC = REGISTRAR.register("dynamic") { -> PageType<DynamicPage>(rl("dynamic"), DynamicPage.CODEC) }
 }

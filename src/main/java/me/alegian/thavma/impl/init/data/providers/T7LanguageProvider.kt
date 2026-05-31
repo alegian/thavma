@@ -276,134 +276,45 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
 
-    addTextPage(
-      ResearchEntries.Story.TEST, 0,
-      "A Courtesy Call 1",
-      "Lorem ipsum %s 1 sit amet,",
-      "this story a great meaning haveth."
-    )
-
-    addTextPage(
-      ResearchEntries.Story.TEST, 1,
-      "A Courtesy Call 2",
-      "Lorem dolor 2 sit amet,",
-      "this story a great meaning haveth.",
-      ""
-    )
-
-    addTextPage(
-      ResearchEntries.Story.TEST, 2,
-      "A Courtesy Call 3",
-      "Lorem lotrumatum dolor 3 sit amet,",
-      "this story a great meaning haveth."
-    )
-
     addTitleFeature(ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
     addParagraphFeature(
       ResearchEntries.Story.TEST, 0, """
-      As fate would have it, this paragraph will probably not start a page because it does not
-      have the mustStartPage flag set to true, which is actually rather a worrisome tragedy.
-      Somebody had better do something about it soon.
+      This is a sample paragraph that does not start a page.
     """
     )
     addParagraphFeature(
       ResearchEntries.Story.TEST, 1, """
-      This is an experiment simply due to the fact that I am testing out double-trim-indent behaviour!
-      If this fails and I am left to contemplate my existence in the bottomless abyss that my mind is, 
-      I will be making phone calls real fast real soon.
-      (I got my Karen haircut done yesterday so while you mongrels crawl about,
-      I will bee the queen out of every damn bastard who makes me think badly of me, myself included.)
+      Another paragraph just to make the content on the page stretch out a little longer.
+      Possible double trimIndent() in the LanguageProvider does not cause any trouble. 
     """.trimIndent()
     )
     addFigureFeature(
       ResearchEntries.Story.TEST, 0, """
-We're no strangers to love
-You know the rules and so do I
-A full commitment's what I'm thinking of
-You wouldn't get this from any other guy
-I just wanna tell you how I'm feeling
-Gotta make you understand
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-We've known each other for so long
-Your heart's been aching, but you're too shy to say it
-Inside, we both know what's been going on
-We know the game, and we're gonna play it
-And if you ask me how I'm feeling
-Don't tell me you're too blind to see
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Ooh (Give you up)
-Ooh-ooh (Give you up)
-Ooh (Never gonna give, never gonna give)
-Give you up
-Ooh-ooh (Never gonna give, never gonna give)
-Give you up
-We've known each other for so long
-Your heart's been aching, but you're too shy to say it
-Inside, we both know what's been going on
-We know the game, and we're gonna play it
-I just wanna tell you how I'm feeling
-Gotta make you understand
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
-Never gonna give you up
-Never gonna let you down
-Never gonna run around and desert you
-Never gonna make you cry
-Never gonna say goodbye
-Never gonna tell a lie and hurt you
+What follows is generic lorem ipsum so the text looks natural.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
+Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
+sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
     addTitleFeature(ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
     addParagraphFeature(
       ResearchEntries.Story.TEST, 2, """
-      On the other hand, this paragraph should start a new page always. It has the mustStartPage property set to true :3
+      This paragraph should start a new page always. It has the mustStartPage property set to true.
     """.trimIndent()
     )
     addTitleFeature(ResearchEntries.Story.TEST, 2, "(start of page)")
-    addTitleFeature(ResearchEntries.Story.TEST, 3, """
-      this is page number 1! Surprise! Even though this Title is added as the 
-      fourth one in the DataPackBuiltinEntriesProvider and LanguageProvider
-      after a ton of paragraphs and titles and figures etc., 
-      it has a preferred page index 0!
-    """.trimIndent())
+    addTitleFeature(
+      ResearchEntries.Story.TEST, 3, """
+      This is page number 1!
+    """.trimIndent()
+    )
     addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
-    addParagraphFeature(ResearchEntries.Story.TEST, 4, """
-            And BAM! smack that paragraph right in the middle without it 
-            being an image caption! (Both the image and this have a 
-            preferred page index set to 5 -> always page number 6)
-    """.trimIndent())
+    addParagraphFeature(
+      ResearchEntries.Story.TEST, 4, """
+            This paragraph is inserted into the middle without it 
+            being an image caption (pre-set page number)
+    """.trimIndent()
+    )
 
     addTextPage(
       ResearchEntries.Thavma.THAVMA, 0,

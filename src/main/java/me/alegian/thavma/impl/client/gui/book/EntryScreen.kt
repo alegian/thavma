@@ -47,17 +47,22 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
         }) {
           Row({
             size = grow()
-          }) {
-            initPageFeatures(pages.getOrNull(currentPage))
+          }) {Column({
+            size = grow()
+            gap = 4
+          }){
+            val features = pages.getOrNull(currentPage)
+            if (features != null) {
+              for (feature in features)
+                initPageFeature(feature)
+            }
             if (currentPage != 0) {
               Box({
                 width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
                 height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
               }) {
                 afterLayout {
-
-                  //addRenderableWidget(PageTurningWidget(position, false) {
-                  addRenderableWidget(PageTurningWidget(Vec2(position.x - maxWidth + 40, position.y + maxHeight + 30), false) {
+                  addRenderableWidget(PageTurningWidget(Vec2(25f, 245f), false) {
                     // reinitiate the screen for this research entry when clicked
                     // with an updated page
                     // clearWidgets() is essential, also clears underline formatting!
@@ -67,21 +72,27 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
                   })
                 }
               }
-            }
+            }}
           }
 
           Row({
             size = grow()
-          }) {
-            initPageFeatures(pages.getOrNull(currentPage + 1))
+          }) {Column({
+            size = grow()
+            gap = 4
+          }){
+            val features = pages.getOrNull(currentPage + 1)
+            if (features != null) {
+              for (feature in features)
+                initPageFeature(feature)
+            }
             if (pages.getOrNull(currentPage + 2) != null) {
               Box({
                 width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
                 height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
               }) {
                 afterLayout {
-
-                  addRenderableWidget(PageTurningWidget(Vec2(position.x - 10, position.y + maxHeight + 30), true) {
+                  addRenderableWidget(PageTurningWidget(Vec2(420f, 245f), true) {
                     // reinitiate the screen for this research entry when clicked
                     // with an updated page
                     // clearWidgets() is essential, also clears underline formatting!
@@ -91,7 +102,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
                   })
                 }
               }
-            }
+            }}
           }
         }
       }
@@ -109,10 +120,11 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
     renderer.initPage(this, page)
   }
 
-  private fun initPageFeatures(features: List<PageFeature>?) {
-    if (features != null) {
-      val renderer = DynamicFeaturesRenderer
-      renderer.initPageFeatures(this, features, maxWidth, fontify, scale)
+  // wrapper around... unchecked cast
+  private fun <T : PageFeature?> initPageFeature(feature: T) {
+    if (feature != null) {
+      val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
+      renderer.initPageFeature(this, feature, maxWidth, fontify, scale)
     }
   }
 

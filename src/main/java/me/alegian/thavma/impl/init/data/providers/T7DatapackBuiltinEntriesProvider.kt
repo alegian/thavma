@@ -140,17 +140,14 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature(false, false))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image", 180, 101, 180, 101), true, false, false, 1, ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC))
+          .addPageFeature(makeFigureFeature(Texture("gui/images/haybales", 180, 101, 180, 101), true, false, false, 1, ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC))
           .addPageFeature(makeTitleFeature(false))
           .addPageFeature(makeParagraphFeature(true))
           .addPageFeature(makeTitleFeature(true, false))
           .addPageFeature(makeTitleFeature(true, true, 0))
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/important_image2", 87, 77, 87, 77), false, false, true, 5))
+          .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false, false, true, 5))
           .addPageFeature(makeParagraphFeature(false, true, 5))
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
-//            .addPage(simpleTextPage(2, true))
           .defaultKnown()
           .build(ctx)
 
@@ -414,7 +411,7 @@ private fun makeRecipeFeature(
   mustOccupySetPage: Boolean = true,
   preferredPageIndex: Int = 1
 ): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
-  return { entryKey, titleIndex ->
+  return { _, _ ->
     RecipeFeature(
       recipeRL, coversOneWholePage, mustStartPage, mustOccupySetPage,
       preferredPageIndex

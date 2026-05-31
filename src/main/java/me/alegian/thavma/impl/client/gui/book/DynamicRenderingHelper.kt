@@ -1,12 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
-import me.alegian.thavma.config.Config
-import me.alegian.thavma.impl.common.book.FigureFeature
-import me.alegian.thavma.impl.common.book.FormattedTextFeature
-import me.alegian.thavma.impl.common.book.PageFeature
-import me.alegian.thavma.impl.common.book.ParagraphFeature
-import me.alegian.thavma.impl.common.book.RecipeFeature
-import me.alegian.thavma.impl.common.book.TitleFeature
+import me.alegian.thavma.impl.common.book.*
 import net.minecraft.client.gui.Font
 import net.minecraft.util.Mth.ceil
 import net.minecraft.util.Mth.floor
@@ -38,17 +32,9 @@ fun spliceParagraphOrFigure(
   currentHeight: Int, maxPageWidth: Int, font: Font, scale: Float
 ): List<PageFeature> {
   val result = mutableListOf<PageFeature>()
-  println("maxHeight is $maxPageHeight, pageWidth is $maxPageWidth, processing page feature $input, current height is $currentHeight")
-
   if (input is ParagraphFeature) {
-    // how many lines fit in the current page
-    val lineHeight = ceil((font.lineHeight  * scale + 2)) //* Config.FONT_SIZE_MULTIPLIER.get()
-    println("lineheight is $lineHeight")
-
-    // so that we get at least 2 lines at the end of the first page
+    val lineHeight = ceil((font.lineHeight  * scale + 2))
     val linesRemainingAtStart: Int = (maxPageHeight - currentHeight) / lineHeight
-    println("lines remaining until end of page are $linesRemainingAtStart")
-
 
     // so that we get at least 2 lines at the start of the last page
     // (making use of rounding down when dividing integers)
@@ -58,23 +44,20 @@ fun spliceParagraphOrFigure(
         font,
         scale
       ) - linesRemainingAtStart * lineHeight) / maxPageHeight * maxPageHeight / lineHeight
-    println("number of lines covering whole pages is $numOfLinesCoveringFullPages")
+
     var linesCroppingOutAtEnd: Int =
       (input.renderedHeight(
         maxPageWidth,
         font,
         scale
       ) - linesRemainingAtStart * lineHeight - numOfLinesCoveringFullPages * lineHeight) / lineHeight
+
     if (linesCroppingOutAtEnd < 0) linesCroppingOutAtEnd = 0
-    println("number of lines cropping out at end are $linesCroppingOutAtEnd")
+
     val maxLinesPerPage = maxPageHeight / lineHeight
-    println("max lines per page is $maxLinesPerPage")
     val numOfFullPagesCovered = numOfLinesCoveringFullPages / maxLinesPerPage
-    println("number of full pages is $numOfFullPagesCovered")
     val lines = font.split(input.text, (maxPageWidth/scale).toInt())
-    println("the text was split into this number of lines: ${lines.size}")
     val realLinesRemaining: Int = min(linesRemainingAtStart, lines.size)
-    println("given the length of the text, this many lines are at the start: ${realLinesRemaining}")
 
     when {
       lines.size <= linesRemainingAtStart && currentHeight + lineHeight * lines.size <= maxPageHeight -> result += FormattedTextFeature(
@@ -122,7 +105,6 @@ fun spliceParagraphOrFigure(
         }
 
         currentHeight + textureHeight <= maxPageHeight -> {
-          //result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
           result += this
           result.addAll(
             spliceParagraphOrFigure(
@@ -136,7 +118,6 @@ fun spliceParagraphOrFigure(
 
         else -> {
           result += FormattedTextFeature(listOf())
-          //result += FigureFeature(image, null, input.mustStartPage, input.mustOccupySetPage, input.preferredPageIndex)
           result += this
           result.addAll(
             spliceParagraphOrFigure(
@@ -161,27 +142,17 @@ fun spliceParagraphOrFigure(
  *  Features in the same list belong together on one page.
  */
 fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, font: Font, scale: Float): List<List<PageFeature>> {
-  println("maxHeight is $maxHeight, pageWidth is $pageWidth")
   val partition = features.partition { !it.mustOccupySetPage }
   val pages = mutableListOf<List<PageFeature>>()
   val buffer = mutableListOf<PageFeature>()
   fun currentHeight() = buffer.sumOf { it.renderedHeight(pageWidth, font, scale) }
   fun submitBufferAndClear() {
     pages.add(buffer.toList())
-    println("===== Just submitted from buffer =====")
-    buffer.forEach { println(it) }
     buffer.clear()
   }
 
-  println("The list of features contains:")
-  for (i in features) println(i)
-  println("Divided into partitions of length ${partition.first.size} and ${partition.second.size}")
-  println(partition.first)
-  println(partition.second)
-
   // deal with elements without predetermined order (bulk of the logic)
   for (feature in partition.first) {
-    println("Processing feature $feature in initial pagifyFeatures(), current height ${currentHeight()}")
     with(feature) {
       when {
         (this !is ParagraphFeature && this !is FigureFeature) && renderedHeight(
@@ -206,7 +177,6 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
         mustStartPage -> {
           if (buffer.isNotEmpty()) submitBufferAndClear()
           if (this is ParagraphFeature || this is FigureFeature) {
-            println("Currently have this in the result: $pages")
             val processed = spliceParagraphOrFigure(this, maxHeight, currentHeight(), pageWidth, font, scale)
             if (processed.size < 2) buffer += processed.first()
             // only need to check this much since buffer is empty (starts page)
@@ -299,16 +269,9 @@ fun pagifyFeatures(features: List<PageFeature>, maxHeight: Int, pageWidth: Int, 
   // add anything left over in the buffer
   if (buffer.isNotEmpty()) submitBufferAndClear()
 
-  println("current state of pages before adding predetermined stuff is")
-  for (i in pages) println(i)
-
   // finally add features with pre-determined positions (cannot be long paragraphs)
   // these features have to be ordered correctly in the Research Entry builder
-  println("The grouping of the second partition is ${partition.second.groupBy { it.preferredPageIndex }}")
   partition.second.groupBy { it.preferredPageIndex }.forEach { pages.add(it.key, it.value) }
-
-  println("the final state of pages is")
-  for (i in pages) println(i)
 
   return pages
 }

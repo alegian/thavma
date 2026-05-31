@@ -10,6 +10,5 @@ import net.neoforged.fml.event.IModBusEvent
 class RegisterPageRenderersEvent : Event(), IModBusEvent {
   fun <T : Page> register(pageType: PageType<T>, pageRenderer: PageRenderer<T>) {
     PAGE_RENDERERS[pageType] = pageRenderer
-
   }
 }

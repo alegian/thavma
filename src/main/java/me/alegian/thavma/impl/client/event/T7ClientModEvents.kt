@@ -6,8 +6,11 @@ import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
 import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
-import me.alegian.thavma.impl.client.gui.book.DynamicFeaturesRenderer
+import me.alegian.thavma.impl.client.gui.book.FigureFeatureRenderer
+import me.alegian.thavma.impl.client.gui.book.FormattedTextFeatureRenderer
+import me.alegian.thavma.impl.client.gui.book.ParagraphFeatureRenderer
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
+import me.alegian.thavma.impl.client.gui.book.TitleFeatureRenderer
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
@@ -43,6 +46,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun clientSetup(event: FMLClientSetupEvent) {
   ModLoader.postEvent(RegisterPageRenderersEvent())
+  ModLoader.postEvent(RegisterPageFeatureRenderersEvent())
   ItemProperties.register(T7Items.RESEARCH_SCROLL.get(), T7ItemProperties.COMPLETED) { stack, level, entity, seed ->
     val completed = stack.get(T7DataComponents.RESEARCH_STATE)?.completed ?: false
     if (completed) 1f else 0f
@@ -92,11 +96,17 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
     event.registerItem(WandItemExtensions(), wand)
 
   event.registerItem(ArcaneLensItemExtensions(), T7Items.ARCANE_LENS.get())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())), T7Blocks.ARCANE_WORKBENCH.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())),
+    T7Blocks.ARCANE_WORKBENCH.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(MatrixBE())), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PillarBE())), T7Blocks.PILLAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PedestalBE())), T7Blocks.PEDESTAL.get().asItem())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())), T7Blocks.HUNGRY_CHEST.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())),
+    T7Blocks.HUNGRY_CHEST.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(SealingJarBEWLR), T7Blocks.SEALING_JAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(NodeJarBEWLR), T7Items.NODE_JAR.get())
 }
@@ -220,8 +230,11 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
 }
 
-private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent){
-  event.register(DynamicFeaturesRenderer)
+private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent) {
+  event.register(PageFeatureTypes.PARAGRAPH.get(), ParagraphFeatureRenderer)
+  event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
+  event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
+  event.register(PageFeatureTypes.FORMATTED.get(), FormattedTextFeatureRenderer)
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {

@@ -1,14 +1,12 @@
 package me.alegian.thavma.impl.common.book
 
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
+import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.util.FormattedCharSequence
 
-/**
- * Is only ever used in EntryScreen.kt to break ParagraphFeatures into segments
- * so that they fit in their respective pages
- */
-
-class FormattedTextFeature(val text: List<FormattedCharSequence>, val isTitle: Boolean = false) : PageFeature {
+class FormattedTextFeature(val text: List<FormattedCharSequence>) : PageFeature {
   override val coversOneWholePage: Boolean
     get() = false
   override val mustStartPage: Boolean
@@ -17,21 +15,23 @@ class FormattedTextFeature(val text: List<FormattedCharSequence>, val isTitle: B
     get() = false
 
   override val type: PageFeatureType<*>
-    get() = PageFeatureTypes.PARAGRAPH.get()
+    get() = PageFeatureTypes.FORMATTED.get()
 
   override fun toString(): String {
     return "FormattedTextFeature with number of lines ${text.size}"
   }
 
-  //val font: Font = Minecraft.getInstance().font
-  //val DEFAULT_FONT = ResourceLocation.fromNamespaceAndPath("thavma","font:default.ttf")
-  //val x: Font? = null
-
-
-  // if a recalibrated font size is used, I can multiply or divide by rendering scaling factor
-  //val LINE_HEIGHT = font.lineHeight + 2
-  //val LINE_HEIGHT = 11
-  //val lines = font.splitter.splitLines(text, pageWidth - 25, Style.EMPTY)
-
-  //override val renderedHeight = LINE_HEIGHT * text.size + LINE_HEIGHT * 2 / 3
+  companion object {
+    // this thing bypasses the nonexistent native CODEC for FormattedCharSequence
+    // which we don't even need
+    val CODEC: MapCodec<FormattedTextFeature> = RecordCodecBuilder.mapCodec { instance ->
+      instance.group(
+        ComponentSerialization.CODEC.listOf().fieldOf("text").forGetter { _ ->
+          emptyList()
+        }
+      ).apply(instance) { components ->
+        FormattedTextFeature(components.map { it.visualOrderText })
+      }
+    }
+  }
 }

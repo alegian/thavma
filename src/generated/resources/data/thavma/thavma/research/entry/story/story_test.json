@@ -39,7 +39,7 @@
         "canvas_height": 101,
         "canvas_width": 180,
         "height": 101,
-        "location": "thavma:textures/gui/images/important_image.png",
+        "location": "thavma:textures/gui/images/haybales.png",
         "width": 180
       }
     },
@@ -88,7 +88,7 @@
         "canvas_height": 77,
         "canvas_width": 87,
         "height": 77,
-        "location": "thavma:textures/gui/images/important_image2.png",
+        "location": "thavma:textures/gui/images/smileyface.png",
         "width": 87
       },
       "preferred_page": 5

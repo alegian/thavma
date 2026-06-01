@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.drawString
-import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
@@ -52,19 +51,6 @@ fun relativeRenderable(renderable: Renderable) {
   }
 }
 
-inline fun relativeCenteredRenderable(renderable: Renderable, maxWidth: Int, texture: Texture) {
-  val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
-  afterLayout {
-    screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
-      guiGraphics.usePose {
-        translateXY(position.x + (maxWidth - texture.width)/2, position.y)
-        renderable.render(guiGraphics, mouseX, mouseY, partialTick)
-      }
-    })
-  }
-}
-
-
 fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
   Row({
     width = fixed(texture.width)
@@ -74,14 +60,23 @@ fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
     children()
   }
 
-fun CenteredTextureBox(texture: Texture, maxWidth: Int ,children: T7LayoutElement.() -> Unit) =
+fun CenteredTextureBox(texture: Texture, maxWidth: Int, children: T7LayoutElement.() -> Unit) {
+  val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   Row({
     width = fixed(texture.width)
     height = fixed(texture.height)
   }) {
-    relativeCenteredRenderable(renderableTexture(texture), maxWidth, texture)
+    afterLayout {
+      screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
+        guiGraphics.usePose {
+          translateXY(position.x + (maxWidth - texture.width) / 2, position.y)
+          renderableTexture(texture).render(guiGraphics, mouseX, mouseY, partialTick)
+        }
+      })
+    }
     children()
   }
+}
 
 private fun T7LayoutElement.slotSetup(slot: Slot) {
   if (slot !is DynamicSlot<*>) return

@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
 import me.alegian.thavma.impl.client.gui.book.FigureFeatureRenderer
 import me.alegian.thavma.impl.client.gui.book.FormattedTextFeatureRenderer
 import me.alegian.thavma.impl.client.gui.book.ParagraphFeatureRenderer
+import me.alegian.thavma.impl.client.gui.book.RecipeFeatureRenderer
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
 import me.alegian.thavma.impl.client.gui.book.TitleFeatureRenderer
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
@@ -235,6 +236,7 @@ private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEven
   event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
   event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
   event.register(PageFeatureTypes.FORMATTED.get(), FormattedTextFeatureRenderer)
+  event.register(PageFeatureTypes.RECIPE.get(), RecipeFeatureRenderer)
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {

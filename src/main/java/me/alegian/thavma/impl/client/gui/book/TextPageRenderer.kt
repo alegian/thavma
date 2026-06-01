@@ -7,11 +7,9 @@ import me.alegian.thavma.impl.client.util.drawString
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.TextPage
-import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
-import net.minecraft.util.FormattedCharSequence
 
 object TextPageRenderer : PageRenderer<TextPage> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)

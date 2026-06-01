@@ -12,7 +12,6 @@ import net.minecraft.client.gui.Font
 import net.minecraft.util.Mth.ceil
 
 object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
-
   override fun initPageFeature(
     screen: EntryScreen,
     feature: ParagraphFeature,

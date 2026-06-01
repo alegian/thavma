@@ -8,7 +8,6 @@ import me.alegian.thavma.impl.common.book.FigureFeature
 import net.minecraft.client.gui.Font
 
 object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
-
   override fun initPageFeature(
     screen: EntryScreen,
     feature: FigureFeature,

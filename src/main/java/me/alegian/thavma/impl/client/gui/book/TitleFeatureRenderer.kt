@@ -10,7 +10,6 @@ import net.minecraft.client.gui.Font
 import net.minecraft.util.Mth.ceil
 
 object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
-
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
   override fun initPageFeature(

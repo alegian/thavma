@@ -34,13 +34,14 @@ class ResearchEntry(
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
       val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)
-      registry.holders().filter { e -> e.value().children.map{it.value()}.contains(this) }.toList()
+      registry.holders().filter { e -> e.value().children.map { it.value() }.contains(this) }.toList()
     }
 
   companion object {
     val CODEC: Codec<ResearchEntry> = RecordCodecBuilder.create {
       it.group(
-        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_CATEGORY, ResearchCategory.CODEC).fieldOf("category").forGetter(ResearchEntry::category),
+        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_CATEGORY, ResearchCategory.CODEC).fieldOf("category")
+          .forGetter(ResearchEntry::category),
         T7ExtraCodecs.VECTOR2I.fieldOf("position").forGetter(ResearchEntry::position),
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
         RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_ENTRY, CODEC).listOf().fieldOf("children").forGetter(ResearchEntry::children),
@@ -52,7 +53,8 @@ class ResearchEntry(
       ).apply(it, ::ResearchEntry)
     }
 
-    fun translationId(entryKey: ResourceKey<ResearchEntry>) = Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
+    fun translationId(entryKey: ResourceKey<ResearchEntry>) =
+      Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
 
     val TOAST_TRANSLATION = "research." + Thavma.MODID + ".toast"
     val SCROLL_GIVEN_TRANSLATION = "research." + Thavma.MODID + ".scroll_given"

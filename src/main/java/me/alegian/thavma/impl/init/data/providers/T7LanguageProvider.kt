@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.T7KeyMappings
+import me.alegian.thavma.impl.client.gui.book.PageTurningWidget
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.research_table.AspectWidget
 import me.alegian.thavma.impl.client.gui.research_table.ButtonWidget
@@ -253,6 +254,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(SocketWidget.removeTranslationId, "Click to remove")
     add(ButtonWidget.leftTranslationId, "Previous Page")
     add(ButtonWidget.rightTranslationId, "Next Page")
+    add(PageTurningWidget.leftTranslationId, "Previous Page")
+    add(PageTurningWidget.rightTranslationId, "Next Page")
 
     add(REVEALING, "Revealing")
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")
@@ -274,43 +277,43 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
     addCategory(ResearchCategories.STORY, "???")
-    addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
+    addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
 
-    addTitleFeature(ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
+    addTitleFeature(ResearchEntries.Story.STORY1, 0, "A courtesy call starts the page")
     addParagraphFeature(
-      ResearchEntries.Story.TEST, 0, """
+      ResearchEntries.Story.STORY1, 0, """
       This is a sample paragraph that does not start a page.
     """
     )
     addParagraphFeature(
-      ResearchEntries.Story.TEST, 1, """
+      ResearchEntries.Story.STORY1, 1, """
       Another paragraph just to make the content on the page stretch out a little longer.
       Possible double trimIndent() in the LanguageProvider does not cause any trouble. 
     """.trimIndent()
     )
     addFigureFeature(
-      ResearchEntries.Story.TEST, 0, """
+      ResearchEntries.Story.STORY1, 0, """
 What follows is generic lorem ipsum so the text looks natural.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
 Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
 sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
-    addTitleFeature(ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
+    addTitleFeature(ResearchEntries.Story.STORY1, 1, "This title might appear in the middle")
     addParagraphFeature(
-      ResearchEntries.Story.TEST, 2, """
+      ResearchEntries.Story.STORY1, 2, """
       This paragraph should start a new page always. It has the mustStartPage property set to true.
     """.trimIndent()
     )
-    addTitleFeature(ResearchEntries.Story.TEST, 2, "(start of page)")
+    addTitleFeature(ResearchEntries.Story.STORY1, 2, "(start of page)")
     addTitleFeature(
-      ResearchEntries.Story.TEST, 3, """
+      ResearchEntries.Story.STORY1, 3, """
       This is page number 1!
     """.trimIndent()
     )
-    addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
+    addParagraphFeature(ResearchEntries.Story.STORY1, 3, "Just another random little paragraph :D")
     addParagraphFeature(
-      ResearchEntries.Story.TEST, 4, """
+      ResearchEntries.Story.STORY1, 4, """
             This paragraph is inserted into the middle without it 
             being an image caption (pre-set page number)
     """.trimIndent()

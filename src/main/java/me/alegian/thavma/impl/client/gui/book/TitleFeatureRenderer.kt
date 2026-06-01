@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.TitleFeature
 import net.minecraft.client.gui.Font
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.util.Mth.ceil
 
 object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
@@ -40,14 +41,16 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
       width = grow()
       height = fixed(ceil((font.lineHeight * scale + 2)) * lines.size)
     }) {
-      relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.pose().scale(scale, scale, 1.0f)
-        guiGraphics.usePose {
-          for ((index, line) in lines.withIndex()) {
-            guiGraphics.drawCenteredString(
-              font, line, size.x / scale / 2
-            )
-            if (index != lines.size - 1) translateXY(0, ceil((font.lineHeight * scale + 2)) / scale)
+      relativeRenderable {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.pose().scale(scale, scale, 1.0f)
+          guiGraphics.usePose {
+            for ((index, line) in lines.withIndex()) {
+              guiGraphics.drawCenteredString(
+                font, line, size.x / scale / 2
+              )
+              if (index != lines.size - 1) translateXY(0, ceil((font.lineHeight * scale + 2)) / scale)
+            }
           }
         }
       }

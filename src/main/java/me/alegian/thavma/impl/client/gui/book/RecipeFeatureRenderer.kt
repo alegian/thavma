@@ -7,6 +7,7 @@ import me.alegian.thavma.impl.common.book.RecipeFeature
 import me.alegian.thavma.impl.common.recipe.translationId
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -41,8 +42,10 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
     Row({
       height = fixed(font.lineHeight)
     }) {
-      relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+      relativeRenderable {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+        }
       }
     }
   }

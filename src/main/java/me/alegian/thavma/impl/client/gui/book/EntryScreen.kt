@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.Minecraft
@@ -22,7 +21,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private var maxWidth = BG.width / 2 - 65
   private var maxHeight = BG.height - 90
 
-  private val scale = 1.75f
+  private val scale = 1f
 
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
   var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify, scale)
@@ -38,36 +37,28 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
       align = Alignment.CENTER
     }) {
       TextureBox(BG) {
-        Row({
+        Column({
           size = grow()
-          paddingTop = 32
-          paddingX = 32
-          paddingBottom = 42
-          gap = 48
+          gap = 8
         }) {
+          PageTurnerRow()
+
           Row({
             size = grow()
+            paddingX = 32
+            paddingBottom = 42
+            gap = 48
           }) {
-            Column({
+            Row({
               size = grow()
-              gap = 4
             }) {
-              val features = pages.getOrNull(currentPage)
-              if (features != null) {
-                for (feature in features)
-                  initPageFeature(feature)
-              }
-              if (currentPage != 0) {
-                Box({
-                  width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
-                  height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
-                }) {
-                  afterLayout {
-                    addRenderableWidget(PageTurningWidget(position, false) {
-                      // rerender the screen for the new page(s)
-                      turnPage(false)
-                    })
-                  }
+              Column({
+                size = grow()
+                gap = 4
+              }) {
+                val features = pages.getOrNull(currentPage)
+                if (features != null) {
+                  for (feature in features) initPageFeature(feature)
                 }
               }
             }
@@ -81,24 +72,44 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
               }) {
                 val features = pages.getOrNull(currentPage + 1)
                 if (features != null) {
-                  for (feature in features)
-                    initPageFeature(feature)
-                }
-                if (pages.getOrNull(currentPage + 2) != null) {
-                  Box({
-                    width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
-                    height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
-                  }) {
-                    afterLayout {
-                      addRenderableWidget(PageTurningWidget(position, true) {
-                        // rerender the screen for the new page(s)
-                        turnPage(true)
-                      })
-                    }
-                  }
+                  for (feature in features) initPageFeature(feature)
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+
+  private fun PageTurnerRow() {
+    Row({
+      width = grow()
+    }) {
+      if (currentPage != 0) {
+        Box({
+          width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
+          height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
+        }) {
+          afterLayout {
+            addRenderableWidget(PageTurningWidget(position, false) {
+              // rerender the screen for the new page(s)
+              turnPage(false)
+            })
+          }
+        }
+      }
+      Box({ width = grow() }) {}
+      if (pages.getOrNull(currentPage + 2) != null) {
+        Box({
+          width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
+          height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+        }) {
+          afterLayout {
+            addRenderableWidget(PageTurningWidget(position, true) {
+              // rerender the screen for the new page(s)
+              turnPage(true)
+            })
           }
         }
       }
@@ -113,13 +124,6 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
 
   override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     renderTransparentBackground(guiGraphics)
-  }
-
-  // wrapper around unchecked cast
-  private fun <T : Page?> initPage(page: T) {
-    if (page == null) return
-    val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
-    renderer.initPage(this, page)
   }
 
   // wrapper around... unchecked cast

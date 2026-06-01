@@ -9,6 +9,7 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.ParagraphFeature
 import net.minecraft.client.gui.Font
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.util.Mth.ceil
 
 object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
@@ -26,14 +27,16 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
       width = grow()
       height = fixed(LINE_HEIGHT * (lines.size + 0.5f))
     }) {
-      relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.pose().scale(scale, scale, 1.0f)
-        guiGraphics.usePose {
-          for (line in font.split(feature.text, (maxWidth / scale).toInt())) {
-            guiGraphics.drawString(font, line)
-            translateXY(0, LINE_HEIGHT / scale)
+      relativeRenderable {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.pose().scale(scale, scale, 1.0f)
+          guiGraphics.usePose {
+            for (line in font.split(feature.text, (maxWidth / scale).toInt())) {
+              guiGraphics.drawString(font, line)
+              translateXY(0, LINE_HEIGHT / scale)
+            }
+            translateXY(0, LINE_HEIGHT * 2 / 3)
           }
-          translateXY(0, LINE_HEIGHT * 2 / 3)
         }
       }
     }

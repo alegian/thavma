@@ -68,6 +68,7 @@ private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.MATRIX.get()) { _ -> MatrixBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PILLAR.get()) { _ -> PillarBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PEDESTAL.get()) { _ -> PedestalBER() }
+  event.registerBlockEntityRenderer(T7BlockEntities.HOLE.get()) { _ -> HoleBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.HUNGRY_CHEST.get()) { ctx -> HungryChestBER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.FANCY_ITEM.get()) { ctx -> FancyItemER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.ANGRY_ZOMBIE.get()) { ctx -> AngryZombieER(ctx) }

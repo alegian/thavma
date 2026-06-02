@@ -99,6 +99,8 @@ object T7Blocks {
 
   val HUNGRY_CHEST = register("hungry_chest") { HungryChestBlock() }
 
+  val HOLE = register("hole") { HoleBlock() }
+
   private fun <T : Block> register(name: String, sup: Supplier<T>): DeferredBlock<T> {
     val block = REGISTRAR.register(name, sup)
     T7Items.REGISTRAR.registerSimpleBlockItem(name, block)

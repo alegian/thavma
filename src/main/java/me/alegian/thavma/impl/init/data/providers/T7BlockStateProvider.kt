@@ -22,6 +22,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLIN
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HOLE
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_DEEPSLATES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.INFUSED_STONES
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
@@ -50,7 +51,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) : BlockStateProvider(output, Thavma.MODID, exFileHelper) {
   override fun registerStatesAndModels() {
     simpleBlockWithItem(
-      CRUCIBLE.get(), this.models().getBuilder(CRUCIBLE.id.path)
+      CRUCIBLE.get(), models().getBuilder(CRUCIBLE.id.path)
         .parent(UncheckedModelFile("block/cauldron"))
         .texture("particle", rl("block/crucible_side"))
         .texture("top", rl("block/crucible_top"))
@@ -64,7 +65,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
 
     simpleBlockWithItem(
       ITEM_HATCH.get(), models()
-        .withExistingParent(name(ITEM_HATCH.get()), mcLoc("block/iron_trapdoor_top"))
+        .withExistingParent(ITEM_HATCH.id.path, mcLoc("block/iron_trapdoor_top"))
         .renderType(RenderType.cutout().name)
         .texture("texture", key(ITEM_HATCH.get()).withPrefix("block/"))
         .customLoader(WithTransformParentModel::Builder)
@@ -104,6 +105,9 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     sealingJar(T7Blocks.SEALING_JAR.get())
     horizontalBlockWithItem(TABLE.get(), models().getExistingFile(key(TABLE.get())))
     horizontalBlockWithItem(RESEARCH_TABLE.get(), models().getExistingFile(key(RESEARCH_TABLE.get())))
+
+    simpleBlock(HOLE.get(), models().getBuilder(HOLE.id.path).parent(UncheckedModelFile("block/air")))
+    itemModels().getBuilder(HOLE.id.path)
 
     simpleBlockWithItem(
       ARCANE_LEVITATOR.get(),
@@ -179,7 +183,7 @@ class T7BlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper)
     itemModels().withExistingParent(name(block), "item/chest").texture("particle", particle)
   }
 
-  fun sealingJar(block:Block){
+  fun sealingJar(block: Block) {
     simpleBlock(block, models().getExistingFile(key(block)))
     blockEntityItem1x1x1(block, blockTexture(block))
   }

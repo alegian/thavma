@@ -21,86 +21,16 @@ import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.*
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes.REVEALING
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_LEVITATOR
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ARCANE_WORKBENCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.AURA_NODE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRACKED_ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.CRUCIBLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_BRICKS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_SLAB
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ELEMENTAL_STONE_STAIRS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ETERNAL_FLAME
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LEAVES
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_LOG
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_PLANKS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SAPLING
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_SLAB
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.GREATWOOD_STAIRS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.HUNGRY_CHEST
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ITEM_HATCH
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.LEVITATOR_COLUMN
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.MATRIX
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.ORICHALCUM_BLOCK
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PEDESTAL
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.PILLAR
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.RESEARCH_TABLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SEALING_JAR
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LEAVES
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_LOG
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_PLANKS
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.SILVERWOOD_SAPLING
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.TABLE
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks.THAVMITE_BLOCK
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.APPRENTICE_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ARCANE_LENS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.BOOK
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.DAWN_CHARM
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.EYE_OF_WARDEN
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.FABRIC
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOGGLES_CURIO
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GOLD_PLATING
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.GREATWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.IRON_PLATING
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_INGOT
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ORICHALCUM_PLATING
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RESEARCH_SCROLL
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ROTTEN_BRAIN
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.RUNE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.SILVERWOOD_CORE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HAMMER
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_HOE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_INGOT
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_KATANA
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_NUGGET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PICKAXE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_PLATING
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SHOVEL
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_SWORD
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_BOOTS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_CHESTPLATE
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_HELMET
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_LEGGINGS
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.ZEPHYR
-import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.GREATWOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.SILVERWOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials.WOOD
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.GOLD
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.IRON
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.ORICHALCUM
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials.THAVMITE
+import me.alegian.thavma.impl.init.registries.deferred.Aspects
+import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
+import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
+import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
+import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
+import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
+import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
+import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
+import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -122,74 +52,74 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     add(Thavma.MODID, "Thavma")
 
-    add(IRON_PLATING.get(), "Iron Plating")
-    add(GOLD_PLATING.get(), "Gold Plating")
-    add(ORICHALCUM_PLATING.get(), "Orichalcum Plating")
-    add(THAVMITE_PLATING.get(), "Thavmite Plating")
+    add(T7Items.IRON_PLATING.get(), "Iron Plating")
+    add(T7Items.GOLD_PLATING.get(), "Gold Plating")
+    add(T7Items.ORICHALCUM_PLATING.get(), "Orichalcum Plating")
+    add(T7Items.THAVMITE_PLATING.get(), "Thavmite Plating")
 
-    add(EYE_OF_WARDEN.get(), "Eye of Warden")
-    add(ROTTEN_BRAIN.get(), "Rotten Brain")
-    add(FABRIC.get(), "Infused Fabric")
+    add(T7Items.EYE_OF_WARDEN.get(), "Eye of Warden")
+    add(T7Items.ROTTEN_BRAIN.get(), "Rotten Brain")
+    add(T7Items.FABRIC.get(), "Infused Fabric")
 
-    add(GREATWOOD_CORE.get(), "Greatwood Wand Core")
-    add(SILVERWOOD_CORE.get(), "Silverwood Wand Core")
+    add(T7Items.GREATWOOD_CORE.get(), "Greatwood Wand Core")
+    add(T7Items.SILVERWOOD_CORE.get(), "Silverwood Wand Core")
 
-    add(RUNE.get(), "Rune")
-    add(THAVMITE_INGOT.get(), "Thavmite Ingot")
-    add(THAVMITE_NUGGET.get(), "Thavmite Nugget")
-    add(ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
-    add(ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
-    add(RESEARCH_SCROLL.get(), "Research Scroll")
-    add(ARCANE_LENS.get(), "Arcane Lens")
-    add(BOOK.get(), "Elements")
+    add(T7Items.RUNE.get(), "Rune")
+    add(T7Items.THAVMITE_INGOT.get(), "Thavmite Ingot")
+    add(T7Items.THAVMITE_NUGGET.get(), "Thavmite Nugget")
+    add(T7Items.ORICHALCUM_INGOT.get(), "Orichalcum Ingot")
+    add(T7Items.ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
+    add(T7Items.RESEARCH_SCROLL.get(), "Research Scroll")
+    add(T7Items.ARCANE_LENS.get(), "Arcane Lens")
+    add(T7Items.BOOK.get(), "Elements")
 
     add(T7Items.BASIC_AMULET.get(), "Basic Amulet")
     add(T7Items.BASIC_BELT.get(), "Basic Belt")
     add(T7Items.BASIC_RING.get(), "Basic Ring")
 
-    add(GOGGLES.get(), "Goggles Of Revealing")
-    add(GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
-    add(DAWN_CHARM.get(), "Charm of the Dawn")
-    add(APPRENTICE_BOOTS.get(), "[WIP]Apprentice Boots")
-    add(APPRENTICE_CHESTPLATE.get(), "[WIP]Apprentice Robes")
-    add(APPRENTICE_LEGGINGS.get(), "[WIP]Apprentice Pants")
+    add(T7Items.GOGGLES.get(), "Goggles Of Revealing")
+    add(T7Items.GOGGLES_CURIO.get(), "Goggles Of Revealing (Curio)")
+    add(T7Items.DAWN_CHARM.get(), "Charm of the Dawn")
+    add(T7Items.APPRENTICE_BOOTS.get(), "[WIP]Apprentice Boots")
+    add(T7Items.APPRENTICE_CHESTPLATE.get(), "[WIP]Apprentice Robes")
+    add(T7Items.APPRENTICE_LEGGINGS.get(), "[WIP]Apprentice Pants")
 
-    add(THAVMITE_BOOTS.get(), "Thavmite Boots")
-    add(THAVMITE_HELMET.get(), "Thavmite Helmet")
-    add(THAVMITE_CHESTPLATE.get(), "Thavmite Chestplate")
-    add(THAVMITE_LEGGINGS.get(), "Thavmite Leggings")
+    add(T7Items.THAVMITE_BOOTS.get(), "Thavmite Boots")
+    add(T7Items.THAVMITE_HELMET.get(), "Thavmite Helmet")
+    add(T7Items.THAVMITE_CHESTPLATE.get(), "Thavmite Chestplate")
+    add(T7Items.THAVMITE_LEGGINGS.get(), "Thavmite Leggings")
 
-    add(THAVMITE_VANGUARD_BOOTS.get(), "[WIP]Thavmite Vanguard Boots")
-    add(THAVMITE_VANGUARD_HELMET.get(), "[WIP]Thavmite Vanguard Helmet")
-    add(THAVMITE_VANGUARD_CHESTPLATE.get(), "[WIP]Thavmite Vanguard Chestplate")
-    add(THAVMITE_VANGUARD_LEGGINGS.get(), "[WIP]Thavmite Vanguard Leggings")
+    add(T7Items.THAVMITE_VANGUARD_BOOTS.get(), "[WIP]Thavmite Vanguard Boots")
+    add(T7Items.THAVMITE_VANGUARD_HELMET.get(), "[WIP]Thavmite Vanguard Helmet")
+    add(T7Items.THAVMITE_VANGUARD_CHESTPLATE.get(), "[WIP]Thavmite Vanguard Chestplate")
+    add(T7Items.THAVMITE_VANGUARD_LEGGINGS.get(), "[WIP]Thavmite Vanguard Leggings")
 
     for ((aspect, shard) in T7Items.SHARDS)
       add(shard.get(), aspectTranslations[aspect]!! + " Shard")
 
-    add(THAVMITE_SWORD.get(), "Thavmite Sword")
+    add(T7Items.THAVMITE_SWORD.get(), "Thavmite Sword")
     add(T7Items.THAVMITE_AXE.get(), "Thavmite Axe")
-    add(THAVMITE_PICKAXE.get(), "Thavmite Pickaxe")
-    add(THAVMITE_HAMMER.get(), "Thavmite Hammer")
-    add(THAVMITE_SHOVEL.get(), "Thavmite Shovel")
-    add(THAVMITE_HOE.get(), "Thavmite Hoe")
-    add(THAVMITE_KATANA.get(), "[WIP]Thavmite Katana")
-    add(ZEPHYR.get(), "[WIP]Zephyr")
+    add(T7Items.THAVMITE_PICKAXE.get(), "Thavmite Pickaxe")
+    add(T7Items.THAVMITE_HAMMER.get(), "Thavmite Hammer")
+    add(T7Items.THAVMITE_SHOVEL.get(), "Thavmite Shovel")
+    add(T7Items.THAVMITE_HOE.get(), "Thavmite Hoe")
+    add(T7Items.THAVMITE_KATANA.get(), "[WIP]Thavmite Katana")
+    add(T7Items.ZEPHYR.get(), "[WIP]Zephyr")
     add(T7Items.AXE_OF_THE_FOREST.get(), "Axe of the Forest")
 
     val platingNames: MutableMap<WandPlatingMaterial, String> = HashMap()
-    platingNames[IRON.get()] = "Iron Plated"
-    platingNames[GOLD.get()] = "Gold Plated"
-    platingNames[ORICHALCUM.get()] = "Orichalcum Plated"
-    platingNames[THAVMITE.get()] = "Thavmite Plated"
+    platingNames[WandPlatingMaterials.IRON.get()] = "Iron Plated"
+    platingNames[WandPlatingMaterials.GOLD.get()] = "Gold Plated"
+    platingNames[WandPlatingMaterials.ORICHALCUM.get()] = "Orichalcum Plated"
+    platingNames[WandPlatingMaterials.THAVMITE.get()] = "Thavmite Plated"
 
     val coreNames: MutableMap<WandCoreMaterial, String> = HashMap()
-    coreNames[WOOD.get()] = "Wooden"
-    coreNames[GREATWOOD.get()] = "Greatwood"
-    coreNames[SILVERWOOD.get()] = "Silverwood"
+    coreNames[WandCoreMaterials.WOOD.get()] = "Wooden"
+    coreNames[WandCoreMaterials.GREATWOOD.get()] = "Greatwood"
+    coreNames[WandCoreMaterials.SILVERWOOD.get()] = "Silverwood"
 
     for ((pKey, pName) in platingNames) for ((cKey, cName) in coreNames) {
-      val wand = wandOrThrow(pKey, cKey)
+      val wand = T7Items.wandOrThrow(pKey, cKey)
       add(wand, "$pName $cName Wand")
     }
 
@@ -202,48 +132,49 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Items.FOCUS_EXCHANGE.get(), "Focus: Exchange")
     add(T7Items.FOCUS_LIGHTNING.get(), "[WIP]Focus: Lightning")
 
-    add(AURA_NODE.get(), "Aura Node")
-    add(CRUCIBLE.get(), "Crucible")
-    add(ARCANE_WORKBENCH.get(), "Arcane Workbench")
-    add(MATRIX.get(), "Infusion Matrix")
-    add(PILLAR.get(), "Infusion Pillar")
-    add(PEDESTAL.get(), "Infusion Pedestal")
-    add(RESEARCH_TABLE.get(), "Research Table")
-    add(TABLE.get(), "Table")
-    add(ITEM_HATCH.get(), "Item Hatch")
-    add(ELEMENTAL_STONE.get(), "Elemental Stone")
-    add(ELEMENTAL_STONE_STAIRS.get(), "Elemental Stone Stairs")
-    add(ELEMENTAL_STONE_SLAB.get(), "Elemental Stone Slab")
-    add(ELEMENTAL_CORE.get(), "Elemental Core")
-    add(CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
-    add(ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
+    add(T7Blocks.AURA_NODE.get(), "Aura Node")
+    add(T7Blocks.CRUCIBLE.get(), "Crucible")
+    add(T7Blocks.ARCANE_WORKBENCH.get(), "Arcane Workbench")
+    add(T7Blocks.MATRIX.get(), "Infusion Matrix")
+    add(T7Blocks.PILLAR.get(), "Infusion Pillar")
+    add(T7Blocks.PEDESTAL.get(), "Infusion Pedestal")
+    add(T7Blocks.RESEARCH_TABLE.get(), "Research Table")
+    add(T7Blocks.TABLE.get(), "Table")
+    add(T7Blocks.ITEM_HATCH.get(), "Item Hatch")
+    add(T7Blocks.ELEMENTAL_STONE.get(), "Elemental Stone")
+    add(T7Blocks.ELEMENTAL_STONE_STAIRS.get(), "Elemental Stone Stairs")
+    add(T7Blocks.ELEMENTAL_STONE_SLAB.get(), "Elemental Stone Slab")
+    add(T7Blocks.ELEMENTAL_CORE.get(), "Elemental Core")
+    add(T7Blocks.CRACKED_ELEMENTAL_STONE.get(), "Cracked Elemental Stone")
+    add(T7Blocks.ELEMENTAL_STONE_BRICKS.get(), "Elemental Stone Bricks")
 
-    add(ARCANE_LEVITATOR.get(), "Arcane Levitator")
-    add(LEVITATOR_COLUMN.get(), "Arcane Levitator Column")
+    add(T7Blocks.ARCANE_LEVITATOR.get(), "Arcane Levitator")
+    add(T7Blocks.LEVITATOR_COLUMN.get(), "Arcane Levitator Column")
 
     for ((aspect, infusedStone) in T7Blocks.INFUSED_STONES)
       add(infusedStone.get(), aspectTranslations[aspect]!! + " Infused Stone")
     for ((aspect, infusedDeepslate) in T7Blocks.INFUSED_DEEPSLATES)
       add(infusedDeepslate.get(), aspectTranslations[aspect]!! + " Infused Deepslate")
 
-    add(THAVMITE_BLOCK.get(), "Thavmite Block")
-    add(ORICHALCUM_BLOCK.get(), "Orichalcum Block")
+    add(T7Blocks.THAVMITE_BLOCK.get(), "Thavmite Block")
+    add(T7Blocks.ORICHALCUM_BLOCK.get(), "Orichalcum Block")
 
-    add(GREATWOOD_LOG.get(), "Greatwood Log")
-    add(GREATWOOD_LEAVES.get(), "Greatwood Leaves")
-    add(GREATWOOD_PLANKS.get(), "Greatwood Planks")
-    add(GREATWOOD_STAIRS.get(), "Greatwood Stairs")
-    add(GREATWOOD_SLAB.get(), "Greatwood Slab")
-    add(GREATWOOD_SAPLING.get(), "Greatwood Sapling")
-    add(SILVERWOOD_LOG.get(), "Silverwood Log")
-    add(SILVERWOOD_LEAVES.get(), "Silverwood Leaves")
-    add(SILVERWOOD_PLANKS.get(), "Silverwood Planks")
-    add(SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
+    add(T7Blocks.GREATWOOD_LOG.get(), "Greatwood Log")
+    add(T7Blocks.GREATWOOD_LEAVES.get(), "Greatwood Leaves")
+    add(T7Blocks.GREATWOOD_PLANKS.get(), "Greatwood Planks")
+    add(T7Blocks.GREATWOOD_STAIRS.get(), "Greatwood Stairs")
+    add(T7Blocks.GREATWOOD_SLAB.get(), "Greatwood Slab")
+    add(T7Blocks.GREATWOOD_SAPLING.get(), "Greatwood Sapling")
+    add(T7Blocks.SILVERWOOD_LOG.get(), "Silverwood Log")
+    add(T7Blocks.SILVERWOOD_LEAVES.get(), "Silverwood Leaves")
+    add(T7Blocks.SILVERWOOD_PLANKS.get(), "Silverwood Planks")
+    add(T7Blocks.SILVERWOOD_SAPLING.get(), "Silverwood Sapling")
 
-    add(SEALING_JAR.get(), "Sealing Jar")
+    add(T7Blocks.SEALING_JAR.get(), "Sealing Jar")
     add(T7Items.NODE_JAR.get(), "Node in a Jar")
-    add(ETERNAL_FLAME.get(), "Eternal Flame")
-    add(HUNGRY_CHEST.get(), "Hungry Chest")
+    add(T7Blocks.ETERNAL_FLAME.get(), "Eternal Flame")
+    add(T7Blocks.HUNGRY_CHEST.get(), "Hungry Chest")
+    add(T7Blocks.HOLE.get(), "Hole Block")
 
     add(WorkbenchBlock.CONTAINER_TITLE, "Arcane Workbench")
     add(HungryChestBlock.CONTAINER_TITLE, "Hungry Chest")
@@ -257,7 +188,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(PageTurningWidget.leftTranslationId, "Previous Page")
     add(PageTurningWidget.rightTranslationId, "Next Page")
 
-    add(REVEALING, "Revealing")
+    add(T7Attributes.REVEALING, "Revealing")
     add(T7EntityTypes.ANGRY_ZOMBIE.get(), "Angry Zombie")
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
 
@@ -360,7 +291,7 @@ sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet ni
       """
     )
 
-    add(RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
+    add(T7Items.RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
     add(ResearchEntry.SCROLL_GIVEN_TRANSLATION, "You have received a research scroll")
     add(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION, "You are missing required knowledge for this research")

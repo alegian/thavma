@@ -46,6 +46,7 @@ Good pick azanor ;-)
 - BlakeBr0 of Mystical Agriculture, I learnt the Item Particle effects for Infusion from their codebase
 - my friend thedarkcolour, for helping with KFF and mc-publish
 - BazZziliuS, for contributing the first Russian translation file
+- Tobias Korran, for collaborating in code
 
 ## License
 

@@ -30,7 +30,7 @@ class BookScreen : Screen(Component.literal("book")) {
     selectorOffset = cornerHeight + selectorGap
 
     val categoryRegistry = clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
-    currentCategory = categoryRegistry?.getOrThrow(ResearchCategories.THAVMA)
+    currentCategory = categoryRegistry?.getOrThrow(ResearchCategories.STORY)
     categoryRegistry?.forEach {
       tabs[it] = addRenderableOnly(TabRenderable(this))
     }

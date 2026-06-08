@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.gui.layer.PlayerNotifications
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
@@ -47,6 +48,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, false) {
                     // rerender the screen for the new page(s)
                     turnPage(false)
+                    PlayerNotifications.add("Error: wand not attuned", color = 0xFFFFFF, fontSize = 1.2f)
                   })
                 }
               }
@@ -66,6 +68,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, true) {
                     // rerender the screen for the new page(s)
                     turnPage(true)
+                    PlayerNotifications.add("Error: wand not attuned", color = 0xFFFFFF, fontSize = 1.2f)
                   })
                 }
               }

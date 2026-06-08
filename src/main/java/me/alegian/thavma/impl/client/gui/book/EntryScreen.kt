@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.Minecraft
@@ -10,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
-import net.minecraft.world.phys.Vec2
 
 class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
@@ -20,16 +18,17 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private var currentPage = 0
   private val fontify = Minecraft.getInstance().font
 
-  private var maxWidth = BG.width/2 - 65
+  private var maxWidth = BG.width / 2 - 65
   private var maxHeight = BG.height - 90
 
-  private val scale = 1.75f
+  private val scale = 1f
 
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
   var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify, scale)
 
   override fun init() {
     super.init()
+    clearWidgets()
 
     LayoutExtensions.currScreen = this
     Row({
@@ -38,86 +37,93 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
       align = Alignment.CENTER
     }) {
       TextureBox(BG) {
-        Row({
+        Column({
           size = grow()
-          paddingTop = 32
-          paddingX = 32
-          paddingBottom = 42
-          gap = 48
+          gap = 8
         }) {
-          Row({
-            size = grow()
-          }) {Column({
-            size = grow()
-            gap = 4
-          }){
-            val features = pages.getOrNull(currentPage)
-            if (features != null) {
-              for (feature in features)
-                initPageFeature(feature)
-            }
-            if (currentPage != 0) {
-              Box({
-                width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
-                height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
-              }) {
-                afterLayout {
-                  addRenderableWidget(PageTurningWidget(Vec2(25f, 245f), false) {
-                    // reinitiate the screen for this research entry when clicked
-                    // with an updated page
-                    // clearWidgets() is essential, also clears underline formatting!
-                    currentPage -= 2
-                    clearWidgets()
-                    init()
-                  })
-                }
-              }
-            }}
-          }
+          PageTurnerRow()
 
           Row({
             size = grow()
-          }) {Column({
-            size = grow()
-            gap = 4
-          }){
-            val features = pages.getOrNull(currentPage + 1)
-            if (features != null) {
-              for (feature in features)
-                initPageFeature(feature)
-            }
-            if (pages.getOrNull(currentPage + 2) != null) {
-              Box({
-                width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
-                height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+            paddingX = 32
+            paddingBottom = 42
+            gap = 48
+          }) {
+            Row({
+              size = grow()
+            }) {
+              Column({
+                size = grow()
+                gap = 4
               }) {
-                afterLayout {
-                  addRenderableWidget(PageTurningWidget(Vec2(420f, 245f), true) {
-                    // reinitiate the screen for this research entry when clicked
-                    // with an updated page
-                    // clearWidgets() is essential, also clears underline formatting!
-                    currentPage += 2
-                    clearWidgets()
-                    init()
-                  })
+                val features = pages.getOrNull(currentPage)
+                if (features != null) {
+                  for (feature in features) initPageFeature(feature)
                 }
               }
-            }}
+            }
+
+            Row({
+              size = grow()
+            }) {
+              Column({
+                size = grow()
+                gap = 4
+              }) {
+                val features = pages.getOrNull(currentPage + 1)
+                if (features != null) {
+                  for (feature in features) initPageFeature(feature)
+                }
+              }
+            }
           }
         }
       }
     }
   }
 
-  override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    renderTransparentBackground(guiGraphics)
+  private fun PageTurnerRow() {
+    Row({
+      width = grow()
+    }) {
+      if (currentPage != 0) {
+        Box({
+          width = fixed(PageTurningWidget.LEFT_TEXTURE.width)
+          height = fixed(PageTurningWidget.LEFT_TEXTURE.height)
+        }) {
+          afterLayout {
+            addRenderableWidget(PageTurningWidget(position, false) {
+              // rerender the screen for the new page(s)
+              turnPage(false)
+            })
+          }
+        }
+      }
+      Box({ width = grow() }) {}
+      if (pages.getOrNull(currentPage + 2) != null) {
+        Box({
+          width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
+          height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+        }) {
+          afterLayout {
+            addRenderableWidget(PageTurningWidget(position, true) {
+              // rerender the screen for the new page(s)
+              turnPage(true)
+            })
+          }
+        }
+      }
+    }
   }
 
-  // wrapper around unchecked cast
-  private fun <T : Page?> initPage(page: T) {
-    if (page == null) return
-    val renderer = PAGE_RENDERERS[page.type] as PageRenderer<T>
-    renderer.initPage(this, page)
+  fun turnPage(right: Boolean) {
+    if (right) currentPage += 2
+    else currentPage -= 2
+    init()
+  }
+
+  override fun renderBackground(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+    renderTransparentBackground(guiGraphics)
   }
 
   // wrapper around... unchecked cast

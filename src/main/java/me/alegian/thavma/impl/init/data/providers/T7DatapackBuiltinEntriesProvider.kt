@@ -111,7 +111,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
                     AddValue(LevelBasedValue.perLevel(2.0f)),
                     Optional.of(
                       DamageSourceCondition.hasDamageSource(
-                        DamageSourcePredicate.Builder.damageType().tag(TagPredicate.`is`(T7Tags.DamageTypes.SONIC))
+                        DamageSourcePredicate.Builder.damageType()
+                          .tag(TagPredicate.`is`(T7Tags.DamageTypes.SONIC))
                       ).build()
                     )
                   )
@@ -126,7 +127,12 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
-        ResearchEntryBuilder(ResearchEntries.Thavma.THAVMA, Vector2i(0, -6), false, T7Items.BOOK.get().defaultInstance)
+        ResearchEntryBuilder(
+          ResearchEntries.Thavma.THAVMA,
+          Vector2i(0, -6),
+          false,
+          T7Items.BOOK.get().defaultInstance
+        )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
           .addPage(simpleTextPage(3, true))
           .addPage(simpleTextPage(1, false))
@@ -135,7 +141,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .defaultKnown()
           .build(ctx)
 
-        ResearchEntryBuilder(ResearchEntries.Story.TEST, Vector2i(0, 0), false, Items.TURTLE_HELMET.defaultInstance)
+        ResearchEntryBuilder(ResearchEntries.Story.STORY1, Vector2i(0, 0), false, Items.TURTLE_HELMET.defaultInstance)
           .research()
           .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature(false, false))
@@ -219,7 +225,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           ResearchEntries.Thavma.WANDS,
           Vector2i(-2, 4),
           true,
-          T7Items.wandOrThrow(WandPlatingMaterials.THAVMITE.get(), WandCoreMaterials.SILVERWOOD.get()).defaultInstance
+          T7Items.wandOrThrow(
+            WandPlatingMaterials.THAVMITE.get(),
+            WandCoreMaterials.SILVERWOOD.get()
+          ).defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)

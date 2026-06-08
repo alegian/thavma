@@ -8,8 +8,8 @@ import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.TextPage
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 
 object TextPageRenderer : PageRenderer<TextPage> {
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
@@ -29,14 +29,16 @@ object TextPageRenderer : PageRenderer<TextPage> {
       Row({
         size = grow()
       }) {
-        relativeRenderable { guiGraphics, _, _, _ ->
-          guiGraphics.usePose {
-            for (paragraph in page.paragraphs) {
-              for (line in font.splitter.splitLines(paragraph, size.x.toInt(), Style.EMPTY)) {
-                guiGraphics.drawString(Minecraft.getInstance().font, Component.literal(line.string))
-                translateXY(0, LINE_HEIGHT)
+        relativeRenderable {
+          Renderable { guiGraphics, _, _, _ ->
+            guiGraphics.usePose {
+              for (paragraph in page.paragraphs) {
+                for (line in font.split(paragraph, size.x.toInt())) {
+                  guiGraphics.drawString(Minecraft.getInstance().font, line)
+                  translateXY(0, LINE_HEIGHT)
+                }
+                translateXY(0, LINE_HEIGHT * 2 / 3)
               }
-              translateXY(0, LINE_HEIGHT * 2 / 3)
             }
           }
         }
@@ -60,8 +62,10 @@ object TextPageRenderer : PageRenderer<TextPage> {
       width = grow()
       height = fixed(font.lineHeight)
     }) {
-      relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.drawCenteredString(font, text, size.x / 2)
+      relativeRenderable {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.drawCenteredString(font, text, size.x / 2)
+        }
       }
     }
   }

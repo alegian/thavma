@@ -27,7 +27,7 @@ object ResearchEntries {
   }
 
   object Story {
-      val TEST = register("story_test", ResearchCategories.STORY)
+      val STORY1 = register("story1", ResearchCategories.STORY)
   }
 }
 

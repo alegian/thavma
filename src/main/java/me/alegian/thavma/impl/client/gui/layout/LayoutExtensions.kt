@@ -39,13 +39,13 @@ private fun renderableTexture(texture: Texture) = Renderable { guiGraphics: GuiG
   RenderSystem.disableBlend()
 }
 
-fun relativeRenderable(renderable: Renderable) {
+fun relativeRenderable(getRenderable: T7LayoutElement.() -> Renderable) {
   val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   afterLayout {
     screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
       guiGraphics.usePose {
         translateXY(position.x, position.y)
-        renderable.render(guiGraphics, mouseX, mouseY, partialTick)
+        getRenderable(this@afterLayout).render(guiGraphics, mouseX, mouseY, partialTick)
       }
     })
   }
@@ -56,7 +56,7 @@ fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
     width = fixed(texture.width)
     height = fixed(texture.height)
   }) {
-    relativeRenderable(renderableTexture(texture))
+    relativeRenderable { renderableTexture(texture) }
     children()
   }
 
@@ -98,7 +98,7 @@ fun Slot(slot: Slot, texture: Texture? = null, slotSize: Int? = null) =
 fun <T> Grid(rows: Int, columns: Int, elements: List<T>, bgLayers: List<Texture> = listOf(), gapSize: Int = 0, child: (T) -> Unit) =
   Column({ gap = gapSize }) {
     for (layer in bgLayers)
-      relativeRenderable(renderableTexture(layer))
+      relativeRenderable{ renderableTexture(layer) }
 
     for (i in 0 until rows)
       Row({ gap = gapSize }) {

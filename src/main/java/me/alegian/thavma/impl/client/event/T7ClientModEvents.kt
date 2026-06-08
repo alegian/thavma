@@ -5,13 +5,7 @@ import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
-import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
-import me.alegian.thavma.impl.client.gui.book.FigureFeatureRenderer
-import me.alegian.thavma.impl.client.gui.book.FormattedTextFeatureRenderer
-import me.alegian.thavma.impl.client.gui.book.ParagraphFeatureRenderer
-import me.alegian.thavma.impl.client.gui.book.RecipeFeatureRenderer
-import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
-import me.alegian.thavma.impl.client.gui.book.TitleFeatureRenderer
+import me.alegian.thavma.impl.client.gui.book.*
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen

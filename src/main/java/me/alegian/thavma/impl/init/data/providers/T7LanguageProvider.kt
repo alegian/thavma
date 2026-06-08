@@ -10,10 +10,7 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
-import me.alegian.thavma.impl.common.book.FigureFeature
-import me.alegian.thavma.impl.common.book.ParagraphFeature
-import me.alegian.thavma.impl.common.book.TextPage
-import me.alegian.thavma.impl.common.book.TitleFeature
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -276,19 +273,22 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.TEST, "A Courtesy Call")
 
-    addTitleFeature(ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
-    addParagraphFeature(
+    addPageFeature(TITLE, ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
+    addPageFeature(
+      PARAGRAPH,
       ResearchEntries.Story.TEST, 0, """
       This is a sample paragraph that does not start a page.
     """
     )
-    addParagraphFeature(
+    addPageFeature(
+      PARAGRAPH,
       ResearchEntries.Story.TEST, 1, """
       Another paragraph just to make the content on the page stretch out a little longer.
       Possible double trimIndent() in the LanguageProvider does not cause any trouble. 
     """.trimIndent()
     )
-    addFigureFeature(
+    addPageFeature(
+      FIGURE,
       ResearchEntries.Story.TEST, 0, """
 What follows is generic lorem ipsum so the text looks natural.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
@@ -296,20 +296,23 @@ Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus n
 sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
-    addTitleFeature(ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
-    addParagraphFeature(
+    addPageFeature(TITLE, ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
+    addPageFeature(
+      PARAGRAPH,
       ResearchEntries.Story.TEST, 2, """
       This paragraph should start a new page always. It has the mustStartPage property set to true.
     """.trimIndent()
     )
-    addTitleFeature(ResearchEntries.Story.TEST, 2, "(start of page)")
-    addTitleFeature(
+    addPageFeature(TITLE, ResearchEntries.Story.TEST, 2, "(start of page)")
+    addPageFeature(
+      TITLE,
       ResearchEntries.Story.TEST, 3, """
       This is page number 1!
     """.trimIndent()
     )
-    addParagraphFeature(ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
-    addParagraphFeature(
+    addPageFeature(PARAGRAPH, ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
+    addPageFeature(
+      PARAGRAPH,
       ResearchEntries.Story.TEST, 4, """
             This paragraph is inserted into the middle without it 
             being an image caption (pre-set page number)
@@ -448,18 +451,20 @@ sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet ni
       )
   }
 
-  private fun addParagraphFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
+  private fun addPageFeature(identifier: Char, entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
     val baseId = ResearchEntry.translationId(entryKey)
-    add(ParagraphFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+    when (identifier) {
+      'P' -> add(ParagraphFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'T' -> add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'F' -> add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'R' -> add(RecipeFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+    }
   }
 
-  private fun addTitleFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
-    val baseId = ResearchEntry.translationId(entryKey)
-    add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
-  }
-
-  private fun addFigureFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
-    val baseId = ResearchEntry.translationId(entryKey)
-    add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+  companion object {
+    val PARAGRAPH = 'P'
+    val TITLE = 'T'
+    val FIGURE = 'F'
+    val RECIPE = 'R'
   }
 }

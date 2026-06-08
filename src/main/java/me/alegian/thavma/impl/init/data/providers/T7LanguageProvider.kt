@@ -11,27 +11,14 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
-import me.alegian.thavma.impl.common.book.FigureFeature
-import me.alegian.thavma.impl.common.book.ParagraphFeature
-import me.alegian.thavma.impl.common.book.RecipeFeature
-import me.alegian.thavma.impl.common.book.TextPage
-import me.alegian.thavma.impl.common.book.TitleFeature
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
-import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -211,47 +198,47 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
 
-    addPageFeature(TITLE, ResearchEntries.Story.TEST, 0, "A courtesy call starts the page")
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 0, "A courtesy call starts the page")
     addPageFeature(
       PARAGRAPH,
-      ResearchEntries.Story.TEST, 0, """
+      ResearchEntries.Story.STORY1, 0, """
       This is a sample paragraph that does not start a page.
     """
     )
     addPageFeature(
       PARAGRAPH,
-      ResearchEntries.Story.TEST, 1, """
+      ResearchEntries.Story.STORY1, 1, """
       Another paragraph just to make the content on the page stretch out a little longer.
       Possible double trimIndent() in the LanguageProvider does not cause any trouble. 
     """.trimIndent()
     )
     addPageFeature(
       FIGURE,
-      ResearchEntries.Story.TEST, 0, """
+      ResearchEntries.Story.STORY1, 0, """
 What follows is generic lorem ipsum so the text looks natural.
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
 Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
 sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
-    addPageFeature(TITLE, ResearchEntries.Story.TEST, 1, "This title might appear in the middle")
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 1, "This title might appear in the middle")
     addPageFeature(
       PARAGRAPH,
-      ResearchEntries.Story.TEST, 2, """
+      ResearchEntries.Story.STORY1, 2, """
       This paragraph should start a new page always. It has the mustStartPage property set to true.
     """.trimIndent()
     )
-    addPageFeature(TITLE, ResearchEntries.Story.TEST, 2, "(start of page)")
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 2, "(start of page)")
     addPageFeature(
       TITLE,
-      ResearchEntries.Story.TEST, 3, """
+      ResearchEntries.Story.STORY1, 3, """
       This is page number 1!
     """.trimIndent()
     )
-    addPageFeature(PARAGRAPH, ResearchEntries.Story.TEST, 3, "Just another random little paragraph :D")
+    addPageFeature(PARAGRAPH, ResearchEntries.Story.STORY1, 3, "Just another random little paragraph :D")
     addPageFeature(
       PARAGRAPH,
-      ResearchEntries.Story.TEST, 4, """
+      ResearchEntries.Story.STORY1, 4, """
             This paragraph is inserted into the middle without it 
             being an image caption (pre-set page number)
     """.trimIndent()

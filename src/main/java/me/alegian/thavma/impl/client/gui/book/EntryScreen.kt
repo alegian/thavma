@@ -5,6 +5,7 @@ import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
@@ -15,6 +16,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
 
+  val player = Minecraft.getInstance().player
   private var currentPage = 0
 
   override fun init() {
@@ -48,7 +50,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, false) {
                     // rerender the screen for the new page(s)
                     turnPage(false)
-                    PlayerNotifications.add("Error: wand not attuned", color = 0xFFFFFF, fontSize = 1.2f)
+                    if (player != null) PlayerNotifications.add(
+                      Component.literal("Error: wand not attuned"),
+                      color = 0xFFFFFF,
+                      scale = 1.2f,
+                      player = player
+                    )
                   })
                 }
               }
@@ -68,7 +75,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, true) {
                     // rerender the screen for the new page(s)
                     turnPage(true)
-                    PlayerNotifications.add("Error: wand not attuned", color = 0xFFFFFF, fontSize = 1.2f)
+                    if (player != null) PlayerNotifications.add(
+                      Component.literal("Error: wand not attuned"),
+                      color = 0xFFFFFF,
+                      scale = 1.2f,
+                      player = player
+                    )
                   })
                 }
               }

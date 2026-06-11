@@ -8,7 +8,8 @@ import me.alegian.thavma.impl.client.gui.WorkbenchScreen
 import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
 import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
-import me.alegian.thavma.impl.client.gui.layer.NotificationLayer
+import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer
+import me.alegian.thavma.impl.client.gui.layer.RegularNotifLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
 import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
@@ -52,7 +53,8 @@ private fun clientSetup(event: FMLClientSetupEvent) {
 private fun registerGuiLayers(event: RegisterGuiLayersEvent) {
   event.registerAboveAll(rl("vis"), WandLayer)
   event.registerAboveAll(rl("arcane_lens"), ArcaneLensLayer)
-  event.registerAboveAll(rl("player_notifications"), NotificationLayer::render)
+  event.registerAboveAll(rl("regular_notifications"), RegularNotifLayer::render)
+  event.registerAboveAll(rl("priority_notifications"), PriorityNotifLayer::render)
 }
 
 private fun registerEntityRenderers(event: RegisterRenderers) {

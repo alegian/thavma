@@ -11,12 +11,12 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PlayerNotifications {
 
-  const val MAX_VISIBLE_PLAIN = 5
-  const val MAX_VISIBLE_VOICE = 5
+  const val MAX_VISIBLE_REG = 20
+  const val MAX_VISIBLE_PRIO = 3
   const val FONT_SIZE = 0.35f
 
   data class Notification(
-    val isVoice: Boolean,
+    val isPriority: Boolean,
     val text: Component,
     val player: LocalPlayer,
     val image: ResourceLocation? = null,
@@ -28,7 +28,7 @@ object PlayerNotifications {
   private val queue = mutableListOf<Notification>()
 
   fun add(
-    isVoice: Boolean,
+    isPriority: Boolean,
     text: Component,
     player: LocalPlayer,
     image: ResourceLocation? = null,
@@ -36,7 +36,7 @@ object PlayerNotifications {
     scale: Float = FONT_SIZE
   ) {
     queue += Notification(
-      isVoice = isVoice,
+      isPriority = isPriority,
       text = text,
       player = player,
       image = image,
@@ -46,12 +46,12 @@ object PlayerNotifications {
     )
   }
 
-  /** Non-mutating read — NotificationLayer decides when to clear. */
+  /** Non-mutating read — RegularNotifLayer decides when to clear. */
   internal fun getForPlayer(player: Player): List<Notification> =
     queue.filter { it.player == player }
 
-  /** Called by NotificationLayer once the scroll-out animation completes. */
-  internal fun clearForPlayer(player: Player, isVoice: Boolean) {
-    queue.removeAll { it.player == player && it.isVoice == isVoice }
+  /** Called by RegularNotifLayer once the scroll-out animation completes. */
+  internal fun clearForPlayer(player: Player, isPriority: Boolean) {
+    queue.removeAll { it.player == player && it.isPriority == isPriority }
   }
 }

@@ -8,142 +8,229 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
-import kotlin.math.pow
 
 @OnlyIn(Dist.CLIENT)
 object NotificationLayer : LayeredDraw.Layer {
 
-  // Scroll animation: when new entries are pushed in, this offset springs from
-  // ROW_HEIGHT toward 0, making existing entries appear to slide upward smoothly.
-  private var scrollAnimation = 0f
-  private var queuedNotifs = 0
-  private var timestamp = 0L
+  // ── ① Fade-in ─────────────────────────────────────────────────────────────
+  // How long each notification takes to reach full alpha after being added.
+  // Per-notification: measured from Notification.addedTime, not batchStartTime.
+  // Lines are stationary during this phase.
+  private const val FADE_IN_PLAIN = 750L
+  private const val FADE_IN_VOICE = 750L
 
-  override fun render(
-    graphics: GuiGraphics,
-    deltaTracker: DeltaTracker
-  ) {
-    val width = graphics.guiWidth()
-    val height = graphics.guiHeight()
+  // ── ② Static hold ─────────────────────────────────────────────────────────
+  // After FADE_IN_DURATION_MS has elapsed from batchStartTime, all lines hold
+  // at full alpha for this long before anything moves.
+  // Scroll begins at: batchStartTime + FADE_IN_DURATION_MS + STATIC_DELAY_MS
+  private const val STATIC_DELAY_PLAIN = 2_000L
+  private const val STATIC_DELAY_VOICE = 2_000L
+
+  // ── ③ Scroll-out ──────────────────────────────────────────────────────────
+  // SCROLL_SPEED_PX_PER_MS: how fast all lines drift downward (px per ms).
+  // FADE_OUT_DISTANCE_PX:   screen pixels before the bottom edge where alpha
+  //                          begins dropping. Fade duration in ms ≈ distance / speed.
+  private const val SCROLL_SPEED_PX_PER_MS_PLAIN = 0.01f   // 60 px / second
+  private const val SCROLL_SPEED_PX_PER_MS_VOICE = 0.01f   // 60 px / second
+  private const val FADE_DISTANCE_PLAIN = 40f
+  private const val FADE_DISTANCE_VOICE = 40f
+
+  // How far above the screen's bottom edge lines initially rest (clears the hotbar).
+  private const val BOTTOM_MARGIN_PLAIN = 50f
+  private const val BOTTOM_MARGIN_VOICE = 50f
+
+  private var batchStartTimePlain = -1L
+  private var batchStartTimeVoice = -1L
+  private var globalScrollOffsetPlain = 0f
+  private var globalScrollOffsetVoice = 0f
+
+  override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val mc = Minecraft.getInstance()
-    val level = mc.level ?: return
     val player = mc.player ?: return
-    val currentTime = Util.getMillis()
+    val now = Util.getMillis()
 
-    val activeNotifs = PlayerNotifications.pollActive(currentTime, player)
-    if (activeNotifs.isEmpty()) return
+    val notifications = PlayerNotifications.getForPlayer(player)
 
-    val passedTime = (currentTime - timestamp).coerceIn(0L, 100L).toFloat()
-    timestamp = currentTime
+    if (notifications.isEmpty()) {
+      batchStartTimePlain = -1L
+      batchStartTimeVoice = -1L
+      globalScrollOffsetPlain = 0f
+      globalScrollOffsetVoice = 0f
+      return
+    }
+
+    // Latch batch start time once on first non-empty render
+    if (batchStartTimePlain < 0L) batchStartTimePlain = now
+    if (batchStartTimeVoice < 0L) batchStartTimeVoice = now
+
     val scaledWidth = mc.window.guiScaledWidth
     val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
+    val elapsedPlain = now - batchStartTimePlain
+    val elapsedVoice = now - batchStartTimeVoice
 
-    //tohle celý můžu hodit do toho foreachindexed
+    // ── Phase gate ────────────────────────────────────────────────────────
+    val inScrollPlain = elapsedPlain >= FADE_IN_PLAIN + STATIC_DELAY_PLAIN
+    val inScrollVoice = elapsedVoice >= FADE_IN_VOICE + STATIC_DELAY_VOICE
 
-    activeNotifs.mapIndexed { index, notif ->
-      index to font.split(
-        notif.text,
-        (scaledWidth.toFloat() / 3f / notif.scale).toInt()
-      )
-    }.forEach { PlayerNotifications.addFormatted(it.second, activeNotifs[it.first]) }
-    val activeListList = PlayerNotifications.pollActiveFormatted(currentTime, player)
-    val activeFlatList = activeListList.flatten()
-    val activeNumber = activeFlatList.size
+    globalScrollOffsetPlain = if (inScrollPlain)
+      (elapsedPlain - FADE_IN_PLAIN - STATIC_DELAY_PLAIN).toFloat() * SCROLL_SPEED_PX_PER_MS_PLAIN
+    else 0f
 
-    val ROW_HEIGHT = 8f * activeListList.first().first().scale  // screen-space pixels per notification row
+    globalScrollOffsetVoice = if (inScrollVoice)
+      (elapsedVoice - FADE_IN_VOICE - STATIC_DELAY_VOICE).toFloat() * SCROLL_SPEED_PX_PER_MS_VOICE
+    else 0f
 
-    // Pulse the scroll animation whenever the queue grows
-    if (activeNumber > queuedNotifs) {
-      scrollAnimation += ROW_HEIGHT * (activeNumber - queuedNotifs)
+    val partition = notifications.partition { it.isVoice }
+
+    // Split each notification into wrapped lines (rendering artifact, not stored)
+    // NEEDS SOME TWEAKING
+    val plainNotifs = partition.second
+      .take(PlayerNotifications.MAX_VISIBLE_PLAIN)
+      .map { n -> n to font.split(n.text, (scaledWidth / 3f / n.scale).toInt()).reversed() }
+
+    val voiceNotifs = partition.first
+      .take(PlayerNotifications.MAX_VISIBLE_VOICE)
+      .map { n -> n to font.split(n.text, (scaledWidth / 3f / n.scale).toInt()).reversed() }
+
+    // Total pixel height of all rendered rows including inter-group gaps
+    val totalHeightPlain = plainNotifs.sumOf { (n, lines) ->
+      ((lines.size + 1) * n.scale * 8.0)
+    }.toFloat()
+    val totalHeightVoice = voiceNotifs.sumOf { (n, lines) ->
+      ((lines.size + 1) * n.scale * 8.0)
+    }.toFloat()
+
+    // Once the topmost line has drifted past the bottom edge, the batch is done
+    if (inScrollPlain && globalScrollOffsetPlain > BOTTOM_MARGIN_PLAIN + totalHeightPlain) {
+      PlayerNotifications.clearForPlayer(player, false)
+      batchStartTimePlain = -1L
+      globalScrollOffsetPlain = 0f
+      return
     }
-    queuedNotifs = activeNumber
 
-    // Exponential decay — frame-rate independent
-    //!!! <- originally 16f
-    scrollAnimation *= 0.85f.pow(passedTime / 8f) //!!!
-    if (scrollAnimation < 0.05f) scrollAnimation = 0f
-
-
-    val intermediateList = activeFlatList.take(PlayerNotifications.MAX_VISIBLE)
-    val visibleNotifs = mutableListOf<List<PlayerNotifications.FormattedCharSeqNotification>>()
-    var counter = 0
-    var tracker = intermediateList.size
-    // count how many empty lines there will be
-    while (tracker > 0) {
-      if (tracker >= activeListList[counter].size) {
-        tracker -= activeListList[counter].size
-        visibleNotifs += activeListList[counter].toList()
-        counter += 1
-      } else {
-        // take the remaining lines
-        visibleNotifs += activeListList[counter].take(tracker)
-        break
-      }
+    if (inScrollVoice && globalScrollOffsetVoice > BOTTOM_MARGIN_VOICE + totalHeightVoice) {
+      PlayerNotifications.clearForPlayer(player, true)
+      batchStartTimeVoice = -1L
+      globalScrollOffsetVoice = 0f
+      return
     }
 
     RenderSystem.enableBlend()
     RenderSystem.defaultBlendFunc()
 
-    var offsetHelp = 0
+    var pixelOffsetPlain = 0f
+    var pixelOffsetVoice = 0f
 
-    visibleNotifs.forEachIndexed { index, notifications ->
-      notifications.forEachIndexed { rank, notif ->
-        // ── Alpha & slide ──────────────────────────────────────────────────
-        var alpha = 255
-        var shift = 0f  // upward nudge during fade-out
+    plainNotifs.forEach { (notif, lines) ->
+      val rowHeight = notif.scale * 8f
 
-        // Fade-in: applies only to the newest visible entry while still arriving
-        if (index == visibleNotifs.lastIndex && rank == notifications.lastIndex && notif.created > currentTime) {
-          val progress = (notif.created - currentTime).toFloat() / PlayerNotifications.FADE_IN_DURATION_MS
-          alpha = (255 - progress * 240f).toInt()
-        }
+      lines.forEachIndexed { lineIndex, line ->
+        val baseY = scaledHeight.toFloat() - BOTTOM_MARGIN_PLAIN -
+                (pixelOffsetPlain + lineIndex * rowHeight)
+        val screenY = baseY + globalScrollOffsetPlain
 
-        // Fade-out: begins one DISPLAY_DURATION before the entry expires
-        if (notif.expire < currentTime + PlayerNotifications.DISPLAY_DURATION_MS) {
-          val progress = (currentTime + PlayerNotifications.DISPLAY_DURATION_MS - notif.expire).toFloat() /
-                  PlayerNotifications.DISPLAY_DURATION_MS
-          alpha = (255 - progress * 240f).toInt()
-          shift = -8f * (alpha / 255f)  // slide entry upward as it fades
-          //scrollAnimation -= 8f * (alpha / 255f)
+        // ── ① Per-notification fade-in (position fixed, only alpha changes) ──
+        var alpha = if (!inScrollPlain) {
+          val age = (now - notif.addedTime).toFloat()
+          ((age / FADE_IN_PLAIN).coerceIn(0f, 1f) * 255f).toInt()
+        } else 255  // snap to full at scroll start — no jump since age ≥ FADE_IN by then
+
+        // ── ③ Scroll fade-out: alpha drops as line approaches screen bottom ──
+        if (inScrollPlain) {
+          val fadeStartY = scaledHeight.toFloat() - FADE_DISTANCE_PLAIN
+          if (screenY > fadeStartY) {
+            val fadeProgress =
+              ((screenY - fadeStartY) / FADE_DISTANCE_PLAIN).coerceIn(0f, 1f)
+            alpha = (alpha * (1f - fadeProgress)).toInt()
+          }
         }
 
         alpha = alpha.coerceIn(0, 255)
+        if (alpha == 0) return@forEachIndexed
 
-        // ── Color channels ─────────────────────────────────────────────────
-        val red = (notif.color shr 16) and 0xFF
-        val green = (notif.color shr 8) and 0xFF
-        val blue = notif.color and 0xFF
+        val cr = (notif.color shr 16) and 0xFF
+        val cg = (notif.color shr 8) and 0xFF
+        val cb = notif.color and 0xFF
+        val textArgb = ((alpha / 2) shl 24) or (cr shl 16) or (cg shl 8) or cb
+        val lineWidth = font.width(line) * notif.scale
 
-        // Text: half-alpha, notification color (ARGB packed)
-        val textArgb = ((alpha / 2) shl 24) or (red shl 16) or (green shl 8) or blue
-
-        // ── Position ───────────────────────────────────────────────────────
-//      val scale = notif.scale
-//      val lines = font.split(notifications.text, (scaledWidth.toFloat() / 3f / scale).toInt())
-
-        //for ((rank, line) in lines.withIndex()) {
-        //val lineWidth = (font.width(notification.text) * scale).toInt() // actual rendered pixel width
-        val lineWidth = font.width(notif.text) * notif.scale // actual rendered pixel width
-        val verticalOffset = scaledHeight - (rank + offsetHelp) * ROW_HEIGHT + shift + scrollAnimation
-
-        // ── Text ───────────────────────────────────────────────────────────
-        // Translate to right-aligned position, then scale — text drawn at local (0,0)
         graphics.pose().pushPose()
-        graphics.pose().translate((scaledWidth - lineWidth - 12), verticalOffset, 0f)
+        graphics.pose().translate(
+          scaledWidth.toFloat() - lineWidth - 12f, screenY, 0f
+        )
         graphics.pose().scale(notif.scale, notif.scale, 1f)
-        graphics.drawString(font, notif.text, 0, 0, textArgb, true)
+        graphics.drawString(font, line, 0, 0, textArgb, true)
         graphics.pose().popPose()
 
-        // ── Icon (optional) ────────────────────────────────────────────────
-        // Tinted with notification color at half the text's alpha, matching original
-        notif.image?.let { texture ->
-          RenderSystem.setShaderColor(red / 255f, green / 255f, blue / 255f, alpha / 511f)
-          graphics.blit(texture, scaledWidth - 18, verticalOffset.toInt() - 6, 0, 0, 16, 16)
-          RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+        if (lineIndex == 0) {
+          notif.image?.let { tex ->
+            RenderSystem.setShaderColor(
+              cr / 255f, cg / 255f, cb / 255f, alpha / 511f
+            )
+            graphics.blit(tex, scaledWidth - 18, screenY.toInt() - 6, 0, 0, 16, 16)
+            RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+          }
         }
       }
-      offsetHelp += notifications.size + 1
+
+      pixelOffsetPlain += (lines.size + 1) * rowHeight
+    }
+
+    //MUST TURN THIS WHOLE THING INTO VOICE VERSION
+    plainNotifs.forEach { (notif, lines) ->
+      val rowHeight = notif.scale * 8f
+
+      lines.forEachIndexed { lineIndex, line ->
+        val baseY = scaledHeight.toFloat() - BOTTOM_MARGIN_PLAIN -
+                (pixelOffsetPlain + lineIndex * rowHeight)
+        val screenY = baseY + globalScrollOffsetPlain
+
+        // ── ① Per-notification fade-in (position fixed, only alpha changes) ──
+        var alpha = if (!inScrollPlain) {
+          val age = (now - notif.addedTime).toFloat()
+          ((age / FADE_IN_PLAIN).coerceIn(0f, 1f) * 255f).toInt()
+        } else 255  // snap to full at scroll start — no jump since age ≥ FADE_IN by then
+
+        // ── ③ Scroll fade-out: alpha drops as line approaches screen bottom ──
+        if (inScrollPlain) {
+          val fadeStartY = scaledHeight.toFloat() - FADE_DISTANCE_PLAIN
+          if (screenY > fadeStartY) {
+            val fadeProgress =
+              ((screenY - fadeStartY) / FADE_DISTANCE_PLAIN).coerceIn(0f, 1f)
+            alpha = (alpha * (1f - fadeProgress)).toInt()
+          }
+        }
+
+        alpha = alpha.coerceIn(0, 255)
+        if (alpha == 0) return@forEachIndexed
+
+        val cr = (notif.color shr 16) and 0xFF
+        val cg = (notif.color shr 8) and 0xFF
+        val cb = notif.color and 0xFF
+        val textArgb = ((alpha / 2) shl 24) or (cr shl 16) or (cg shl 8) or cb
+        val lineWidth = font.width(line) * notif.scale
+
+        graphics.pose().pushPose()
+        graphics.pose().translate(
+          scaledWidth.toFloat() - lineWidth - 12f, screenY, 0f
+        )
+        graphics.pose().scale(notif.scale, notif.scale, 1f)
+        graphics.drawString(font, line, 0, 0, textArgb, true)
+        graphics.pose().popPose()
+
+        if (lineIndex == 0) {
+          notif.image?.let { tex ->
+            RenderSystem.setShaderColor(
+              cr / 255f, cg / 255f, cb / 255f, alpha / 511f
+            )
+            graphics.blit(tex, scaledWidth - 18, screenY.toInt() - 6, 0, 0, 16, 16)
+            RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+          }
+        }
+      }
+
+      pixelOffsetPlain += (lines.size + 1) * rowHeight
     }
 
     RenderSystem.disableBlend()

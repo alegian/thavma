@@ -187,3 +187,10 @@ idea {
     downloadJavadoc = true
   }
 }
+
+eclipse {
+  classpath {
+    downloadSources = true
+    downloadJavadoc = true
+  }
+}

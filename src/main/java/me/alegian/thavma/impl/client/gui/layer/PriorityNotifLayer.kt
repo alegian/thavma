@@ -11,22 +11,10 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PriorityNotifLayer : LayeredDraw.Layer {
 
-  // ── ① Fade-in ─────────────────────────────────────────────────────────────
-  // How long each notification takes to reach full alpha after being added.
-  // Per-notification: measured from Notification.addedTime, not batchStartTime.
-  // Lines are stationary during this phase.
   private const val FADE_IN_PRIO = 20L
 
-  // ── ② Static hold ─────────────────────────────────────────────────────────
-  // After FADE_IN_DURATION_MS has elapsed from batchStartTime, all lines hold
-  // at full alpha for this long before anything moves.
-  // Scroll begins at: batchStartTime + FADE_IN_DURATION_MS + STATIC_DELAY_MS
   private const val STATIC_DELAY_PRIO = 60L
 
-  // ── ③ Scroll-out ──────────────────────────────────────────────────────────
-  // SCROLL_SPEED_PX_PER_MS: how fast all lines drift downward (px per ms).
-  // FADE_OUT_DISTANCE_PX:   screen pixels before the bottom edge where alpha
-  //  begins dropping. Fade duration in ms ≈ distance / speed.
   private const val SCROLL_SPEED_PRIO = 0.4f
 
 
@@ -37,7 +25,6 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val mc = Minecraft.getInstance()
     val player = mc.player ?: return
-    //val currentTime = Util.getMillis()
     val currentTime = player.level().gameTime
 
     val notifications = PlayerNotifications.getForPlayer(player).filter { it.isPriority }
@@ -54,9 +41,11 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
 
-    val FADE_OUT_DISTANCE_PRIO = scaledHeight / 4f
-    val BOTTOM_MARGIN_PRIO = scaledHeight / 2.4f
-    val BOTTOM_MARGIN_PRIO2 = scaledHeight * 3 / 4f - scaledHeight / 16f
+    val bottomMargin = scaledHeight / 2.4f
+    val fadeInStart = scaledHeight * 17 / 32f
+    val fadeInEnd = scaledHeight * 9 / 16f
+    val fadeOutEnd = scaledHeight * 3 / 4f - scaledHeight / 16f
+    val fadeOutStart = scaledHeight * 3 / 4f - scaledHeight / 8f
 
     val elapsedPrio = currentTime - batchStartTimePrio
     val inScrollPrio = elapsedPrio >= FADE_IN_PRIO + STATIC_DELAY_PRIO
@@ -85,7 +74,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     RenderSystem.enableBlend()
     RenderSystem.defaultBlendFunc()
 
-    graphics.enableScissor(0, scaledHeight * 9 / 16, scaledWidth, scaledHeight * 3 / 4 - scaledHeight / 15)
+    graphics.enableScissor(0, scaledHeight * 9 / 16 + 1, scaledWidth, scaledHeight * 3 / 4 - scaledHeight / 15)
 
     var pixelOffsetPrio = 0f
 
@@ -93,55 +82,29 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       val rowHeight = notif.scale * (font.lineHeight - 1)
 
       lines.forEachIndexed { lineIndex, line ->
-        val baseY = scaledHeight.toFloat() - BOTTOM_MARGIN_PRIO -
+        val baseY = scaledHeight.toFloat() - bottomMargin -
                 (pixelOffsetPrio + (lineIndex - 1) * rowHeight)
         val screenY = baseY + globalScrollOffsetPrio
 
-        //jestli je globalScrollOffsetPrio mezi FADE_OUT_DISTANCE_PRIO-BOTTOM_MARGIN_PRIO
-
-        // ── ① Per-notification fade-in (position fixed, only alpha changes) ──
         var alpha: Int
         if (notifIndex == 0) alpha =
           (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
         else if (lineIndex == 0) alpha = 127
         else alpha = 0
-        //if (currentTime - notif.addedTime > 20) alpha = 255
-        // snap to full at scroll start — no jump since age ≥ FADE_IN by then
 
-
-        // ── ③ Scroll fade-out: alpha drops as line approaches screen bottom ──
         if (inScrollPrio) {
-
-          val fadeInStart = scaledHeight / 2f
-          val fadeInEnd = scaledHeight / 2f + scaledHeight / 16f
-          val fadeOutEnd = scaledHeight * 3 / 4f - scaledHeight / 16f
-          val fadeOutStart = scaledHeight * 3 / 4f - scaledHeight / 8f
 
           if (screenY < fadeInStart) alpha = 0
           else if (screenY in fadeInStart..fadeInEnd) alpha =
-            (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(-1f, 255F).toInt()
+            (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(0f, 255F).toInt()
           else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
           else if (screenY in fadeOutStart..fadeOutEnd) alpha =
-            ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(-1f, 255f).toInt()
+            ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
           else if (screenY > fadeOutEnd) alpha = 0
-
-//          val fadeOutStartY = scaledHeight.toFloat() - FADE_OUT_DISTANCE_PRIO
-//          val fadecomplete = fadeOutStartY + font.lineHeight
-////          if (screenY > fadeInStartY) {
-////            val fadeProgress =
-////              ((screenY - fadeInStartY) / FADE_IN_DISTANCE_PRIO).coerceIn(0f, 1f)
-////            alpha = (alpha * (1f - fadeProgress)).toInt()
-////          }
-////          else
-//          if (screenY > fadeOutStartY) {
-//            val fadeProgress =
-//              ((screenY - fadeOutStartY) / fadecomplete).coerceIn(0f, 1f)
-//            alpha = (255 * (1f - fadeProgress)).toInt()
-//          } else alpha = 255
         }
 
-        alpha = alpha.coerceIn(0, 255)
-        if (alpha == 0) return@forEachIndexed
+        alpha = alpha.coerceIn(1, 255)
+        if (alpha == 1) return@forEachIndexed
 
         val cr = (notif.color shr 16) and 0xFF
         val cg = (notif.color shr 8) and 0xFF

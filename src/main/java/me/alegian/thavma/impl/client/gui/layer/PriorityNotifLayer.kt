@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.layer
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.texture.Texture
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -17,10 +18,12 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
   private const val SCROLL_SPEED_PRIO = 0.4f
 
-
   private var batchStartTimePrio = -1L
   private var globalScrollOffsetPrio = 0f
 
+  val Asymbol = Texture("gui/layer/symbol_alpha", 8, 7, 8, 7)
+  val Osymbol = Texture("gui/layer/symbol_omega", 8, 7, 8, 7)
+  val FusedSymbol = Texture("gui/layer/symbol_fused", 8, 7, 8, 7)
 
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val mc = Minecraft.getInstance()
@@ -35,7 +38,9 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       return
     }
 
-    if (batchStartTimePrio < 0L) batchStartTimePrio = currentTime
+    if (batchStartTimePrio < 0L) {
+      batchStartTimePrio = currentTime
+    }
 
     val scaledWidth = mc.window.guiScaledWidth
     val scaledHeight = mc.window.guiScaledHeight
@@ -52,7 +57,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
     val prioNotifs = notifications
       .take(PlayerNotifications.MAX_VISIBLE_PRIO)
-      .map { n -> n to font.split(n.text, (scaledWidth * 2 / 3f / n.scale).toInt()).reversed() }
+      .map { n -> n to font.split(n.text, (scaledWidth * 2 / 3f / n.scale).toInt()) }
 
     globalScrollOffsetPrio = if (inScrollPrio)
       (elapsedPrio - FADE_IN_PRIO - STATIC_DELAY_PRIO).toFloat() * SCROLL_SPEED_PRIO //* prioNotifs.first().first.scale
@@ -68,6 +73,14 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       PlayerNotifications.clearForPlayer(player, true)
       batchStartTimePrio = -1L
       globalScrollOffsetPrio = 0f
+
+      RenderSystem.enableBlend()
+      RenderSystem.defaultBlendFunc()
+
+
+
+      RenderSystem.disableBlend()
+
       return
     }
 
@@ -82,17 +95,17 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       val rowHeight = notif.scale * (font.lineHeight - 1)
 
       lines.forEachIndexed { lineIndex, line ->
-        val baseY = scaledHeight.toFloat() - bottomMargin -
-                (pixelOffsetPrio + (lineIndex - 1) * rowHeight)
-        val screenY = baseY + globalScrollOffsetPrio
+        val baseY = scaledHeight.toFloat() - bottomMargin +
+                (pixelOffsetPrio + (lineIndex) * rowHeight)
+        val screenY = baseY - globalScrollOffsetPrio
 
         var alpha: Int
-        if (notifIndex == 0) alpha =
-          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
-        else if (lineIndex == 0) alpha = 127
-        else alpha = 0
+        //if (notifIndex == 0) alpha =
+//          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
+//        else if (lineIndex == 0) alpha = 127
+//        else alpha = 0
 
-        if (inScrollPrio) {
+        //if (inScrollPrio) {
 
           if (screenY < fadeInStart) alpha = 0
           else if (screenY in fadeInStart..fadeInEnd) alpha =
@@ -101,7 +114,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
           else if (screenY in fadeOutStart..fadeOutEnd) alpha =
             ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
           else if (screenY > fadeOutEnd) alpha = 0
-        }
+          else alpha = 255
+        //}
 
         alpha = alpha.coerceIn(1, 255)
         if (alpha == 1) return@forEachIndexed
@@ -133,9 +147,9 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
       pixelOffsetPrio += (lines.size + 1) * rowHeight
     }
-
     graphics.disableScissor()
     RenderSystem.disableBlend()
+
 
   }
 }

@@ -91,34 +91,29 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
     var pixelOffsetPrio = 0f
 
-    prioNotifs.forEachIndexed { notifIndex, (notif, lines) ->
+    prioNotifs.forEach { (notif, lines) ->
       val rowHeight = notif.scale * (font.lineHeight - 1)
 
       lines.forEachIndexed { lineIndex, line ->
         val baseY = scaledHeight.toFloat() - bottomMargin +
-                (pixelOffsetPrio + (lineIndex) * rowHeight)
+                (pixelOffsetPrio + (lineIndex + 0.5f) * rowHeight)
         val screenY = baseY - globalScrollOffsetPrio
 
         var alpha: Int
-        //if (notifIndex == 0) alpha =
-//          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
-//        else if (lineIndex == 0) alpha = 127
-//        else alpha = 0
 
-        //if (inScrollPrio) {
+        if (currentTime - batchStartTimePrio < FADE_IN_PRIO) alpha =
+          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
+        else if (screenY < fadeInStart) alpha = 0
+        else if (screenY in fadeInStart..fadeInEnd) alpha =
+          (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(0f, 255F).toInt()
+        else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
+        else if (screenY in fadeOutStart..fadeOutEnd) alpha =
+          ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
+        else if (screenY > fadeOutEnd) alpha = 0
+        else alpha = 255
 
-          if (screenY < fadeInStart) alpha = 0
-          else if (screenY in fadeInStart..fadeInEnd) alpha =
-            (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(0f, 255F).toInt()
-          else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
-          else if (screenY in fadeOutStart..fadeOutEnd) alpha =
-            ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
-          else if (screenY > fadeOutEnd) alpha = 0
-          else alpha = 255
-        //}
-
-        alpha = alpha.coerceIn(1, 255)
-        if (alpha == 1) return@forEachIndexed
+        alpha = alpha.coerceIn(0, 255)
+        if (alpha == 0) return@forEachIndexed
 
         val cr = (notif.color shr 16) and 0xFF
         val cg = (notif.color shr 8) and 0xFF

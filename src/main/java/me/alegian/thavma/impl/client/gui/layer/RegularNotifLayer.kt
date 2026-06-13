@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layer
 
 import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.Util
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -19,38 +18,32 @@ object RegularNotifLayer : LayeredDraw.Layer {
   // How long each notification takes to reach full alpha after being added.
   // Per-notification: measured from Notification.addedTime, not batchStartTime.
   // Lines are stationary during this phase.
-  private const val FADE_IN_REG = 750L
-  private const val FADE_IN_PRIO = 750L
+  private const val FADE_IN_REG = 20L
 
   // ── ② Static hold ─────────────────────────────────────────────────────────
   // After FADE_IN_DURATION_MS has elapsed from batchStartTime, all lines hold
   // at full alpha for this long before anything moves.
   // Scroll begins at: batchStartTime + FADE_IN_DURATION_MS + STATIC_DELAY_MS
-  private const val STATIC_DELAY_REG = 2_000L
-  private const val STATIC_DELAY_PRIO = 2_000L
+  private const val STATIC_DELAY_REG = 60L
 
   // ── ③ Scroll-out ──────────────────────────────────────────────────────────
   // SCROLL_SPEED_PX_PER_MS: how fast all lines drift downward (px per ms).
   // FADE_OUT_DISTANCE_PX:   screen pixels before the bottom edge where alpha
-  //                          begins dropping. Fade duration in ms ≈ distance / speed.
-  private const val SCROLL_SPEED_REG = 0.01f   // 60 px / second
-  private const val SCROLL_SPEED_PRIO = 0.01f   // 60 px / second
-  private const val FADE_DISTANCE_REG = 40f
-  private const val FADE_DISTANCE_PRIO = 40f
+  //  begins dropping. Fade duration in ms ≈ distance / speed.
+  private const val SCROLL_SPEED_REG = 0.4f
+  private const val FADE_DISTANCE_REG = 10f
 
   // How far above the screen's bottom edge lines initially rest (clears the hotbar).
-  private const val BOTTOM_MARGIN_REG = 50f
-  private const val BOTTOM_MARGIN_PRIO = 50f
+  private const val BOTTOM_MARGIN_REG = 20f
 
   private var batchStartTimeReg = -1L
-  private var batchStartTimePrio = -1L
   private var globalScrollOffsetReg = 0f
-  private var globalScrollOffsetPrio = 0f
 
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val mc = Minecraft.getInstance()
     val player = mc.player ?: return
-    val currentTime = Util.getMillis()
+    //val currentTime = Util.getMillis()
+    val currentTime = player.level().gameTime
 
     val notifications = PlayerNotifications.getForPlayer(player).filter { !it.isPriority }
 
@@ -66,25 +59,19 @@ object RegularNotifLayer : LayeredDraw.Layer {
     val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
     val elapsedReg = currentTime - batchStartTimeReg
-    val elapsedPrio = currentTime - batchStartTimePrio
 
     // ── Phase gate ────────────────────────────────────────────────────────
     val inScrollReg = elapsedReg >= FADE_IN_REG + STATIC_DELAY_REG
-    val inScrollPrio = elapsedPrio >= FADE_IN_PRIO + STATIC_DELAY_PRIO
 
     globalScrollOffsetReg = if (inScrollReg)
       (elapsedReg - FADE_IN_REG - STATIC_DELAY_REG).toFloat() * SCROLL_SPEED_REG
-    else 0f
-
-    globalScrollOffsetPrio = if (inScrollPrio)
-      (elapsedPrio - FADE_IN_PRIO - STATIC_DELAY_PRIO).toFloat() * SCROLL_SPEED_PRIO
     else 0f
 
     // Split each notification into wrapped lines (rendering artifact, not stored)
     // NEEDS SOME TWEAKING
     val regNotifs = notifications
       .take((PlayerNotifications.MAX_VISIBLE_REG / notifications.first().scale).toInt())
-      .map { n -> n to font.split(n.text, (scaledWidth / 3f / n.scale).toInt()).reversed() }
+      .map { n -> n to font.split(n.text, (scaledWidth / 3.5f / n.scale).toInt()).reversed() }
 
     // Total pixel height of all rendered rows including inter-group gaps
     val totalHeightReg = regNotifs.sumOf { (n, lines) ->
@@ -92,17 +79,18 @@ object RegularNotifLayer : LayeredDraw.Layer {
     }.toFloat()
 
     // Once the topmost line has drifted past the bottom edge, the batch is done
-    if (inScrollReg && globalScrollOffsetReg > BOTTOM_MARGIN_REG + totalHeightReg) {
+    if (inScrollReg && globalScrollOffsetReg > BOTTOM_MARGIN_REG + totalHeightReg - 20) {
       PlayerNotifications.clearForPlayer(player, false)
       batchStartTimeReg = -1L
       globalScrollOffsetReg = 0f
       return
     }
 
+    var pixelOffsetReg = 0f
+
     RenderSystem.enableBlend()
     RenderSystem.defaultBlendFunc()
-
-    var pixelOffsetReg = 0f
+    graphics.enableScissor(scaledWidth * 2 / 3, scaledHeight / 4, scaledWidth, scaledHeight)
 
     regNotifs.forEach { (notif, lines) ->
       val rowHeight = notif.scale * 8f
@@ -113,10 +101,8 @@ object RegularNotifLayer : LayeredDraw.Layer {
         val screenY = baseY + globalScrollOffsetReg
 
         // ── ① Per-notification fade-in (position fixed, only alpha changes) ──
-        var alpha = if (!inScrollReg) {
-          val age = (currentTime - notif.addedTime).toFloat()
-          ((age / FADE_IN_REG).coerceIn(0f, 1f) * 255f).toInt()
-        } else 255  // snap to full at scroll start — no jump since age ≥ FADE_IN by then
+        var alpha = (((currentTime - notif.addedTime).toFloat() / FADE_IN_REG).coerceIn(0f, 1f) * 255f).toInt()
+        // snap to full at scroll start — no jump since age ≥ FADE_IN by then
 
         // ── ③ Scroll fade-out: alpha drops as line approaches screen bottom ──
         if (inScrollReg) {
@@ -159,6 +145,7 @@ object RegularNotifLayer : LayeredDraw.Layer {
       pixelOffsetReg += (lines.size + 1) * rowHeight
     }
 
+    graphics.disableScissor()
     RenderSystem.disableBlend()
   }
 }

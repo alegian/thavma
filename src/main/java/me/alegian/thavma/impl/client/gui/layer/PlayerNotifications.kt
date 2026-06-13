@@ -1,6 +1,5 @@
 package me.alegian.thavma.impl.client.gui.layer
 
-import net.minecraft.Util
 import net.minecraft.client.player.LocalPlayer
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -13,7 +12,8 @@ object PlayerNotifications {
 
   const val MAX_VISIBLE_REG = 20
   const val MAX_VISIBLE_PRIO = 3
-  const val FONT_SIZE = 0.35f
+  const val FONT_SIZE_REG = 0.35f
+  const val FONT_SIZE_PRIO = 0.5f
 
   data class Notification(
     val isPriority: Boolean,
@@ -21,8 +21,8 @@ object PlayerNotifications {
     val player: LocalPlayer,
     val image: ResourceLocation? = null,
     val color: Int = 0xFFFFFF,
-    val scale: Float = FONT_SIZE,
-    val addedTime: Long          // Util.getMillis() at insertion — used for per-notification fade-in
+    val scale: Float = if (isPriority) FONT_SIZE_PRIO else FONT_SIZE_REG,
+    val addedTime: Long         // Util.getMillis() at insertion — used for per-notification fade-in
   )
 
   private val queue = mutableListOf<Notification>()
@@ -33,7 +33,7 @@ object PlayerNotifications {
     player: LocalPlayer,
     image: ResourceLocation? = null,
     color: Int = 0xFFFFFF,
-    scale: Float = FONT_SIZE
+    scale: Float = if (isPriority) FONT_SIZE_PRIO else FONT_SIZE_REG
   ) {
     queue += Notification(
       isPriority = isPriority,
@@ -42,7 +42,8 @@ object PlayerNotifications {
       image = image,
       color = color,
       scale = scale,
-      addedTime = Util.getMillis()
+      //addedTime = Util.getMillis()
+      addedTime = player.level().gameTime
     )
   }
 

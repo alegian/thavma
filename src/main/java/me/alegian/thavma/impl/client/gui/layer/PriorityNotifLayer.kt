@@ -12,11 +12,29 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PriorityNotifLayer : LayeredDraw.Layer {
 
+  // ── ① Fade-in ─────────────────────────────────────────────────────────────
+  // How long each notification takes to reach full alpha after being added.
+  // Per-notification: measured from Notification.addedTime, not batchStartTime.
+  // Lines are stationary during this phase.
   private const val FADE_IN_PRIO = 750L
+
+  // ── ② Static hold ─────────────────────────────────────────────────────────
+  // After FADE_IN_DURATION_MS has elapsed from batchStartTime, all lines hold
+  // at full alpha for this long before anything moves.
+  // Scroll begins at: batchStartTime + FADE_IN_DURATION_MS + STATIC_DELAY_MS
   private const val STATIC_DELAY_PRIO = 2_000L
+
+  // ── ③ Scroll-out ──────────────────────────────────────────────────────────
+  // SCROLL_SPEED_PX_PER_MS: how fast all lines drift downward (px per ms).
+  // FADE_OUT_DISTANCE_PX:   screen pixels before the bottom edge where alpha
+  //  begins dropping. Fade duration in ms ≈ distance / speed.
   private const val SCROLL_SPEED_PRIO = 0.01f
   private const val FADE_DISTANCE_PRIO = 40f
+
+  // How far above the screen's bottom edge lines initially rest (clears the hotbar).
   private const val BOTTOM_MARGIN_PRIO = 50f
+
+
   private var batchStartTimePrio = -1L
   private var globalScrollOffsetPrio = 0f
 

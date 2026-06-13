@@ -52,9 +52,9 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                     turnPage(false)
                     if (player != null) PlayerNotifications.add(
                       false,
-                      Component.literal("Error: wand not attuned"),
+                      Component.literal("Error: wand not attuned sample text sample text sample text sample text"),
                       color = 0xFFFFFF,
-                      scale = 1.2f,
+                      scale = 1f,
                       player = player
                     )
                   })
@@ -78,9 +78,9 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                     turnPage(true)
                     if (player != null) PlayerNotifications.add(
                       false,
-                      Component.literal("Error: wand not attuned"),
+                      Component.literal("Error: wand not attuned sample text sample text sample text sample text"),
                       color = 0xFFFFFF,
-                      scale = 1.2f,
+                      scale = 1f,
                       player = player
                     )
                   })

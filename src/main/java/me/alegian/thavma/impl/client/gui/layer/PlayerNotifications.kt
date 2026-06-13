@@ -10,8 +10,8 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PlayerNotifications {
 
-  const val MAX_VISIBLE_REG = 20
-  const val MAX_VISIBLE_PRIO = 3
+  const val MAX_VISIBLE_REG = Int.MAX_VALUE
+  const val MAX_VISIBLE_PRIO = Int.MAX_VALUE
   const val FONT_SIZE_REG = 0.35f
   const val FONT_SIZE_PRIO = 0.5f
 

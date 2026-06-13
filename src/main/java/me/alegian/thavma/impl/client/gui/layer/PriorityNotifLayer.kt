@@ -12,7 +12,8 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PriorityNotifLayer : LayeredDraw.Layer {
 
-  private const val FADE_IN_PRIO = 20L
+  const val FADE_IN_PRIO = 40L
+  const val ANIMATION_SPEED = 3.0
 
   private const val STATIC_DELAY_PRIO = 60L
 
@@ -20,10 +21,15 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
   private var batchStartTimePrio = -1L
   private var globalScrollOffsetPrio = 0f
+  const val MARGIN_CONST = 2.4f
 
-  val Asymbol = Texture("gui/layer/symbol_alpha", 8, 7, 8, 7)
-  val Osymbol = Texture("gui/layer/symbol_omega", 8, 7, 8, 7)
-  val FusedSymbol = Texture("gui/layer/symbol_fused", 8, 7, 8, 7)
+  val Asymbol = Texture("layer/symbol_alpha", 8, 7, 8, 7)
+  val Osymbol = Texture("layer/symbol_omega", 8, 7, 8, 7)
+  val FusedSymbol = Texture("layer/symbol_fused", 8, 7, 8, 7)
+
+  var shouldPlayIntro = false
+  var animationOpacity = 1f
+  var animationStart = -1L
 
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
     val mc = Minecraft.getInstance()
@@ -38,22 +44,26 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       return
     }
 
-    if (batchStartTimePrio < 0L) {
-      batchStartTimePrio = currentTime
-    }
-
     val scaledWidth = mc.window.guiScaledWidth
     val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
 
-    val bottomMargin = scaledHeight / 2.4f
+    val bottomMargin = scaledHeight / MARGIN_CONST
     val fadeInStart = scaledHeight * 17 / 32f
     val fadeInEnd = scaledHeight * 9 / 16f
     val fadeOutEnd = scaledHeight * 3 / 4f - scaledHeight / 16f
     val fadeOutStart = scaledHeight * 3 / 4f - scaledHeight / 8f
 
+    if (batchStartTimePrio < 0L) {
+      batchStartTimePrio = currentTime
+    }
+
     val elapsedPrio = currentTime - batchStartTimePrio
     val inScrollPrio = elapsedPrio >= FADE_IN_PRIO + STATIC_DELAY_PRIO
+
+    shouldPlayIntro = currentTime - batchStartTimePrio < FADE_IN_PRIO
+    animationOpacity = ((ANIMATION_SPEED * currentTime - batchStartTimePrio).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f)
+    animationStart = batchStartTimePrio
 
     val prioNotifs = notifications
       .take(PlayerNotifications.MAX_VISIBLE_PRIO)
@@ -100,10 +110,12 @@ object PriorityNotifLayer : LayeredDraw.Layer {
         val screenY = baseY - globalScrollOffsetPrio
 
         var alpha: Int
+        var multiplier: Float
 
-        if (currentTime - batchStartTimePrio < FADE_IN_PRIO) alpha =
-          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
-        else if (screenY < fadeInStart) alpha = 0
+        if (currentTime - batchStartTimePrio < FADE_IN_PRIO) multiplier =
+          ((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) else multiplier = 1f
+
+        if (screenY < fadeInStart) alpha = 0
         else if (screenY in fadeInStart..fadeInEnd) alpha =
           (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(0f, 255F).toInt()
         else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
@@ -111,6 +123,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
           ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
         else if (screenY > fadeOutEnd) alpha = 0
         else alpha = 255
+
+        alpha = (alpha * multiplier).toInt()
 
         alpha = alpha.coerceIn(0, 255)
         if (alpha == 0) return@forEachIndexed

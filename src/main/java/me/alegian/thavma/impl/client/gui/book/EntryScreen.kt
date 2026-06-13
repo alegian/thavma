@@ -51,7 +51,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                     // rerender the screen for the new page(s)
                     turnPage(false)
                     if (player != null) PlayerNotifications.add(
-                      false,
+                      true,
                       Component.literal("Error: wand not attuned sample text sample text sample text sample text"),
                       color = 0xFFFFFF,
                       scale = 1f,
@@ -77,7 +77,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                     // rerender the screen for the new page(s)
                     turnPage(true)
                     if (player != null) PlayerNotifications.add(
-                      false,
+                      true,
                       Component.literal("Error: wand not attuned sample text sample text sample text sample text"),
                       color = 0xFFFFFF,
                       scale = 1f,

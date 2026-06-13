@@ -55,27 +55,27 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     val font = mc.font
 
     val FADE_OUT_DISTANCE_PRIO = scaledHeight / 4f
-    val FADE_IN_DISTANCE_PRIO = scaledHeight / 2f
     val BOTTOM_MARGIN_PRIO = scaledHeight / 2.4f
-    val BOTTOM_MARGIN_PRIO2 = scaledHeight / 4f
+    val BOTTOM_MARGIN_PRIO2 = scaledHeight * 3 / 4f - scaledHeight / 16f
 
     val elapsedPrio = currentTime - batchStartTimePrio
     val inScrollPrio = elapsedPrio >= FADE_IN_PRIO + STATIC_DELAY_PRIO
 
-    globalScrollOffsetPrio = if (inScrollPrio)
-      (elapsedPrio - FADE_IN_PRIO - STATIC_DELAY_PRIO).toFloat() * SCROLL_SPEED_PRIO
-    else 0f
-
     val prioNotifs = notifications
       .take(PlayerNotifications.MAX_VISIBLE_PRIO)
       .map { n -> n to font.split(n.text, (scaledWidth * 2 / 3f / n.scale).toInt()).reversed() }
+
+    globalScrollOffsetPrio = if (inScrollPrio)
+      (elapsedPrio - FADE_IN_PRIO - STATIC_DELAY_PRIO).toFloat() * SCROLL_SPEED_PRIO //* prioNotifs.first().first.scale
+    else 0f
 
     val totalHeightPrio = prioNotifs.sumOf { (n, lines) ->
       ((lines.size + 1) * n.scale * (font.lineHeight - 1.0))
     }.toFloat()
 
     // Once the topmost line has drifted past the bottom edge, the batch is done
-    if (inScrollPrio && globalScrollOffsetPrio * 1.4f > BOTTOM_MARGIN_PRIO2 + totalHeightPrio - prioNotifs.first().first.scale * (font.lineHeight - 1)) {
+    if (inScrollPrio && globalScrollOffsetPrio > totalHeightPrio)//-prioNotifs.first().first.scale * (font.lineHeight - 1))
+    {
       PlayerNotifications.clearForPlayer(player, true)
       batchStartTimePrio = -1L
       globalScrollOffsetPrio = 0f
@@ -85,40 +85,59 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     RenderSystem.enableBlend()
     RenderSystem.defaultBlendFunc()
 
+    graphics.enableScissor(0, scaledHeight * 9 / 16, scaledWidth, scaledHeight * 3 / 4 - scaledHeight / 15)
+
     var pixelOffsetPrio = 0f
 
-    prioNotifs.forEach { (notif, lines) ->
+    prioNotifs.forEachIndexed { notifIndex, (notif, lines) ->
       val rowHeight = notif.scale * (font.lineHeight - 1)
-      val notifHeight = rowHeight * lines.size
 
       lines.forEachIndexed { lineIndex, line ->
         val baseY = scaledHeight.toFloat() - BOTTOM_MARGIN_PRIO -
-                (pixelOffsetPrio + lineIndex * rowHeight)
+                (pixelOffsetPrio + (lineIndex - 1) * rowHeight)
         val screenY = baseY + globalScrollOffsetPrio
-        val lineHeight = pixelOffsetPrio + rowHeight * lineIndex
 
         //jestli je globalScrollOffsetPrio mezi FADE_OUT_DISTANCE_PRIO-BOTTOM_MARGIN_PRIO
 
         // ── ① Per-notification fade-in (position fixed, only alpha changes) ──
-        var alpha = (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
-        if (currentTime - notif.addedTime > 20) alpha = 255
+        var alpha: Int
+        if (notifIndex == 0) alpha =
+          (((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) * 255f).toInt()
+        else if (lineIndex == 0) alpha = 127
+        else alpha = 0
+        //if (currentTime - notif.addedTime > 20) alpha = 255
         // snap to full at scroll start — no jump since age ≥ FADE_IN by then
+
 
         // ── ③ Scroll fade-out: alpha drops as line approaches screen bottom ──
         if (inScrollPrio) {
-          val fadeOutStartY = scaledHeight.toFloat() - FADE_OUT_DISTANCE_PRIO
-          val fadeInStartY = scaledHeight.toFloat() - FADE_IN_DISTANCE_PRIO
-//          if (screenY > fadeInStartY) {
+
+          val fadeInStart = scaledHeight / 2f
+          val fadeInEnd = scaledHeight / 2f + scaledHeight / 16f
+          val fadeOutEnd = scaledHeight * 3 / 4f - scaledHeight / 16f
+          val fadeOutStart = scaledHeight * 3 / 4f - scaledHeight / 8f
+
+          if (screenY < fadeInStart) alpha = 0
+          else if (screenY in fadeInStart..fadeInEnd) alpha =
+            (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(-1f, 255F).toInt()
+          else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
+          else if (screenY in fadeOutStart..fadeOutEnd) alpha =
+            ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(-1f, 255f).toInt()
+          else if (screenY > fadeOutEnd) alpha = 0
+
+//          val fadeOutStartY = scaledHeight.toFloat() - FADE_OUT_DISTANCE_PRIO
+//          val fadecomplete = fadeOutStartY + font.lineHeight
+////          if (screenY > fadeInStartY) {
+////            val fadeProgress =
+////              ((screenY - fadeInStartY) / FADE_IN_DISTANCE_PRIO).coerceIn(0f, 1f)
+////            alpha = (alpha * (1f - fadeProgress)).toInt()
+////          }
+////          else
+//          if (screenY > fadeOutStartY) {
 //            val fadeProgress =
-//              ((screenY - fadeInStartY) / FADE_IN_DISTANCE_PRIO).coerceIn(0f, 1f)
-//            alpha = (alpha * (1f - fadeProgress)).toInt()
-//          }
-//          else
-          if (screenY * 1.4f > fadeOutStartY) {
-            val fadeProgress =
-              ((screenY * 1.4f - fadeOutStartY) / FADE_OUT_DISTANCE_PRIO).coerceIn(0f, 1f)
-            alpha = (255 * (1f - fadeProgress)).toInt()
-          } else alpha = 255
+//              ((screenY - fadeOutStartY) / fadecomplete).coerceIn(0f, 1f)
+//            alpha = (255 * (1f - fadeProgress)).toInt()
+//          } else alpha = 255
         }
 
         alpha = alpha.coerceIn(0, 255)
@@ -127,12 +146,12 @@ object PriorityNotifLayer : LayeredDraw.Layer {
         val cr = (notif.color shr 16) and 0xFF
         val cg = (notif.color shr 8) and 0xFF
         val cb = notif.color and 0xFF
-        val textArgb = ((alpha / 2) shl 24) or (cr shl 16) or (cg shl 8) or cb
+        val textArgb = ((alpha * 5 / 6) shl 24) or (cr shl 16) or (cg shl 8) or cb
         val lineWidth = font.width(line) * notif.scale
 
         graphics.pose().pushPose()
         graphics.pose().translate(
-          scaledWidth.toFloat() / 2f - lineWidth / 2f - 12f / 2f, screenY, 0f
+          scaledWidth.toFloat() / 2f - lineWidth / 2f, screenY, 0f
         )
         graphics.pose().scale(notif.scale, notif.scale, 1f)
         graphics.drawString(font, line, 0, 0, textArgb, true)
@@ -152,6 +171,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       pixelOffsetPrio += (lines.size + 1) * rowHeight
     }
 
+    graphics.disableScissor()
     RenderSystem.disableBlend()
 
   }

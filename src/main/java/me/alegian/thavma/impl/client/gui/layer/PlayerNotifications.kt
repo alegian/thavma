@@ -22,7 +22,7 @@ object PlayerNotifications {
     val image: ResourceLocation? = null,
     val color: Int = 0xFFFFFF,
     val scale: Float = if (isPriority) FONT_SIZE_PRIO else FONT_SIZE_REG,
-    val addedTime: Long         // Util.getMillis() at insertion — used for per-notification fade-in
+    val addedTime: Long
   )
 
   private val queue = mutableListOf<Notification>()

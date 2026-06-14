@@ -13,7 +13,7 @@ import net.neoforged.api.distmarker.OnlyIn
 object PriorityNotifLayer : LayeredDraw.Layer {
 
   const val FADE_IN_PRIO = 40L
-  const val ANIMATION_SPEED = 3.0f
+  const val ANIMATION_SPEED = 5.0f
 
   const val STATIC_DELAY_PRIO = 60L
 
@@ -71,7 +71,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
     val prioNotifs = notifications
       .take(PlayerNotifications.MAX_VISIBLE_PRIO)
-      .map { n -> n to font.split(n.text, (scaledWidth * 2 / 3f / n.scale).toInt()) }
+      .map { n -> n to font.split(n.text, (scaledWidth * 6 / 10f / n.scale).toInt()) }
 
     globalScrollOffsetPrio = if (inScrollPrio)
       (elapsedPrio - FADE_IN_PRIO - STATIC_DELAY_PRIO).toFloat() * SCROLL_SPEED_PRIO //* prioNotifs.first().first.scale

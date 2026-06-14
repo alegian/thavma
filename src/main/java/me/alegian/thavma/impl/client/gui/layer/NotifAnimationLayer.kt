@@ -26,10 +26,10 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
   // ── Position (fractions of screen dimensions — easy to read and tune) ──
   // 0 = top of screen, 1 = bottom
-  private const val SYMBOL_Y_FRAC = 0.6f
+  private const val SYMBOL_Y_FRAC = 0.625f
 
-  // Where each symbol ends up as a fraction of screen width
-  private const val MAX_SEPARATION_FRAC = 0.15f
+  // Distance where each symbol ends up as a fraction of screen width
+  private const val MAX_SEPARATION_FRAC = 0.10f
 
   // ── Sprite geometry ────────────────────────────────────────────────────
   // Native texture size of each symbol in its sprite sheet
@@ -63,8 +63,8 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
     val scaledWidth = graphics.guiWidth()
     val scaledHeight = graphics.guiHeight()
-    val centerX = scaledWidth / 2f //- DISPLAY_W / 2f
-    val centerY = scaledHeight * SYMBOL_Y_FRAC //- DISPLAY_H / 2f
+    val centerX = scaledWidth / 2f - DISPLAY_W / 2f
+    val centerY = scaledHeight * SYMBOL_Y_FRAC - DISPLAY_H / 2f
 
     if (PriorityNotifLayer.shouldPlayIntro) {
       if (animationOpacity < 1f) {

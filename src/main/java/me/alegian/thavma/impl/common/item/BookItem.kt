@@ -2,7 +2,10 @@ package me.alegian.thavma.impl.common.item
 
 import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.book.BookScreen
+import me.alegian.thavma.impl.client.gui.layer.PlayerNotifications
 import me.alegian.thavma.impl.client.setScreen
+import net.minecraft.client.player.LocalPlayer
+import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
@@ -17,6 +20,12 @@ class T7BookItem : Item(Properties().stacksTo(1)) {
     if (level.isClientSide()) {
       setScreen(BookScreen())
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
+      PlayerNotifications.add(
+        true,
+        Component.literal("You have successfully opened the book! I am so proud of you!"),
+        color = 0xFFFFFF,
+        player = player as LocalPlayer
+      )
     }
 
     return InteractionResultHolder.consume(player.getItemInHand(hand))

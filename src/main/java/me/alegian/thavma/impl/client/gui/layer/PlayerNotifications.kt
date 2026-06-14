@@ -13,7 +13,7 @@ object PlayerNotifications {
   const val MAX_VISIBLE_REG = Int.MAX_VALUE
   const val MAX_VISIBLE_PRIO = Int.MAX_VALUE
   const val FONT_SIZE_REG = 0.35f
-  const val FONT_SIZE_PRIO = 0.5f
+  const val FONT_SIZE_PRIO = 1f
 
   data class Notification(
     val isPriority: Boolean,

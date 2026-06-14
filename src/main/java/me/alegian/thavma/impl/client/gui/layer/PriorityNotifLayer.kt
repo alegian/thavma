@@ -15,9 +15,6 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   const val FADE_IN_PRIO = 40L
   const val ANIMATION_SPEED = 3.0f
 
-  var scaledWidth = 0
-  var scaledHeight = 0
-
   const val STATIC_DELAY_PRIO = 60L
 
   private const val SCROLL_SPEED_PRIO = 0.4f
@@ -31,6 +28,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   val FusedSymbol = Texture("layer/symbol_fused", 8, 7, 8, 7)
 
   var shouldPlayIntro = false
+  var shouldPlayOutro = false
+  var endCheckpoint = -1L
   var animationOpacity = 1f
   var animationStart = -1L
 
@@ -47,8 +46,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       return
     }
 
-    scaledWidth = mc.window.guiScaledWidth
-    scaledHeight = mc.window.guiScaledHeight
+    val scaledWidth = mc.window.guiScaledWidth
+    val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
 
     val bottomMargin = scaledHeight / MARGIN_CONST
@@ -59,6 +58,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
     if (batchStartTimePrio < 0L) {
       batchStartTimePrio = currentTime
+      endCheckpoint = -1L
     }
 
     val elapsedPrio = currentTime - batchStartTimePrio
@@ -87,14 +87,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       PlayerNotifications.clearForPlayer(player, true)
       batchStartTimePrio = -1L
       globalScrollOffsetPrio = 0f
-
-      RenderSystem.enableBlend()
-      RenderSystem.defaultBlendFunc()
-
-
-
-      RenderSystem.disableBlend()
-
+      endCheckpoint = currentTime
+      shouldPlayOutro = true
       return
     }
 

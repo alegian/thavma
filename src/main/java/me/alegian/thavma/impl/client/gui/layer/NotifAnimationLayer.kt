@@ -28,7 +28,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
   // 0 = top of screen, 1 = bottom
   private const val SYMBOL_Y_FRAC = 0.6f
 
-  // How far each symbol travels from centre, as a fraction of screen width
+  // Where each symbol ends up as a fraction of screen width
   private const val MAX_SEPARATION_FRAC = 0.15f
 
   // ── Sprite geometry ────────────────────────────────────────────────────
@@ -69,7 +69,6 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     if (PriorityNotifLayer.shouldPlayIntro) {
       if (animationOpacity < 1f) {
 
-
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
         RenderSystem.setShaderColor(1f, 1f, 1f, animationOpacity)
@@ -78,49 +77,10 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           graphics, FusedSymbol.location,
           centerX, centerY.toInt()
         )
-
-//        graphics.pose().pushPose()
-//        val xPos = 230f
-//        val yPos = 160f
-//        graphics.pose().translate(xPos, yPos, 1f)
-//        graphics.pose().scale(1 / 14f, 0.0625f, 1f)
-//        graphics.blit(FusedSymbol)
-//        graphics.blit(
-//          ResourceLocation.fromNamespaceAndPath(Thavma.MODID, "textures/layer/symbol_fused.png"),
-//          0,
-//          0,
-//          0,
-//          0,
-//          256,
-//          256
-//        )
-//        graphics.pose().popPose()
-
         RenderSystem.disableBlend()
-      }
-
-//      RenderSystem.enableBlend()
-//      RenderSystem.defaultBlendFunc()
-//      RenderSystem.setShaderColor(1f, 1f, 1f, animationOpacity)
-//
-//      if (animationOpacity < 1f) {
-//        graphics.pose().pushPose()
-//        graphics.pose().scale(2f, 2f, 1f)
-//        graphics.blit(
-//          FusedSymbol.location,
-//          scaledWidth / 2 - 4,
-//          (scaledHeight - scaledHeight / 2.4f - 3).toInt(),
-//          0,
-//          0,
-//          8,
-//          7
-//        )
-//        graphics.pose().popPose()
-//      }
-      else {
+      } else {
         RenderSystem.enableBlend()
         RenderSystem.defaultBlendFunc()
-        //RenderSystem.setShaderColor(1f, 1f, 1f, 1 / 0.85.ow(5).toFloat())
 
         // ── Phase 2: symbols separate outward from centre ──────────────
         val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
@@ -152,37 +112,74 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           graphics, PriorityNotifLayer.Osymbol.location,
           centerX.toInt() * easedT + separationO, centerY.toInt()
         )
-
-//        graphics.pose().pushPose()
-//        val xPos = 230f
-//        val yPos = 160f
-//        graphics.pose().translate(xPos, yPos, 1f)
-//        graphics.pose().scale(1 / 14f, 0.0625f, 1f)
-////        graphics.blit(
-////          ResourceLocation.fromNamespaceAndPath(Thavma.MODID, "textures/layer/symbol_alpha.png"),
-////          (xPos + 0.5.pow(-dexponential.toDouble().pow(-5)).toInt()).toInt(),
-////          0,
-////          0,
-////          0,
-////          256,
-////          256
-////        )
-//        graphics.blit(
-//          ResourceLocation.fromNamespaceAndPath(Thavma.MODID, "textures/layer/symbol_omega.png"),
-//          ((6440*easedT+ (6440) * (1-easedT)).toInt()),
-//          0,
-//          0,
-//          0,
-//          256,
-//          256
-//        )
-//        graphics.pose().popPose()
       }
 
       RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
       RenderSystem.disableBlend()
+    }
+
+    if (PriorityNotifLayer.shouldPlayOutro && !PriorityNotifLayer.shouldPlayIntro) {
+      RenderSystem.enableBlend()
+      RenderSystem.defaultBlendFunc()
+
+      // ── Phase 2: symbols separate outward from centre ──────────────
+      val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
+      // Fade-in phase ends at this many ticks after animationStart
+      val fadeInLength = timeLimit / PriorityNotifLayer.ANIMATION_SPEED  // ≈ 33 ticks
+      // Separation phase runs for the remaining ticks
+      val splitLength = timeLimit - fadeInLength                         // ≈ 67 ticks
+
+      // Raw linear progress through the split phase, 0 → 1
+      val rawT = ((currentTime - PriorityNotifLayer.endCheckpoint).toFloat())
+        .coerceAtLeast(0f) / splitLength
+      // Eased progress — swap easing function here freely
+      val easedT = easeOutQuad(rawT.coerceIn(0f, 1f))
+
+      val separationA = (scaledWidth * MAX_SEPARATION_FRAC * easedT)
+      val separationO = (scaledWidth * (1 - MAX_SEPARATION_FRAC) * easedT)
+
+      RenderSystem.setShaderColor(1f, 1f, 1f, rawT)
+
+      if (currentTime - PriorityNotifLayer.endCheckpoint <= splitLength) {
+        // Alpha moves right from centre
+        blitSprite(
+          graphics, PriorityNotifLayer.Asymbol.location,
+          centerX.toInt() * (1 - easedT) + separationA, centerY.toInt()
+        )
+
+        // Omega moves left from centre
+        blitSprite(
+          graphics, PriorityNotifLayer.Osymbol.location,
+          centerX.toInt() * (1 - easedT) + separationO, centerY.toInt()
+        )
+      }
+      RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+      RenderSystem.disableBlend()
+
+      if (currentTime - PriorityNotifLayer.endCheckpoint >= splitLength) {
+        RenderSystem.enableBlend()
+        RenderSystem.defaultBlendFunc()
+        val alpha = (currentTime - PriorityNotifLayer.endCheckpoint - splitLength) / fadeInLength
+
+        RenderSystem.setShaderColor(
+          1f,
+          1f,
+          1f,
+          1f - ((currentTime - PriorityNotifLayer.endCheckpoint - splitLength) / fadeInLength).coerceIn(0f, 1f)
+        )
+
+        blitSprite(
+          graphics, FusedSymbol.location,
+          centerX, centerY.toInt()
+        )
+        RenderSystem.disableBlend()
+      }
+    }
+    RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
+    RenderSystem.disableBlend()
+    if (currentTime - PriorityNotifLayer.endCheckpoint > timeLimit) PriorityNotifLayer.shouldPlayOutro = false
   }
-  }
+
 
   /**
    * Renders an [SPRITE_W_TEX]×[SPRITE_H_TEX] region from a 256×256 texture
@@ -200,4 +197,3 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     )
   }
 }
-//}

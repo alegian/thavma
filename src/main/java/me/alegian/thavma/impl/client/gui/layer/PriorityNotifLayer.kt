@@ -15,6 +15,9 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   const val FADE_IN_PRIO = 40L
   const val ANIMATION_SPEED = 3.0f
 
+  var scaledWidth = 0
+  var scaledHeight = 0
+
   const val STATIC_DELAY_PRIO = 60L
 
   private const val SCROLL_SPEED_PRIO = 0.4f
@@ -44,8 +47,8 @@ object PriorityNotifLayer : LayeredDraw.Layer {
       return
     }
 
-    val scaledWidth = mc.window.guiScaledWidth
-    val scaledHeight = mc.window.guiScaledHeight
+    scaledWidth = mc.window.guiScaledWidth
+    scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
 
     val bottomMargin = scaledHeight / MARGIN_CONST

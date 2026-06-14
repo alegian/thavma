@@ -17,18 +17,21 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
 
   private var currentPage = 0
   private val fontify = Minecraft.getInstance().font
+  private val entry = entry.value()
 
-  private var maxWidth = BG.width / 2 - 65
-  private var maxHeight = BG.height - 90
+  private var maxWidthCorrection = 0
+  private var maxHeightCorrection = 0
 
   private val scale = 1f
 
   // maxHeight is height of background texture minus padding (32 top 42 bottom)
-  var pages = pagifyFeatures(entry.value().pageFeatures, maxHeight, maxWidth, fontify, scale)
+  var pages = listOf<List<PageFeature>>()
 
   override fun init() {
     super.init()
     clearWidgets()
+    maxWidthCorrection = 0
+    maxHeightCorrection = 0
 
     LayoutExtensions.currScreen = this
     Row({
@@ -41,13 +44,14 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
           size = grow()
           gap = 8
         }) {
-          PageTurnerRow()
-
           Row({
             size = grow()
+            paddingY = PageTurningWidget.LEFT_TEXTURE.height + 8
             paddingX = 32
             paddingBottom = 42
             gap = 48
+            maxWidthCorrection += 2 * paddingX.toInt()
+            maxHeightCorrection += gap.toInt() + paddingBottom.toInt()
           }) {
             Row({
               size = grow()
@@ -56,6 +60,13 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
                 size = grow()
                 gap = 4
               }) {
+                pages = pagifyFeatures(
+                  entry.pageFeatures,
+                  BG.height - maxHeightCorrection,
+                  BG.width / 2 - maxWidthCorrection,
+                  fontify,
+                  scale
+                )
                 val features = pages.getOrNull(currentPage)
                 if (features != null) {
                   for (feature in features) initPageFeature(feature)
@@ -77,6 +88,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
               }
             }
           }
+          PageTurnerRow()
         }
       }
     }
@@ -85,6 +97,8 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private fun PageTurnerRow() {
     Row({
       width = grow()
+      paddingX = 40
+      paddingY = 20
     }) {
       if (currentPage != 0) {
         Box({
@@ -130,7 +144,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private fun <T : PageFeature?> initPageFeature(feature: T) {
     if (feature != null) {
       val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
-      renderer.initPageFeature(this, feature, maxWidth, fontify, scale)
+      renderer.initPageFeature(this, feature, BG.width / 2 - maxWidthCorrection, fontify, scale)
     }
   }
 

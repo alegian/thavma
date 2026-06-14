@@ -51,7 +51,8 @@ class Props() {
     }
 
   var paddingX: Number
-    get() = throw UnsupportedOperationException()
+    //get() = throw UnsupportedOperationException()
+    get() = paddingLeft
     set(value) {
       paddingLeft = value
       paddingRight = value

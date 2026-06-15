@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layer
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.texture.Texture
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -22,10 +21,6 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   private var batchStartTimePrio = -1L
   private var globalScrollOffsetPrio = 0f
   const val MARGIN_CONST = 2.4f
-
-  val Asymbol = Texture("layer/symbol_alpha", 8, 7, 8, 7)
-  val Osymbol = Texture("layer/symbol_omega", 8, 7, 8, 7)
-  val FusedSymbol = Texture("layer/symbol_fused", 8, 7, 8, 7)
 
   var shouldPlayIntro = false
   var shouldPlayOutro = false

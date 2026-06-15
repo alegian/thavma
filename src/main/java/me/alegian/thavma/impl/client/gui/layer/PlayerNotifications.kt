@@ -42,7 +42,6 @@ object PlayerNotifications {
       image = image,
       color = color,
       scale = scale,
-      //addedTime = Util.getMillis()
       addedTime = player.level().gameTime
     )
   }

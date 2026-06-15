@@ -6,10 +6,10 @@ import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.DISPLAY_W
 import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.SPRITE_H_TEX
 import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.SPRITE_W_TEX
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.FADE_IN_PRIO
-import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.FusedSymbol
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.STATIC_DELAY_PRIO
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.animationOpacity
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.animationStart
+import me.alegian.thavma.impl.client.texture.Texture
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -21,6 +21,10 @@ import kotlin.math.pow
 
 @OnlyIn(Dist.CLIENT)
 object NotifAnimationLayer : LayeredDraw.Layer {
+
+  val Asymbol = Texture("layer/symbol_alpha", 8, 7, 8, 7)
+  val Osymbol = Texture("layer/symbol_omega", 8, 7, 8, 7)
+  val FusedSymbol = Texture("layer/symbol_fused", 8, 7, 8, 7)
 
   val timeLimit = FADE_IN_PRIO + STATIC_DELAY_PRIO
 
@@ -103,13 +107,13 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         // Alpha moves right from centre
         blitSprite(
-          graphics, PriorityNotifLayer.Asymbol.location,
+          graphics, Asymbol.location,
           centerX.toInt() * easedT + separationA, centerY.toInt()
         )
 
         // Omega moves left from centre
         blitSprite(
-          graphics, PriorityNotifLayer.Osymbol.location,
+          graphics, Osymbol.location,
           centerX.toInt() * easedT + separationO, centerY.toInt()
         )
       }
@@ -143,13 +147,13 @@ object NotifAnimationLayer : LayeredDraw.Layer {
       if (currentTime - PriorityNotifLayer.endCheckpoint <= splitLength) {
         // Alpha moves right from centre
         blitSprite(
-          graphics, PriorityNotifLayer.Asymbol.location,
+          graphics, Asymbol.location,
           centerX.toInt() * (1 - easedT) + separationA, centerY.toInt()
         )
 
         // Omega moves left from centre
         blitSprite(
-          graphics, PriorityNotifLayer.Osymbol.location,
+          graphics, Osymbol.location,
           centerX.toInt() * (1 - easedT) + separationO, centerY.toInt()
         )
       }

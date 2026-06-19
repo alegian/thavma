@@ -20,10 +20,10 @@ class RecipeFeature(
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
         ResourceLocation.CODEC.fieldOf("recipeRL").forGetter(RecipeFeature::recipeRL),
-        Codec.BOOL.optionalFieldOf("covers_whole_page", true).forGetter(RecipeFeature::coversOneWholePage),
-        Codec.BOOL.optionalFieldOf("starts_page", true).forGetter(RecipeFeature::mustStartPage),
-        Codec.BOOL.optionalFieldOf("has_set_page", true).forGetter(RecipeFeature::mustOccupySetPage),
-        Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(RecipeFeature::preferredPageIndex)
+        Codec.BOOL.optionalFieldOf("covers_one_whole_page", true).forGetter(RecipeFeature::coversOneWholePage),
+        Codec.BOOL.optionalFieldOf("must_start_page", true).forGetter(RecipeFeature::mustStartPage),
+        Codec.BOOL.optionalFieldOf("must_occupy_set_page", true).forGetter(RecipeFeature::mustOccupySetPage),
+        Codec.INT.optionalFieldOf("preferred_page_index", 1).forGetter(RecipeFeature::preferredPageIndex)
       ).apply(builder, ::RecipeFeature)
     }
 

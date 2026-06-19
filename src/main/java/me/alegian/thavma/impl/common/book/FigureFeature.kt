@@ -31,9 +31,9 @@ class FigureFeature(
       builder.group(
         Texture.CODEC.fieldOf("image").forGetter(FigureFeature::image),
         ComponentSerialization.CODEC.optionalFieldOf("caption").forGetter { p -> Optional.ofNullable(p.caption) },
-        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(FigureFeature::mustStartPage),
-        Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(FigureFeature::mustOccupySetPage),
-        Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(FigureFeature::preferredPageIndex)
+        Codec.BOOL.optionalFieldOf("must_start_page", false).forGetter(FigureFeature::mustStartPage),
+        Codec.BOOL.optionalFieldOf("must_occupy_set_page", false).forGetter(FigureFeature::mustOccupySetPage),
+        Codec.INT.optionalFieldOf("preferred_page_index", 1).forGetter(FigureFeature::preferredPageIndex)
       ).apply(builder) { img, cap, start, index, pref ->
         FigureFeature(img, cap.orElse(null), start, index, pref)
       }

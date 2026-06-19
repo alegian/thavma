@@ -33,9 +33,9 @@ class TitleFeature(val text: Component, override val mustStartPage: Boolean = fa
         val CODEC = RecordCodecBuilder.mapCodec { builder ->
             builder.group(
                 ComponentSerialization.CODEC.fieldOf("text").forGetter(TitleFeature::text),
-              Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(TitleFeature::mustStartPage),
-              Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(TitleFeature::mustOccupySetPage),
-              Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(TitleFeature::preferredPageIndex)
+              Codec.BOOL.optionalFieldOf("must_start_page", false).forGetter(TitleFeature::mustStartPage),
+              Codec.BOOL.optionalFieldOf("must_occupy_set_page", false).forGetter(TitleFeature::mustOccupySetPage),
+              Codec.INT.optionalFieldOf("preferred_page_index", 1).forGetter(TitleFeature::preferredPageIndex)
             ).apply(builder, ::TitleFeature)
         }
 

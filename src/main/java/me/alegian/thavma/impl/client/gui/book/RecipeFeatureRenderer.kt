@@ -23,12 +23,13 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
     val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeRL)?.getOrNull()?.value
     if (recipe !is CraftingRecipe) return // TODO: support other recipe types
 
+
     Column({
       alignCross = Alignment.CENTER
       size = grow()
       gap = GAP
     }) {
-      Title()
+      Title(screen.maxWidth)
 
       TextureBox(RESULT) {}
 
@@ -36,7 +37,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
     }
   }
 
-  private fun Title() {
+  private fun Title(maxWidth: Int) {
     val font = Minecraft.getInstance().font
 
     Row({
@@ -44,7 +45,9 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
     }) {
       relativeRenderable {
         Renderable { guiGraphics, _, _, _ ->
-          guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+          val lines = font.split(TITLE, maxWidth)
+          for (line in lines)
+            guiGraphics.drawCenteredString(font, line, size.x / 2)
         }
       }
     }

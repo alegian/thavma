@@ -22,14 +22,14 @@ class FormattedTextFeature(val text: List<FormattedCharSequence>) : PageFeature 
   }
 
   companion object {
-    // this thing bypasses the nonexistent native CODEC for FormattedCharSequence
-    // which we don't even need
-    val CODEC: MapCodec<FormattedTextFeature> = RecordCodecBuilder.mapCodec { instance ->
-      instance.group(
+    // This thing bypasses the nonexistent native CODEC for FormattedCharSequence
+    // We don't need the information from the CODEC, just its existence.
+    val CODEC: MapCodec<FormattedTextFeature> = RecordCodecBuilder.mapCodec { builder ->
+      builder.group(
         ComponentSerialization.CODEC.listOf().fieldOf("text").forGetter { _ ->
           emptyList()
         }
-      ).apply(instance) { components ->
+      ).apply(builder) { components ->
         FormattedTextFeature(components.map { it.visualOrderText })
       }
     }

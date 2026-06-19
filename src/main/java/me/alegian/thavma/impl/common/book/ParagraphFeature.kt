@@ -25,9 +25,9 @@ class ParagraphFeature(
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
         ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
-        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::mustStartPage),
-        Codec.BOOL.optionalFieldOf("has_set_page", false).forGetter(ParagraphFeature::mustOccupySetPage),
-        Codec.INT.optionalFieldOf("preferred_page", 1).forGetter(ParagraphFeature::preferredPageIndex)
+        Codec.BOOL.optionalFieldOf("must_start_page", false).forGetter(ParagraphFeature::mustStartPage),
+        Codec.BOOL.optionalFieldOf("must_occupy_set_page", false).forGetter(ParagraphFeature::mustOccupySetPage),
+        Codec.INT.optionalFieldOf("preferred_page_index", 1).forGetter(ParagraphFeature::preferredPageIndex)
       ).apply(builder, ::ParagraphFeature)
     }
 

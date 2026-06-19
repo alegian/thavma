@@ -23,7 +23,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
       gap = 4
     }) {
       if (page.title != null) {
-        Title(page.title)
+        Title(page.title, screen.maxWidth)
         Separator()
       }
       Row({
@@ -55,7 +55,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
     }
   }
 
-  private fun Title(text: Component) {
+  private fun Title(text: Component, maxWidth: Int) {
     val font = Minecraft.getInstance().font
 
     Row({
@@ -64,7 +64,9 @@ object TextPageRenderer : PageRenderer<TextPage> {
     }) {
       relativeRenderable {
         Renderable { guiGraphics, _, _, _ ->
-          guiGraphics.drawCenteredString(font, text, size.x / 2)
+          val lines = font.split(text, maxWidth)
+          for (line in lines)
+            guiGraphics.drawCenteredString(font, line, size.x / 2)
         }
       }
     }

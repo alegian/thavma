@@ -27,7 +27,7 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
       size = grow()
       gap = GAP
     }) {
-      Title()
+      Title(screen.maxWidth)
 
       TextureBox(RESULT) {}
 
@@ -35,7 +35,7 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
     }
   }
 
-  private fun Title() {
+  private fun Title(maxWidth: Int) {
     val font = Minecraft.getInstance().font
 
     Row({
@@ -43,7 +43,9 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
     }) {
       relativeRenderable {
         Renderable { guiGraphics, _, _, _ ->
-          guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+          val lines = font.split(TITLE, maxWidth)
+          for (line in lines)
+            guiGraphics.drawCenteredString(font, line, size.x / 2)
         }
       }
     }

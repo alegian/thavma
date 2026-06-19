@@ -3,14 +3,7 @@ package me.alegian.thavma.impl.init.data.providers
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.book.CraftingPage
-import me.alegian.thavma.impl.common.book.FigureFeature
-import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.book.PageFeature
-import me.alegian.thavma.impl.common.book.ParagraphFeature
-import me.alegian.thavma.impl.common.book.RecipeFeature
-import me.alegian.thavma.impl.common.book.TextPage
-import me.alegian.thavma.impl.common.book.TitleFeature
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -417,7 +410,7 @@ private fun makeRecipeFeature(
   recipeRL: ResourceLocation,
   coversOneWholePage: Boolean = true,
   mustStartPage: Boolean = true,
-  mustOccupySetPage: Boolean = true,
+  mustOccupySetPage: Boolean = false,
   preferredPageIndex: Int = 1
 ): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
   return { _, _ ->

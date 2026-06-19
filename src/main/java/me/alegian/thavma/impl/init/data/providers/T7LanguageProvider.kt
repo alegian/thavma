@@ -387,8 +387,8 @@ sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet ni
   }
 
   companion object {
-    val PARAGRAPH = 'P'
     val TITLE = 'T'
+    val PARAGRAPH = 'P'
     val FIGURE = 'F'
     val RECIPE = 'R'
   }

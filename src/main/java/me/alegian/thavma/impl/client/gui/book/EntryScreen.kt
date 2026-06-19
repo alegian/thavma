@@ -20,6 +20,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private val entry = entry.value()
 
   private var maxWidthCorrection = 0
+  var maxWidth = 0
   private var maxHeightCorrection = 0
 
   private val scale = 1f
@@ -51,7 +52,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
             paddingBottom = 42
             gap = 48
             maxWidthCorrection += 2 * paddingX.toInt()
-            maxHeightCorrection += gap.toInt() + paddingBottom.toInt()
+            maxHeightCorrection += 2 * paddingY.toInt() + paddingBottom.toInt() - 8
           }) {
             Row({
               size = grow()
@@ -60,10 +61,11 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
                 size = grow()
                 gap = 4
               }) {
-                pages = pagifyFeatures(
+                maxWidth = BG.width / 2 - maxWidthCorrection
+                if (pages.isEmpty()) pages = pagifyFeatures(
                   entry.pageFeatures,
                   BG.height - maxHeightCorrection,
-                  BG.width / 2 - maxWidthCorrection,
+                  maxWidth,
                   fontify,
                   scale
                 )

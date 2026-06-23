@@ -43,9 +43,7 @@ class Size internal constructor(
   internal val mode: SizingMode = SizingMode.AUTO,
   internal var value: Number = 0f,
   internal val fromWidth: ((Float) -> Float)? = null,
-) {
-  internal fun resolve(width: Float): Float = fromWidth?.invoke(width) ?: value.toFloat()
-}
+)
 
 // when adding children, negative sign means "move left"
 private val Alignment.sign: Float
@@ -188,7 +186,8 @@ class T7LayoutElement internal constructor(
    * finalized width. Ran recursively from the root (DFS)
    */
   internal fun resolveDerivedHeightsRecursively() {
-    sizing.y.fromWidth?.let { size.y = sizing.y.resolve(size.x) }
+    sizing.x.fromWidth?.let { throw UnsupportedOperationException("derived is only supported for height") }
+    sizing.y.fromWidth?.let { size = Vec2(size.x, it(size.x)) }
     for (child in children)
       child.resolveDerivedHeightsRecursively()
   }

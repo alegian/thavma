@@ -6,6 +6,7 @@ import me.alegian.thavma.impl.client.util.drawCenteredString
 import me.alegian.thavma.impl.common.book.CraftingPage
 import me.alegian.thavma.impl.common.recipe.translationId
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -40,8 +41,10 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
     Row({
       height = fixed(font.lineHeight)
     }) {
-      relativeRenderable { guiGraphics, _, _, _ ->
-        guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+      draw {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
+        }
       }
     }
   }

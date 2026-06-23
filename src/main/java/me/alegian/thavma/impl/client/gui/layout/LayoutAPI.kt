@@ -1,5 +1,7 @@
 package me.alegian.thavma.impl.client.gui.layout
 
+import net.minecraft.world.phys.Vec2
+
 /**
  * A Layout System for creating Component-based GUIs.
  *
@@ -14,13 +16,13 @@ fun afterLayout(callback: T7LayoutElement.() -> Unit) {
   currElement?.afterLayoutCallbacks?.add(callback)
 }
 
-enum class Alignment() {
+enum class Alignment {
   START,
   CENTER,
   END
 }
 
-class Padding(var left: Float = 0f, var right: Float = 0f, var top: Float = 0f, var bottom: Float = 0f)
+class Padding(val topLeft: Vec2 = Vec2.ZERO, val bottomRight: Vec2 = Vec2.ZERO)
 
 class Sizing(var x: Size = Size(), var y: Size = Size()) {
   constructor(both: Size = Size()) : this(both, both)
@@ -31,8 +33,9 @@ class Align(val main: Alignment = Alignment.START, val cross: Alignment = Alignm
 fun auto(s: Number = 0f) = Size(SizingMode.AUTO, s.toFloat())
 fun fixed(s: Number = 0f) = Size(SizingMode.FIXED, s.toFloat())
 fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
+fun derived(fn: (Float) -> Float) = Size(SizingMode.FIXED, 0f, fn)
 
-class Props() {
+class Props {
   var width = Size()
   var height = Size()
   var paddingLeft: Number = 0f
@@ -81,7 +84,7 @@ class Props() {
   internal fun buildElement(direction: Direction, children: T7LayoutElement.() -> Unit) =
     createElement(
       Sizing(width, height),
-      Padding(paddingLeft.toFloat(), paddingRight.toFloat(), paddingTop.toFloat(), paddingBottom.toFloat()),
+      Padding(Vec2(paddingLeft.toFloat(), paddingTop.toFloat()), Vec2(paddingRight.toFloat(), paddingBottom.toFloat())),
       direction,
       gap.toFloat(),
       Align(alignMain, alignCross),

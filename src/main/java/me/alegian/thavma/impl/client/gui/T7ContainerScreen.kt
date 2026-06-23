@@ -51,7 +51,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
           height = fixed(font.lineHeight)
           width = grow()
         }) {
-          relativeRenderable { text(this@T7ContainerScreen.title, T7Colors.GREEN) }
+          draw { text(this@T7ContainerScreen.title, T7Colors.GREEN) }
         }
 
         TextureBox(bgTexture) {
@@ -69,7 +69,7 @@ abstract class T7ContainerScreen<T : Menu>(menu: T, pPlayerInventory: Inventory,
               width = grow()
               height = fixed(font.lineHeight)
             }) {
-              relativeRenderable { text(this@T7ContainerScreen.playerInventoryTitle, 0x404040) }
+              draw { text(this@T7ContainerScreen.playerInventoryTitle, 0x404040) }
             }
 
             Column({

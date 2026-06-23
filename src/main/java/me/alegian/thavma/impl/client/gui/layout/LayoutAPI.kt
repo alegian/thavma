@@ -16,7 +16,7 @@ fun afterLayout(callback: T7LayoutElement.() -> Unit) {
   currElement?.afterLayoutCallbacks?.add(callback)
 }
 
-enum class Alignment() {
+enum class Alignment {
   START,
   CENTER,
   END
@@ -35,7 +35,7 @@ fun fixed(s: Number = 0f) = Size(SizingMode.FIXED, s.toFloat())
 fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
 fun derived(fn: (Float) -> Float) = Size(SizingMode.FIXED, 0f, fn)
 
-class Props() {
+class Props {
   var width = Size()
   var height = Size()
   var paddingLeft: Number = 0f

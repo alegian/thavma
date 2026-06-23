@@ -41,7 +41,7 @@ object CraftingPageRenderer : PageRenderer<CraftingPage> {
     Row({
       height = fixed(font.lineHeight)
     }) {
-      relativeRenderable {
+      draw {
         Renderable { guiGraphics, _, _, _ ->
           guiGraphics.drawCenteredString(font, TITLE, size.x / 2)
         }

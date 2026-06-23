@@ -29,7 +29,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
       Row({
         size = grow()
       }) {
-        relativeRenderable {
+        draw {
           Renderable { guiGraphics, _, _, _ ->
             guiGraphics.usePose {
               for (paragraph in page.paragraphs) {
@@ -62,7 +62,7 @@ object TextPageRenderer : PageRenderer<TextPage> {
       width = grow()
       height = fixed(font.lineHeight)
     }) {
-      relativeRenderable {
+      draw {
         Renderable { guiGraphics, _, _, _ ->
           guiGraphics.drawCenteredString(font, text, size.x / 2)
         }

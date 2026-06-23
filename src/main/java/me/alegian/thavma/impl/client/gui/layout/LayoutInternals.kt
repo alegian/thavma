@@ -68,7 +68,7 @@ private fun Align.signs(direction: Direction): Vec2 {
 }
 
 private val Padding.all: Vec2
-  get() = Vec2(left + right, top + bottom)
+  get() = topLeft + bottomRight
 
 internal fun createElement(
   sizing: Sizing,
@@ -219,14 +219,9 @@ class T7LayoutElement internal constructor(
       child.afterLayoutRecursively()
   }
 
-  // TODO: clean up. padding at the start of an aligned container
   private fun T7LayoutElement.paddingStart(): Vec2 {
-    val mainPadding = padding.select(direction, align.main == Alignment.START)
-    val crossPadding = padding.select(direction.opposite, align.cross == Alignment.START)
-    return direction.basis * mainPadding + direction.crossBasis * crossPadding
+    val mainVec = if (align.main == Alignment.START) padding.topLeft else padding.bottomRight
+    val crossVec = if (align.cross == Alignment.START) padding.topLeft else padding.bottomRight
+    return mainVec * direction.basis + crossVec * direction.crossBasis
   }
-
-  private fun Padding.select(direction: Direction, isStart: Boolean): Float =
-    if (direction == Direction.TOP_BOTTOM) if (isStart) top else bottom
-    else if (isStart) left else right
 }

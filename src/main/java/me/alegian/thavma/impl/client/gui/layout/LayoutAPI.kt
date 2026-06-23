@@ -1,5 +1,7 @@
 package me.alegian.thavma.impl.client.gui.layout
 
+import net.minecraft.world.phys.Vec2
+
 /**
  * A Layout System for creating Component-based GUIs.
  *
@@ -20,7 +22,7 @@ enum class Alignment() {
   END
 }
 
-class Padding(var left: Float = 0f, var right: Float = 0f, var top: Float = 0f, var bottom: Float = 0f)
+class Padding(val topLeft: Vec2 = Vec2.ZERO, val bottomRight: Vec2 = Vec2.ZERO)
 
 class Sizing(var x: Size = Size(), var y: Size = Size()) {
   constructor(both: Size = Size()) : this(both, both)
@@ -82,7 +84,7 @@ class Props() {
   internal fun buildElement(direction: Direction, children: T7LayoutElement.() -> Unit) =
     createElement(
       Sizing(width, height),
-      Padding(paddingLeft.toFloat(), paddingRight.toFloat(), paddingTop.toFloat(), paddingBottom.toFloat()),
+      Padding(Vec2(paddingLeft.toFloat(), paddingTop.toFloat()), Vec2(paddingRight.toFloat(), paddingBottom.toFloat())),
       direction,
       gap.toFloat(),
       Align(alignMain, alignCross),

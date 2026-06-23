@@ -18,6 +18,8 @@ import kotlin.math.round
 
 internal var currElement: T7LayoutElement? = null
 private fun max(a: Vec2, b: Vec2) = Vec2(max(a.x, b.x), max(a.y, b.y))
+private val xAxis = Vec2(1f, 0f)
+private val yAxis = Vec2(0f, 1f)
 
 internal enum class Direction(val basis: Vec2) {
   NONE(Vec2.ZERO),
@@ -82,16 +84,18 @@ internal fun createElement(
   element.children()
   currElement = element.parent
 
-  // first pass: reverse BFS
-  element.calculateInitialSizes()
   if (element.parent == null) {
+    // first pass: reverse BFS
+    element.calculateInitialSizesRecursively(xAxis)
     // second pass: DFS from root
-    element.calculateDynamicSizesRecursively()
-    // third pass: DFS from root
-    element.resolveDerivedHeightsRecursively()
+    element.calculateDynamicSizesRecursively(xAxis)
+    // third pass: reverse BFS (resolves derived heights)
+    element.calculateInitialSizesRecursively(yAxis)
     // fourth pass: DFS from root
-    element.calculatePositionsRecursively()
+    element.calculateDynamicSizesRecursively(yAxis)
     // fifth pass: DFS from root
+    element.calculatePositionsRecursively()
+    // sixth pass: DFS from root
     element.afterLayoutRecursively()
     currElement = null
   }
@@ -132,70 +136,58 @@ class T7LayoutElement internal constructor(
   }
 
   /**
-   * first pass: calculates sizes for each element, in reverse BFS order,
-   * based on paddings, gaps and sizes of children (as determined in first pass)
+   * calculates sizes for each element along one axis, in reverse BFS order (post-order DFS),
+   * based on paddings, gaps and sizes of children. For the y-axis pass, also resolves derived heights.
    */
-  internal fun calculateInitialSizes() {
-    size += padding.all
-    val childGaps = gap * (children.size - 1)
-    size += direction.basis * childGaps
+  internal fun calculateInitialSizesRecursively(axis: Vec2) {
+    for (child in children)
+      child.calculateInitialSizesRecursively(axis)
+
+    if (axis.y != 0f) sizing.y.fromWidth?.let { size = Vec2(size.x, it(size.x)) }
+
+    size += padding.all * axis
+    size += direction.basis * (gap * (children.size - 1)) * axis
 
     if (parent == null) return
-    val mainBasis = parent.direction.basis
-    parent.size += size * mainBasis * parent.fixedMask
-    val crossBasis = parent.direction.crossBasis
-    parent.size = max(parent.size, size * crossBasis * parent.fixedMask)
+    parent.size += size * parent.direction.basis * axis * parent.fixedMask
+    parent.size = max(parent.size, size * parent.direction.crossBasis * axis * parent.fixedMask)
   }
 
   /**
-   * second pass: calculates the amount by which elements with "grow"
-   * should be expanded, ran recursively from the root (DFS)
+   * calculates the amount by which elements with "grow" should be expanded along one axis,
+   * ran recursively from the root (DFS)
    */
-  internal fun calculateDynamicSizesRecursively() {
+  internal fun calculateDynamicSizesRecursively(axis: Vec2) {
     val mainBasis = direction.basis
     val crossBasis = direction.crossBasis
     var remainingSize = size - padding.all - mainBasis * (gap * (children.size - 1))
 
-    // children that can grow along main axis
-    val mainGrowables = mutableListOf<T7LayoutElement>()
-
-    for (child in children) {
-      val canGrow = child.growBasis.dot(mainBasis) != 0f
-      if (canGrow) mainGrowables.add(child)
-      else remainingSize -= (child.size * mainBasis)
+    if (mainBasis.dot(axis) != 0f) {
+      val mainGrowables = mutableListOf<T7LayoutElement>()
+      for (child in children) {
+        val canGrow = child.growBasis.dot(mainBasis) != 0f
+        if (canGrow) mainGrowables.add(child)
+        else remainingSize -= child.size * mainBasis
+      }
+      for (child in mainGrowables)
+        child.size = (remainingSize / mainGrowables.size.toFloat()) * mainBasis + child.size * crossBasis
     }
 
-    // main axis growth
-    for (child in mainGrowables) {
-      child.size = (remainingSize / mainGrowables.size.toFloat()) * mainBasis + child.size * crossBasis
-    }
-
-    // cross axis growth
-    for (child in children) {
-      val canGrow = child.growBasis.dot(crossBasis) != 0f
-      if (!canGrow) continue
-      child.size += (remainingSize - child.size) * crossBasis
+    if (crossBasis.dot(axis) != 0f) {
+      for (child in children) {
+        val canGrow = child.growBasis.dot(crossBasis) != 0f
+        if (!canGrow) continue
+        child.size += (remainingSize - child.size) * crossBasis
+      }
     }
 
     for (child in children)
-      child.calculateDynamicSizesRecursively()
+      child.calculateDynamicSizesRecursively(axis)
   }
 
   /**
-   * third pass: resolves heights derived from width, after dynamic sizing has
-   * finalized width. Ran recursively from the root (DFS)
-   */
-  internal fun resolveDerivedHeightsRecursively() {
-    sizing.x.fromWidth?.let { throw UnsupportedOperationException("derived is only supported for height") }
-    sizing.y.fromWidth?.let { size = Vec2(size.x, it(size.x)) }
-    for (child in children)
-      child.resolveDerivedHeightsRecursively()
-  }
-
-  /**
-   * fourth pass: calculates the final position of each element,
-   * using paddings, gaps and sizes of children (as determined in first and
-   * second passes). Ran recursively from the root (DFS)
+   * calculates the final position of each element,
+   * using paddings, gaps and sizes of children. Ran recursively from the root (DFS)
    */
   internal fun calculatePositionsRecursively() {
     val childPosition = position + (paddingStart() * align.signs(direction))
@@ -218,7 +210,7 @@ class T7LayoutElement internal constructor(
   }
 
   /**
-   * fifth pass: side effects after layout (e.g. drawing)
+   * side effects after layout (e.g. drawing)
    */
   internal fun afterLayoutRecursively() {
     for (callback in afterLayoutCallbacks)

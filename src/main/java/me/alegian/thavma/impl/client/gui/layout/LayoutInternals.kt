@@ -39,7 +39,13 @@ internal enum class SizingMode {
   GROW
 }
 
-class Size internal constructor(internal val mode: SizingMode = SizingMode.AUTO, internal var value: Number = 0f)
+class Size internal constructor(
+  internal val mode: SizingMode = SizingMode.AUTO,
+  internal var value: Number = 0f,
+  internal val fromWidth: ((Float) -> Float)? = null,
+) {
+  internal fun resolve(width: Float): Float = fromWidth?.invoke(width) ?: value.toFloat()
+}
 
 // when adding children, negative sign means "move left"
 private val Alignment.sign: Float
@@ -84,8 +90,10 @@ internal fun createElement(
     // second pass: DFS from root
     element.calculateDynamicSizesRecursively()
     // third pass: DFS from root
-    element.calculatePositionsRecursively()
+    element.resolveDerivedHeightsRecursively()
     // fourth pass: DFS from root
+    element.calculatePositionsRecursively()
+    // fifth pass: DFS from root
     element.afterLayoutRecursively()
     currElement = null
   }
@@ -176,7 +184,17 @@ class T7LayoutElement internal constructor(
   }
 
   /**
-   * third pass: calculates the final position of each element,
+   * third pass: resolves heights derived from width, after dynamic sizing has
+   * finalized width. Ran recursively from the root (DFS)
+   */
+  internal fun resolveDerivedHeightsRecursively() {
+    sizing.y.fromWidth?.let { size.y = sizing.y.resolve(size.x) }
+    for (child in children)
+      child.resolveDerivedHeightsRecursively()
+  }
+
+  /**
+   * fourth pass: calculates the final position of each element,
    * using paddings, gaps and sizes of children (as determined in first and
    * second passes). Ran recursively from the root (DFS)
    */
@@ -201,7 +219,7 @@ class T7LayoutElement internal constructor(
   }
 
   /**
-   * fourth pass: side effects after layout (e.g. drawing)
+   * fifth pass: side effects after layout (e.g. drawing)
    */
   internal fun afterLayoutRecursively() {
     for (callback in afterLayoutCallbacks)

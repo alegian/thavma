@@ -31,6 +31,7 @@ class Align(val main: Alignment = Alignment.START, val cross: Alignment = Alignm
 fun auto(s: Number = 0f) = Size(SizingMode.AUTO, s.toFloat())
 fun fixed(s: Number = 0f) = Size(SizingMode.FIXED, s.toFloat())
 fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
+fun derived(fn: (Float) -> Float) = Size(SizingMode.FIXED, 0f, fn)
 
 class Props() {
   var width = Size()

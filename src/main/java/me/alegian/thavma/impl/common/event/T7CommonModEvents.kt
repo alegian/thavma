@@ -40,6 +40,7 @@ private fun registerRegistries(event: NewRegistryEvent) {
   event.register(T7Registries.WAND_CORE)
   event.register(T7Registries.ASPECT)
   event.register(T7Registries.PAGE_TYPE)
+  event.register(T7Registries.PAGE_FEATURE_TYPE)
 }
 
 private fun registerDatapackRegistries(event: DataPackRegistryEvent.NewRegistry) {

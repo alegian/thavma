@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.blit
 import me.alegian.thavma.impl.client.util.drawString
-import me.alegian.thavma.impl.client.util.transformOrigin
 import me.alegian.thavma.impl.client.util.translateXY
 import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.menu.slot.DynamicSlot
@@ -41,13 +40,13 @@ private fun renderableTexture(texture: Texture) = Renderable { guiGraphics: GuiG
 }
 
 fun draw(getRenderable: T7LayoutElement.() -> Renderable) {
-  val screen = LayoutExtensions.currScreen ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
+  val screen = LayoutExtensions.currScreen
+    ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   afterLayout {
-    val renderable = getRenderable()
     screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
       guiGraphics.usePose {
         translateXY(position.x, position.y)
-        renderable.render(guiGraphics, mouseX, mouseY, partialTick)
+        getRenderable(this@afterLayout).render(guiGraphics, mouseX, mouseY, partialTick)
       }
     })
   }
@@ -61,6 +60,25 @@ fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
     draw { renderableTexture(texture) }
     children()
   }
+
+fun CenteredTextureBox(texture: Texture, maxWidth: Int, children: T7LayoutElement.() -> Unit) {
+  val screen = LayoutExtensions.currScreen
+    ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
+  Row({
+    width = fixed(texture.width)
+    height = fixed(texture.height)
+  }) {
+    afterLayout {
+      screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
+        guiGraphics.usePose {
+          translateXY(position.x + (maxWidth - texture.width) / 2, position.y)
+          renderableTexture(texture).render(guiGraphics, mouseX, mouseY, partialTick)
+        }
+      })
+    }
+    children()
+  }
+}
 
 private fun T7LayoutElement.slotSetup(slot: Slot) {
   if (slot !is DynamicSlot<*>) return
@@ -79,7 +97,14 @@ fun Slot(slot: Slot, texture: Texture? = null, slotSize: Int? = null) =
       afterLayout { slotSetup(slot) }
     }
 
-fun <T> Grid(rows: Int, columns: Int, elements: List<T>, bgLayers: List<Texture> = listOf(), gapSize: Int = 0, child: (T) -> Unit) =
+fun <T> Grid(
+  rows: Int,
+  columns: Int,
+  elements: List<T>,
+  bgLayers: List<Texture> = listOf(),
+  gapSize: Int = 0,
+  child: (T) -> Unit
+) =
   Column({ gap = gapSize }) {
     for (layer in bgLayers)
       draw { renderableTexture(layer) }

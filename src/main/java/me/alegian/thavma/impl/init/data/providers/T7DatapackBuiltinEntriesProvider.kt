@@ -1,16 +1,14 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.book.CraftingPage
-import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
-import me.alegian.thavma.impl.init.data.Recipes
 import me.alegian.thavma.impl.init.data.worldgen.Node
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
@@ -33,6 +31,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
@@ -127,8 +126,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.BOOK.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-          .addPage(simpleTextPage(3, true))
-          .addPage(simpleTextPage(1, false))
+//          .addPage(simpleTextPage(3, true))
+//          .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
           .defaultKnown()
@@ -141,9 +140,26 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           Items.TURTLE_HELMET.defaultInstance
         )
           .research()
-          .addPage(simpleTextPage(2, true))
-          .addPage(simpleTextPage(2, true))
-          .addPage(simpleTextPage(2, true))
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature(false))
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(
+            makeFigureFeature(
+              Texture("gui/images/haybales", 180, 101, 180, 101),
+              true,
+              false,
+              1,
+              ChatFormatting.DARK_AQUA,
+              ChatFormatting.ITALIC
+            )
+          )
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature(true))
+          .addPageFeature(makeTitleFeature(true))
+          .addPageFeature(makeTitleFeature(true, 0))
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false, false, 2))
+          .addPageFeature(makeParagraphFeature(false, 2))
           .defaultKnown()
           .build(ctx)
 
@@ -175,7 +191,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-          .addPage(simpleTextPage(3, true))
+//          .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -185,7 +201,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
-          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
+//          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -261,7 +277,9 @@ private class ResearchEntryBuilder(
   private val icon: ItemStack
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
-  private val pages = mutableListOf<Page>()
+
+  //  private val pages = mutableListOf<Page>()
+  private val pageFeatures = mutableListOf<PageFeature>()
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
 
@@ -270,8 +288,13 @@ private class ResearchEntryBuilder(
     return this
   }
 
-  fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
-    pages.add(makePage(key, pages.size))
+//  fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
+//    pages.add(makePage(key, pages.size))
+//    return this
+//  }
+
+  inline fun <reified T : PageFeature> addPageFeature(crossinline makeFeature: (ResourceKey<ResearchEntry>, Int) -> T): ResearchEntryBuilder {
+    pageFeatures.add(makeFeature(key, pageFeatures.filterIsInstance<T>().size))
     return this
   }
 
@@ -297,7 +320,8 @@ private class ResearchEntryBuilder(
         pos,
         preferX,
         childrenHolders,
-        pages,
+        //pages,
+        pageFeatures,
         icon,
         Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
         socketStates,
@@ -322,6 +346,87 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
       if (hasTitle) simpleTitle(pageIndex, baseId) else null,
       simpleParagraphs(paragraphCount, pageIndex, baseId)
     )
+  }
+}
+
+private fun makeParagraphFeature(
+  startsPage: Boolean = false,
+  forceIndex: Int? = null
+): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
+  return { entryKey, paragraphIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    ParagraphFeature(
+      Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
+      startsPage, forceIndex
+    )
+  }
+}
+
+private fun makeTitleFeature(
+  startsPage: Boolean = false,
+  forceIndex: Int? = null
+): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
+  return { entryKey, titleIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    TitleFeature(
+      Component.translatable(TitleFeature.translationId(baseId, titleIndex)),
+      startsPage, forceIndex
+    )
+  }
+}
+
+
+private fun makeFigureFeature(
+  image: Texture,
+  giveCaption: Boolean,
+  startsPage: Boolean = false,
+  forceIndex: Int? = null,
+  vararg styles: ChatFormatting?
+): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
+  return if (giveCaption) { entryKey, figureIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    val content = Component.translatable(FigureFeature.translationId(baseId, figureIndex))
+    for (i in styles) {
+      content.apply {
+        if (i != null) {
+          this.withStyle(i)
+        }
+      }
+    }
+    FigureFeature(image, content, startsPage, forceIndex)
+  } else { _, _ ->
+    FigureFeature(image, null, startsPage, forceIndex)
+  }
+}
+
+private fun makeRecipeFeature(
+  recipeRL: ResourceLocation,
+  startsPage: Boolean = true,
+  forceIndex: Int? = 1
+): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
+  return { _, _ ->
+    RecipeFeature(
+      recipeRL, startsPage, forceIndex
+    )
+  }
+}
+
+private fun makeStyledParagraphFeature(
+  startsPage: Boolean = false,
+  forceIndex: Int? = null,
+  vararg styles: ChatFormatting?
+): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
+  return { entryKey, paragraphIndex ->
+    val baseId = ResearchEntry.translationId(entryKey)
+    val content = Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex))
+    for (i in styles) {
+      content.apply {
+        if (i != null) {
+          this.withStyle(i)
+        }
+      }
+    }
+    ParagraphFeature(content, startsPage, forceIndex)
   }
 }
 

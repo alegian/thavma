@@ -27,7 +27,7 @@ object T7Registries {
     .maxId(Int.MAX_VALUE)
     .create()
 
-  val PAGE_FEATURE_TYPE = RegistryBuilder(ResourceKey.createRegistryKey<PageFeatureType<*>>(rl("page_feature")))
+  val PAGE_FEATURE_TYPE = RegistryBuilder(ResourceKey.createRegistryKey<PageFeatureType<*>>(rl("page_feature_type")))
     .maxId(Int.MAX_VALUE)
     .create()
 }

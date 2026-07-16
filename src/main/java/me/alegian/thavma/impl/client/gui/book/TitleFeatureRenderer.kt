@@ -38,18 +38,19 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
 
     Row({
       width = grow()
-      height = fixed(LINE_HEIGHT * (lines.size + PARAGRAPH_OFFSET))
+      height = fixed(LINE_HEIGHT * lines.size)
     }) {
       draw {
         Renderable { guiGraphics, _, _, _ ->
-        guiGraphics.usePose {
-          for ((index, line) in lines.withIndex()) {
-            guiGraphics.drawCenteredString(
-              font, line, size.x / 2
-            )
-            if (index != lines.size - 1) translateXY(0, PRG_OFFSET_OTHER)
+          guiGraphics.usePose {
+            for ((index, line) in lines.withIndex()) {
+              guiGraphics.drawCenteredString(
+                font, line, size.x / 2
+              )
+              translateXY(0, LINE_HEIGHT)
+              if (index != lines.size - 1) translateXY(0, PRG_OFFSET_OTHER)
+            }
           }
-        }
         }
       }
     }

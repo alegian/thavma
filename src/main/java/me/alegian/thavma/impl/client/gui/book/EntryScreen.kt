@@ -20,7 +20,9 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private val entry = _entry.value()
 
   var maxWidth = 0
+  var maxHeight = 0
   var pages = listOf<List<PageFeature>>()
+  private var isFirstPass = true
 
 
   override fun init() {
@@ -36,7 +38,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
       TextureBox(BG) {
         Column({
           size = grow()
-          gap = 8
+          //gap = 8
         }) {
           Row({
             size = grow()
@@ -52,16 +54,21 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
                 size = grow()
                 gap = 4
               }) {
-                //afterLayout {
-                if (pages.isEmpty() && entry.pageFeatures != null) {
-                  pages = pagifyFeatures(entry.pageFeatures)
-                  //maxWidth = this@afterLayout.size.x.toInt()
-                  maxWidth = 60
-                }
-                //}
-                val features = pages.getOrNull(currentPage)
-                if (features != null) {
-                  for (feature in features) initPageFeature(feature)
+                if (isFirstPass) {
+                  afterLayout {
+                    maxWidth = this@afterLayout.size.x.toInt()
+                    maxHeight = this@afterLayout.size.y.toInt()
+                    isFirstPass = false
+                    init()
+                  }
+                } else {
+                  if (pages.isEmpty() && entry.pageFeatures != null) {
+                    pages = pagifyFeatures(entry.pageFeatures)
+                  }
+                  val features = pages.getOrNull(currentPage)
+                  if (features != null) {
+                    for (feature in features) initPageFeature(feature)
+                  }
                 }
               }
             }
@@ -89,6 +96,8 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private fun PageTurnerRow() {
     Row({
       width = grow()
+      paddingX = 30
+      paddingY = 15
     }) {
       if (currentPage != 0) {
         Box({

@@ -208,7 +208,9 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addPageFeature(
       PARAGRAPH,
       ResearchEntries.Story.STORY1, 1, """
-      This is a longer paragraph to highlight the importance of splicing longer pieces of text over multiple pages. If you do not splice the paragraph to go over multiple pages, the text will spill out of the bottom of the screen and we don't want that to happen, hence DynamicRenderingHelper.kt
+      This is a longer paragraph to highlight the importance of splicing longer pieces of text over multiple pages. If you do not splice the paragraph to go over multiple pages, the text will spill out of the bottom of the screen and we don't want that to happen, hence DynamicRenderingHelper.kt. I will continue with some lorem ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
+      Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
+      sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
     addPageFeature(

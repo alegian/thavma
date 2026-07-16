@@ -320,7 +320,6 @@ private class ResearchEntryBuilder(
         pos,
         preferX,
         childrenHolders,
-        pages,
         pageFeatures,
         icon,
         Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),

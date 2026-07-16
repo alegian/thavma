@@ -38,7 +38,6 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
       TextureBox(BG) {
         Column({
           size = grow()
-          //gap = 8
         }) {
           Row({
             size = grow()

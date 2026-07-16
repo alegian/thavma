@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.Row
+import me.alegian.thavma.impl.client.gui.layout.draw
 import me.alegian.thavma.impl.client.gui.layout.fixed
 import me.alegian.thavma.impl.client.gui.layout.grow
 import me.alegian.thavma.impl.client.util.drawString
@@ -23,13 +24,15 @@ object FormCharSeqRenderer : PageFeatureRenderer<FormCharSeqFeature> {
       width = grow()
       height = fixed(LINE_HEIGHT * (feature.text.size + PARAGRAPH_OFFSET))
     }) {
-      Renderable { guiGraphics, _, _, _ ->
-        guiGraphics.usePose {
-          for (line in feature.text) {
-            guiGraphics.drawString(font, line)
-            translateXY(0, LINE_HEIGHT)
+      draw {
+        Renderable { guiGraphics, _, _, _ ->
+          guiGraphics.usePose {
+            for (line in feature.text) {
+              guiGraphics.drawString(font, line)
+              translateXY(0, LINE_HEIGHT)
+            }
+            translateXY(0, PRG_OFFSET_OTHER)
           }
-          translateXY(0, PRG_OFFSET_OTHER)
         }
       }
     }

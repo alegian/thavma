@@ -7,53 +7,93 @@
     "count": 1,
     "id": "minecraft:turtle_helmet"
   },
-  "pages": [
+  "pageFeatures": [
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story1.page0.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story1.page0.paragraph1"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.story.story1.page0.title"
+      "type": "thavma:title",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.title_feature0"
       }
     },
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story1.page1.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story1.page1.paragraph1"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.story.story1.page1.title"
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.paragraph_feature0"
       }
     },
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.story.story1.page2.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.story.story1.page2.paragraph1"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.story.story1.page2.title"
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.paragraph_feature1"
+      }
+    },
+    {
+      "type": "thavma:figure",
+      "caption": {
+        "color": "dark_aqua",
+        "italic": true,
+        "translate": "research/entry.thavma.story.story1.figure_feature0"
+      },
+      "force_index": 1,
+      "image": {
+        "canvas_height": 101,
+        "canvas_width": 180,
+        "height": 101,
+        "location": "thavma:textures/gui/images/haybales.png",
+        "width": 180
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.title_feature1"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "starts_page": true,
+      "text": {
+        "translate": "research/entry.thavma.story.story1.paragraph_feature2"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.title_feature2"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "force_index": 0,
+      "text": {
+        "translate": "research/entry.thavma.story.story1.title_feature3"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.story.story1.paragraph_feature3"
+      }
+    },
+    {
+      "type": "thavma:figure",
+      "force_index": 2,
+      "image": {
+        "canvas_height": 77,
+        "canvas_width": 87,
+        "height": 77,
+        "location": "thavma:textures/gui/images/smileyface.png",
+        "width": 87
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "force_index": 2,
+      "text": {
+        "translate": "research/entry.thavma.story.story1.paragraph_feature4"
       }
     }
   ],
+  "pages": [],
   "position": [
     0,
     -3

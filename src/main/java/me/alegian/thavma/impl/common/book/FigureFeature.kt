@@ -12,7 +12,7 @@ class FigureFeature(
   val image: Texture,
   val caption: Component?,
   override val startsPage: Boolean = false,
-  override val forceIndex: Int? = null
+  override val forceIndex: Int = -1
 ) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.FIGURE.get()
@@ -25,9 +25,9 @@ class FigureFeature(
         Texture.CODEC.fieldOf("image").forGetter(FigureFeature::image),
         ComponentSerialization.CODEC.optionalFieldOf("caption").forGetter { p -> Optional.ofNullable(p.caption) },
         Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(FigureFeature::startsPage),
-        Codec.INT.optionalFieldOf("force_index", null).forGetter(FigureFeature::forceIndex)
+        Codec.INT.optionalFieldOf("force_index", -1).forGetter(FigureFeature::forceIndex)
       ).apply(builder) { img, cap, start, index ->
-        FigureFeature(img, cap.orElse(null), start, index)
+        FigureFeature(img, cap.orElse(Component.literal("")), start, index)
       }
     }
 

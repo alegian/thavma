@@ -40,7 +40,8 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
       width = grow()
       height = fixed(LINE_HEIGHT * (lines.size + PARAGRAPH_OFFSET))
     }) {
-      Renderable { guiGraphics, _, _, _ ->
+      draw {
+        Renderable { guiGraphics, _, _, _ ->
         guiGraphics.usePose {
           for ((index, line) in lines.withIndex()) {
             guiGraphics.drawCenteredString(
@@ -48,6 +49,7 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
             )
             if (index != lines.size - 1) translateXY(0, PRG_OFFSET_OTHER)
           }
+        }
         }
       }
     }

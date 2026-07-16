@@ -9,7 +9,7 @@ import net.minecraft.network.chat.ComponentSerialization
 class ParagraphFeature(
   val text: Component,
   override val startsPage: Boolean = false,
-  override val forceIndex: Int? = null
+  override val forceIndex: Int = -1
 ) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.PARAGRAPH.get()
@@ -19,7 +19,7 @@ class ParagraphFeature(
       builder.group(
         ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
         Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::startsPage),
-        Codec.INT.optionalFieldOf("force_index", null).forGetter(ParagraphFeature::forceIndex)
+        Codec.INT.optionalFieldOf("force_index", -1).forGetter(ParagraphFeature::forceIndex)
       ).apply(builder, ::ParagraphFeature)
     }
 

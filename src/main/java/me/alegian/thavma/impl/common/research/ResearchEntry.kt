@@ -3,6 +3,7 @@ package me.alegian.thavma.impl.common.research
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.Thavma
+import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.common.util.registry
@@ -24,8 +25,8 @@ class ResearchEntry(
   val position: Vector2i,
   val preferX: Boolean,
   val children: List<Holder<ResearchEntry>>,
-  //val pages: List<Page>,
-  val pageFeatures: List<PageFeature>,
+  val pages: List<Page>?,
+  val pageFeatures: List<PageFeature>?,
   val icon: ItemStack,
   val title: Component,
   val defaultResearchState: List<SocketState>,
@@ -46,8 +47,8 @@ class ResearchEntry(
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
         RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_ENTRY, CODEC).listOf().fieldOf("children")
           .forGetter(ResearchEntry::children),
-        //Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
-        PageFeature.CODEC.listOf().fieldOf("pageFeatures").forGetter(ResearchEntry::pageFeatures),
+        Page.CODEC.listOf().optionalFieldOf("pages", null).forGetter(ResearchEntry::pages),
+        PageFeature.CODEC.listOf().optionalFieldOf("pageFeatures", null).forGetter(ResearchEntry::pageFeatures),
         ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
         ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title),
         SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState),

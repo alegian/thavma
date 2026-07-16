@@ -278,7 +278,7 @@ private class ResearchEntryBuilder(
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
 
-  //  private val pages = mutableListOf<Page>()
+  private val pages = mutableListOf<Page>()
   private val pageFeatures = mutableListOf<PageFeature>()
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
@@ -320,7 +320,7 @@ private class ResearchEntryBuilder(
         pos,
         preferX,
         childrenHolders,
-        //pages,
+        pages,
         pageFeatures,
         icon,
         Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
@@ -351,7 +351,7 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
 
 private fun makeParagraphFeature(
   startsPage: Boolean = false,
-  forceIndex: Int? = null
+  forceIndex: Int = -1
 ): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
   return { entryKey, paragraphIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
@@ -363,13 +363,13 @@ private fun makeParagraphFeature(
 }
 
 private fun makeTitleFeature(
-  startsPage: Boolean = false,
-  forceIndex: Int? = null
+  startsPage: Boolean = true,
+  forceIndex: Int = -1
 ): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
   return { entryKey, titleIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     TitleFeature(
-      Component.translatable(TitleFeature.translationId(baseId, titleIndex)),
+      Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD),
       startsPage, forceIndex
     )
   }
@@ -380,7 +380,7 @@ private fun makeFigureFeature(
   image: Texture,
   giveCaption: Boolean,
   startsPage: Boolean = false,
-  forceIndex: Int? = null,
+  forceIndex: Int = -1,
   vararg styles: ChatFormatting?
 ): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
   return if (giveCaption) { entryKey, figureIndex ->
@@ -402,7 +402,7 @@ private fun makeFigureFeature(
 private fun makeRecipeFeature(
   recipeRL: ResourceLocation,
   startsPage: Boolean = true,
-  forceIndex: Int? = 1
+  forceIndex: Int = 1
 ): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
   return { _, _ ->
     RecipeFeature(
@@ -413,7 +413,7 @@ private fun makeRecipeFeature(
 
 private fun makeStyledParagraphFeature(
   startsPage: Boolean = false,
-  forceIndex: Int? = null,
+  forceIndex: Int = -1,
   vararg styles: ChatFormatting?
 ): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
   return { entryKey, paragraphIndex ->

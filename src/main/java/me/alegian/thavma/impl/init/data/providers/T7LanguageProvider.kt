@@ -227,7 +227,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addPageFeature(PARAGRAPH, ResearchEntries.Story.STORY1, 3, "Just another random little paragraph :D")
     addPageFeature(
       PARAGRAPH, ResearchEntries.Story.STORY1, 4, """
-            This paragraph has a pre-set page index of 5
+            This paragraph has a pre-set page index of 2
     """.trimIndent()
     )
 

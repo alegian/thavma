@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.Row
+import me.alegian.thavma.impl.client.gui.layout.draw
 import me.alegian.thavma.impl.client.gui.layout.fixed
 import me.alegian.thavma.impl.client.gui.layout.grow
 import me.alegian.thavma.impl.client.util.drawString
@@ -24,6 +25,7 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
       width = grow()
       height = fixed(LINE_HEIGHT * (lines.size + PARAGRAPH_OFFSET))
     }) {
+      draw {
       Renderable { guiGraphics, _, _, _ ->
         guiGraphics.usePose {
           for (line in lines) {
@@ -32,6 +34,7 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
           }
           translateXY(0, PRG_OFFSET_OTHER)
         }
+      }
       }
     }
   }

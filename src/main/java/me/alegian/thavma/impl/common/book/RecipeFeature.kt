@@ -6,7 +6,7 @@ import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
 import net.minecraft.resources.ResourceLocation
 
 class RecipeFeature(
-  val recipeRL: ResourceLocation, override val startsPage: Boolean = true, override val forceIndex: Int? = 1
+  val recipeRL: ResourceLocation, override val startsPage: Boolean = true, override val forceIndex: Int = 1
 ) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.RECIPE.get()

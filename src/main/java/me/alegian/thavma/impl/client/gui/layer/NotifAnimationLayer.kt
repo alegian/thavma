@@ -34,7 +34,8 @@ object NotifAnimationLayer : LayeredDraw.Layer {
   val octSheet = Texture("layer/octant_spritesheet", 400, 485, 400, 8245)
   val shoeSheet = Texture("layer/horseshoe_spritesheet", 450, 470, 450, 5170)
 
-  val FusedSymbol = Texture("layer/combined", 400, 470, 450, 470)
+  val fusedSymbol = Texture("layer/combined", 400, 470, 450, 470)
+  val colouredSymbol = Texture("layer/combined_colourful", 400, 470, 450, 470)
 
   val timeLimit = FADE_IN_PRIO + STATIC_DELAY_PRIO
 
@@ -89,7 +90,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         RenderSystem.setShaderColor(1f, 1f, 1f, animationOpacity)
 
         graphics.blit(
-          FusedSymbol.location,
+          fusedSymbol.location,
           centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
           SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
           0f, 0f,                  // UV origin in the texture
@@ -128,7 +129,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           centerXshoe.toInt() * easedT + separationO,
           centerYshoe.toInt(),
           false,
-          470f / SYMBOL_RENDER_SCALE * 3 * ((rawT * 50).toInt() % 10)
+          470f / SYMBOL_RENDER_SCALE * 3 / 2f * -((rawT * 40).toInt() % 10)
         )
 
         // Alpha moves right from centre
@@ -198,7 +199,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         )
 
         graphics.blit(
-          FusedSymbol.location,
+          colouredSymbol.location,
           centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
           SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
           0f, 0f,                  // UV origin in the texture

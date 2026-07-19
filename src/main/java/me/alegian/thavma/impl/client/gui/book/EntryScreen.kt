@@ -4,7 +4,6 @@ import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.research.ResearchEntry
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
@@ -16,7 +15,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   }
 
   private var currentPage = 0
-  private val fontify = Minecraft.getInstance().font
+  private val fontify = super.font
   private val entry = _entry.value()
 
   var maxWidth = 0
@@ -61,8 +60,8 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
                     init()
                   }
                 } else {
-                  if (pages.isEmpty() && entry.pageFeatures != null) {
-                    pages = pagifyFeatures(entry.pageFeatures)
+                  if (pages.isEmpty()) {
+                    pages = entry.pageFeatures.map { listOf(it) }
                   }
                   val features = pages.getOrNull(currentPage)
                   if (features != null) {

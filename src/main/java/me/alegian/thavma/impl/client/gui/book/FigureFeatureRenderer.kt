@@ -19,7 +19,7 @@ object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
       width = grow()
       height = fixed(feature.textureHeight)
     }) {
-      CenteredTextureBox(feature.image, maxWidth) {}
+      CenteredTextureBox(feature.image, maxWidth)
     }
   }
 }

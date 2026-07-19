@@ -14,5 +14,4 @@ object PageFeatureTypes {
   val TITLE = REGISTRAR.register("title") { -> PageFeatureType<TitleFeature>(rl("title"), TitleFeature.CODEC) }
   val FIGURE = REGISTRAR.register("figure") { -> PageFeatureType<FigureFeature>(rl("figure"), FigureFeature.CODEC) }
   val RECIPE = REGISTRAR.register("recipe") { -> PageFeatureType<RecipeFeature>(rl("recipe"), RecipeFeature.CODEC) }
-  //val FORMCHARSEQ = REGISTRAR.register("formcharseq") { -> PageFeatureType(rl("formcharseq"), FormCharSeqFeature.CODEC) }
 }

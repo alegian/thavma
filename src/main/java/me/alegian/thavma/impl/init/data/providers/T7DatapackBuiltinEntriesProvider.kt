@@ -126,8 +126,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.BOOK.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-//          .addPage(simpleTextPage(3, true))
-//          .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
           .defaultKnown()
@@ -191,7 +189,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-//          .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -201,7 +198,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
-//          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -287,11 +283,6 @@ private class ResearchEntryBuilder(
     children.add(entryKey)
     return this
   }
-
-//  fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
-//    pages.add(makePage(key, pages.size))
-//    return this
-//  }
 
   inline fun <reified T : PageFeature> addPageFeature(crossinline makeFeature: (ResourceKey<ResearchEntry>, Int) -> T): ResearchEntryBuilder {
     pageFeatures.add(makeFeature(key, pageFeatures.filterIsInstance<T>().size))

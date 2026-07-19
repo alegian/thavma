@@ -230,7 +230,6 @@ private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEven
   event.register(PageFeatureTypes.PARAGRAPH.get(), ParagraphFeatureRenderer)
   event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
   event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
-  //event.register(PageFeatureTypes.FORMCHARSEQ.get(), FormCharSeqRenderer)
   event.register(PageFeatureTypes.RECIPE.get(), RecipeFeatureRenderer)
 }
 

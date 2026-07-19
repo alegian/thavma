@@ -1,10 +1,6 @@
 package me.alegian.thavma.impl.client.gui.layer
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.OCT_DISPLAY_HEIGHT
-import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.OCT_DISPLAY_WIDTH
-import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.OCT_ORIG_HEIGHT
-import me.alegian.thavma.impl.client.gui.layer.NotifAnimationLayer.OCT_ORIG_WIDTH
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.FADE_IN_PRIO
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.STATIC_DELAY_PRIO
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.animationOpacity
@@ -23,21 +19,11 @@ import kotlin.math.pow
 @OnlyIn(Dist.CLIENT)
 object NotifAnimationLayer : LayeredDraw.Layer {
 
-//  val Asymbol = Texture("layer/symbol_alpha", 8, 7, 8, 7)
-//  val Osymbol = Texture("layer/symbol_omega", 8, 7, 8, 7)
-//  val FusedSymbol = Texture("layer/symbol_fused", 8, 7, 8, 7)
-
-  // octant - 400 wide, 485 high
-  // horseshoe - 450 wide, 470 high
   const val ANIMATION_SPEED = 3.0f
 
-  val octSymbol = Texture("layer/octant", 400, 485, 400, 485)
-  val shoeSymbol = Texture("layer/horseshoe", 450, 470, 450, 470)
   val octSheet = Texture("layer/octant_spritesheet", 400, 485, 400, 8245)
   val shoeSheet = Texture("layer/horseshoe_spritesheet", 450, 470, 450, 5170)
-
   val fusedSymbol = Texture("layer/combined", 450, 470, 450, 470)
-  val colouredSymbol = Texture("layer/combined_colourful", 450, 470, 450, 470)
   val coloursOnly = Texture("layer/colours_only", 450, 470, 450, 470)
 
   val timeLimit = FADE_IN_PRIO + STATIC_DELAY_PRIO
@@ -94,11 +80,11 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         graphics.blit(
           fusedSymbol.location,
-          centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
-          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
-          0f, 0f,                  // UV origin in the texture
-          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT, // how many texture pixels to sample
-          shoeSheet.width, shoeSymbol.height              // full texture dimensions
+          centerXshoe.toInt(), centerYshoe.toInt(),
+          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
+          0f, 0f,
+          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
+          shoeSheet.width, shoeSheet.height
         )
 
         RenderSystem.disableBlend()
@@ -216,11 +202,11 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         graphics.blit(
           fusedSymbol.location,
-          centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
-          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
-          0f, 0f,                  // UV origin in the texture
-          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT, // how many texture pixels to sample
-          shoeSheet.width, shoeSymbol.height              // full texture dimensions
+          centerXshoe.toInt(), centerYshoe.toInt(),
+          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
+          0f, 0f,
+          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
+          shoeSheet.width, shoeSheet.height
         )
 
         RenderSystem.setShaderColor(
@@ -232,11 +218,11 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         graphics.blit(
           coloursOnly.location,
-          centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
-          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
-          0f, 0f,                  // UV origin in the texture
-          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT, // how many texture pixels to sample
-          shoeSheet.width, shoeSymbol.height              // full texture dimensions
+          centerXshoe.toInt(), centerYshoe.toInt(),
+          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
+          0f, 0f,
+          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
+          shoeSheet.width, shoeSheet.height
         )
 
         RenderSystem.disableBlend()
@@ -247,12 +233,6 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     if (currentTime - PriorityNotifLayer.endCheckpoint > timeLimit) PriorityNotifLayer.shouldPlayOutro = false
   }
 
-
-  /**
-   * Renders an [OCT_ORIG_WIDTH]×[OCT_ORIG_HEIGHT] region from a 256×256 texture
-   * at [OCT_DISPLAY_WIDTH]×[OCT_DISPLAY_HEIGHT] screen pixels — all in plain screen coordinates,
-   * no confusing pose matrix scaling involved.
-   */
   private fun blitSprite(
     graphics: GuiGraphics,
     location: ResourceLocation,
@@ -264,19 +244,19 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     if (isOctant)
       graphics.blit(
         location,
-        x.toInt(), y,               // screen position
+        x.toInt(), y,                                                       // screen position
         OCT_DISPLAY_WIDTH.toInt(), OCT_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
-        0f, spriteSheetOffset,                  // UV origin in the texture
-        OCT_ORIG_WIDTH, OCT_ORIG_HEIGHT, // how many texture pixels to sample
-        octSheet.width, octSheet.canvasHeight              // full texture dimensions
+        0f, spriteSheetOffset,                                // UV origin in the texture
+        OCT_ORIG_WIDTH, OCT_ORIG_HEIGHT,                      // how many texture pixels to sample
+        octSheet.width, octSheet.canvasHeight       // full texture dimensions
       )
     else graphics.blit(
       location,
-      x.toInt(), y,               // screen position
-      SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
-      0f, spriteSheetOffset,                  // UV origin in the texture
-      SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT, // how many texture pixels to sample
-      shoeSheet.width, shoeSheet.canvasHeight              // full texture dimensions
+      x.toInt(), y,
+      SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
+      0f, spriteSheetOffset,
+      SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
+      shoeSheet.width, shoeSheet.canvasHeight
     )
   }
 }

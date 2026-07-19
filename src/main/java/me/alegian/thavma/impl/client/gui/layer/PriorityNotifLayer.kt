@@ -12,7 +12,6 @@ import net.neoforged.api.distmarker.OnlyIn
 object PriorityNotifLayer : LayeredDraw.Layer {
 
   const val FADE_IN_PRIO = 40L
-  const val ANIMATION_SPEED = 3.0f
 
   const val STATIC_DELAY_PRIO = 60L
 
@@ -61,7 +60,10 @@ object PriorityNotifLayer : LayeredDraw.Layer {
 
     shouldPlayIntro = currentTime - batchStartTimePrio < FADE_IN_PRIO + STATIC_DELAY_PRIO
     animationOpacity =
-      (ANIMATION_SPEED * (currentTime - batchStartTimePrio) / (FADE_IN_PRIO + STATIC_DELAY_PRIO)).coerceIn(0f, 1f)
+      (NotifAnimationLayer.ANIMATION_SPEED * (currentTime - batchStartTimePrio) / (FADE_IN_PRIO + STATIC_DELAY_PRIO)).coerceIn(
+        0f,
+        1f
+      )
     animationStart = batchStartTimePrio
 
     val prioNotifs = notifications

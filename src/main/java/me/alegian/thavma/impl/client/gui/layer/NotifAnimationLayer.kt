@@ -29,13 +29,16 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
   // octant - 400 wide, 485 high
   // horseshoe - 450 wide, 470 high
+  const val ANIMATION_SPEED = 3.0f
+
   val octSymbol = Texture("layer/octant", 400, 485, 400, 485)
   val shoeSymbol = Texture("layer/horseshoe", 450, 470, 450, 470)
   val octSheet = Texture("layer/octant_spritesheet", 400, 485, 400, 8245)
   val shoeSheet = Texture("layer/horseshoe_spritesheet", 450, 470, 450, 5170)
 
-  val fusedSymbol = Texture("layer/combined", 400, 470, 450, 470)
-  val colouredSymbol = Texture("layer/combined_colourful", 400, 470, 450, 470)
+  val fusedSymbol = Texture("layer/combined", 450, 470, 450, 470)
+  val colouredSymbol = Texture("layer/combined_colourful", 450, 470, 450, 470)
+  val coloursOnly = Texture("layer/colours_only", 450, 470, 450, 470)
 
   val timeLimit = FADE_IN_PRIO + STATIC_DELAY_PRIO
 
@@ -106,7 +109,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         // ── Phase 2: symbols separate outward from centre ──────────────
         val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
         // Fade-in phase ends at this many ticks after animationStart
-        val fadeInLength = timeLimit / PriorityNotifLayer.ANIMATION_SPEED  // ≈ 33 ticks
+        val fadeInLength = timeLimit / ANIMATION_SPEED  // ≈ 33 ticks
         // Separation phase runs for the remaining ticks
         val splitLength = timeLimit - fadeInLength                         // ≈ 67 ticks
 
@@ -122,15 +125,23 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1 - easeInOutCubic(rawT))
 
+
+        val frameIndex = (rawT * 40).toInt() % 9 + 1
+        val cleanOffset = (SHOE_ORIG_HEIGHT * frameIndex).toFloat()
+
         // Omega moves left from centre
         blitSprite(
           graphics,
           shoeSheet.location,
           centerXshoe.toInt() * easedT + separationO,
           centerYshoe.toInt(),
-          false,
-          470f / SYMBOL_RENDER_SCALE * 3 / 2f * -((rawT * 40).toInt() % 10)
+          false, cleanOffset
         )
+
+        val easedQuad = easeOutQuadratic(rawT)
+        val pingPong = 1f - abs((easedQuad * 2f) - 1f)
+        val currentFrame = (pingPong * 16).toInt()
+        val offset = 485f * (1 + currentFrame).toFloat()
 
         // Alpha moves right from centre
         blitSprite(
@@ -138,8 +149,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           octSheet.location,
           centerXoct.toInt() * easedT + separationA,
           centerYoct.toInt(),
-          true,
-          485f * -(1 + ((abs(85f - easeOutQuadratic(rawT) * 170).toInt() / 6) % 17))
+          true, offset
         )
       }
 
@@ -154,7 +164,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
       // ── Phase 2: symbols separate outward from centre ──────────────
       val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
       // Fade-in phase ends at this many ticks after animationStart
-      val fadeInLength = timeLimit / PriorityNotifLayer.ANIMATION_SPEED  // ≈ 33 ticks
+      val fadeInLength = timeLimit / ANIMATION_SPEED  // ≈ 33 ticks
       // Separation phase runs for the remaining ticks
       val splitLength = timeLimit - fadeInLength                         // ≈ 67 ticks
 
@@ -171,16 +181,22 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
       if (currentTime - PriorityNotifLayer.endCheckpoint <= splitLength) {
 
+        val frameIndex = (rawT * 40).toInt() % 9 + 1
+        val cleanOffset = (SHOE_ORIG_HEIGHT * frameIndex).toFloat()
         // Omega moves left from centre
         blitSprite(
           graphics, shoeSheet.location,
-          centerXshoe.toInt() * (1 - easedT) + separationO, centerYshoe.toInt(), false, 0f
+          centerXshoe.toInt() * (1 - easedT) + separationO, centerYshoe.toInt(), false, cleanOffset
         )
 
+        val easedQuad = easeOutQuadratic(rawT)
+        val pingPong = 1f - abs((easedQuad * 2f) - 1f)
+        val currentFrame = (pingPong * 16).toInt()
+        val offset = 485f * (1 + currentFrame).toFloat()
         // Alpha moves right from centre
         blitSprite(
           graphics, octSheet.location,
-          centerXoct.toInt() * (1 - easedT) + separationA, centerYoct.toInt(), true, 485f
+          centerXoct.toInt() * (1 - easedT) + separationA, centerYoct.toInt(), true, offset
         )
       }
       RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
@@ -195,11 +211,27 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           1f,
           1f,
           1f,
-          1f - alpha.coerceIn(0f, 1f)
+          1f - 1.5f * alpha.coerceIn(0f, 1f)
         )
 
         graphics.blit(
-          colouredSymbol.location,
+          fusedSymbol.location,
+          centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
+          SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
+          0f, 0f,                  // UV origin in the texture
+          SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT, // how many texture pixels to sample
+          shoeSheet.width, shoeSymbol.height              // full texture dimensions
+        )
+
+        RenderSystem.setShaderColor(
+          1f,
+          1f,
+          1f,
+          if (alpha <= 0.5f) 2 * alpha.coerceIn(0f, 1f) else 2 * (1 - alpha.coerceIn(0f, 1f))
+        )
+
+        graphics.blit(
+          coloursOnly.location,
           centerXshoe.toInt(), centerYshoe.toInt(),               // screen position
           SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),   // how large to draw on screen (2× scale)
           0f, 0f,                  // UV origin in the texture

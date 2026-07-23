@@ -91,8 +91,8 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           .coerceAtLeast(0f) / splitLength
         val easedT = easeOutSex(rawT.coerceIn(0f, 1f))
 
-        val separationA = (scaledWidth * MAX_SEPARATION_FRAC * (1 - easedT))
-        val separationO = ((scaledWidth - SHOE_DISPLAY_WIDTH) * (1 - MAX_SEPARATION_FRAC) * (1 - easedT))
+        val separationOct = (scaledWidth * MAX_SEPARATION_FRAC * (1 - easedT))
+        val separationShoe = ((scaledWidth - SHOE_DISPLAY_WIDTH) * (1 - MAX_SEPARATION_FRAC) * (1 - easedT))
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1 - easeInOutCubic(rawT))
 
@@ -100,7 +100,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         blitSprite(
           graphics,
           shoeSheet.location,
-          centerXshoe.toInt() * easedT + separationO,
+          centerXshoe.toInt() * easedT + separationShoe,
           centerYshoe.toInt(),
           rawT, false
         )
@@ -109,7 +109,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         blitSprite(
           graphics,
           octSheet.location,
-          centerXoct.toInt() * easedT + separationA,
+          centerXoct.toInt() * easedT + separationOct,
           centerYoct.toInt(),
           rawT, true
         )
@@ -128,8 +128,8 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         .coerceAtLeast(0f) / splitLength
       val easedT = easeOutQuadratic(rawT.coerceIn(0f, 1f))
 
-      val separationA = (scaledWidth * MAX_SEPARATION_FRAC * easedT)
-      val separationO = (scaledWidth * (1 - MAX_SEPARATION_FRAC) * easedT)
+      val separationOct = (scaledWidth * MAX_SEPARATION_FRAC * easedT)
+      val separationShoe = (scaledWidth * (1 - MAX_SEPARATION_FRAC) * easedT)
 
       RenderSystem.setShaderColor(1f, 1f, 1f, rawT)
 
@@ -138,14 +138,14 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         // Horseshoe moves left from edge toward centre
         blitSprite(
           graphics, shoeSheet.location,
-          centerXshoe.toInt() * (1 - easedT) + separationO,
+          centerXshoe.toInt() * (1 - easedT) + separationShoe,
           centerYshoe.toInt(), rawT, false
         )
 
         // Octant moves right from edge toward centre
         blitSprite(
           graphics, octSheet.location,
-          centerXoct.toInt() * (1 - easedT) + separationA,
+          centerXoct.toInt() * (1 - easedT) + separationOct,
           centerYoct.toInt(), rawT, true
         )
       }

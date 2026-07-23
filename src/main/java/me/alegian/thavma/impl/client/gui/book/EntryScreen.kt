@@ -15,7 +15,6 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   }
 
   private var currentPage = 0
-  private val fontify = super.font
   private val entry = _entry.value()
 
   var maxWidth = 0
@@ -141,7 +140,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private fun <T : PageFeature?> initPageFeature(feature: T) {
     if (feature != null) {
       val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
-      renderer.initPageFeature(this, feature, maxWidth, fontify)
+      renderer.initPageFeature(this, feature, maxWidth, this.font)
     }
   }
 

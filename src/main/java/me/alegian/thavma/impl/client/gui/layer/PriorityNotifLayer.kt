@@ -12,11 +12,8 @@ import net.neoforged.api.distmarker.OnlyIn
 object PriorityNotifLayer : LayeredDraw.Layer {
 
   const val FADE_IN_PRIO = 40L
-
   const val STATIC_DELAY_PRIO = 60L
-
   private const val SCROLL_SPEED_PRIO = 0.4f
-
   private var batchStartTimePrio = -1L
   private var globalScrollOffsetPrio = 0f
   const val MARGIN_CONST = 2.4f
@@ -44,6 +41,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     val scaledHeight = mc.window.guiScaledHeight
     val font = mc.font
 
+    // this defines the heights at which lines of text will fade in/out
     val bottomMargin = scaledHeight / MARGIN_CONST
     val fadeInStart = scaledHeight * 17 / 32f
     val fadeInEnd = scaledHeight * 9 / 16f
@@ -67,7 +65,7 @@ object PriorityNotifLayer : LayeredDraw.Layer {
     animationStart = batchStartTimePrio
 
     val prioNotifs = notifications
-      .take(PlayerNotifications.MAX_VISIBLE_PRIO)
+      .take(PlayerNotifications.MAX_LISTABLE_PRIO)
       .map { n -> n to font.split(n.text, (scaledWidth * 6 / 10f / n.scale).toInt()) }
 
     globalScrollOffsetPrio = if (inScrollPrio)
@@ -104,24 +102,25 @@ object PriorityNotifLayer : LayeredDraw.Layer {
                 (pixelOffsetPrio + (lineIndex + 0.5f) * rowHeight)
         val screenY = baseY - globalScrollOffsetPrio
 
-        var alpha: Int
-        var multiplier: Float
+        var alpha = 255
+        when {
+          screenY < fadeInStart -> alpha = 0
+          screenY in fadeInStart..fadeInEnd -> alpha =
+            (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).toInt()
 
-        if (currentTime - batchStartTimePrio < FADE_IN_PRIO) multiplier =
-          ((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f) else multiplier = 1f
+          screenY in fadeInEnd..fadeOutStart -> alpha = 255
+          screenY in fadeOutStart..fadeOutEnd -> alpha =
+            ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).toInt()
 
-        if (screenY < fadeInStart) alpha = 0
-        else if (screenY in fadeInStart..fadeInEnd) alpha =
-          (255 - (fadeInEnd - screenY) / (fadeInEnd - fadeInStart) * 255).coerceIn(0f, 255F).toInt()
-        else if (screenY in fadeInEnd..fadeOutStart) alpha = 255
-        else if (screenY in fadeOutStart..fadeOutEnd) alpha =
-          ((fadeOutEnd - screenY) / (fadeOutEnd - fadeOutStart) * 255).coerceIn(0f, 255f).toInt()
-        else if (screenY > fadeOutEnd) alpha = 0
-        else alpha = 255
+          screenY > fadeOutEnd -> alpha = 0
+        }
 
-        alpha = (alpha * multiplier).toInt()
+        val multiplier = if (currentTime - batchStartTimePrio < FADE_IN_PRIO)
+          ((currentTime - notif.addedTime).toFloat() / FADE_IN_PRIO).coerceIn(0f, 1f)
+        else 1f
 
-        alpha = alpha.coerceIn(0, 255)
+        alpha = (alpha * multiplier).toInt().coerceIn(0, 255)
+
         if (alpha == 0) return@forEachIndexed
 
         val cr = (notif.color shr 16) and 0xFF
@@ -137,23 +136,11 @@ object PriorityNotifLayer : LayeredDraw.Layer {
         graphics.pose().scale(notif.scale, notif.scale, 1f)
         graphics.drawString(font, line, 0, 0, textArgb, true)
         graphics.pose().popPose()
-
-        if (lineIndex == 0) {
-          notif.image?.let { tex ->
-            RenderSystem.setShaderColor(
-              cr / 255f, cg / 255f, cb / 255f, alpha / 511f
-            )
-            graphics.blit(tex, scaledWidth - 18, screenY.toInt() - 6, 0, 0, 16, 16)
-            RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
-          }
-        }
       }
 
       pixelOffsetPrio += (lines.size + 1) * rowHeight
     }
     graphics.disableScissor()
     RenderSystem.disableBlend()
-
-
   }
 }

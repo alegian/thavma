@@ -60,17 +60,15 @@ object RegularNotifLayer : LayeredDraw.Layer {
     val font = mc.font
     val elapsedReg = currentTime - batchStartTimeReg
 
-    // ── Phase gate ────────────────────────────────────────────────────────
     val inScrollReg = elapsedReg >= FADE_IN_REG + STATIC_DELAY_REG
 
     globalScrollOffsetReg = if (inScrollReg)
       (elapsedReg - FADE_IN_REG - STATIC_DELAY_REG).toFloat() * SCROLL_SPEED_REG
     else 0f
 
-    // Split each notification into wrapped lines (rendering artifact, not stored)
-    // NEEDS SOME TWEAKING
+    // Split each notification into wrapped lines
     val regNotifs = notifications
-      .take((PlayerNotifications.MAX_VISIBLE_REG / notifications.first().scale).toInt())
+      .take((PlayerNotifications.MAX_LISTABLE_REG / notifications.first().scale).toInt())
       .map { n -> n to font.split(n.text, (scaledWidth / 3.5f / n.scale).toInt()).reversed() }
 
     // Total pixel height of all rendered rows including inter-group gaps

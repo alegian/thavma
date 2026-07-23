@@ -10,8 +10,8 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 object PlayerNotifications {
 
-  const val MAX_VISIBLE_REG = Int.MAX_VALUE
-  const val MAX_VISIBLE_PRIO = Int.MAX_VALUE
+  const val MAX_LISTABLE_REG = Int.MAX_VALUE
+  const val MAX_LISTABLE_PRIO = Int.MAX_VALUE
   const val FONT_SIZE_REG = 0.35f
   const val FONT_SIZE_PRIO = 1f
 
@@ -46,11 +46,11 @@ object PlayerNotifications {
     )
   }
 
-  /** Non-mutating read — RegularNotifLayer decides when to clear. */
+  /** Non-mutating read — Priority/RegularNotifLayer decides when to clear. */
   internal fun getForPlayer(player: Player): List<Notification> =
     queue.filter { it.player == player }
 
-  /** Called by RegularNotifLayer once the scroll-out animation completes. */
+  /** Called by Priority/RegularNotifLayer once the scroll-out animation completes. */
   internal fun clearForPlayer(player: Player, isPriority: Boolean) {
     queue.removeAll { it.player == player && it.isPriority == isPriority }
   }

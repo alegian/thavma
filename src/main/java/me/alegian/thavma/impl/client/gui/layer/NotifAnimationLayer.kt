@@ -19,14 +19,10 @@ import kotlin.math.pow
 @OnlyIn(Dist.CLIENT)
 object NotifAnimationLayer : LayeredDraw.Layer {
 
-  const val ANIMATION_SPEED = 3.0f
-
   val octSheet = Texture("layer/octant_spritesheet", 400, 485, 400, 8245)
   val shoeSheet = Texture("layer/horseshoe_spritesheet", 450, 470, 450, 5170)
   val fusedSymbol = Texture("layer/combined", 450, 470, 450, 470)
   val coloursOnly = Texture("layer/colours_only", 450, 470, 450, 470)
-
-  val timeLimit = FADE_IN_PRIO + STATIC_DELAY_PRIO
 
   // ── Position (fractions of screen dimensions — easy to read and tune) ──
   // 0 = top of screen, 1 = bottom
@@ -34,6 +30,9 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
   // Distance where each symbol ends up as a fraction of screen width
   private const val MAX_SEPARATION_FRAC = 0.10f
+
+  // How fast sprites fade in/out before/after text starts/finishes scrolling
+  const val ANIMATION_SPEED = 3.0f
 
   // ── Sprite geometry ────────────────────────────────────────────────────
   // Native texture size of each symbol in its sprite sheet
@@ -49,19 +48,15 @@ object NotifAnimationLayer : LayeredDraw.Layer {
   private val SHOE_DISPLAY_WIDTH get() = SHOE_ORIG_WIDTH * SYMBOL_RENDER_SCALE
   private val SHOE_DISPLAY_HEIGHT get() = SHOE_ORIG_HEIGHT * SYMBOL_RENDER_SCALE
 
-  private fun easeOutQuadratic(t: Float) = (1f - t) * (1f - t)
-  private fun easeOutSex(t: Float) = (1f - t).pow(6)
-  private fun easeInOutCubic(t: Float) =
-    if (t < 0.5f) 4f * t * t * t
-    else 1f - (-2f * t + 2f).pow(3) / 2f
+  val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
+  val fadeInLength = timeLimit / ANIMATION_SPEED  // ≈ 33 ticks
+  val splitLength = timeLimit - fadeInLength
 
   override fun render(
     graphics: GuiGraphics,
     deltaTracker: DeltaTracker
   ) {
-
-    val mc = Minecraft.getInstance()
-    val player = mc.player ?: return
+    val player = Minecraft.getInstance().player ?: return
     val currentTime = player.level().gameTime
 
     val scaledWidth = graphics.guiWidth()
@@ -71,13 +66,13 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     val centerXshoe = scaledWidth / 2f - SHOE_DISPLAY_WIDTH / 2f
     val centerYshoe = scaledHeight * SYMBOL_Y_FRAC - SHOE_DISPLAY_HEIGHT / 2f
 
+    // when "a" first priority notification appears, play intro
     if (PriorityNotifLayer.shouldPlayIntro) {
       if (animationOpacity < 1f) {
-
-        RenderSystem.enableBlend()
-        RenderSystem.defaultBlendFunc()
+        renderSystemStart()
         RenderSystem.setShaderColor(1f, 1f, 1f, animationOpacity)
 
+        // Symbols fade in as one joined sprite
         graphics.blit(
           fusedSymbol.location,
           centerXshoe.toInt(), centerYshoe.toInt(),
@@ -89,53 +84,34 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
         RenderSystem.disableBlend()
       } else {
-        RenderSystem.enableBlend()
-        RenderSystem.defaultBlendFunc()
-
-        // ── Phase 2: symbols separate outward from centre ──────────────
-        val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
-        // Fade-in phase ends at this many ticks after animationStart
-        val fadeInLength = timeLimit / ANIMATION_SPEED  // ≈ 33 ticks
-        // Separation phase runs for the remaining ticks
-        val splitLength = timeLimit - fadeInLength                         // ≈ 67 ticks
+        renderSystemStart()
 
         // Raw linear progress through the split phase, 0 → 1
         val rawT = ((currentTime - animationStart).toFloat() - fadeInLength)
           .coerceAtLeast(0f) / splitLength
-        // Eased progress — swap easing function here freely
         val easedT = easeOutSex(rawT.coerceIn(0f, 1f))
 
-        // Separation in screen pixels at this frame (0 at start, maxSep at end)
         val separationA = (scaledWidth * MAX_SEPARATION_FRAC * (1 - easedT))
         val separationO = ((scaledWidth - SHOE_DISPLAY_WIDTH) * (1 - MAX_SEPARATION_FRAC) * (1 - easedT))
 
         RenderSystem.setShaderColor(1f, 1f, 1f, 1 - easeInOutCubic(rawT))
 
-
-        val frameIndex = (rawT * 40).toInt() % 9 + 1
-        val cleanOffset = (SHOE_ORIG_HEIGHT * frameIndex).toFloat()
-
-        // Omega moves left from centre
+        // Horseshoe moves right from centre
         blitSprite(
           graphics,
           shoeSheet.location,
           centerXshoe.toInt() * easedT + separationO,
           centerYshoe.toInt(),
-          false, cleanOffset
+          rawT, false
         )
 
-        val easedQuad = easeOutQuadratic(rawT)
-        val pingPong = 1f - abs((easedQuad * 2f) - 1f)
-        val currentFrame = (pingPong * 16).toInt()
-        val offset = 485f * (1 + currentFrame).toFloat()
-
-        // Alpha moves right from centre
+        // Octant moves left from centre
         blitSprite(
           graphics,
           octSheet.location,
           centerXoct.toInt() * easedT + separationA,
           centerYoct.toInt(),
-          true, offset
+          rawT, true
         )
       }
 
@@ -143,21 +119,13 @@ object NotifAnimationLayer : LayeredDraw.Layer {
       RenderSystem.disableBlend()
     }
 
+    // when the last line of priority notifications is gone, play outro
     if (PriorityNotifLayer.shouldPlayOutro && !PriorityNotifLayer.shouldPlayIntro) {
-      RenderSystem.enableBlend()
-      RenderSystem.defaultBlendFunc()
-
-      // ── Phase 2: symbols separate outward from centre ──────────────
-      val timeLimit = (FADE_IN_PRIO + STATIC_DELAY_PRIO).toFloat()
-      // Fade-in phase ends at this many ticks after animationStart
-      val fadeInLength = timeLimit / ANIMATION_SPEED  // ≈ 33 ticks
-      // Separation phase runs for the remaining ticks
-      val splitLength = timeLimit - fadeInLength                         // ≈ 67 ticks
+      renderSystemStart()
 
       // Raw linear progress through the split phase, 0 → 1
       val rawT = ((currentTime - PriorityNotifLayer.endCheckpoint).toFloat())
         .coerceAtLeast(0f) / splitLength
-      // Eased progress — swap easing function here freely
       val easedT = easeOutQuadratic(rawT.coerceIn(0f, 1f))
 
       val separationA = (scaledWidth * MAX_SEPARATION_FRAC * easedT)
@@ -167,30 +135,25 @@ object NotifAnimationLayer : LayeredDraw.Layer {
 
       if (currentTime - PriorityNotifLayer.endCheckpoint <= splitLength) {
 
-        val frameIndex = (rawT * 40).toInt() % 9 + 1
-        val cleanOffset = (SHOE_ORIG_HEIGHT * frameIndex).toFloat()
-        // Omega moves left from centre
+        // Horseshoe moves left from edge toward centre
         blitSprite(
           graphics, shoeSheet.location,
-          centerXshoe.toInt() * (1 - easedT) + separationO, centerYshoe.toInt(), false, cleanOffset
+          centerXshoe.toInt() * (1 - easedT) + separationO,
+          centerYshoe.toInt(), rawT, false
         )
 
-        val easedQuad = easeOutQuadratic(rawT)
-        val pingPong = 1f - abs((easedQuad * 2f) - 1f)
-        val currentFrame = (pingPong * 16).toInt()
-        val offset = 485f * (1 + currentFrame).toFloat()
-        // Alpha moves right from centre
+        // Octant moves right from edge toward centre
         blitSprite(
           graphics, octSheet.location,
-          centerXoct.toInt() * (1 - easedT) + separationA, centerYoct.toInt(), true, offset
+          centerXoct.toInt() * (1 - easedT) + separationA,
+          centerYoct.toInt(), rawT, true
         )
       }
       RenderSystem.setShaderColor(1f, 1f, 1f, 1f)
       RenderSystem.disableBlend()
 
       if (currentTime - PriorityNotifLayer.endCheckpoint >= splitLength) {
-        RenderSystem.enableBlend()
-        RenderSystem.defaultBlendFunc()
+        renderSystemStart()
         val alpha = (currentTime - PriorityNotifLayer.endCheckpoint - splitLength) / fadeInLength
 
         RenderSystem.setShaderColor(
@@ -200,6 +163,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           1f - 1.5f * alpha.coerceIn(0f, 1f)
         )
 
+        // Symbols fade out as one joined sprite
         graphics.blit(
           fusedSymbol.location,
           centerXshoe.toInt(), centerYshoe.toInt(),
@@ -216,6 +180,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
           if (alpha <= 0.5f) 2 * alpha.coerceIn(0f, 1f) else 2 * (1 - alpha.coerceIn(0f, 1f))
         )
 
+        // Coloured highlights blink shortly
         graphics.blit(
           coloursOnly.location,
           centerXshoe.toInt(), centerYshoe.toInt(),
@@ -238,10 +203,15 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     location: ResourceLocation,
     x: Float,
     y: Int,
-    isOctant: Boolean,
-    spriteSheetOffset: Float
+    rawT: Float,
+    isOctant: Boolean
   ) {
-    if (isOctant)
+    if (isOctant) {
+      val easedQuad = easeOutQuadratic(rawT)
+      val pingPong = 1f - abs((easedQuad * 2f) - 1f)
+      val currentFrame = (pingPong * 16).toInt()
+      val spriteSheetOffset = 485f * (1 + currentFrame).toFloat()
+
       graphics.blit(
         location,
         x.toInt(), y,                                                       // screen position
@@ -250,13 +220,29 @@ object NotifAnimationLayer : LayeredDraw.Layer {
         OCT_ORIG_WIDTH, OCT_ORIG_HEIGHT,                      // how many texture pixels to sample
         octSheet.width, octSheet.canvasHeight       // full texture dimensions
       )
-    else graphics.blit(
-      location,
-      x.toInt(), y,
-      SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
-      0f, spriteSheetOffset,
-      SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
-      shoeSheet.width, shoeSheet.canvasHeight
-    )
+    } else {
+      val frameIndex = (rawT * 40).toInt() % 9 + 1
+      val spriteSheetOffset = (SHOE_ORIG_HEIGHT * frameIndex).toFloat()
+
+      graphics.blit(
+        location,
+        x.toInt(), y,
+        SHOE_DISPLAY_WIDTH.toInt(), SHOE_DISPLAY_HEIGHT.toInt(),
+        0f, spriteSheetOffset,
+        SHOE_ORIG_WIDTH, SHOE_ORIG_HEIGHT,
+        shoeSheet.width, shoeSheet.canvasHeight
+      )
+    }
+  }
+
+  private fun easeOutQuadratic(t: Float) = (1f - t) * (1f - t)
+  private fun easeOutSex(t: Float) = (1f - t).pow(6)
+  private fun easeInOutCubic(t: Float) =
+    if (t < 0.5f) 4f * t * t * t
+    else 1f - (-2f * t + 2f).pow(3) / 2f
+
+  private fun renderSystemStart() {
+    RenderSystem.enableBlend()
+    RenderSystem.defaultBlendFunc()
   }
 }

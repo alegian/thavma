@@ -17,11 +17,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private var currentPage = 0
   private val entry = _entry.value()
 
-  var maxWidth = 0
-  var maxHeight = 0
   var pages = listOf<List<PageFeature>>()
-  private var isFirstPass = true
-
 
   override fun init() {
     super.init()
@@ -51,21 +47,12 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
                 size = grow()
                 gap = 4
               }) {
-                if (isFirstPass) {
-                  afterLayout {
-                    maxWidth = this@afterLayout.size.x.toInt()
-                    maxHeight = this@afterLayout.size.y.toInt()
-                    isFirstPass = false
-                    init()
-                  }
-                } else {
-                  if (pages.isEmpty()) {
-                    pages = entry.pageFeatures.map { listOf(it) }
-                  }
-                  val features = pages.getOrNull(currentPage)
-                  if (features != null) {
-                    for (feature in features) initPageFeature(feature)
-                  }
+                if (pages.isEmpty()) {
+                  pages = entry.pageFeatures.map { listOf(it) }
+                }
+                val features = pages.getOrNull(currentPage)
+                if (features != null) {
+                  for (feature in features) initPageFeature(feature)
                 }
               }
             }
@@ -140,7 +127,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private fun <T : PageFeature?> initPageFeature(feature: T) {
     if (feature != null) {
       val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
-      renderer.initPageFeature(this, feature, maxWidth, this.font)
+      renderer.initPageFeature(this, feature, this.font)
     }
   }
 

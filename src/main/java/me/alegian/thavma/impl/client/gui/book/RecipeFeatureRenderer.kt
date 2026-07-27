@@ -19,7 +19,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
   private val TITLE = Component.translatable(RecipeType.CRAFTING.translationId)
   private const val GAP = 12
 
-  override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature, maxWidth: Int, font: Font) {
+  override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature, font: Font) {
     val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeRL)?.getOrNull()?.value
     if (recipe !is CraftingRecipe) return // TODO: support other recipe types
 

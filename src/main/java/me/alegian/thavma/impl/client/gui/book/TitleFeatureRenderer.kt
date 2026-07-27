@@ -8,6 +8,7 @@ import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.book.TitleFeature
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.util.FormattedCharSequence
 
 object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
 
@@ -16,10 +17,9 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
   override fun initPageFeature(
     screen: EntryScreen,
     feature: TitleFeature,
-    maxWidth: Int,
     font: Font
   ) {
-    Title(feature, maxWidth, font)
+    Title(feature, font)
     Separator()
   }
 
@@ -32,13 +32,16 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
     }
   }
 
-  private fun Title(title: TitleFeature, maxWidth: Int, font: Font) {
+  private fun Title(title: TitleFeature, font: Font) {
 
-    val lines = font.split(title.text, maxWidth)
+    var lines: List<FormattedCharSequence> = listOf()
 
     Row({
       width = grow()
-      height = fixed(LINE_HEIGHT * lines.size)
+      height = derived { w ->
+        lines = font.split(title.text, w.toInt())
+        (LINE_HEIGHT * lines.size).toFloat()
+      }
     }) {
       draw {
         Renderable { guiGraphics, _, _, _ ->

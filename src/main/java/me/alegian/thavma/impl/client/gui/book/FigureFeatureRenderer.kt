@@ -12,14 +12,13 @@ object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
   override fun initPageFeature(
     screen: EntryScreen,
     feature: FigureFeature,
-    maxWidth: Int,
     font: Font
   ) {
     Row({
       width = grow()
       height = fixed(feature.textureHeight)
     }) {
-      CenteredTextureBox(feature.image, maxWidth)
+      CenteredTextureBox(feature.image)
     }
   }
 }

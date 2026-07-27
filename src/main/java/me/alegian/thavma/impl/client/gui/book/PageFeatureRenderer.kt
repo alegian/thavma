@@ -7,5 +7,5 @@ import net.minecraft.client.gui.Font
 val PAGE_FEATURE_RENDERERS = mutableMapOf<PageFeatureType<*>, PageFeatureRenderer<*>>()
 
 interface PageFeatureRenderer<T : PageFeature> {
-  fun initPageFeature(screen: EntryScreen, feature: T, maxWidth: Int, font: Font)
+  fun initPageFeature(screen: EntryScreen, feature: T, font: Font)
 }

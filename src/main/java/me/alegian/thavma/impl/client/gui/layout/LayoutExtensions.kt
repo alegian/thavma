@@ -65,7 +65,7 @@ fun CenteredTextureBox(texture: Texture) {
   val screen = LayoutExtensions.currScreen
     ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   Row({
-    width = fixed(texture.width)
+    width = grow()
     height = fixed(texture.height)
   }) {
     afterLayout {

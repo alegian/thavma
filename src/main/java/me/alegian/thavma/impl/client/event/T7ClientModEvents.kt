@@ -5,8 +5,7 @@ import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
-import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
-import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
+import me.alegian.thavma.impl.client.gui.book.*
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
@@ -42,6 +41,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun clientSetup(event: FMLClientSetupEvent) {
   ModLoader.postEvent(RegisterPageRenderersEvent())
+  ModLoader.postEvent(RegisterPageFeatureRenderersEvent())
   ItemProperties.register(T7Items.RESEARCH_SCROLL.get(), T7ItemProperties.COMPLETED) { stack, level, entity, seed ->
     val completed = stack.get(T7DataComponents.RESEARCH_STATE)?.completed ?: false
     if (completed) 1f else 0f
@@ -226,6 +226,14 @@ private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
   event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
 }
 
+private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent) {
+  event.register(PageFeatureTypes.PARAGRAPH.get(), ParagraphFeatureRenderer)
+  event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
+  event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
+  event.register(PageFeatureTypes.RECIPE.get(), RecipeFeatureRenderer)
+  event.register(PageFeatureTypes.BREAK.get(), PageBreakFeatureRenderer)
+}
+
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
   event.register(T7KeyMappings.FOCI)
 }
@@ -251,6 +259,7 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
   KFF_MOD_BUS.addListener(::registerPageRenderers)
+  KFF_MOD_BUS.addListener(::registerPageFeatureRenderers)
   KFF_MOD_BUS.addListener(::registerKeyMappings)
   KFF_MOD_BUS.addListener(::registerRenderBuffers)
 }

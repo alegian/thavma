@@ -11,23 +11,14 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
-import me.alegian.thavma.impl.common.book.TextPage
+import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
-import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -68,7 +59,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Items.ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(T7Items.RESEARCH_SCROLL.get(), "Research Scroll")
     add(T7Items.ARCANE_LENS.get(), "Arcane Lens")
-    add(T7Items.BOOK.get(), "Elements of Thavma")
+    add(T7Items.BOOK.get(), "Elements")
 
     add(T7Items.BASIC_AMULET.get(), "Basic Amulet")
     add(T7Items.BASIC_BELT.get(), "Basic Belt")
@@ -207,25 +198,39 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
 
-    addTextPage(
-      ResearchEntries.Story.STORY1, 0,
-      "A Courtesy Call 1",
-      "Lorem ipsum %s 1 sit amet,",
-      "this story a great meaning haveth."
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 0, "This title starts the page")
+    addPageFeature(
+      PARAGRAPH,
+      ResearchEntries.Story.STORY1, 0, """
+      This is a short paragraph just to showcase that the feature exists.
+    """
     )
-
-    addTextPage(
-      ResearchEntries.Story.STORY1, 1,
-      "A Courtesy Call 2",
-      "Lorem dolor 2 sit amet,",
-      "this story a great meaning haveth."
+    addPageFeature(
+      PARAGRAPH,
+      ResearchEntries.Story.STORY1, 1, """
+      This is a longer paragraph to highlight the importance of splicing longer pieces of text over multiple pages. If you do not splice the paragraph to go over multiple pages, the text will spill out of the bottom of the screen and we don't want that to happen, hence DynamicRenderingHelper.kt. I will continue with some lorem ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
+      Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
+      sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
+    """.trimIndent()
     )
-
-    addTextPage(
-      ResearchEntries.Story.STORY1, 2,
-      "A Courtesy Call 3",
-      "Lorem lotrumatum dolor 3 sit amet,",
-      "this story a great meaning haveth."
+    addPageFeature(
+      FIGURE,
+      ResearchEntries.Story.STORY1, 0, """ A short caption for the figure just to show the custom style """.trimIndent()
+    )
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 1, "This might appear in the middle")
+    addPageFeature(
+      PARAGRAPH,
+      ResearchEntries.Story.STORY1, 2, """
+      This paragraph should start a new page always.
+    """.trimIndent()
+    )
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 2, "(start of page)")
+    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 3, "This is page number 1!")
+    addPageFeature(PARAGRAPH, ResearchEntries.Story.STORY1, 3, "Just another random little paragraph :D")
+    addPageFeature(
+      PARAGRAPH, ResearchEntries.Story.STORY1, 4, """
+            This paragraph has a pre-set page index of 2
+    """.trimIndent()
     )
 
     addTextPage(
@@ -236,7 +241,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         flew into my hands! I can sense great power within it.
       """,
       """
-        The cover reads "Elements of Thavma", but a lot of its pages appear blank, sealed by some magic.
+        The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
       """,
       """
         To read them, I will first need to break that seal. It won't be easy... but
@@ -310,7 +315,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
     add(
       RecipeViewerDescriptions.RESEARCH_SCROLL,
-      "Obtained by clicking any unknown entry in the \"Elements of Thavma\""
+      "Obtained by clicking any unknown entry in the \"Elements\""
     )
 
     add(RecipeViewerAliases.BOOK, "Book")
@@ -359,4 +364,22 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
         paragraphs[parIndex].trimIndent().replace("\n", " ")
       )
   }
+
+  private fun addPageFeature(identifier: Char, entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
+    val baseId = ResearchEntry.translationId(entryKey)
+    when (identifier) {
+      'P' -> add(ParagraphFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'T' -> add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'F' -> add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+      'R' -> add(RecipeFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
+    }
+  }
+
+  companion object {
+    val PARAGRAPH = 'P'
+    val TITLE = 'T'
+    val FIGURE = 'F'
+    val RECIPE = 'R'
+  }
+
 }

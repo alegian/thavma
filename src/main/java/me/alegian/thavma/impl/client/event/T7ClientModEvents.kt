@@ -231,6 +231,7 @@ private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEven
   event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
   event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
   event.register(PageFeatureTypes.RECIPE.get(), RecipeFeatureRenderer)
+  event.register(PageFeatureTypes.BREAK.get(), PageBreakFeatureRenderer)
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {

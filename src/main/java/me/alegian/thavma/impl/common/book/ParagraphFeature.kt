@@ -8,7 +8,6 @@ import net.minecraft.network.chat.ComponentSerialization
 
 class ParagraphFeature(
   val text: Component,
-  override val startsPage: Boolean = false,
   override val forceIndex: Int = -1
 ) : PageFeature {
   override val type: PageFeatureType<*>
@@ -18,7 +17,6 @@ class ParagraphFeature(
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
         ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
-        Codec.BOOL.optionalFieldOf("starts_page", false).forGetter(ParagraphFeature::startsPage),
         Codec.INT.optionalFieldOf("force_index", -1).forGetter(ParagraphFeature::forceIndex)
       ).apply(builder, ::ParagraphFeature)
     }

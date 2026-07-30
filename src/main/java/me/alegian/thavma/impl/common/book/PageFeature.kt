@@ -3,10 +3,8 @@ package me.alegian.thavma.impl.common.book
 import me.alegian.thavma.impl.init.registries.T7Registries
 
 interface PageFeature {
-
-  val startsPage: Boolean
-  val forceIndex: Int?
-    get() = null
+  val forceIndex: Int
+    get() = -1
 
   val type: PageFeatureType<*>
 

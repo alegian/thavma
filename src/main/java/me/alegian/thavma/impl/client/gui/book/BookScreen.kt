@@ -1,7 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.clientRegistry
-import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
@@ -22,6 +21,11 @@ class BookScreen : Screen(Component.literal("book")) {
   private var selectorOffset = 0
   private val entryWidgets = mutableListOf<EntryWidget>()
 
+  private val entries = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.toList()
+  private var currentEntries = entries?.filter { it.value().category.value() == currentCategory }
+  var currentWidgets = listOf<EntryWidget>()
+
+
   override fun init() {
     super.init()
     val player = Minecraft.getInstance().player ?: return
@@ -31,19 +35,23 @@ class BookScreen : Screen(Component.literal("book")) {
 
     val categoryRegistry = clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
     currentCategory = categoryRegistry?.getOrThrow(ResearchCategories.THAVMA)
-    categoryRegistry?.forEach {
-      tabs[it] = addRenderableOnly(TabRenderable(this))
-    }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.forEach {
-      val tab = tabs[it.value().category.value()]
-      var shown = player.knowsResearch(it)
-      for (p in it.value().parents(player.level()))
-        if (player.knowsResearch(p)) shown = true
 
-      if (tab != null && shown)
-        entryWidgets.add(addRenderableWidget(EntryWidget(this, tab, it)))
+    categoryRegistry?.forEach { category ->
+      tabs[category] = addRenderableOnly(
+        TabRenderable(
+          this,
+          category,
+          entries?.filter { it.value().category.value() == category },
+          player
+        )
+      )
+
     }
     updateEntryWidgets()
+
+    currentWidgets = entryWidgets.filter { entryWidget ->
+      currentEntries?.map { it.value() }?.contains(entryWidget.entry.value()) == true
+    }
 
     addRenderableOnly(FrameRenderable)
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
@@ -68,6 +76,10 @@ class BookScreen : Screen(Component.literal("book")) {
   }
 
   override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, dragX: Double, dragY: Double): Boolean {
+
+    val dimensionX = currentWidgets.maxOf { it.x } - currentWidgets.minOf { it.x }
+    val dimensionY = currentWidgets.maxOf { it.y } - currentWidgets.minOf { it.y }
+
     if (button != 0) {
       this.isScrolling = false
       return false
@@ -75,7 +87,7 @@ class BookScreen : Screen(Component.literal("book")) {
       if (!this.isScrolling) {
         this.isScrolling = true
       } else {
-        currentTab.drag(dragX, dragY)
+        currentTab.drag(dragX / (dimensionX - 1), dragY / (dimensionY - 1))
       }
 
       return true

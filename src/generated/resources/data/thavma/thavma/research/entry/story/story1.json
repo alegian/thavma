@@ -95,6 +95,54 @@
       "text": {
         "translate": "research/entry.thavma.story.story1.paragraph_feature4"
       }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 1."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 2."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 3."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 4."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 5."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 6."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 7."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 8."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 9."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 10."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 11."
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": "Pagination test paragraph 12."
     }
   ],
   "position": [

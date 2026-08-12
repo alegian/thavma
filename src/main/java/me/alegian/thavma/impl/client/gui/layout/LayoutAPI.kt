@@ -35,6 +35,12 @@ fun fixed(s: Number = 0f) = Size(SizingMode.FIXED, s.toFloat())
 fun grow(s: Number = 0f) = Size(SizingMode.GROW, s.toFloat())
 fun derived(fn: (Float) -> Float) = Size(SizingMode.FIXED, 0f, fn)
 
+class Pagination<T>(internal val items: List<T>) {
+  internal var pageCount = 0
+
+  fun hasPage(index: Int): Boolean = index in 0 until pageCount
+}
+
 class Props {
   var width = Size()
   var height = Size()
@@ -108,6 +114,25 @@ fun Column(
   val props = Props()
   props.propSetter()
   return props.buildElement(Direction.TOP_BOTTOM, children)
+}
+
+fun <T> PaginatedColumn(
+  pagination: Pagination<T>,
+  pageIndex: Int,
+  propSetter: Props.() -> Unit = {},
+  item: T7LayoutElement.(T) -> Unit,
+): T7LayoutElement {
+  val itemElements = mutableListOf<T7LayoutElement>()
+
+  return Column(propSetter) {
+    for (value in pagination.items) {
+      itemElements += Column({ width = grow() }) {
+        item(value)
+      }
+    }
+
+    paginate(pagination, pageIndex, itemElements)
+  }
 }
 
 fun Box(

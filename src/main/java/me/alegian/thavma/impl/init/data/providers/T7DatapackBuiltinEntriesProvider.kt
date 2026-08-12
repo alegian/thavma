@@ -158,6 +158,13 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeParagraphFeature())
           .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false, false, 2))
           .addPageFeature(makeParagraphFeature(false, 2))
+          .apply {
+            repeat(12) { index ->
+              addPageFeature { _, _ ->
+                ParagraphFeature(Component.literal("Pagination test paragraph ${index + 1}."))
+              }
+            }
+          }
           .defaultKnown()
           .build(ctx)
 

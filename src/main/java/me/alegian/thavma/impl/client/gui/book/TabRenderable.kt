@@ -20,17 +20,22 @@ class TabRenderable(
 ) : Renderable {
   companion object{
     private const val ZOOM_MULTIPLIER = 1.25
-    private const val maxScrollX = 300.0
-    private const val maxScrollY = 300.0
+    const val maxScrollX = 600.0
+    const val maxScrollY = 300.0
     private const val minZoom = 0.0
     private const val maxZoom = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
 
   }
 
-  val entryWidgets: List<EntryWidget>? = entries?.mapNotNull { entry ->
-    if (player.knowsParentResearch(entry)) EntryWidget(screen, this, entry) else null
+  // unsure about the not-null assertion (here !!) but we expect tabs to have entries right?
+  val entryWidgets: List<EntryWidget> = entries!!.mapNotNull { entry ->
+    if (player.knowsParentResearch(entry)) EntryWidget(screen, this, entry, player) else null
   }
+
+  val dimensionX = entryWidgets.maxOf { it.x } - entryWidgets.minOf { it.x }
+  val dimensionY = entryWidgets.maxOf { it.y } - entryWidgets.minOf { it.y }
+  val average = (dimensionY + dimensionX) / 2
 
   var scrollX = 0.0
     private set
@@ -39,8 +44,10 @@ class TabRenderable(
   private var zoom = 2.0 // TODO: this is actually inverse zoom
 
   fun drag(x: Double, y: Double) {
-    val rawScrollX = scrollX - zoomFactor() * x
-    val rawScrollY = scrollY - zoomFactor() * y
+
+    //CLEAN UP THE NUMBERS HERE
+    val rawScrollX = scrollX - zoomFactor() * x * 1200 / (average * 10 + 50)
+    val rawScrollY = scrollY - zoomFactor() * y * 1200 / (average * 10 + 50)
 
     scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
     scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)

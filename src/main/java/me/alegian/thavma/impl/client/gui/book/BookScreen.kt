@@ -1,10 +1,10 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientRegistry
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
@@ -28,7 +28,7 @@ class BookScreen : Screen(Component.literal("book")) {
 
   override fun init() {
     super.init()
-    val player = Minecraft.getInstance().player ?: return
+    val player = ClientHelper.player() ?: return
 
     entryWidgets.clear()
     selectorOffset = cornerHeight + selectorGap
@@ -87,7 +87,7 @@ class BookScreen : Screen(Component.literal("book")) {
       if (!this.isScrolling) {
         this.isScrolling = true
       } else {
-        currentTab.drag(dragX / (dimensionX - 1), dragY / (dimensionY - 1))
+        currentTab.drag(dragX, dragY)
       }
 
       return true

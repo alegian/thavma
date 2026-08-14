@@ -25,7 +25,6 @@ class TabRenderable(
     private const val minZoom = 0.0
     private const val maxZoom = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
-
   }
 
   // unsure about the not-null assertion (here !!) but we expect tabs to have entries right?

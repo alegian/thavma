@@ -22,9 +22,6 @@ class BookScreen : Screen(Component.literal("book")) {
   private val entryWidgets = mutableListOf<EntryWidget>()
 
   private val entries = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.toList()
-  private var currentEntries = entries?.filter { it.value().category.value() == currentCategory }
-  var currentWidgets = listOf<EntryWidget>()
-
 
   override fun init() {
     super.init()
@@ -45,13 +42,13 @@ class BookScreen : Screen(Component.literal("book")) {
           player
         )
       )
-
     }
+
+    // moved EntryWidget creation logic into TabRenderable.kt, here only adding them via
+    // the protected method addRenderableWidget
+    tabs.forEach { tab -> entryWidgets.addAll(tab.value.entryWidgets.map { addRenderableWidget(it) }) }
+
     updateEntryWidgets()
-
-    currentWidgets = entryWidgets.filter { entryWidget ->
-      currentEntries?.map { it.value() }?.contains(entryWidget.entry.value()) == true
-    }
 
     addRenderableOnly(FrameRenderable)
     clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
@@ -76,9 +73,6 @@ class BookScreen : Screen(Component.literal("book")) {
   }
 
   override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, dragX: Double, dragY: Double): Boolean {
-
-    val dimensionX = currentWidgets.maxOf { it.x } - currentWidgets.minOf { it.x }
-    val dimensionY = currentWidgets.maxOf { it.y } - currentWidgets.minOf { it.y }
 
     if (button != 0) {
       this.isScrolling = false

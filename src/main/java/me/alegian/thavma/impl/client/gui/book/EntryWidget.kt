@@ -53,7 +53,7 @@ class EntryWidget(
 
   private val pos = entry.value().position
 
-  //CLEAN UP THE NUMBERS HERE
+  //CLEAN UP THE NUMBERS HERE (extract into function)
   override fun getX(): Int {
     return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX / (300 / (tab.average * 1.5 + 10))) / tab.zoomFactor() + screen.width / 2).toInt()
   }
@@ -96,16 +96,16 @@ class EntryWidget(
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
-      renderEntry(guiGraphics)
+      // Magic numbers here affect speed and min/max alpha when blinking
+      val alpha = abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f
+
+      renderEntry(guiGraphics, alpha)
 
       if (!knowsResearch) return@usePose
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
         val dv = child.value().position - pos
-
-        //CLEAN THE NUMBERS HERE
-        val alpha = abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f
 
         guiGraphics.usePose {
           renderConnectionRecursive(
@@ -139,11 +139,9 @@ class EntryWidget(
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
   }
 
-  private fun renderEntry(guiGraphics: GuiGraphics) {
+  private fun renderEntry(guiGraphics: GuiGraphics, blinkingAlpha: Float) {
     val brightness = if (knowsResearch) 1f else 0.55f
-
-    // CLEAN UP THE NUMBERS HERE
-    val alpha = if (knowsResearch) 1f else abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f
+    val alpha = if (knowsResearch) 1f else blinkingAlpha
 
     renderGridElement(
       guiGraphics,

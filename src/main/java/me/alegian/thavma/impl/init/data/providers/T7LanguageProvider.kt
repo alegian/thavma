@@ -197,6 +197,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
+    addEntry(ResearchEntries.Story.STORY2, "A Literary Genius")
 
     addTextPage(
       ResearchEntries.Story.STORY1, 0,

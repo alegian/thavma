@@ -27,14 +27,18 @@ class TabRenderable(
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
   }
 
-  // unsure about the not-null assertion (here !!) but we expect tabs to have entries right?
   val entryWidgets: List<EntryWidget> = entries!!.mapNotNull { entry ->
     if (player.knowsParentResearch(entry)) EntryWidget(screen, this, entry, player) else null
   }
 
-  val dimensionX = entryWidgets.maxOf { it.x } - entryWidgets.minOf { it.x }
-  val dimensionY = entryWidgets.maxOf { it.y } - entryWidgets.minOf { it.y }
-  val average = (dimensionY + dimensionX) / 2
+  // average of the height and width of the "circumscribed" rectangle of all active and inactive entry widgets in a tab
+  // the larger the rectangle the slower the background drags by and the faster entry widgets do
+  val average =
+    (entryWidgets.maxOf { it.x } - entryWidgets.minOf { it.x } + entryWidgets.maxOf { it.y } - entryWidgets.minOf { it.y }) / 2
+
+  // Magic numbers - magnitude of the parallax effect of the background
+  private fun parallax(scroll: Double, factor: Double) =
+    scroll - factor * 1200 / (average * 10 + 50)
 
   var scrollX = 0.0
     private set
@@ -44,9 +48,8 @@ class TabRenderable(
 
   fun drag(x: Double, y: Double) {
 
-    //CLEAN UP THE NUMBERS HERE
-    val rawScrollX = scrollX - zoomFactor() * x * 1200 / (average * 10 + 50)
-    val rawScrollY = scrollY - zoomFactor() * y * 1200 / (average * 10 + 50)
+    val rawScrollX = parallax(scrollX, zoomFactor() * x)
+    val rawScrollY = parallax(scrollY, zoomFactor() * y)
 
     scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
     scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)

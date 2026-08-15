@@ -53,14 +53,12 @@ class EntryWidget(
 
   private val pos = entry.value().position
 
-  //CLEAN UP THE NUMBERS HERE (extract into function)
   override fun getX(): Int {
-    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX / (300 / (tab.average * 1.5 + 10))) / tab.zoomFactor() + screen.width / 2).toInt()
+    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 + parallax(tab.scrollX)) / tab.zoomFactor() + screen.width / 2).toInt()
   }
 
-  //CLEAN UP THE NUMBERS HERE
   override fun getY(): Int {
-    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY / (300 / (tab.average * 1.5 + 10))) / tab.zoomFactor() + screen.height / 2).toInt()
+    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 + parallax(tab.scrollY)) / tab.zoomFactor() + screen.height / 2).toInt()
   }
 
   override fun getWidth(): Int {
@@ -86,17 +84,14 @@ class EntryWidget(
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
       scaleXY(1 / tab.zoomFactor())
-
-      // CLEAN UP THE NUMBERS HERE
       translateXY(
-        -tab.scrollX / (300 / (tab.average * 1.5 + 10)),
-        -tab.scrollY / (300 / (tab.average * 1.5 + 10))
+        parallax(tab.scrollX),
+        parallax(tab.scrollY)
       )
-
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
-      // Magic numbers here affect speed and min/max alpha when blinking
+      // Magic numbers here affect speed and min/max alpha when blinking (unknown research)
       val alpha = abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f
 
       renderEntry(guiGraphics, alpha)
@@ -170,6 +165,9 @@ class EntryWidget(
   override fun playDownSound(handler: SoundManager) {
     handler.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0f, 1.0f))
   }
+
+  // Magic numbers - magnitude of the parallax effect of entry widgets
+  private fun parallax(scroll: Double) = -scroll * (tab.average * 1.5 + 10) / 300
 
   companion object {
     val TEXTURE = Texture("gui/book/node", 32, 32)

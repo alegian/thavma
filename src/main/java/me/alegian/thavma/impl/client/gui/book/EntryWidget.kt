@@ -1,15 +1,12 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import com.mojang.blaze3d.systems.RenderSystem
-import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.resetRenderSystemColor
-import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.entity.knowsParentResearch
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -24,23 +21,28 @@ import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.entity.player.Player
 import net.neoforged.neoforge.network.PacketDistributor
+import kotlin.math.abs
+import kotlin.math.sin
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
  * entry.preferX makes connections prefer the X axis.
  * Straight lines will ignore this preference
  */
-class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val entry: Holder<ResearchEntry>) :
+class EntryWidget(
+  private val screen: BookScreen,
+  val tab: TabRenderable,
+  val entry: Holder<ResearchEntry>,
+  val player: Player
+) :
   AbstractWidget(0, 0, CELL_SIZE, CELL_SIZE, entry.value().title) {
   private var gaveScroll = false
   val knowsResearch =
-    ClientHelper.player()?.knowsResearch(entry) ?: false
+    player.knowsResearch(entry)
   val knowsParents =
-    ClientHelper.player()?.let { player ->
-      val parents = entry.value().parents(player.level())
-      parents.all { player.knowsResearch(it) }
-    } ?: false
+    player.knowsParentResearch(entry)
   val children = entry.value().children
 
   init {
@@ -52,11 +54,11 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   private val pos = entry.value().position
 
   override fun getX(): Int {
-    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
+    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 + parallax(tab.scrollX)) / tab.zoomFactor() + screen.width / 2).toInt()
   }
 
   override fun getY(): Int {
-    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY) / tab.zoomFactor() + screen.height / 2).toInt()
+    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 + parallax(tab.scrollY)) / tab.zoomFactor() + screen.height / 2).toInt()
   }
 
   override fun getWidth(): Int {
@@ -74,26 +76,47 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
         && mouseX < x + getWidth()
         && mouseY < y + getHeight()
 
+    guiGraphics.enableCrop(
+      FrameRenderable.CORNER_TEXTURE.width / 2 + FrameRenderable.EDGE_TEXTURE.height / 2,
+      FrameRenderable.CORNER_TEXTURE.height / 2 + FrameRenderable.EDGE_TEXTURE.height / 2
+    )
+
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
       scaleXY(1 / tab.zoomFactor())
-      translateXY(-tab.scrollX, -tab.scrollY)
+      translateXY(
+        parallax(tab.scrollX),
+        parallax(tab.scrollY)
+      )
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
-      renderEntry(guiGraphics)
+      // Magic numbers here affect speed and min/max alpha when blinking (unknown research)
+      val alpha = abs(sin(player.level().gameTime / 8.0f)) / 4 * 3 + 0.25f
+
+      renderEntry(guiGraphics, alpha)
 
       if (!knowsResearch) return@usePose
       // allows negative size drawing, which greatly simplifies math
       RenderSystem.disableCull()
       for (child in children) {
         val dv = child.value().position - pos
+
         guiGraphics.usePose {
-          renderConnectionRecursive(dv.x, dv.y, guiGraphics, child.value().preferX, false)
+          renderConnectionRecursive(
+            dv.x,
+            dv.y,
+            guiGraphics,
+            child.value().preferX,
+            false,
+            alpha,
+            player.knowsResearch(child)
+          )
         }
       }
       RenderSystem.enableCull()
     }
+    guiGraphics.disableCrop()
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
@@ -111,18 +134,23 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
   }
 
-  private fun renderEntry(guiGraphics: GuiGraphics) {
-    var brightness = 1f
-    if (!knowsResearch) brightness = 0.4f
-    RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
+  private fun renderEntry(guiGraphics: GuiGraphics, blinkingAlpha: Float) {
+    val brightness = if (knowsResearch) 1f else 0.55f
+    val alpha = if (knowsResearch) 1f else blinkingAlpha
 
     renderGridElement(
       guiGraphics,
       1f,
       1f,
       TEXTURE.location,
-      false
+      false,
+      alpha,
+      knowsResearch
     )
+
+    RenderSystem.enableBlend()
+    RenderSystem.defaultBlendFunc()
+    guiGraphics.setColor(brightness, brightness, brightness, alpha)
 
     guiGraphics.usePose {
       scaleXY(1f / CELL_SIZE) // back to pixel space
@@ -130,12 +158,16 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       guiGraphics.renderItem(entry.value().icon, -8, -8)
     }
 
-    resetRenderSystemColor()
+    guiGraphics.setColor(1f, 1f, 1f, 1f)
+    RenderSystem.disableBlend()
   }
 
   override fun playDownSound(handler: SoundManager) {
     handler.play(SimpleSoundInstance.forUI(SoundEvents.BOOK_PAGE_TURN, 1.0f, 1.0f))
   }
+
+  // Magic numbers - magnitude of the parallax effect of entry widgets
+  private fun parallax(scroll: Double) = -scroll * (tab.average * 1.5 + 10) / 300
 
   companion object {
     val TEXTURE = Texture("gui/book/node", 32, 32)

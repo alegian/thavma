@@ -25,6 +25,13 @@ fun Player.knowsResearch(entry: Holder<ResearchEntry>): Boolean {
   return knows(entry.unwrapKey().get())
 }
 
+fun Player.knowsParentResearch(entry: Holder<ResearchEntry>): Boolean {
+  for (parent in entry.value().parents(this.level())) {
+    if (!this.knowsResearch(parent)) return false
+  }
+  return true
+}
+
 fun Player.knowsAspect(aspect: Aspect) = aspect.isPrimal || knows(aspect.resourceKey)
 
 private fun Player.knows(resourceKey: ResourceKey<*>) =

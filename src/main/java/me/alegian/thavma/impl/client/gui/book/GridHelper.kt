@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import me.alegian.thavma.impl.client.texture.Texture
@@ -25,7 +26,15 @@ val CORNER_2X2 = Texture("gui/book/corner_2x2", 96, 96)
  * along x or y axis)
  * Uses recursion to draw long connections.
  */
-fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphics, preferX: Boolean, invert: Boolean) {
+fun PoseStack.renderConnectionRecursive(
+  dx: Int,
+  dy: Int,
+  guiGraphics: GuiGraphics,
+  preferX: Boolean,
+  invert: Boolean,
+  blinkingAlpha: Float,
+  knowsChild: Boolean
+) {
   val absDx = abs(dx)
   val absDy = abs(dy)
   val signX = dx.sign
@@ -37,19 +46,19 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
   else if (!invert && (preferX && absDx > absDy && absDy > 0 || !preferX && absDy > absDx && absDx > 0)) {
     translateXY(dx, dy)
-    renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true)
+    renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true, blinkingAlpha, knowsChild)
   } else if (absDx == absDy) {
     translateXY(dx / 2f, dy / 2f)
     translateXY(preference * signX * inversion / 2f, -preference * signY * inversion / 2f)
-    renderCorner(guiGraphics, dx * inversion, dy * inversion, preferX)
+    renderCorner(guiGraphics, dx * inversion, dy * inversion, preferX, blinkingAlpha, knowsChild)
   } else if (absDx > absDy) {
     translateXY(signX, 0)
-    renderLine(guiGraphics, signX * inversion, 1f, false)
-    renderConnectionRecursive(dx - signX, dy, guiGraphics, preferX, invert)
+    renderLine(guiGraphics, signX * inversion, 1f, false, blinkingAlpha, knowsChild)
+    renderConnectionRecursive(dx - signX, dy, guiGraphics, preferX, invert, blinkingAlpha, knowsChild)
   } else {
     translateXY(0, signY)
-    renderLine(guiGraphics, 1f, signY * inversion, true)
-    renderConnectionRecursive(dx, dy - signY, guiGraphics, preferX, invert)
+    renderLine(guiGraphics, 1f, signY * inversion, true, blinkingAlpha, knowsChild)
+    renderConnectionRecursive(dx, dy - signY, guiGraphics, preferX, invert, blinkingAlpha, knowsChild)
   }
 }
 
@@ -58,20 +67,36 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
  * Vertical lines are reflected horizontals.
  * Uses negative dimensions for orientation.
  */
-private fun renderLine(guiGraphics: GuiGraphics, signX: Float, signY: Float, vertical: Boolean) =
+private fun renderLine(
+  guiGraphics: GuiGraphics,
+  signX: Float,
+  signY: Float,
+  vertical: Boolean,
+  blinkingAlpha: Float,
+  knowsChild: Boolean
+) =
   renderGridElement(
     guiGraphics,
     signX,
     signY,
     LINE.location,
-    vertical
+    vertical,
+    blinkingAlpha,
+    knowsChild
   )
 
 /**
  * Only 2x2 and 1x1 corners are supported. Only one texture
  * is ever used. Uses negative dimensions & reflections for orientation.
  */
-private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect: Boolean) {
+private fun renderCorner(
+  guiGraphics: GuiGraphics,
+  dx: Float,
+  dy: Float,
+  reflect: Boolean,
+  blinkingAlpha: Float,
+  knowsChild: Boolean
+) {
   val textureLoc =
     if (abs(dx) == 1f) CORNER_1X1.location
     else CORNER_2X2.location
@@ -81,7 +106,9 @@ private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect
     dx,
     dy,
     textureLoc,
-    reflect
+    reflect,
+    blinkingAlpha,
+    knowsChild
   )
 }
 
@@ -92,11 +119,28 @@ private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect
  * The reflect param reflects the object across the y=x axis.
  * It supports negative size drawing, and adjusts the reflection axis accordingly
  */
-fun renderGridElement(graphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation, reflect: Boolean) {
+fun renderGridElement(
+  graphics: GuiGraphics,
+  width: Float,
+  height: Float,
+  textureLoc: ResourceLocation,
+  reflect: Boolean,
+  blinkingAlpha: Float,
+  knowsChild: Boolean
+) {
+  val brightness = if (knowsChild) 1f else 0.55f
+  val alpha = if (knowsChild) 1f else blinkingAlpha
+  RenderSystem.enableBlend()
+  RenderSystem.defaultBlendFunc()
+  graphics.setColor(brightness, brightness, brightness, alpha)
+
   graphics.usePose {
     if (reflect) mulPose(Axis.of(Vector3f(sign(width), sign(height), 0f)).rotationDegrees(180f))
     scale(width, height, 1f)
     translateXY(-0.5f, -0.5f)
     graphics.blit(textureLoc, 0, 0, 0, 0f, 0f, 1, 1, 1, 1)
   }
+
+  graphics.setColor(1f, 1f, 1f, 1f)
+  RenderSystem.disableBlend()
 }

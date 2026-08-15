@@ -2,20 +2,43 @@ package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.common.entity.knowsParentResearch
+import me.alegian.thavma.impl.common.research.ResearchCategory
+import me.alegian.thavma.impl.common.research.ResearchEntry
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
+import net.minecraft.core.Holder
+import net.minecraft.world.entity.player.Player
 import kotlin.math.pow
 
 // represents the renderable content of a tab in the book
-class TabRenderable(val screen: BookScreen) : Renderable {
+class TabRenderable(
+  val screen: BookScreen,
+  val category: ResearchCategory,
+  val entries: List<Holder.Reference<ResearchEntry>>?,
+  val player: Player
+) : Renderable {
   companion object{
     private const val ZOOM_MULTIPLIER = 1.25
-    private const val maxScrollX = 300.0
-    private const val maxScrollY = 300.0
+    const val maxScrollX = 600.0
+    const val maxScrollY = 300.0
     private const val minZoom = 0.0
     private const val maxZoom = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
   }
+
+  val entryWidgets: List<EntryWidget> = entries!!.mapNotNull { entry ->
+    if (player.knowsParentResearch(entry)) EntryWidget(screen, this, entry, player) else null
+  }
+
+  // average of the height and width of the "circumscribed" rectangle of all active and inactive entry widgets in a tab
+  // the larger the rectangle the slower the background drags by and the faster entry widgets do
+  val average =
+    (entryWidgets.maxOf { it.x } - entryWidgets.minOf { it.x } + entryWidgets.maxOf { it.y } - entryWidgets.minOf { it.y }) / 2
+
+  // Magic numbers - magnitude of the parallax effect of the background
+  private fun parallax(scroll: Double, factor: Double) =
+    scroll - factor * 1200 / (average * 10 + 50)
 
   var scrollX = 0.0
     private set
@@ -24,8 +47,9 @@ class TabRenderable(val screen: BookScreen) : Renderable {
   private var zoom = 2.0 // TODO: this is actually inverse zoom
 
   fun drag(x: Double, y: Double) {
-    val rawScrollX = scrollX - zoomFactor() * x
-    val rawScrollY = scrollY - zoomFactor() * y
+
+    val rawScrollX = parallax(scrollX, zoomFactor() * x)
+    val rawScrollY = parallax(scrollY, zoomFactor() * y)
 
     scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
     scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)

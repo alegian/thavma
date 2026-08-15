@@ -18,16 +18,7 @@ import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
-import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -206,6 +197,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
+    addEntry(ResearchEntries.Story.STORY2, "A Literary Genius")
 
     addTextPage(
       ResearchEntries.Story.STORY1, 0,
@@ -226,6 +218,11 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
       "A Courtesy Call 3",
       "Lorem lotrumatum dolor 3 sit amet,",
       "this story a great meaning haveth."
+    )
+
+    addTextPage(
+      ResearchEntries.Story.STORY2, 0,
+      "An epic poem from times of old", "Do you feel that in the distance?", "It is of your pomp an instance!"
     )
 
     addTextPage(

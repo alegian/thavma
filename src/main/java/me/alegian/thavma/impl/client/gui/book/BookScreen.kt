@@ -1,11 +1,10 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.clientRegistry
-import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
@@ -22,27 +21,33 @@ class BookScreen : Screen(Component.literal("book")) {
   private var selectorOffset = 0
   private val entryWidgets = mutableListOf<EntryWidget>()
 
+  private val entries = clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.toList()
+
   override fun init() {
     super.init()
-    val player = Minecraft.getInstance().player ?: return
+    val player = ClientHelper.player() ?: return
 
     entryWidgets.clear()
     selectorOffset = cornerHeight + selectorGap
 
     val categoryRegistry = clientRegistry(T7DatapackRegistries.RESEARCH_CATEGORY)
     currentCategory = categoryRegistry?.getOrThrow(ResearchCategories.THAVMA)
-    categoryRegistry?.forEach {
-      tabs[it] = addRenderableOnly(TabRenderable(this))
-    }
-    clientRegistry(T7DatapackRegistries.RESEARCH_ENTRY)?.holders()?.forEach {
-      val tab = tabs[it.value().category.value()]
-      var shown = player.knowsResearch(it)
-      for (p in it.value().parents(player.level()))
-        if (player.knowsResearch(p)) shown = true
 
-      if (tab != null && shown)
-        entryWidgets.add(addRenderableWidget(EntryWidget(this, tab, it)))
+    categoryRegistry?.forEach { category ->
+      tabs[category] = addRenderableOnly(
+        TabRenderable(
+          this,
+          category,
+          entries?.filter { it.value().category.value() == category },
+          player
+        )
+      )
     }
+
+    // moved EntryWidget creation logic into TabRenderable.kt, here only adding them via
+    // the protected method addRenderableWidget
+    tabs.forEach { tab -> entryWidgets.addAll(tab.value.entryWidgets.map { addRenderableWidget(it) }) }
+
     updateEntryWidgets()
 
     addRenderableOnly(FrameRenderable)
@@ -68,6 +73,7 @@ class BookScreen : Screen(Component.literal("book")) {
   }
 
   override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int, dragX: Double, dragY: Double): Boolean {
+
     if (button != 0) {
       this.isScrolling = false
       return false

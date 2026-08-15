@@ -144,7 +144,13 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPage(simpleTextPage(2, true))
           .addPage(simpleTextPage(2, true))
           .addPage(simpleTextPage(2, true))
+          .addChild(ResearchEntries.Story.STORY2)
           .defaultKnown()
+          .build(ctx)
+
+        ResearchEntryBuilder(ResearchEntries.Story.STORY2, Vector2i(0, 3), false, Items.FISHING_ROD.defaultInstance)
+          .research()
+          .addPage(simpleTextPage(2, true))
           .build(ctx)
 
         ResearchEntryBuilder(

@@ -1,13 +1,13 @@
 package me.alegian.thavma.impl.client.gui.layer
 
 import com.mojang.blaze3d.systems.RenderSystem
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.FADE_IN_PRIO
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.STATIC_DELAY_PRIO
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.animationOpacity
 import me.alegian.thavma.impl.client.gui.layer.PriorityNotifLayer.animationStart
 import me.alegian.thavma.impl.client.texture.Texture
 import net.minecraft.client.DeltaTracker
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 import net.minecraft.resources.ResourceLocation
@@ -56,7 +56,7 @@ object NotifAnimationLayer : LayeredDraw.Layer {
     graphics: GuiGraphics,
     deltaTracker: DeltaTracker
   ) {
-    val player = Minecraft.getInstance().player ?: return
+    val player = ClientHelper.player() ?: return
     val currentTime = player.level().gameTime
 
     val scaledWidth = graphics.guiWidth()

@@ -24,8 +24,9 @@ object PriorityNotifLayer : LayeredDraw.Layer {
   var animationOpacity = 1f
   var animationStart = -1L
 
+  val mc = Minecraft.getInstance()
+
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
-    val mc = Minecraft.getInstance()
     val player = mc.player ?: return
     val currentTime = player.level().gameTime
 

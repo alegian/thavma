@@ -39,8 +39,9 @@ object RegularNotifLayer : LayeredDraw.Layer {
   private var batchStartTimeReg = -1L
   private var globalScrollOffsetReg = 0f
 
+  val mc = Minecraft.getInstance()
+
   override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
-    val mc = Minecraft.getInstance()
     val player = mc.player ?: return
     //val currentTime = Util.getMillis()
     val currentTime = player.level().gameTime

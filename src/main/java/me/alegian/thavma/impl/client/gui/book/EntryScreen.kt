@@ -1,9 +1,11 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.gui.layer.PlayerNotifications
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.Page
 import me.alegian.thavma.impl.common.research.ResearchEntry
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
@@ -14,6 +16,7 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
 
+  val player = Minecraft.getInstance().player
   private var currentPage = 0
 
   override fun init() {
@@ -47,6 +50,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, false) {
                     // rerender the screen for the new page(s)
                     turnPage(false)
+                    if (player != null) PlayerNotifications.add(
+                      false,
+                      Component.literal("You turned the page to the left, honestly we've got a bookworm right here!"),
+                      color = 0xFFFFFF,
+                      player = player
+                    )
                   })
                 }
               }
@@ -66,6 +75,12 @@ class EntryScreen(private val entry: Holder<ResearchEntry>) : Screen(Component.l
                   addRenderableWidget(PageTurningWidget(position, true) {
                     // rerender the screen for the new page(s)
                     turnPage(true)
+                    if (player != null) PlayerNotifications.add(
+                      false,
+                      Component.literal("You turned the page to the right you are so good!"),
+                      color = 0xFFFFFF,
+                      player = player
+                    )
                   })
                 }
               }

@@ -15,6 +15,7 @@ import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.ChatFormatting
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
@@ -25,6 +26,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.neoforged.neoforge.network.PacketDistributor
+import kotlin.math.PI
+import kotlin.math.sin
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -45,7 +48,9 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   init {
     val components = mutableListOf(entry.value().title)
-    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+    if (!knowsParents) components.add(
+      Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+    )
     tooltip = T7Tooltip(components)
   }
 
@@ -69,10 +74,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     this.isHovered = guiGraphics.containsPointInScissor(mouseX, mouseY)
-        && mouseX >= x
-        && mouseY >= y
-        && mouseX < x + getWidth()
-        && mouseY < y + getHeight()
+      && mouseX >= x
+      && mouseY >= y
+      && mouseX < x + getWidth()
+      && mouseY < y + getHeight()
 
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
@@ -81,7 +86,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
-      renderEntry(guiGraphics)
+      renderEntry(guiGraphics, partialTick)
 
       if (!knowsResearch) return@usePose
       // allows negative size drawing, which greatly simplifies math
@@ -101,7 +106,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       PacketDistributor.sendToServer(ResearchScrollPayload(entry))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
-      tooltip = T7Tooltip(entry.value().title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+      tooltip = T7Tooltip(
+        entry.value().title,
+        Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+      )
       return
     }
     if (knowsResearch)
@@ -111,9 +119,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
   }
 
-  private fun renderEntry(guiGraphics: GuiGraphics) {
-    var brightness = 1f
-    if (!knowsResearch) brightness = 0.4f
+  private fun renderEntry(guiGraphics: GuiGraphics, partialTick: Float) {
+    val brightness =
+      if (knowsResearch) 1f
+      else (0.6 + 0.2 * sin(2 * PI * (ClientHelper.ticks() + partialTick) / PERIOD_TICKS)).toFloat()
     RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
 
     renderGridElement(
@@ -138,6 +147,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   companion object {
+    private const val PERIOD_TICKS = 40
     val TEXTURE = Texture("gui/book/node", 32, 32)
   }
 }

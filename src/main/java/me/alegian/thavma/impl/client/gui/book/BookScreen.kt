@@ -89,4 +89,3 @@ class BookScreen : Screen(Component.literal("book")) {
 
   override fun isPauseScreen() = false
 }
-

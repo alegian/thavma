@@ -43,4 +43,5 @@ object ClientHelper {
   fun entityRenderDispatcher() = Minecraft.getInstance().entityRenderDispatcher
   fun camera() = Minecraft.getInstance().gameRenderer.mainCamera
   fun firstPerson() = Minecraft.getInstance().options.cameraType.isFirstPerson
+  fun ticks() = Minecraft.getInstance().level?.gameTime ?: 0
 }

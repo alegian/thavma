@@ -61,17 +61,18 @@ fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
     children()
   }
 
-fun CenteredTextureBox(texture: Texture) {
+fun CenteredTextureBox(texture: Texture, displayWidth: Int, displayHeight: Int) {
   val screen = LayoutExtensions.currScreen
     ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
   Row({
     width = grow()
-    height = fixed(texture.height)
+    height = fixed(displayHeight)
   }) {
     afterLayout {
       screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
         guiGraphics.usePose {
-          translateXY(position.x + (size.x - texture.width) / 2, position.y)
+          translateXY(position.x + (size.x - displayWidth) / 2, position.y)
+          scale(displayWidth.toFloat() / texture.width, displayHeight.toFloat() / texture.height, 1f)
           renderableTexture(texture).render(guiGraphics, mouseX, mouseY, partialTick)
         }
       })

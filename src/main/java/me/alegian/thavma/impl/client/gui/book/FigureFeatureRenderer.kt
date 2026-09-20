@@ -14,9 +14,9 @@ object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
   ) {
     Row({
       width = grow()
-      height = fixed(feature.textureHeight)
+      height = fixed(feature.height)
     }) {
-      CenteredTextureBox(feature.image)
+      CenteredTextureBox(feature.image, feature.width, feature.height)
     }
   }
 }

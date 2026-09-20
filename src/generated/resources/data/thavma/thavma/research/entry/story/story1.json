@@ -28,13 +28,15 @@
         "italic": true,
         "translate": "research/entry.thavma.story.story1.feature2"
       },
+      "height": 101,
       "image": {
         "canvas_height": 1036,
         "canvas_width": 1916,
         "height": 1036,
         "location": "thavma:textures/gui/images/infusion.png",
         "width": 1916
-      }
+      },
+      "width": 180
     },
     {
       "type": "thavma:title",

@@ -148,6 +148,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(
             makeFigureFeature(
               Texture("gui/images/infusion", 1916, 1036, 1916, 1036),
+              180,
+              101,
               true,
               ChatFormatting.DARK_AQUA,
               ChatFormatting.ITALIC
@@ -358,6 +360,8 @@ private fun makeTitleFeature(
 
 private fun makeFigureFeature(
   image: Texture,
+  width: Int,
+  height: Int,
   giveCaption: Boolean,
   vararg styles: ChatFormatting?
 ): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
@@ -371,9 +375,9 @@ private fun makeFigureFeature(
         }
       }
     }
-    FigureFeature(image, content)
+    FigureFeature(image, width, height, content)
   } else { _, _ ->
-    FigureFeature(image, null)
+    FigureFeature(image, width, height, null)
   }
 }
 

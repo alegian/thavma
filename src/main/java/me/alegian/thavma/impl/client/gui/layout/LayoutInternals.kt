@@ -93,13 +93,44 @@ internal fun createElement(
     element.calculateInitialSizesRecursively(yAxis)
     // fourth pass: DFS from root
     element.calculateDynamicSizesRecursively(yAxis)
-    // fifth pass: DFS from root
-    element.calculatePositionsRecursively()
+    // fifth pass: DFS from root (removes content outside requested pages)
+    element.paginateRecursively()
     // sixth pass: DFS from root
+    element.calculatePositionsRecursively()
+    // seventh pass: DFS from root
     element.afterLayoutRecursively()
     currElement = null
   }
   return element
+}
+
+internal fun <T> T7LayoutElement.paginate(
+  pagination: Pagination<T>,
+  pageIndex: Int,
+  itemElements: List<T7LayoutElement>,
+) {
+  paginationCallback = {
+    val availableHeight = size.y - padding.all.y
+    val pages = mutableListOf<MutableList<T7LayoutElement>>()
+    var page = mutableListOf<T7LayoutElement>()
+    var usedHeight = 0f
+
+    for (element in itemElements) {
+      val requiredHeight = element.size.y + if (page.isEmpty()) 0f else gap
+      if (page.isNotEmpty() && usedHeight + requiredHeight > availableHeight) {
+        pages += page
+        page = mutableListOf()
+        usedHeight = 0f
+      }
+
+      page += element
+      usedHeight += element.size.y + if (page.size == 1) 0f else gap
+    }
+
+    if (page.isNotEmpty()) pages += page
+    pagination.pageCount = pages.size
+    children.retainAll(pages.getOrNull(pageIndex).orEmpty())
+  }
 }
 
 class T7LayoutElement internal constructor(
@@ -130,6 +161,7 @@ class T7LayoutElement internal constructor(
       return Vec2(maskX, maskY)
     }
   internal var afterLayoutCallbacks = mutableListOf<T7LayoutElement.() -> Unit>()
+  internal var paginationCallback: (() -> Unit)? = null
 
   init {
     parent?.children?.add(this)
@@ -207,6 +239,12 @@ class T7LayoutElement internal constructor(
 
       child.calculatePositionsRecursively()
     }
+  }
+
+  internal fun paginateRecursively() {
+    paginationCallback?.invoke()
+    for (child in children)
+      child.paginateRecursively()
   }
 
   /**

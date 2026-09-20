@@ -17,7 +17,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private var currentPage = 0
   private val entry = _entry.value()
 
-  var pages = listOf<List<PageFeature>>()
+  private val pagination = Pagination(entry.pageFeatures)
 
   override fun init() {
     super.init()
@@ -43,31 +43,22 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
             Row({
               size = grow()
             }) {
-              Column({
+              PaginatedColumn(pagination, currentPage, {
                 size = grow()
                 gap = 4
-              }) {
-                if (pages.isEmpty()) {
-                  pages = entry.pageFeatures.map { listOf(it) }
-                }
-                val features = pages.getOrNull(currentPage)
-                if (features != null) {
-                  for (feature in features) initPageFeature(feature)
-                }
+              }) { feature ->
+                initPageFeature(feature)
               }
             }
 
             Row({
               size = grow()
             }) {
-              Column({
+              PaginatedColumn(pagination, currentPage + 1, {
                 size = grow()
                 gap = 4
-              }) {
-                val features = pages.getOrNull(currentPage + 1)
-                if (features != null) {
-                  for (feature in features) initPageFeature(feature)
-                }
+              }) { feature ->
+                initPageFeature(feature)
               }
             }
           }
@@ -97,12 +88,12 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
         }
       }
       Box({ width = grow() }) {}
-      if (pages.getOrNull(currentPage + 2) != null) {
-        Box({
-          width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
-          height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
-        }) {
-          afterLayout {
+      Box({
+        width = fixed(PageTurningWidget.RIGHT_TEXTURE.width)
+        height = fixed(PageTurningWidget.RIGHT_TEXTURE.height)
+      }) {
+        afterLayout {
+          if (pagination.hasPage(currentPage + 2)) {
             addRenderableWidget(PageTurningWidget(position, true) {
               // rerender the screen for the new page(s)
               turnPage(true)

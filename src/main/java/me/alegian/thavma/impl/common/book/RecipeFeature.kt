@@ -16,7 +16,5 @@ class RecipeFeature(
         ResourceLocation.CODEC.fieldOf("recipeRL").forGetter(RecipeFeature::recipeRL),
       ).apply(builder, ::RecipeFeature)
     }
-
-    fun translationId(baseId: String, featureIndex: Int) = "$baseId.recipe_feature$featureIndex"
   }
 }

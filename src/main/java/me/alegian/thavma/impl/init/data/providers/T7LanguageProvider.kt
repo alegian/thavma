@@ -198,77 +198,83 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.STORY, "???")
     addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
 
-    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 0, "This title starts the page")
+    addPageFeature(ResearchEntries.Story.STORY1, 0, "This title starts the page")
     addPageFeature(
-      PARAGRAPH,
-      ResearchEntries.Story.STORY1, 0, """
+      ResearchEntries.Story.STORY1, 1, """
       This is a short paragraph just to showcase that the feature exists.
     """
     )
     addPageFeature(
-      PARAGRAPH,
-      ResearchEntries.Story.STORY1, 1, """
+      ResearchEntries.Story.STORY1, 2, """
       This is a longer paragraph to highlight the importance of splicing longer pieces of text over multiple pages. If you do not splice the paragraph to go over multiple pages, the text will spill out of the bottom of the screen and we don't want that to happen, hence DynamicRenderingHelper.kt. I will continue with some lorem ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
       Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
       sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
     """.trimIndent()
     )
     addPageFeature(
-      FIGURE,
-      ResearchEntries.Story.STORY1, 0, """ A short caption for the figure just to show the custom style """.trimIndent()
+      ResearchEntries.Story.STORY1, 3, """ A short caption for the figure just to show the custom style """.trimIndent()
     )
-    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 1, "This might appear in the middle")
+    addPageFeature(ResearchEntries.Story.STORY1, 4, "This might appear in the middle")
     addPageFeature(
-      PARAGRAPH,
-      ResearchEntries.Story.STORY1, 2, """
+      ResearchEntries.Story.STORY1, 6, """
       This paragraph should start a new page always.
     """.trimIndent()
     )
-    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 2, "(start of page)")
-    addPageFeature(TITLE, ResearchEntries.Story.STORY1, 3, "This is page number 1!")
-    addPageFeature(PARAGRAPH, ResearchEntries.Story.STORY1, 3, "Just another random little paragraph :D")
+    addPageFeature(ResearchEntries.Story.STORY1, 8, "(start of page)")
+    addPageFeature(ResearchEntries.Story.STORY1, 9, "This is page number 1!")
+    addPageFeature(ResearchEntries.Story.STORY1, 10, "Just another random little paragraph :D")
     addPageFeature(
-      PARAGRAPH, ResearchEntries.Story.STORY1, 4, """
+      ResearchEntries.Story.STORY1, 12, """
             This paragraph has a pre-set page index of 2
     """.trimIndent()
     )
 
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 0,
-      "Thavma",
+    addPageFeature(ResearchEntries.Thavma.THAVMA, 0, "Thavma")
+    addPageFeature(
+      ResearchEntries.Thavma.THAVMA, 1,
       """
         I was merely toying with that wand -if it can even be called that- when this tome
         flew into my hands! I can sense great power within it.
-      """,
+      """
+    )
+    addPageFeature(
+      ResearchEntries.Thavma.THAVMA, 2,
       """
         The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
-      """,
+      """
+    )
+    addPageFeature(
+      ResearchEntries.Thavma.THAVMA, 3,
       """
         To read them, I will first need to break that seal. It won't be easy... but
         I have a feeling it will be worth my efforts.
       """
     )
-
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 1,
-      null,
+    addPageFeature(
+      ResearchEntries.Thavma.THAVMA, 5,
       """
         I will document all my findings inside the book, so that I can recall them later.
       """
     )
 
-    addTextPage(
-      ResearchEntries.Thavma.ARCANE_LENS, 0,
-      "The Arcane Lens",
+    addPageFeature(ResearchEntries.Thavma.ARCANE_LENS, 0, "The Arcane Lens")
+    addPageFeature(
+      ResearchEntries.Thavma.ARCANE_LENS, 1,
       """
         The part of the book I can read describes an arcane tool that "allows the user
         to see", whatever that might mean. I have a feeling that crafting it could assist
         my work in unsealing the other pages.
-      """,
+      """
+    )
+    addPageFeature(
+      ResearchEntries.Thavma.ARCANE_LENS, 2,
       """
         The blueprint describes a hexagonal device, much like a prism,
         made with those colorful crystals I found lying in a cave.
-      """,
+      """
+    )
+    addPageFeature(
+      ResearchEntries.Thavma.ARCANE_LENS, 3,
       """
         I should look at the world through its lens, maybe it will uncover something useful.
       """
@@ -350,36 +356,9 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchCategory.translationId(key), name)
   }
 
-  private fun addTextPage(
-    entryKey: ResourceKey<ResearchEntry>,
-    pageIndex: Int,
-    title: String?,
-    vararg paragraphs: String
-  ) {
+  private fun addPageFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
     val baseId = ResearchEntry.translationId(entryKey)
-    if (title != null) add(TextPage.titleTranslationId(baseId, pageIndex), title)
-    for (parIndex in paragraphs.indices)
-      add(
-        TextPage.paragraphTranslationId(baseId, pageIndex, parIndex),
-        paragraphs[parIndex].trimIndent().replace("\n", " ")
-      )
-  }
-
-  private fun addPageFeature(identifier: Char, entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
-    val baseId = ResearchEntry.translationId(entryKey)
-    when (identifier) {
-      'P' -> add(ParagraphFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
-      'T' -> add(TitleFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
-      'F' -> add(FigureFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
-      'R' -> add(RecipeFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
-    }
-  }
-
-  companion object {
-    val PARAGRAPH = 'P'
-    val TITLE = 'T'
-    val FIGURE = 'F'
-    val RECIPE = 'R'
+    add(PageFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
   }
 
 }

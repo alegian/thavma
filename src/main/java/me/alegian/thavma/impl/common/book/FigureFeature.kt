@@ -25,8 +25,6 @@ class FigureFeature(
         FigureFeature(img, cap.orElse(null))
       }
     }
-
-    fun translationId(baseId: String, featureIndex: Int) = "$baseId.figure_feature$featureIndex"
   }
 
 }

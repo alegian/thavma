@@ -127,6 +127,12 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makePageBreakFeature())
+          .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)
 
@@ -190,6 +196,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
+          .addPageFeature(makeTitleFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
+          .addPageFeature(makeParagraphFeature())
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -284,8 +294,8 @@ private class ResearchEntryBuilder(
     return this
   }
 
-  inline fun <reified T : PageFeature> addPageFeature(crossinline makeFeature: (ResourceKey<ResearchEntry>, Int) -> T): ResearchEntryBuilder {
-    pageFeatures.add(makeFeature(key, pageFeatures.filterIsInstance<T>().size))
+  fun addPageFeature(makeFeature: (ResourceKey<ResearchEntry>, Int) -> PageFeature): ResearchEntryBuilder {
+    pageFeatures.add(makeFeature(key, pageFeatures.size))
     return this
   }
 
@@ -331,20 +341,20 @@ private fun BootstrapContext<ResearchCategory>.registerCategory(
 
 private fun makeParagraphFeature(
 ): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
-  return { entryKey, paragraphIndex ->
+  return { entryKey, featureIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     ParagraphFeature(
-      Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
+      Component.translatable(PageFeature.translationId(baseId, featureIndex)),
     )
   }
 }
 
 private fun makeTitleFeature(
 ): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
-  return { entryKey, titleIndex ->
+  return { entryKey, featureIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     TitleFeature(
-      Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD)
+      Component.translatable(PageFeature.translationId(baseId, featureIndex)).withStyle(ChatFormatting.BOLD)
     )
   }
 }
@@ -355,9 +365,9 @@ private fun makeFigureFeature(
   giveCaption: Boolean,
   vararg styles: ChatFormatting?
 ): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
-  return if (giveCaption) { entryKey, figureIndex ->
+  return if (giveCaption) { entryKey, featureIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
-    val content = Component.translatable(FigureFeature.translationId(baseId, figureIndex))
+    val content = Component.translatable(PageFeature.translationId(baseId, featureIndex))
     for (i in styles) {
       content.apply {
         if (i != null) {

@@ -17,7 +17,5 @@ class ParagraphFeature(
         ComponentSerialization.CODEC.fieldOf("text").forGetter(ParagraphFeature::text),
       ).apply(builder, ::ParagraphFeature)
     }
-
-    fun translationId(baseId: String, featureIndex: Int) = "$baseId.paragraph_feature$featureIndex"
   }
 }

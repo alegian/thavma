@@ -16,7 +16,5 @@ class TitleFeature(val text: Component) :
         ComponentSerialization.CODEC.fieldOf("text").forGetter(TitleFeature::text),
       ).apply(builder, ::TitleFeature)
     }
-
-    fun translationId(baseId: String, featureIndex: Int) = "$baseId.title_feature$featureIndex"
   }
 }

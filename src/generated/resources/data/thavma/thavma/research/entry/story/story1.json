@@ -12,19 +12,19 @@
       "type": "thavma:title",
       "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story1.title_feature0"
+        "translate": "research/entry.thavma.story.story1.feature0"
       }
     },
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.paragraph_feature0"
+        "translate": "research/entry.thavma.story.story1.feature1"
       }
     },
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.paragraph_feature1"
+        "translate": "research/entry.thavma.story.story1.feature2"
       }
     },
     {
@@ -32,7 +32,7 @@
       "caption": {
         "color": "dark_aqua",
         "italic": true,
-        "translate": "research/entry.thavma.story.story1.figure_feature0"
+        "translate": "research/entry.thavma.story.story1.feature3"
       },
       "image": {
         "canvas_height": 101,
@@ -46,7 +46,7 @@
       "type": "thavma:title",
       "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story1.title_feature1"
+        "translate": "research/entry.thavma.story.story1.feature4"
       }
     },
     {
@@ -55,7 +55,7 @@
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.paragraph_feature2"
+        "translate": "research/entry.thavma.story.story1.feature6"
       }
     },
     {
@@ -65,20 +65,20 @@
       "type": "thavma:title",
       "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story1.title_feature2"
+        "translate": "research/entry.thavma.story.story1.feature8"
       }
     },
     {
       "type": "thavma:title",
       "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story1.title_feature3"
+        "translate": "research/entry.thavma.story.story1.feature9"
       }
     },
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.paragraph_feature3"
+        "translate": "research/entry.thavma.story.story1.feature10"
       }
     },
     {
@@ -94,7 +94,7 @@
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.paragraph_feature4"
+        "translate": "research/entry.thavma.story.story1.feature12"
       }
     }
   ],

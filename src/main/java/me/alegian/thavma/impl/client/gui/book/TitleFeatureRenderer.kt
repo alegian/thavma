@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.gui.layout.*
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.client.util.drawCenteredString
@@ -39,18 +40,17 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
       width = grow()
       height = derived { w ->
         lines = font.split(title.text, w.toInt())
-        (LINE_HEIGHT * lines.size).toFloat()
+        (font.lineHeight * ClientHelper.LINE_GAP_FACTOR * lines.size).toFloat()
       }
     }) {
       draw {
         Renderable { guiGraphics, _, _, _ ->
           guiGraphics.usePose {
-            for ((index, line) in lines.withIndex()) {
+            for (line in lines) {
               guiGraphics.drawCenteredString(
                 font, line, size.x / 2
               )
-              translateXY(0, LINE_HEIGHT)
-              if (index != lines.size - 1) translateXY(0, PRG_OFFSET_OTHER)
+              translateXY(0, font.lineHeight * ClientHelper.LINE_GAP_FACTOR)
             }
           }
         }

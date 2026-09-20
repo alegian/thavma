@@ -37,6 +37,7 @@ fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Fl
 }
 
 object ClientHelper {
+  val LINE_GAP_FACTOR = 1.125
   fun hitResult() = Minecraft.getInstance().hitResult
   fun player() = Minecraft.getInstance().player
   fun bufferSource() = Minecraft.getInstance().renderBuffers().bufferSource()

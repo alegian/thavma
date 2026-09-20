@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.client.gui.book
 
+import me.alegian.thavma.impl.client.ClientHelper
 import me.alegian.thavma.impl.client.gui.layout.Row
 import me.alegian.thavma.impl.client.gui.layout.derived
 import me.alegian.thavma.impl.client.gui.layout.draw
@@ -17,13 +18,13 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
     screen: EntryScreen,
     feature: ParagraphFeature,
   ) {
-
+    val font = screen.getFont()
     var lines: List<FormattedCharSequence> = listOf()
     Row({
       width = grow()
       height = derived { w ->
         lines = screen.getFont().split(feature.text, w.toInt())
-        LINE_HEIGHT * (lines.size + PARAGRAPH_OFFSET)
+        (font.lineHeight * lines.size * ClientHelper.LINE_GAP_FACTOR).toFloat()
       }
     }) {
       draw {
@@ -31,9 +32,8 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
           guiGraphics.usePose {
             for (line in lines) {
               guiGraphics.drawString(screen.getFont(), line)
-              translateXY(0, LINE_HEIGHT)
+              translateXY(0, font.lineHeight * ClientHelper.LINE_GAP_FACTOR)
             }
-            translateXY(0, PRG_OFFSET_OTHER)
           }
         }
       }

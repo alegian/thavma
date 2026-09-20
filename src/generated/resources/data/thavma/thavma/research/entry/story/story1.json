@@ -34,7 +34,6 @@
         "italic": true,
         "translate": "research/entry.thavma.story.story1.figure_feature0"
       },
-      "force_index": 1,
       "image": {
         "canvas_height": 101,
         "canvas_width": 180,
@@ -51,11 +50,16 @@
       }
     },
     {
+      "type": "thavma:break"
+    },
+    {
       "type": "thavma:paragraph",
-      "starts_page": true,
       "text": {
         "translate": "research/entry.thavma.story.story1.paragraph_feature2"
       }
+    },
+    {
+      "type": "thavma:break"
     },
     {
       "type": "thavma:title",
@@ -66,7 +70,6 @@
     },
     {
       "type": "thavma:title",
-      "force_index": 0,
       "text": {
         "bold": true,
         "translate": "research/entry.thavma.story.story1.title_feature3"
@@ -80,7 +83,6 @@
     },
     {
       "type": "thavma:figure",
-      "force_index": 2,
       "image": {
         "canvas_height": 77,
         "canvas_width": 87,
@@ -91,7 +93,6 @@
     },
     {
       "type": "thavma:paragraph",
-      "force_index": 2,
       "text": {
         "translate": "research/entry.thavma.story.story1.paragraph_feature4"
       }

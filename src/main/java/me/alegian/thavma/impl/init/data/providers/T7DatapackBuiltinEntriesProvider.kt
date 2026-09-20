@@ -145,7 +145,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
             makeFigureFeature(
               Texture("gui/images/haybales", 180, 101, 180, 101),
               true,
-              1,
               ChatFormatting.DARK_AQUA,
               ChatFormatting.ITALIC
             )
@@ -157,10 +156,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
 
           .addPageFeature(makePageBreakFeature())
           .addPageFeature(makeTitleFeature())
-          .addPageFeature(makeTitleFeature(0))
+          .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false, 2))
-          .addPageFeature(makeParagraphFeature(2))
+          .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false))
+          .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)
 
@@ -343,24 +342,21 @@ private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey
 }
 
 private fun makeParagraphFeature(
-  forceIndex: Int = -1
 ): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
   return { entryKey, paragraphIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     ParagraphFeature(
       Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex)),
-      forceIndex
     )
   }
 }
 
 private fun makeTitleFeature(
-  forceIndex: Int = -1
 ): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
   return { entryKey, titleIndex ->
     val baseId = ResearchEntry.translationId(entryKey)
     TitleFeature(
-      Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD), forceIndex
+      Component.translatable(TitleFeature.translationId(baseId, titleIndex)).withStyle(ChatFormatting.BOLD)
     )
   }
 }
@@ -369,7 +365,6 @@ private fun makeTitleFeature(
 private fun makeFigureFeature(
   image: Texture,
   giveCaption: Boolean,
-  forceIndex: Int = -1,
   vararg styles: ChatFormatting?
 ): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
   return if (giveCaption) { entryKey, figureIndex ->
@@ -382,9 +377,9 @@ private fun makeFigureFeature(
         }
       }
     }
-    FigureFeature(image, content, forceIndex)
+    FigureFeature(image, content)
   } else { _, _ ->
-    FigureFeature(image, null, forceIndex)
+    FigureFeature(image, null)
   }
 }
 
@@ -393,11 +388,10 @@ private fun makePageBreakFeature(): (ResourceKey<ResearchEntry>, Int) -> PageBre
 
 private fun makeRecipeFeature(
   recipeRL: ResourceLocation,
-  forceIndex: Int = 1
 ): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
   return { _, _ ->
     RecipeFeature(
-      recipeRL, forceIndex
+      recipeRL
     )
   }
 }
@@ -416,7 +410,7 @@ private fun makeStyledParagraphFeature(
         }
       }
     }
-    ParagraphFeature(content, forceIndex)
+    ParagraphFeature(content)
   }
 }
 

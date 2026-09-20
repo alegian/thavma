@@ -9,15 +9,14 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.network.chat.Component
 
-class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
+class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book Entry")) {
   companion object {
     private val BG = Texture("gui/book/background", 510, 282, 512, 512)
   }
 
   private var currentPage = 0
-  private val entry = _entry.value()
 
-  private val pagination = Pagination(entry.pageFeatures)
+  private val pagination = Pagination(entry.value().pageFeatures)
 
   fun getFont() = font
 

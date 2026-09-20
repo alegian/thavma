@@ -116,6 +116,13 @@ internal fun <T> T7LayoutElement.paginate(
     var usedHeight = 0f
 
     for (element in itemElements) {
+      if (element.isPageBreak) {
+        if (page.isNotEmpty()) pages += page
+        page = mutableListOf()
+        usedHeight = 0f
+        continue
+      }
+
       val requiredHeight = element.size.y + if (page.isEmpty()) 0f else gap
       if (page.isNotEmpty() && usedHeight + requiredHeight > availableHeight) {
         pages += page
@@ -162,6 +169,7 @@ class T7LayoutElement internal constructor(
     }
   internal var afterLayoutCallbacks = mutableListOf<T7LayoutElement.() -> Unit>()
   internal var paginationCallback: (() -> Unit)? = null
+  internal var isPageBreak = false
 
   init {
     parent?.children?.add(this)

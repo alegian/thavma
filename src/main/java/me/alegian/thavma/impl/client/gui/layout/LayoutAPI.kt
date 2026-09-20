@@ -16,6 +16,10 @@ fun afterLayout(callback: T7LayoutElement.() -> Unit) {
   currElement?.afterLayoutCallbacks?.add(callback)
 }
 
+fun pageBreak() {
+  currElement?.isPageBreak = true
+}
+
 enum class Alignment {
   START,
   CENTER,

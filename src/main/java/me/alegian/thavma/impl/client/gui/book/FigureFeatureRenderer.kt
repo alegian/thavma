@@ -5,14 +5,12 @@ import me.alegian.thavma.impl.client.gui.layout.Row
 import me.alegian.thavma.impl.client.gui.layout.fixed
 import me.alegian.thavma.impl.client.gui.layout.grow
 import me.alegian.thavma.impl.common.book.FigureFeature
-import net.minecraft.client.gui.Font
 
 object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
 
   override fun initPageFeature(
     screen: EntryScreen,
     feature: FigureFeature,
-    font: Font
   ) {
     Row({
       width = grow()

@@ -19,6 +19,8 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
 
   private val pagination = Pagination(entry.pageFeatures)
 
+  fun getFont() = font
+
   override fun init() {
     super.init()
     clearWidgets()
@@ -118,7 +120,7 @@ class EntryScreen(_entry: Holder<ResearchEntry>) : Screen(Component.literal("Boo
   private fun <T : PageFeature?> initPageFeature(feature: T) {
     if (feature != null) {
       val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
-      renderer.initPageFeature(this, feature, this.font)
+      renderer.initPageFeature(this, feature)
     }
   }
 

@@ -17,9 +17,8 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
   override fun initPageFeature(
     screen: EntryScreen,
     feature: TitleFeature,
-    font: Font
   ) {
-    Title(feature, font)
+    Title(feature, screen.getFont())
     Separator()
   }
 

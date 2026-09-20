@@ -6,7 +6,6 @@ import me.alegian.thavma.impl.client.util.drawCenteredString
 import me.alegian.thavma.impl.common.book.RecipeFeature
 import me.alegian.thavma.impl.common.recipe.translationId
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.crafting.CraftingRecipe
@@ -19,7 +18,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
   private val TITLE = Component.translatable(RecipeType.CRAFTING.translationId)
   private const val GAP = 12
 
-  override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature, font: Font) {
+  override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature) {
     val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeRL)?.getOrNull()?.value
     if (recipe !is CraftingRecipe) return // TODO: support other recipe types
 

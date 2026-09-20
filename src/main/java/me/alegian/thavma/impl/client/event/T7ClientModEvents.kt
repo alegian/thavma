@@ -40,7 +40,6 @@ import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun clientSetup(event: FMLClientSetupEvent) {
-  ModLoader.postEvent(RegisterPageRenderersEvent())
   ModLoader.postEvent(RegisterPageFeatureRenderersEvent())
   ItemProperties.register(T7Items.RESEARCH_SCROLL.get(), T7ItemProperties.COMPLETED) { stack, level, entity, seed ->
     val completed = stack.get(T7DataComponents.RESEARCH_STATE)?.completed ?: false
@@ -221,11 +220,6 @@ private fun registerScreens(event: RegisterMenuScreensEvent) {
   event.register(T7MenuTypes.RESEARCH.get(), ::ResearchScreen)
 }
 
-private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
-  event.register(PageTypes.TEXT.get(), TextPageRenderer)
-  event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
-}
-
 private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent) {
   event.register(PageFeatureTypes.PARAGRAPH.get(), ParagraphFeatureRenderer)
   event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
@@ -258,7 +252,6 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerShaders)
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
-  KFF_MOD_BUS.addListener(::registerPageRenderers)
   KFF_MOD_BUS.addListener(::registerPageFeatureRenderers)
   KFF_MOD_BUS.addListener(::registerKeyMappings)
   KFF_MOD_BUS.addListener(::registerRenderBuffers)

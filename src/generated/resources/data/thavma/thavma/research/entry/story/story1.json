@@ -22,31 +22,25 @@
       }
     },
     {
-      "type": "thavma:paragraph",
-      "text": {
-        "translate": "research/entry.thavma.story.story1.feature2"
-      }
-    },
-    {
       "type": "thavma:figure",
       "caption": {
         "color": "dark_aqua",
         "italic": true,
-        "translate": "research/entry.thavma.story.story1.feature3"
+        "translate": "research/entry.thavma.story.story1.feature2"
       },
       "image": {
-        "canvas_height": 101,
-        "canvas_width": 180,
-        "height": 101,
-        "location": "thavma:textures/gui/images/haybales.png",
-        "width": 180
+        "canvas_height": 1036,
+        "canvas_width": 1916,
+        "height": 1036,
+        "location": "thavma:textures/gui/images/infusion.png",
+        "width": 1916
       }
     },
     {
       "type": "thavma:title",
       "text": {
         "bold": true,
-        "translate": "research/entry.thavma.story.story1.feature4"
+        "translate": "research/entry.thavma.story.story1.feature3"
       }
     },
     {
@@ -55,46 +49,22 @@
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.story.story1.feature6"
+        "translate": "research/entry.thavma.story.story1.feature5"
       }
     },
     {
       "type": "thavma:break"
     },
     {
-      "type": "thavma:title",
+      "type": "thavma:paragraph",
       "text": {
-        "bold": true,
+        "translate": "research/entry.thavma.story.story1.feature7"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
         "translate": "research/entry.thavma.story.story1.feature8"
-      }
-    },
-    {
-      "type": "thavma:title",
-      "text": {
-        "bold": true,
-        "translate": "research/entry.thavma.story.story1.feature9"
-      }
-    },
-    {
-      "type": "thavma:paragraph",
-      "text": {
-        "translate": "research/entry.thavma.story.story1.feature10"
-      }
-    },
-    {
-      "type": "thavma:figure",
-      "image": {
-        "canvas_height": 77,
-        "canvas_width": 87,
-        "height": 77,
-        "location": "thavma:textures/gui/images/smileyface.png",
-        "width": 87
-      }
-    },
-    {
-      "type": "thavma:paragraph",
-      "text": {
-        "translate": "research/entry.thavma.story.story1.feature12"
       }
     }
   ],

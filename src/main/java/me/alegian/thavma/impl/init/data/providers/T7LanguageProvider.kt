@@ -205,26 +205,17 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     """
     )
     addPageFeature(
-      ResearchEntries.Story.STORY1, 2, """
-      This is a longer paragraph to highlight the importance of splicing longer pieces of text over multiple pages. If you do not splice the paragraph to go over multiple pages, the text will spill out of the bottom of the screen and we don't want that to happen, hence DynamicRenderingHelper.kt. I will continue with some lorem ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus mattis lectus, quis aliquet ex. In hac habitasse platea dictumst. Praesent dignissim urna at feugiat pulvinar. Suspendisse laoreet lorem ut velit venenatis gravida. 
-      Donec posuere diam est, ac malesuada libero fermentum sed. Phasellus ac cursus nibh, eget pharetra leo. Maecenas scelerisque velit massa, sit amet tincidunt nulla dictum non. Sed egestas congue bibendum. Aenean facilisis nunc vitae purus tincidunt, 
-      sit amet dignissim libero gravida. Mauris vel tortor elit. Curabitur sit amet nisi sagittis, ullamcorper diam sed, condimentum est. Etiam blandit ac magna sit amet luctus. Duis nec mi tincidunt nunc.
-    """.trimIndent()
+      ResearchEntries.Story.STORY1, 2, """ A short caption for the figure just to show the custom style """.trimIndent()
     )
+    addPageFeature(ResearchEntries.Story.STORY1, 3, "This might appear in the middle")
     addPageFeature(
-      ResearchEntries.Story.STORY1, 3, """ A short caption for the figure just to show the custom style """.trimIndent()
-    )
-    addPageFeature(ResearchEntries.Story.STORY1, 4, "This might appear in the middle")
-    addPageFeature(
-      ResearchEntries.Story.STORY1, 6, """
+      ResearchEntries.Story.STORY1, 5, """
       This paragraph should start a new page always.
     """.trimIndent()
     )
-    addPageFeature(ResearchEntries.Story.STORY1, 8, "(start of page)")
-    addPageFeature(ResearchEntries.Story.STORY1, 9, "This is page number 1!")
-    addPageFeature(ResearchEntries.Story.STORY1, 10, "Just another random little paragraph :D")
+    addPageFeature(ResearchEntries.Story.STORY1, 7, "Just another random little paragraph :D")
     addPageFeature(
-      ResearchEntries.Story.STORY1, 12, """
+      ResearchEntries.Story.STORY1, 8, """
             This paragraph has a pre-set page index of 2
     """.trimIndent()
     )

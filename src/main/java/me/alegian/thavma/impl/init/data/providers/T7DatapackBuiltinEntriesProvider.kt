@@ -145,10 +145,9 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .research()
           .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeParagraphFeature())
           .addPageFeature(
             makeFigureFeature(
-              Texture("gui/images/haybales", 180, 101, 180, 101),
+              Texture("gui/images/infusion", 1916, 1036, 1916, 1036),
               true,
               ChatFormatting.DARK_AQUA,
               ChatFormatting.ITALIC
@@ -160,10 +159,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeParagraphFeature())
 
           .addPageFeature(makePageBreakFeature())
-          .addPageFeature(makeTitleFeature())
-          .addPageFeature(makeTitleFeature())
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeFigureFeature(Texture("gui/images/smileyface", 87, 77, 87, 77), false))
           .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)

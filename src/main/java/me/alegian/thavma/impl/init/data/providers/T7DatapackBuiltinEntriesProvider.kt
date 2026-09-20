@@ -31,7 +31,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.item.ItemStack
@@ -276,7 +275,6 @@ private class ResearchEntryBuilder(
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
 
-  private val pages = mutableListOf<Page>()
   private val pageFeatures = mutableListOf<PageFeature>()
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
@@ -331,16 +329,6 @@ private fun BootstrapContext<ResearchCategory>.registerCategory(
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
 
-private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey<ResearchEntry>, Int) -> Page {
-  return { entryKey, pageIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    TextPage(
-      if (hasTitle) simpleTitle(pageIndex, baseId) else null,
-      simpleParagraphs(paragraphCount, pageIndex, baseId)
-    )
-  }
-}
-
 private fun makeParagraphFeature(
 ): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
   return { entryKey, paragraphIndex ->
@@ -386,39 +374,6 @@ private fun makeFigureFeature(
 private fun makePageBreakFeature(): (ResourceKey<ResearchEntry>, Int) -> PageBreakFeature =
   { _, _ -> PageBreakFeature() }
 
-private fun makeRecipeFeature(
-  recipeRL: ResourceLocation,
-): (ResourceKey<ResearchEntry>, Int) -> RecipeFeature {
-  return { _, _ ->
-    RecipeFeature(
-      recipeRL
-    )
-  }
-}
-
-private fun makeStyledParagraphFeature(
-  forceIndex: Int = -1,
-  vararg styles: ChatFormatting?
-): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
-  return { entryKey, paragraphIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    val content = Component.translatable(ParagraphFeature.translationId(baseId, paragraphIndex))
-    for (i in styles) {
-      content.apply {
-        if (i != null) {
-          this.withStyle(i)
-        }
-      }
-    }
-    ParagraphFeature(content)
-  }
-}
-
-private fun simpleTitle(pageIndex: Int, baseId: String) =
-  Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
-
-private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) =
-  List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
 
 private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =
   SocketState(Indices(row, col), a.get(), false, true)

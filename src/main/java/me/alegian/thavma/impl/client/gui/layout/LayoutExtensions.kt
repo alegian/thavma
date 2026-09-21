@@ -32,10 +32,13 @@ fun text(content: Component, color: Int = 0) = Renderable { guiGraphics: GuiGrap
   guiGraphics.drawString(Minecraft.getInstance().font, content, color)
 }
 
-private fun renderableTexture(texture: Texture) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
+private fun renderableTexture(texture: Texture, displayWidth: Int = texture.width, displayHeight: Int = texture.height) = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
   RenderSystem.enableBlend()
   RenderSystem.defaultBlendFunc()
-  guiGraphics.blit(texture)
+  guiGraphics.usePose {
+    scale(displayWidth.toFloat() / texture.width, displayHeight.toFloat() / texture.height, 1f)
+    guiGraphics.blit(texture)
+  }
   RenderSystem.disableBlend()
 }
 
@@ -52,33 +55,19 @@ fun draw(getRenderable: T7LayoutElement.() -> Renderable) {
   }
 }
 
-fun TextureBox(texture: Texture, children: T7LayoutElement.() -> Unit) =
+fun TextureBox(
+  texture: Texture,
+  displayWidth: Int = texture.width,
+  displayHeight: Int = texture.height,
+  children: T7LayoutElement.() -> Unit,
+) =
   Row({
-    width = fixed(texture.width)
-    height = fixed(texture.height)
-  }) {
-    draw { renderableTexture(texture) }
-    children()
-  }
-
-fun CenteredTextureBox(texture: Texture, displayWidth: Int, displayHeight: Int) {
-  val screen = LayoutExtensions.currScreen
-    ?: throw IllegalStateException("Thavma Exception: cannot add renderable without setting LayoutExtensions.currScreen first!")
-  Row({
-    width = grow()
+    width = fixed(displayWidth)
     height = fixed(displayHeight)
   }) {
-    afterLayout {
-      screen.renderables.add(Renderable { guiGraphics, mouseX, mouseY, partialTick ->
-        guiGraphics.usePose {
-          translateXY(position.x + (size.x - displayWidth) / 2, position.y)
-          scale(displayWidth.toFloat() / texture.width, displayHeight.toFloat() / texture.height, 1f)
-          renderableTexture(texture).render(guiGraphics, mouseX, mouseY, partialTick)
-        }
-      })
-    }
+    draw { renderableTexture(texture, displayWidth, displayHeight) }
+    children()
   }
-}
 
 private fun T7LayoutElement.slotSetup(slot: Slot) {
   if (slot !is DynamicSlot<*>) return

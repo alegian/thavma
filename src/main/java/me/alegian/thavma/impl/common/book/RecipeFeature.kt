@@ -5,7 +5,7 @@ import me.alegian.thavma.impl.init.registries.deferred.PageFeatureTypes
 import net.minecraft.resources.ResourceLocation
 
 class RecipeFeature(
-  val recipeRL: ResourceLocation
+  val recipeId: ResourceLocation
 ) : PageFeature {
   override val type: PageFeatureType<*>
     get() = PageFeatureTypes.RECIPE.get()
@@ -13,7 +13,7 @@ class RecipeFeature(
   companion object {
     val CODEC = RecordCodecBuilder.mapCodec { builder ->
       builder.group(
-        ResourceLocation.CODEC.fieldOf("recipeRL").forGetter(RecipeFeature::recipeRL),
+        ResourceLocation.CODEC.fieldOf("recipe_id").forGetter(RecipeFeature::recipeId),
       ).apply(builder, ::RecipeFeature)
     }
   }

@@ -19,7 +19,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
   private const val GAP = 12
 
   override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature) {
-    val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeRL)?.getOrNull()?.value
+    val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeId)?.getOrNull()?.value
     if (recipe !is CraftingRecipe) return // TODO: support other recipe types
 
     Column({

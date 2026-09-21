@@ -32,12 +32,7 @@
     "count": 1,
     "id": "thavma:research_table"
   },
-  "pages": [
-    {
-      "type": "thavma:crafting",
-      "recipeRL": "minecraft:chest"
-    }
-  ],
+  "pageFeatures": [],
   "position": [
     0,
     0

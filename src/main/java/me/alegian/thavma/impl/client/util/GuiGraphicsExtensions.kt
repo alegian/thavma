@@ -18,6 +18,10 @@ fun GuiGraphics.drawCenteredString(font: Font, text: Component, centerX: Float, 
   drawString(font, text, (centerX - font.width(text) / 2f).toInt(), 0, color, false)
 }
 
+fun GuiGraphics.drawCenteredString(font: Font, text: FormattedCharSequence, centerX: Float, color: Int = 0) {
+  drawString(font, text, (centerX - font.width(text) / 2f).toInt(), 0, color, false)
+}
+
 fun GuiGraphics.drawString(font: Font, text: Component, color: Int = 0) {
   drawString(font, text, 0, 0, color, false)
 }

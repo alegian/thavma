@@ -2,15 +2,11 @@ package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.book.CraftingPage
-import me.alegian.thavma.impl.common.book.Page
-import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.research.SocketState
 import me.alegian.thavma.impl.common.util.Indices
-import me.alegian.thavma.impl.init.data.Recipes
 import me.alegian.thavma.impl.init.data.worldgen.Node
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedOre
 import me.alegian.thavma.impl.init.data.worldgen.ore.InfusedStoneOre
@@ -21,7 +17,6 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.util.DeferredAspect
-import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
 import net.minecraft.core.HolderLookup
@@ -117,7 +112,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.registerCategory(ResearchCategories.THAVMA, T7Items.BOOK.get().defaultInstance, 0f)
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
-        ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(
@@ -127,23 +121,8 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Items.BOOK.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-          .addPage(simpleTextPage(3, true))
-          .addPage(simpleTextPage(1, false))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
-          .defaultKnown()
-          .build(ctx)
-
-        ResearchEntryBuilder(
-          ResearchEntries.Story.STORY1,
-          Vector2i(0, -3),
-          false,
-          Items.TURTLE_HELMET.defaultInstance
-        )
-          .research()
-          .addPage(simpleTextPage(2, true))
-          .addPage(simpleTextPage(2, true))
-          .addPage(simpleTextPage(2, true))
           .defaultKnown()
           .build(ctx)
 
@@ -175,7 +154,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-          .addPage(simpleTextPage(3, true))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -185,7 +163,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
-          .addPage { _, _ -> CraftingPage(Recipes.CHEST) }
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -261,17 +238,12 @@ private class ResearchEntryBuilder(
   private val icon: ItemStack
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
-  private val pages = mutableListOf<Page>()
+
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
 
   fun addChild(entryKey: ResourceKey<ResearchEntry>): ResearchEntryBuilder {
     children.add(entryKey)
-    return this
-  }
-
-  fun addPage(makePage: (ResourceKey<ResearchEntry>, Int) -> Page): ResearchEntryBuilder {
-    pages.add(makePage(key, pages.size))
     return this
   }
 
@@ -297,7 +269,7 @@ private class ResearchEntryBuilder(
         pos,
         preferX,
         childrenHolders,
-        pages,
+        ResearchBookContent.featuresFor(key),
         icon,
         Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
         socketStates,
@@ -314,22 +286,6 @@ private fun BootstrapContext<ResearchCategory>.registerCategory(
 ) {
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
 }
-
-private fun simpleTextPage(paragraphCount: Int, hasTitle: Boolean): (ResourceKey<ResearchEntry>, Int) -> Page {
-  return { entryKey, pageIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    TextPage(
-      if (hasTitle) simpleTitle(pageIndex, baseId) else null,
-      simpleParagraphs(paragraphCount, pageIndex, baseId)
-    )
-  }
-}
-
-private fun simpleTitle(pageIndex: Int, baseId: String) =
-  Component.translatable(TextPage.titleTranslationId(baseId, pageIndex)).withStyle(ChatFormatting.BOLD)
-
-private fun simpleParagraphs(count: Int, pageIndex: Int, baseId: String) =
-  List(count) { Component.translatable(TextPage.paragraphTranslationId(baseId, pageIndex, it)) }
 
 private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =
   SocketState(Indices(row, col), a.get(), false, true)

@@ -11,23 +11,13 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
-import me.alegian.thavma.impl.common.book.TextPage
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.T7Tags
-import me.alegian.thavma.impl.init.registries.deferred.Aspects
-import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
-import me.alegian.thavma.impl.init.registries.deferred.T7Items
-import me.alegian.thavma.impl.init.registries.deferred.T7EntityTypes
-import me.alegian.thavma.impl.init.registries.deferred.ResearchEntries
-import me.alegian.thavma.impl.init.registries.deferred.ResearchCategories
-import me.alegian.thavma.impl.init.registries.deferred.T7Attributes
-import me.alegian.thavma.impl.init.registries.deferred.T7RecipeTypes
-import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
-import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
+import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.integration.RecipeViewerAliases
 import me.alegian.thavma.impl.integration.RecipeViewerDescriptions
 import net.minecraft.Util
@@ -68,7 +58,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Items.ORICHALCUM_NUGGET.get(), "Orichalcum Nugget")
     add(T7Items.RESEARCH_SCROLL.get(), "Research Scroll")
     add(T7Items.ARCANE_LENS.get(), "Arcane Lens")
-    add(T7Items.BOOK.get(), "Elements of Thavma")
+    add(T7Items.BOOK.get(), "Elements")
 
     add(T7Items.BASIC_AMULET.get(), "Basic Amulet")
     add(T7Items.BASIC_BELT.get(), "Basic Belt")
@@ -204,70 +194,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
-    addCategory(ResearchCategories.STORY, "???")
-    addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
-
-    addTextPage(
-      ResearchEntries.Story.STORY1, 0,
-      "A Courtesy Call 1",
-      "Lorem ipsum %s 1 sit amet,",
-      "this story a great meaning haveth."
-    )
-
-    addTextPage(
-      ResearchEntries.Story.STORY1, 1,
-      "A Courtesy Call 2",
-      "Lorem dolor 2 sit amet,",
-      "this story a great meaning haveth."
-    )
-
-    addTextPage(
-      ResearchEntries.Story.STORY1, 2,
-      "A Courtesy Call 3",
-      "Lorem lotrumatum dolor 3 sit amet,",
-      "this story a great meaning haveth."
-    )
-
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 0,
-      "Thavma",
-      """
-        I was merely toying with that wand -if it can even be called that- when this tome
-        flew into my hands! I can sense great power within it.
-      """,
-      """
-        The cover reads "Elements of Thavma", but a lot of its pages appear blank, sealed by some magic.
-      """,
-      """
-        To read them, I will first need to break that seal. It won't be easy... but
-        I have a feeling it will be worth my efforts.
-      """
-    )
-
-    addTextPage(
-      ResearchEntries.Thavma.THAVMA, 1,
-      null,
-      """
-        I will document all my findings inside the book, so that I can recall them later.
-      """
-    )
-
-    addTextPage(
-      ResearchEntries.Thavma.ARCANE_LENS, 0,
-      "The Arcane Lens",
-      """
-        The part of the book I can read describes an arcane tool that "allows the user
-        to see", whatever that might mean. I have a feeling that crafting it could assist
-        my work in unsealing the other pages.
-      """,
-      """
-        The blueprint describes a hexagonal device, much like a prism,
-        made with those colorful crystals I found lying in a cave.
-      """,
-      """
-        I should look at the world through its lens, maybe it will uncover something useful.
-      """
-    )
+    for ((translationId, text) in ResearchBookContent.translations()) add(translationId, text)
 
     add(T7Items.RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
@@ -310,7 +237,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     )
     add(
       RecipeViewerDescriptions.RESEARCH_SCROLL,
-      "Obtained by clicking any unknown entry in the \"Elements of Thavma\""
+      "Obtained by clicking any unknown entry in the \"Elements\""
     )
 
     add(RecipeViewerAliases.BOOK, "Book")
@@ -345,18 +272,4 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(ResearchCategory.translationId(key), name)
   }
 
-  private fun addTextPage(
-    entryKey: ResourceKey<ResearchEntry>,
-    pageIndex: Int,
-    title: String?,
-    vararg paragraphs: String
-  ) {
-    val baseId = ResearchEntry.translationId(entryKey)
-    if (title != null) add(TextPage.titleTranslationId(baseId, pageIndex), title)
-    for (parIndex in paragraphs.indices)
-      add(
-        TextPage.paragraphTranslationId(baseId, pageIndex, parIndex),
-        paragraphs[parIndex].trimIndent().replace("\n", " ")
-      )
-  }
 }

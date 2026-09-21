@@ -80,7 +80,6 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
         }) {
           afterLayout {
             addRenderableWidget(PageTurningWidget(position, false) {
-              // rerender the screen for the new page(s)
               turnPage(false)
             })
           }
@@ -94,7 +93,6 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
         afterLayout {
           if (pagination.hasPage(currentPage + 2)) {
             addRenderableWidget(PageTurningWidget(position, true) {
-              // rerender the screen for the new page(s)
               turnPage(true)
             })
           }

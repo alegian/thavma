@@ -130,7 +130,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeParagraphFeature())
           .addPageFeature(makeParagraphFeature())
           .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makePageBreakFeature())
+          .addPageFeature { _, _ -> PageBreakFeature() }
           .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)
@@ -357,10 +357,6 @@ private fun makeFigureFeature(
     FigureFeature(image, width, height, null)
   }
 }
-
-private fun makePageBreakFeature(): (ResourceKey<ResearchEntry>, Int) -> PageBreakFeature =
-  { _, _ -> PageBreakFeature() }
-
 
 private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =
   SocketState(Indices(row, col), a.get(), false, true)

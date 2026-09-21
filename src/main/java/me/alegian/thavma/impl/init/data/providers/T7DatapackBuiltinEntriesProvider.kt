@@ -115,7 +115,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.registerCategory(ResearchCategories.THAVMA, T7Items.BOOK.get().defaultInstance, 0f)
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
-        ctx.registerCategory(ResearchCategories.STORY, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(
@@ -132,36 +131,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .addPageFeature(makeParagraphFeature())
           .addPageFeature(makeParagraphFeature())
           .addPageFeature(makePageBreakFeature())
-          .addPageFeature(makeParagraphFeature())
-          .defaultKnown()
-          .build(ctx)
-
-        ResearchEntryBuilder(
-          ResearchEntries.Story.STORY1,
-          Vector2i(0, -3),
-          false,
-          Items.TURTLE_HELMET.defaultInstance
-        )
-          .research()
-          .addPageFeature(makeTitleFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature(
-            makeFigureFeature(
-              Texture("gui/images/infusion", 1916, 1036, 1916, 1036),
-              180,
-              101,
-              true,
-              ChatFormatting.DARK_AQUA,
-              ChatFormatting.ITALIC
-            )
-          )
-          .addPageFeature(makeTitleFeature())
-
-          .addPageFeature(makePageBreakFeature())
-          .addPageFeature(makeParagraphFeature())
-
-          .addPageFeature(makePageBreakFeature())
-          .addPageFeature(makeParagraphFeature())
           .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)
@@ -251,6 +220,14 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.MATRIX.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
+          .addPageFeature(
+            makeFigureFeature(
+              Texture("gui/images/infusion", 1916, 1036, 1916, 1036),
+              180,
+              101,
+              true,
+            )
+          )
           .build(ctx)
 
         ResearchEntryBuilder(

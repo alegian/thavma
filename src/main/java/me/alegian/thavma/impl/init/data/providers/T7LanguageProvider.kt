@@ -195,30 +195,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
-    addCategory(ResearchCategories.STORY, "???")
-    addEntry(ResearchEntries.Story.STORY1, "A Courtesy Call")
-
-    addPageFeature(ResearchEntries.Story.STORY1, 0, "This title starts the page")
-    addPageFeature(
-      ResearchEntries.Story.STORY1, 1, """
-      This is a short paragraph just to showcase that the feature exists.
-    """
-    )
-    addPageFeature(
-      ResearchEntries.Story.STORY1, 2, """ A short caption for the figure just to show the custom style """.trimIndent()
-    )
-    addPageFeature(ResearchEntries.Story.STORY1, 3, "This might appear in the middle")
-    addPageFeature(
-      ResearchEntries.Story.STORY1, 5, """
-      This paragraph should start a new page always.
-    """.trimIndent()
-    )
-    addPageFeature(ResearchEntries.Story.STORY1, 7, "Just another random little paragraph :D")
-    addPageFeature(
-      ResearchEntries.Story.STORY1, 8, """
-            This paragraph has a pre-set page index of 2
-    """.trimIndent()
-    )
+    addPageFeature(ResearchEntries.Thavma.INFUSION, 0, "An image of the infusion altar")
 
     addPageFeature(ResearchEntries.Thavma.THAVMA, 0, "Thavma")
     addPageFeature(

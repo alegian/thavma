@@ -26,7 +26,23 @@
     "count": 1,
     "id": "thavma:infusion_matrix"
   },
-  "pageFeatures": [],
+  "pageFeatures": [
+    {
+      "type": "thavma:figure",
+      "caption": {
+        "translate": "research/entry.thavma.thavma.infusion.feature0"
+      },
+      "height": 101,
+      "image": {
+        "canvas_height": 1036,
+        "canvas_width": 1916,
+        "height": 1036,
+        "location": "thavma:textures/gui/images/infusion.png",
+        "width": 1916
+      },
+      "width": 180
+    }
+  ],
   "position": [
     2,
     2

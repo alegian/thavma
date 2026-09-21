@@ -33,12 +33,12 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
       TextureBox(BG) {
         Column({
           size = grow()
+          paddingX = 32
+          paddingTop = 32
+          paddingBottom = 42
         }) {
           Row({
             size = grow()
-            paddingY = PageTurningWidget.LEFT_TEXTURE.height + 8
-            paddingX = 32
-            paddingBottom = 42
             gap = 48
           }) {
             Row({
@@ -72,8 +72,6 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   private fun PageTurnerRow() {
     Row({
       width = grow()
-      paddingX = 30
-      paddingY = 15
     }) {
       if (currentPage != 0) {
         Box({

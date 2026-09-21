@@ -25,10 +25,6 @@ object ResearchEntries {
   object Alchemy {
     val ALCHEMY = register("alchemy", ResearchCategories.ALCHEMY)
   }
-
-  object Story {
-      val STORY1 = register("story1", ResearchCategories.STORY)
-  }
 }
 
 // prepend category id to entry id to avoid duplicates

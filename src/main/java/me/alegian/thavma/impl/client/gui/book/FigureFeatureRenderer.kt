@@ -1,6 +1,7 @@
 package me.alegian.thavma.impl.client.gui.book
 
 import me.alegian.thavma.impl.client.gui.layout.CenteredTextureBox
+import me.alegian.thavma.impl.client.gui.layout.Column
 import me.alegian.thavma.impl.client.gui.layout.Row
 import me.alegian.thavma.impl.client.gui.layout.fixed
 import me.alegian.thavma.impl.client.gui.layout.grow
@@ -12,11 +13,16 @@ object FigureFeatureRenderer : PageFeatureRenderer<FigureFeature> {
     screen: EntryScreen,
     feature: FigureFeature,
   ) {
-    Row({
-      width = grow()
-      height = fixed(feature.height)
-    }) {
-      CenteredTextureBox(feature.image, feature.width, feature.height)
+    Column({ width = grow(); gap = 8 }) {
+      Row({
+        width = grow()
+        height = fixed(feature.height)
+      }) {
+        CenteredTextureBox(feature.image, feature.width, feature.height)
+      }
+
+      if (feature.caption != null)
+        ParagraphFeatureRenderer.renderParagraph(screen.getFont(), feature.caption)
     }
   }
 }

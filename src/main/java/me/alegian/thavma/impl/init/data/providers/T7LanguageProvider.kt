@@ -11,7 +11,6 @@ import me.alegian.thavma.impl.client.gui.tooltip.AspectClientTooltipComponent
 import me.alegian.thavma.impl.common.block.HungryChestBlock
 import me.alegian.thavma.impl.common.block.ResearchTableBlock
 import me.alegian.thavma.impl.common.block.WorkbenchBlock
-import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.recipe.translationId
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -195,58 +194,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     addCategory(ResearchCategories.ALCHEMY, "Alchemy")
     addEntry(ResearchEntries.Alchemy.ALCHEMY, "Alchemy")
 
-    addPageFeature(ResearchEntries.Thavma.INFUSION, 0, "An image of the infusion altar")
-
-    addPageFeature(ResearchEntries.Thavma.THAVMA, 0, "Thavma")
-    addPageFeature(
-      ResearchEntries.Thavma.THAVMA, 1,
-      """
-        I was merely toying with that wand -if it can even be called that- when this tome
-        flew into my hands! I can sense great power within it.
-      """
-    )
-    addPageFeature(
-      ResearchEntries.Thavma.THAVMA, 2,
-      """
-        The cover reads "Elements", but a lot of its pages appear blank, sealed by some magic.
-      """
-    )
-    addPageFeature(
-      ResearchEntries.Thavma.THAVMA, 3,
-      """
-        To read them, I will first need to break that seal. It won't be easy... but
-        I have a feeling it will be worth my efforts.
-      """
-    )
-    addPageFeature(
-      ResearchEntries.Thavma.THAVMA, 5,
-      """
-        I will document all my findings inside the book, so that I can recall them later.
-      """
-    )
-
-    addPageFeature(ResearchEntries.Thavma.ARCANE_LENS, 0, "The Arcane Lens")
-    addPageFeature(
-      ResearchEntries.Thavma.ARCANE_LENS, 1,
-      """
-        The part of the book I can read describes an arcane tool that "allows the user
-        to see", whatever that might mean. I have a feeling that crafting it could assist
-        my work in unsealing the other pages.
-      """
-    )
-    addPageFeature(
-      ResearchEntries.Thavma.ARCANE_LENS, 2,
-      """
-        The blueprint describes a hexagonal device, much like a prism,
-        made with those colorful crystals I found lying in a cave.
-      """
-    )
-    addPageFeature(
-      ResearchEntries.Thavma.ARCANE_LENS, 3,
-      """
-        I should look at the world through its lens, maybe it will uncover something useful.
-      """
-    )
+    for ((translationId, text) in ResearchBookContent.translations()) add(translationId, text)
 
     add(T7Items.RESEARCH_SCROLL.get().completedTranslation(), "Completed Research")
     add(ResearchEntry.TOAST_TRANSLATION, "Research Complete!")
@@ -322,11 +270,6 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
   private fun addCategory(key: ResourceKey<ResearchCategory>, name: String) {
     add(ResearchCategory.translationId(key), name)
-  }
-
-  private fun addPageFeature(entryKey: ResourceKey<ResearchEntry>, featureIndex: Int, text: String) {
-    val baseId = ResearchEntry.translationId(entryKey)
-    add(PageFeature.translationId(baseId, featureIndex), text.trimIndent().replace("\n", " "))
   }
 
 }

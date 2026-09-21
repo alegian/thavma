@@ -1,9 +1,7 @@
 package me.alegian.thavma.impl.init.data.providers
 
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.aspect.Aspect
-import me.alegian.thavma.impl.common.book.*
 import me.alegian.thavma.impl.common.enchantment.ShriekResistance.LOCATION
 import me.alegian.thavma.impl.common.research.ResearchCategory
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -19,7 +17,6 @@ import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
 import me.alegian.thavma.impl.init.registries.T7Tags
 import me.alegian.thavma.impl.init.registries.deferred.*
 import me.alegian.thavma.impl.init.registries.deferred.util.DeferredAspect
-import net.minecraft.ChatFormatting
 import net.minecraft.advancements.critereon.DamageSourcePredicate
 import net.minecraft.advancements.critereon.TagPredicate
 import net.minecraft.core.HolderLookup
@@ -126,12 +123,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
-          .addPageFeature(makeTitleFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature { _, _ -> PageBreakFeature() }
-          .addPageFeature(makeParagraphFeature())
           .defaultKnown()
           .build(ctx)
 
@@ -163,10 +154,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
         )
           .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
-          .addPageFeature(makeTitleFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeParagraphFeature())
-          .addPageFeature(makeParagraphFeature())
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -220,14 +207,6 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.MATRIX.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
-          .addPageFeature(
-            makeFigureFeature(
-              Texture("gui/images/infusion", 1916, 1036, 1916, 1036),
-              180,
-              101,
-              true,
-            )
-          )
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -260,17 +239,11 @@ private class ResearchEntryBuilder(
 ) {
   private val children = mutableListOf<ResourceKey<ResearchEntry>>()
 
-  private val pageFeatures = mutableListOf<PageFeature>()
   private val socketStates = mutableListOf<SocketState>()
   private var defaultKnown = false
 
   fun addChild(entryKey: ResourceKey<ResearchEntry>): ResearchEntryBuilder {
     children.add(entryKey)
-    return this
-  }
-
-  fun addPageFeature(makeFeature: (ResourceKey<ResearchEntry>, Int) -> PageFeature): ResearchEntryBuilder {
-    pageFeatures.add(makeFeature(key, pageFeatures.size))
     return this
   }
 
@@ -296,7 +269,7 @@ private class ResearchEntryBuilder(
         pos,
         preferX,
         childrenHolders,
-        pageFeatures,
+        ResearchBookContent.featuresFor(key),
         icon,
         Component.translatable(ResearchEntry.translationId(key)).withStyle(Rarity.UNCOMMON.styleModifier),
         socketStates,
@@ -312,50 +285,6 @@ private fun BootstrapContext<ResearchCategory>.registerCategory(
   sortIndex: Float
 ) {
   register(key, ResearchCategory(Component.translatable(ResearchCategory.translationId(key)), sortIndex, icon))
-}
-
-private fun makeParagraphFeature(
-): (ResourceKey<ResearchEntry>, Int) -> ParagraphFeature {
-  return { entryKey, featureIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    ParagraphFeature(
-      Component.translatable(PageFeature.translationId(baseId, featureIndex)),
-    )
-  }
-}
-
-private fun makeTitleFeature(
-): (ResourceKey<ResearchEntry>, Int) -> TitleFeature {
-  return { entryKey, featureIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    TitleFeature(
-      Component.translatable(PageFeature.translationId(baseId, featureIndex)).withStyle(ChatFormatting.BOLD)
-    )
-  }
-}
-
-
-private fun makeFigureFeature(
-  image: Texture,
-  width: Int,
-  height: Int,
-  giveCaption: Boolean,
-  vararg styles: ChatFormatting?
-): (ResourceKey<ResearchEntry>, Int) -> FigureFeature {
-  return if (giveCaption) { entryKey, featureIndex ->
-    val baseId = ResearchEntry.translationId(entryKey)
-    val content = Component.translatable(PageFeature.translationId(baseId, featureIndex))
-    for (i in styles) {
-      content.apply {
-        if (i != null) {
-          this.withStyle(i)
-        }
-      }
-    }
-    FigureFeature(image, width, height, content)
-  } else { _, _ ->
-    FigureFeature(image, width, height, null)
-  }
 }
 
 private fun lockedAspect(row: Int, col: Int, a: DeferredAspect<Aspect>) =

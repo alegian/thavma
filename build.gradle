@@ -18,13 +18,8 @@ group = mod_group_id
 
 repositories {
   mavenLocal()
-  maven { url "https://maven.blamejared.com" }
-  maven {
-    url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-    content {
-      includeGroup("software.bernie.geckolib")
-    }
-  }
+  maven { url 'https://maven.blamejared.com' }
+  maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
   maven { url 'https://modmaven.dev/' }
   maven { url 'https://maven.su5ed.dev/releases' }
   maven { url 'https://maven.fabricmc.net' }
@@ -32,6 +27,7 @@ repositories {
   maven { url 'https://maven.theillusivec4.top/' }
   maven { url 'https://maven.terraformersmc.com/' }
   maven { url 'https://api.modrinth.com/maven' }
+  maven { url 'https://cursemaven.com' }
 }
 
 base {
@@ -131,6 +127,7 @@ dependencies {
     if (recipe_viewer == "emi" || recipe_viewer == "both")
       localRuntime "dev.emi:emi-neoforge:${emi_version}"
     localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    localRuntime "curse.maven:itemmodeltransformer-981269:5425784"
   }
 }
 

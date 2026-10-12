@@ -3,7 +3,6 @@ package me.alegian.thavma.impl.common.scanning
 import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.aspect.components
 import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.knowsAspect
 import me.alegian.thavma.impl.common.item.itemResourceKey
@@ -48,7 +47,7 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
   else {
     val aspects = aspectMap.map { it.aspect }
-    if (aspects.flatMap { it.wrapAsHolder().components().orEmpty() }.any { !knowsAspect(it) })
+    if (aspects.flatMap { it.components.orEmpty() }.any { !knowsAspect(it) })
       scanResult = ScanResult.LOCKED
     else
       addKnowledge(

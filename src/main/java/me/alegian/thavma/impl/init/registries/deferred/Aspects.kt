@@ -19,28 +19,30 @@ object Aspects {
   val DATAGEN_PRIMALS = listOf(IGNIS, TERRA, AQUA, AETHER)
 
   // SECONDARY
-  val LUX = register("lux", 0xffffffc0.toInt())
-  val VITREUS = register("vitreus", 0xff80ffff.toInt())
-  val METALLUM = register("metallum", 0xffb5b5cd.toInt())
-  val VICTUS = register("victus", 0xffde0005.toInt())
-  val HERBA = register("herba", 0xff01ac00.toInt())
+  val LUX = register("lux", 0xffffffc0.toInt(), IGNIS)
+  val VITREUS = register("vitreus", 0xff80ffff.toInt(), TERRA)
+  val METALLUM = register("metallum", 0xffb5b5cd.toInt(), TERRA, IGNIS)
+  val VICTUS = register("victus", 0xffde0005.toInt(), TERRA, AQUA)
+  val HERBA = register("herba", 0xff01ac00.toInt(), TERRA, AQUA)
 
   // TERTIARY
-  val ALKIMIA = register("alkimia", 0xff23ac9d.toInt())
-  val TENEBRAE = register("tenebrae", 0xff222222.toInt())
-  val INSTRUMENTUM = register("instrumentum", 0xff4040ee.toInt())
-  val FABRICO = register("fabrico", 0xff809d80.toInt())
-  val MACHINA = register("machina", 0xff8080a0.toInt())
-  val VAS = register("vas", 0xff9a8080.toInt())
-  val COGNITIO = register("cognitio", 0xfff9967f.toInt())
-  val ORNATUS = register("ornatus", 0xffc0ffc0.toInt())
-  val HOSTILIS = register("hostilis", 0xffc05050.toInt())
-  val CORPUS = register("corpus", 0xff9f6409.toInt())
-  val PRAEMUNIO = register("praemunio", 0xff00c0c0.toInt())
-  val CIVILIS = register("civilis", 0xffffd7c0.toInt())
+  val ALKIMIA = register("alkimia", 0xff23ac9d.toInt(), AQUA, AETHER)
+  val TENEBRAE = register("tenebrae", 0xff222222.toInt(), AETHER)
+  val INSTRUMENTUM = register("instrumentum", 0xff4040ee.toInt(), VITREUS, METALLUM)
+  val FABRICO = register("fabrico", 0xff809d80.toInt(), INSTRUMENTUM)
+  val MACHINA = register("machina", 0xff8080a0.toInt(), METALLUM, INSTRUMENTUM)
+  val VAS = register("vas", 0xff9a8080.toInt(), FABRICO)
+  val COGNITIO = register("cognitio", 0xfff9967f.toInt(), AETHER, FABRICO)
+  val ORNATUS = register("ornatus", 0xffc0ffc0.toInt(), VITREUS, FABRICO)
+  val HOSTILIS = register("hostilis", 0xffc05050.toInt(), VICTUS, TENEBRAE)
+  val CORPUS = register("corpus", 0xff9f6409.toInt(), VICTUS)
+  val PRAEMUNIO = register("praemunio", 0xff00c0c0.toInt(), VITREUS, METALLUM, FABRICO)
+  val CIVILIS = register("civilis", 0xffffd7c0.toInt(), VICTUS, COGNITIO, ORNATUS)
 
-  private fun register(id: String, color: Int): DeferredAspect<Aspect> {
-    return REGISTRAR.registerAspect(id) { Aspect(id, color) }
+  private fun register(id: String, color: Int, vararg components: DeferredAspect<Aspect>): DeferredAspect<Aspect> {
+    return REGISTRAR.registerAspect(id) {
+      Aspect(id, color, if (components.isEmpty()) null else components.map { it.get() }.toSet())
+    }
   }
 }
 

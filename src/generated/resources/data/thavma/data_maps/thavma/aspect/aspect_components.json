@@ -5,25 +5,20 @@
       "thavma:cognitio",
       "thavma:tenebrae"
     ],
-    "thavma:alkimia": [],
     "thavma:aqua": [
       "thavma:herba",
       "thavma:victus",
       "thavma:alkimia"
     ],
-    "thavma:civilis": [],
     "thavma:cognitio": [
       "thavma:civilis"
     ],
-    "thavma:corpus": [],
     "thavma:fabrico": [
       "thavma:cognitio",
       "thavma:vas",
       "thavma:ornatus",
       "thavma:praemunio"
     ],
-    "thavma:herba": [],
-    "thavma:hostilis": [],
     "thavma:ignis": [
       "thavma:metallum",
       "thavma:lux"
@@ -32,8 +27,6 @@
       "thavma:fabrico",
       "thavma:machina"
     ],
-    "thavma:lux": [],
-    "thavma:machina": [],
     "thavma:metallum": [
       "thavma:instrumentum",
       "thavma:praemunio",
@@ -42,7 +35,6 @@
     "thavma:ornatus": [
       "thavma:civilis"
     ],
-    "thavma:praemunio": [],
     "thavma:tenebrae": [
       "thavma:hostilis"
     ],
@@ -52,7 +44,6 @@
       "thavma:herba",
       "thavma:victus"
     ],
-    "thavma:vas": [],
     "thavma:victus": [
       "thavma:hostilis",
       "thavma:civilis",

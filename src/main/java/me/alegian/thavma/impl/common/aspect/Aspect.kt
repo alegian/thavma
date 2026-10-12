@@ -27,10 +27,9 @@ class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
   fun wrapAsHolder() = T7Registries.ASPECT.wrapAsHolder(this)
 }
 
-fun Holder<Aspect>.relatedAspects() =
-  getData(T7DataMaps.ASPECT_RELATIONS) ?: listOf()
+fun Holder<Aspect>.components() = getData(T7DataMaps.ASPECT_COMPONENTS)
 
 fun Holder<Aspect>.relatedTo(other: Holder<Aspect>) =
-  this.relatedAspects().contains(other.value()) ||
-      other.relatedAspects().contains(this.value())
+  this.components()?.contains(other.value()) ?: false ||
+    other.components()?.contains(this.value()) ?: false
 

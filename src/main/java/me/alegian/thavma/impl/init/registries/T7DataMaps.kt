@@ -31,9 +31,9 @@ object T7DataMaps {
       .build()
   }
 
-  val ASPECT_RELATIONS = DataMapType
+  val ASPECT_COMPONENTS = DataMapType
     .builder(
-      rl("aspect_relations"),
+      rl("aspect_components"),
       T7Registries.ASPECT_KEY,
       Aspect.CODEC.mutableSetOf()
     )

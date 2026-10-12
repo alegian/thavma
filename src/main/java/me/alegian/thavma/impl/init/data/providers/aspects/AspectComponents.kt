@@ -10,20 +10,24 @@ import net.neoforged.neoforge.common.data.DataMapProvider
 object AspectComponents {
   fun gather(datamapProvider: T7DataMapProvider) =
     datamapProvider.builder(T7DataMaps.ASPECT_COMPONENTS).run {
-      add(Aspects.TERRA, listOf(Aspects.VITREUS, Aspects.METALLUM, Aspects.HERBA, Aspects.VICTUS))
-      add(Aspects.IGNIS, listOf(Aspects.METALLUM, Aspects.LUX))
-      add(Aspects.AQUA, listOf(Aspects.HERBA, Aspects.VICTUS, Aspects.ALKIMIA))
-      add(Aspects.AETHER, listOf(Aspects.ALKIMIA, Aspects.COGNITIO, Aspects.TENEBRAE))
+      add(Aspects.LUX, listOf(Aspects.IGNIS))
+      add(Aspects.VITREUS, listOf(Aspects.TERRA))
+      add(Aspects.METALLUM, listOf(Aspects.TERRA, Aspects.IGNIS))
+      add(Aspects.VICTUS, listOf(Aspects.TERRA, Aspects.AQUA))
+      add(Aspects.HERBA, listOf(Aspects.TERRA, Aspects.AQUA))
 
-      add(Aspects.VITREUS, listOf(Aspects.ORNATUS, Aspects.INSTRUMENTUM, Aspects.PRAEMUNIO))
-      add(Aspects.METALLUM, listOf(Aspects.INSTRUMENTUM, Aspects.PRAEMUNIO, Aspects.MACHINA))
-      add(Aspects.VICTUS, listOf(Aspects.HOSTILIS, Aspects.CIVILIS, Aspects.CORPUS))
-
-      add(Aspects.TENEBRAE, listOf(Aspects.HOSTILIS))
-      add(Aspects.INSTRUMENTUM, listOf(Aspects.FABRICO, Aspects.MACHINA))
-      add(Aspects.FABRICO, listOf(Aspects.COGNITIO, Aspects.VAS, Aspects.ORNATUS, Aspects.PRAEMUNIO))
-      add(Aspects.COGNITIO, listOf(Aspects.CIVILIS))
-      add(Aspects.ORNATUS, listOf(Aspects.CIVILIS))
+      add(Aspects.ALKIMIA, listOf(Aspects.AQUA, Aspects.AETHER))
+      add(Aspects.TENEBRAE, listOf(Aspects.AETHER))
+      add(Aspects.INSTRUMENTUM, listOf(Aspects.VITREUS, Aspects.METALLUM))
+      add(Aspects.FABRICO, listOf(Aspects.INSTRUMENTUM))
+      add(Aspects.MACHINA, listOf(Aspects.METALLUM, Aspects.INSTRUMENTUM))
+      add(Aspects.VAS, listOf(Aspects.FABRICO))
+      add(Aspects.COGNITIO, listOf(Aspects.AETHER, Aspects.FABRICO))
+      add(Aspects.ORNATUS, listOf(Aspects.VITREUS, Aspects.FABRICO))
+      add(Aspects.HOSTILIS, listOf(Aspects.VICTUS, Aspects.TENEBRAE))
+      add(Aspects.CORPUS, listOf(Aspects.VICTUS))
+      add(Aspects.PRAEMUNIO, listOf(Aspects.VITREUS, Aspects.METALLUM, Aspects.FABRICO))
+      add(Aspects.CIVILIS, listOf(Aspects.VICTUS, Aspects.COGNITIO, Aspects.ORNATUS))
     }
 
   private fun DataMapProvider.Builder<MutableSet<Aspect>, Aspect>.add(

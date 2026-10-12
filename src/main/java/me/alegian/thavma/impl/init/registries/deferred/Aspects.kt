@@ -10,12 +10,12 @@ object Aspects {
   val REGISTRAR: T7DeferredRegister.Aspects = T7DeferredRegister.createAspects(Thavma.MODID)
 
   // PRIMAL
-  val TERRA = register("terra", 0xff56c000.toInt(), true)
-  val IGNIS = register("ignis", 0xffff5a01.toInt(), true)
-  val AQUA = register("aqua", 0xff3cd4fc.toInt(), true)
-  val AETHER = register("aether", T7Colors.PURPLE, true)
+  val TERRA = register("terra", 0xff56c000.toInt())
+  val IGNIS = register("ignis", 0xffff5a01.toInt())
+  val AQUA = register("aqua", 0xff3cd4fc.toInt())
+  val AETHER = register("aether", T7Colors.PURPLE)
 
-  // DO NOT use this to check if an aspect is primal. This array is used to datagen ores and other content. Instead, use Aspect::isPrimal
+  // This array is used to datagen ores and other content. Use Aspect::isPrimal to check primality.
   val DATAGEN_PRIMALS = listOf(IGNIS, TERRA, AQUA, AETHER)
 
   // SECONDARY
@@ -39,8 +39,8 @@ object Aspects {
   val PRAEMUNIO = register("praemunio", 0xff00c0c0.toInt())
   val CIVILIS = register("civilis", 0xffffd7c0.toInt())
 
-  private fun register(id: String, color: Int, isPrimal: Boolean = false): DeferredAspect<Aspect> {
-    return REGISTRAR.registerAspect(id) { Aspect(id, color, isPrimal) }
+  private fun register(id: String, color: Int): DeferredAspect<Aspect> {
+    return REGISTRAR.registerAspect(id) { Aspect(id, color) }
   }
 }
 

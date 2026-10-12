@@ -30,6 +30,6 @@ class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
 fun Holder<Aspect>.components() = getData(T7DataMaps.ASPECT_COMPONENTS)
 
 fun Holder<Aspect>.relatedTo(other: Holder<Aspect>) =
-  this.components()?.contains(other.value()) ?: false ||
-    other.components()?.contains(this.value()) ?: false
+  this.components().orEmpty().contains(other.value())  ||
+    other.components().orEmpty().contains(this.value())
 

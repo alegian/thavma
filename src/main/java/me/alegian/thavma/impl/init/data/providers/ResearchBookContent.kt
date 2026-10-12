@@ -672,10 +672,8 @@ internal object ResearchBookContent {
       val baseId = ResearchEntry.translationId(entryKey)
       features.forEachIndexed { index, feature ->
         feature.text?.let { put(PageFeature.translationId(baseId, index, features.lastIndex), it) }
-        if (feature.placeholders.isNotEmpty()) {
-          feature.placeholders.forEachIndexed { number, string ->
-            put(PageFeature.translationId(baseId, index, features.lastIndex) + "-%${number + 1}\$s", string)
-          }
+        feature.placeholders.forEachIndexed { number, string ->
+          put(PageFeature.translationId(baseId, index, features.lastIndex) + "-%${number + 1}\$s", string)
         }
       }
     }
@@ -721,7 +719,6 @@ private val NO_FORMAT = Style.EMPTY
   .withObfuscated(false)
   .withColor(0x000000)
 
-/** Creates a copy of the component that ignores any text formatting inherited from its parent. */
 private fun Component.unformatted(): MutableComponent =
   copy().setStyle(style.applyTo(NO_FORMAT))
 

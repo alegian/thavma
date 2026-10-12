@@ -7,7 +7,7 @@ import net.minecraft.core.Holder
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.resources.ResourceLocation
 
-class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
+class Aspect(var id: String, var color: Int) {
   val translationId by lazy {
     Util.makeDescriptionId(T7Registries.ASPECT.key().location().path, T7Registries.ASPECT.getKey(this))
   }
@@ -25,12 +25,13 @@ class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
   fun defaultStack() = AspectStack.of(this, 1)
 
   fun wrapAsHolder() = T7Registries.ASPECT.wrapAsHolder(this)
+
+  val isPrimal
+    get() = wrapAsHolder().components() == null
 }
 
-fun Holder<Aspect>.relatedAspects() =
-  getData(T7DataMaps.ASPECT_RELATIONS) ?: listOf()
+fun Holder<Aspect>.components() = getData(T7DataMaps.ASPECT_COMPONENTS)
 
 fun Holder<Aspect>.relatedTo(other: Holder<Aspect>) =
-  this.relatedAspects().contains(other.value()) ||
-      other.relatedAspects().contains(this.value())
-
+  this.components().orEmpty().contains(other.value())  ||
+    other.components().orEmpty().contains(this.value())

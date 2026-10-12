@@ -9,6 +9,7 @@ interface PageFeature {
     val CODEC =
       T7Registries.PAGE_FEATURE_TYPE.byNameCodec().dispatch({ pageFeature -> pageFeature.type }, { type -> type.codec })
 
-    fun translationId(baseId: String, featureIndex: Int) = "$baseId.feature$featureIndex"
+    fun translationId(baseId: String, featureIndex: Int, maxFeatureIndex: Int) =
+      "$baseId.feature${featureIndex.toString().padStart(maxFeatureIndex.toString().length, '0')}"
   }
 }

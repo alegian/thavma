@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.scanning
 import com.google.common.primitives.Doubles.max
 import me.alegian.thavma.impl.common.aspect.AspectHelper
 import me.alegian.thavma.impl.common.aspect.AspectMap
-import me.alegian.thavma.impl.common.aspect.relatedAspects
+import me.alegian.thavma.impl.common.aspect.components
 import me.alegian.thavma.impl.common.entity.addKnowledge
 import me.alegian.thavma.impl.common.entity.knowsAspect
 import me.alegian.thavma.impl.common.item.itemResourceKey
@@ -18,7 +18,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ProjectileUtil
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.block.state.BlockState
@@ -49,7 +48,8 @@ private fun ServerPlayer.tryScan(key: ResourceKey<*>, aspectMap: AspectMap?) {
   else if (hasScanned(key)) scanResult = ScanResult.SUCCESS
   else {
     val aspects = aspectMap.map { it.aspect }
-    if (aspects.any { it.wrapAsHolder().relatedAspects().none { !knowsAspect(it) } }) scanResult = ScanResult.LOCKED
+    if (aspects.flatMap { it.wrapAsHolder().components().orEmpty() }.any { !knowsAspect(it) })
+      scanResult = ScanResult.LOCKED
     else
       addKnowledge(
         aspects
@@ -82,7 +82,8 @@ private fun entityKey(entityType: EntityType<*>) =
 fun Player.getScanHitResult(): HitResult {
   val rayVec = getViewVector(0.0f).scale(max(blockInteractionRange(), entityInteractionRange()))
   val predicate = { entity: Entity -> !entity.isSpectator && (entity.isPickable || entity is ItemEntity) }
-  val trueHitResult = ProjectileUtil.getHitResult(eyePosition, this, predicate, rayVec, level(), 0.0f, ClipContext.Block.OUTLINE)
+  val trueHitResult =
+    ProjectileUtil.getHitResult(eyePosition, this, predicate, rayVec, level(), 0.0f, ClipContext.Block.OUTLINE)
 
   val range =
     if (trueHitResult is BlockHitResult) blockInteractionRange()

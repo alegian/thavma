@@ -661,18 +661,20 @@ internal object ResearchBookContent {
   )
 
   fun featuresFor(entryKey: ResourceKey<ResearchEntry>): List<PageFeature> =
-    contentByEntry[entryKey].orEmpty().mapIndexed { index, feature ->
-      feature.create(PageFeature.translationId(ResearchEntry.translationId(entryKey), index))
+    contentByEntry[entryKey].orEmpty().let { features ->
+      features.mapIndexed { index, feature ->
+        feature.create(PageFeature.translationId(ResearchEntry.translationId(entryKey), index, features.lastIndex))
+      }
     }
 
   fun translations(): Map<String, String> = buildMap {
     for ((entryKey, features) in contentByEntry) {
       val baseId = ResearchEntry.translationId(entryKey)
       features.forEachIndexed { index, feature ->
-        feature.text?.let { put(PageFeature.translationId(baseId, index), it) }
+        feature.text?.let { put(PageFeature.translationId(baseId, index, features.lastIndex), it) }
         if (feature.placeholders.isNotEmpty()) {
           feature.placeholders.forEachIndexed { number, string ->
-            string.let { put(PageFeature.translationId(baseId, index) + "-%${number + 1}\$s", it) }
+            put(PageFeature.translationId(baseId, index, features.lastIndex) + "-%${number + 1}\$s", string)
           }
         }
       }

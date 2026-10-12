@@ -2,6 +2,7 @@ package me.alegian.thavma.impl.init.registries
 
 import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectMap
+import me.alegian.thavma.impl.common.codec.mutableSetOf
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.Registries
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
@@ -30,14 +31,13 @@ object T7DataMaps {
       .build()
   }
 
-  val ASPECT_RELATIONS = AdvancedDataMapType
+  val ASPECT_RELATIONS = DataMapType
     .builder(
       rl("aspect_relations"),
       T7Registries.ASPECT_KEY,
-      Aspect.CODEC.listOf()
+      Aspect.CODEC.mutableSetOf()
     )
-    .synced(Aspect.CODEC.listOf(), true)
-    .merger(DataMapValueMerger.listMerger())
+    .synced(Aspect.CODEC.mutableSetOf(), true)
     .build()
 
   // prioritizes resourcekeys before tags

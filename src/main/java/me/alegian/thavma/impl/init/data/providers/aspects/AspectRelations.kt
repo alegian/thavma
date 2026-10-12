@@ -35,6 +35,9 @@ object AspectRelations {
       add(Aspects.CIVILIS, listOf())
     }
 
-  private fun DataMapProvider.Builder<List<Aspect>, Aspect>.add(aspect: Holder<Aspect>, relations: List<Holder<Aspect>>) =
-    add(aspect, relations.map { it.value() }, false)
+  private fun DataMapProvider.Builder<MutableSet<Aspect>, Aspect>.add(
+    aspect: Holder<Aspect>,
+    relations: List<Holder<Aspect>>
+  ) =
+    add(aspect, relations.map { it.value() }.toMutableSet(), false)
 }

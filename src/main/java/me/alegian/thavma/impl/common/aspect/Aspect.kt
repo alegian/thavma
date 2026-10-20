@@ -6,7 +6,7 @@ import net.minecraft.core.Holder
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.resources.ResourceLocation
 
-class Aspect(var id: String, var color: Int, val components: Set<Aspect>? = null) {
+class Aspect(var id: String, var color: Int, val latent: Boolean, val components: Set<Aspect>? = null) {
   val translationId by lazy {
     Util.makeDescriptionId(T7Registries.ASPECT.key().location().path, T7Registries.ASPECT.getKey(this))
   }

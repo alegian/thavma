@@ -115,28 +115,53 @@ internal fun <T> T7LayoutElement.paginate(
     var page = mutableListOf<T7LayoutElement>()
     var usedHeight = 0f
 
-    for (element in itemElements) {
-      if (element.isPageBreak) {
+    for (item in itemElements) {
+      if (item.isPageBreak) {
         if (page.isNotEmpty()) pages += page
         page = mutableListOf()
         usedHeight = 0f
         continue
       }
 
-      val requiredHeight = element.size.y + if (page.isEmpty()) 0f else gap
-      if (page.isNotEmpty() && usedHeight + requiredHeight > availableHeight) {
-        pages += page
-        page = mutableListOf()
-        usedHeight = 0f
-      }
+      var element = item
+      while (true) {
+        val leadingGap = if (page.isEmpty()) 0f else gap
+        val remainingHeight = availableHeight - usedHeight - leadingGap
+        if (element.size.y <= remainingHeight) {
+          page += element
+          usedHeight += leadingGap + element.size.y
+          break
+        }
 
-      page += element
-      usedHeight += element.size.y + if (page.size == 1) 0f else gap
+        val split = element.split(remainingHeight)
+        if (split != null && split.first.size.y > 0f && split.first.size.y <= remainingHeight &&
+          split.second.size.y > 0f && split.second.size.y < element.size.y
+        ) {
+          page += split.first
+          pages += page
+          page = mutableListOf()
+          usedHeight = 0f
+          element = split.second
+          continue
+        }
+
+        if (page.isNotEmpty()) {
+          pages += page
+          page = mutableListOf()
+          usedHeight = 0f
+          continue
+        }
+
+        page += element
+        usedHeight = element.size.y
+        break
+      }
     }
 
     if (page.isNotEmpty()) pages += page
     pagination.pageCount = pages.size
-    children.retainAll(pages.getOrNull(pageIndex).orEmpty())
+    children.clear()
+    children.addAll(pages.getOrNull(pageIndex).orEmpty())
   }
 }
 
@@ -169,6 +194,7 @@ class T7LayoutElement internal constructor(
     }
   internal var afterLayoutCallbacks = mutableListOf<T7LayoutElement.() -> Unit>()
   internal var paginationCallback: (() -> Unit)? = null
+  internal var paginationSplitCallback: (T7LayoutElement.(Float) -> Pair<T7LayoutElement, T7LayoutElement>?)? = null
   internal var isPageBreak = false
 
   init {
@@ -253,6 +279,17 @@ class T7LayoutElement internal constructor(
     paginationCallback?.invoke()
     for (child in children)
       child.paginateRecursively()
+  }
+
+  internal fun split(availableHeight: Float): Pair<T7LayoutElement, T7LayoutElement>? {
+    val callback = paginationSplitCallback ?: return null
+    val previous = currElement
+    currElement = parent
+    return try {
+      callback(availableHeight)
+    } finally {
+      currElement = previous
+    }
   }
 
   /**

@@ -20,6 +20,10 @@ fun pageBreak() {
   currElement?.isPageBreak = true
 }
 
+fun splitForPagination(callback: T7LayoutElement.(Float) -> Pair<T7LayoutElement, T7LayoutElement>?) {
+  currElement?.paginationSplitCallback = callback
+}
+
 enum class Alignment {
   START,
   CENTER,

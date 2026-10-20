@@ -1,8 +1,8 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:aether": 20,
     "thavma:instrumentum": 16,
+    "thavma:praecantatio": 20,
     "thavma:tenebrae": 16
   },
   "base": {

@@ -30,8 +30,7 @@
     "minecraft:elder_guardian": {},
     "minecraft:ender_dragon": {},
     "minecraft:enderman": {
-      "thavma:humanus": 4,
-      "thavma:impetus": 4,
+      "thavma:alienis": 8,
       "thavma:tenebrae": 8
     },
     "minecraft:endermite": {},

@@ -63,7 +63,7 @@
     },
     "#c:gunpowders": {
       "thavma:ignis": 4,
-      "thavma:permutatio": 2,
+      "thavma:pulvis": 2,
       "thavma:terra": 1
     },
     "#c:ingots/copper": {
@@ -147,7 +147,7 @@
     "#c:rods/blaze": {
       "thavma:corpus": 2,
       "thavma:ignis": 4,
-      "thavma:permutatio": 2
+      "thavma:pulvis": 2
     },
     "#c:rods/breeze": {
       "thavma:aer": 6,
@@ -252,7 +252,7 @@
     },
     "#minecraft:terracotta": {
       "thavma:ignis": 4,
-      "thavma:rosaura": 1,
+      "thavma:sensus": 1,
       "thavma:terra": 4
     },
     "#minecraft:wool": {
@@ -408,7 +408,7 @@
     },
     "minecraft:blaze_powder": {
       "thavma:ignis": 2,
-      "thavma:permutatio": 1
+      "thavma:pulvis": 1
     },
     "minecraft:brick": {
       "thavma:ignis": 1,
@@ -775,11 +775,11 @@
       "thavma:terra": 2
     },
     "minecraft:end_crystal": {
+      "thavma:corpus": 4,
       "thavma:ignis": 2,
-      "thavma:impetus": 4,
       "thavma:instrumentum": 4,
-      "thavma:permutatio": 5,
-      "thavma:praecantatio": 2,
+      "thavma:praecantatio": 6,
+      "thavma:pulvis": 1,
       "thavma:tenebrae": 4,
       "thavma:vitreus": 14
     },
@@ -802,8 +802,8 @@
     "minecraft:ender_eye": {
       "thavma:ignis": 2,
       "thavma:instrumentum": 4,
-      "thavma:permutatio": 1,
       "thavma:praecantatio": 2,
+      "thavma:pulvis": 1,
       "thavma:tenebrae": 4
     },
     "minecraft:exposed_chiseled_copper": {
@@ -828,19 +828,19 @@
     },
     "minecraft:firework_rocket": {
       "thavma:ignis": 1,
-      "thavma:rosaura": 1
+      "thavma:sensus": 1
     },
     "minecraft:firework_star": {
       "thavma:ignis": 1,
-      "thavma:rosaura": 2
+      "thavma:sensus": 2
     },
     "minecraft:flint": {
       "thavma:instrumentum": 1,
       "thavma:terra": 1
     },
     "minecraft:ghast_tear": {
-      "thavma:impetus": 4,
-      "thavma:permutatio": 4
+      "thavma:corpus": 4,
+      "thavma:praecantatio": 4
     },
     "minecraft:glow_ink_sac": {
       "thavma:aqua": 2,
@@ -1595,7 +1595,7 @@
     },
     "minecraft:tnt": {
       "thavma:ignis": 20,
-      "thavma:permutatio": 10,
+      "thavma:pulvis": 10,
       "thavma:terra": 13
     },
     "minecraft:torch": {
@@ -1935,9 +1935,8 @@
       "thavma:mortuus": 2
     },
     "thavma:sealing_jar": {
-      "thavma:permutatio": 2,
-      "thavma:praecantatio": 2,
-      "thavma:vitreus": 4
+      "thavma:orbis": 4,
+      "thavma:praecantatio": 2
     },
     "thavma:table": {
       "thavma:fabrico": 2,

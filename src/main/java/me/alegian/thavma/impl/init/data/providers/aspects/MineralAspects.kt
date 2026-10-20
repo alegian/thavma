@@ -50,7 +50,7 @@ object MineralAspects {
 
   val thavmite = AspectGen().mutate {
     it.add(Aspects.METALLUM, 8)
-      .add(Aspects.AETHER, 4)
+      .add(Aspects.PRAECANTATIO, 4)
   }
   val thavmiteBlock = thavmite.mutate(Mutations.STORAGE_BLOCK_9)
 

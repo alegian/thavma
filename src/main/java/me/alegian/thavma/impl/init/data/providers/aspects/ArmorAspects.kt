@@ -27,7 +27,7 @@ object ArmorAspects {
   val diamondBoots = MineralAspects.diamond.mutate(Mutations.boots(8))
   val diamondHorseArmor = MineralAspects.diamond.mutate(Mutations.horseArmor(12))
 
-  private val netheriteUpgrade = MineralAspects.netherite.mutate { it.add(Aspects.PRAEMUNIO, 1) }
+  private val netheriteUpgrade = MineralAspects.netherite.mutate { it.add(Aspects.TUTAMEN, 1) }
   val netheriteHelmet = diamondHelmet.add(netheriteUpgrade)
   val netheriteChestplate = diamondChestplate.add(netheriteUpgrade)
   val netheriteLeggings = diamondLeggings.add(netheriteUpgrade)

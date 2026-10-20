@@ -39,15 +39,14 @@ object EntityAspects {
       entity(EntityType.ELDER_GUARDIAN) {}
       entity(EntityType.ENDERMAN) {
         it.add(Aspects.TENEBRAE, 8)
-          .add(Aspects.HOSTILIS, 4)
-          .add(Aspects.CIVILIS, 4)
+          .add(Aspects.ALIENIS, 8)
       }
       entity(EntityType.ENDERMITE) {}
       entity(EntityType.EVOKER) {}
       entity(EntityType.FOX) {}
       entity(EntityType.FROG) {}
       entity(EntityType.GHAST) {
-        it.add(Aspects.HOSTILIS, 12)
+        it.add(Aspects.IMPETUS, 12)
           .add(Aspects.IGNIS, 8)
       }
       entity(EntityType.GLOW_SQUID) {}
@@ -85,11 +84,11 @@ object EntityAspects {
       entity(EntityType.SILVERFISH) {}
       entity(EntityType.SKELETON) {
         it.add(Aspects.TERRA, 8)
-          .add(Aspects.HOSTILIS, 8)
+          .add(Aspects.IMPETUS, 8)
       }
       entity(EntityType.SKELETON_HORSE) {}
       entity(EntityType.SLIME) {
-        it.add(Aspects.ALKIMIA, 5)
+        it.add(Aspects.PERMUTATIO, 5)
           .add(Aspects.AQUA, 10)
           .add(Aspects.VICTUS, 10)
       }
@@ -97,7 +96,7 @@ object EntityAspects {
       entity(EntityType.SNOW_GOLEM) {}
       entity(EntityType.SPIDER) {
         it.add(Aspects.TERRA, 8)
-          .add(Aspects.HOSTILIS, 8)
+          .add(Aspects.IMPETUS, 8)
       }
       entity(EntityType.SQUID) {}
       entity(EntityType.STRAY) {}
@@ -108,7 +107,7 @@ object EntityAspects {
       entity(EntityType.TURTLE) {}
       entity(EntityType.VEX) {}
       entity(EntityType.VILLAGER) {
-        it.add(Aspects.CIVILIS, 12)
+        it.add(Aspects.HUMANUS, 12)
       }
       entity(EntityType.VINDICATOR) {}
       entity(EntityType.WANDERING_TRADER) {}
@@ -119,7 +118,7 @@ object EntityAspects {
       entity(EntityType.ZOGLIN) {}
       entity(EntityType.ZOMBIE) {
         it.add(Aspects.TERRA, 8)
-          .add(Aspects.HOSTILIS, 8)
+          .add(Aspects.IMPETUS, 8)
       }
       entity(EntityType.ZOMBIE_HORSE) {}
       entity(EntityType.ZOMBIE_VILLAGER) {}

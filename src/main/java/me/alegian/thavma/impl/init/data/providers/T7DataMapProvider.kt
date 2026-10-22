@@ -17,8 +17,6 @@ import java.util.function.Supplier
 class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
   DataMapProvider(packOutput, lookupProvider) {
   override fun gather(lookupProvider: HolderLookup.Provider) {
-    AspectRelations.gather(this)
-
     BlockAndItemAspects.gather(this, lookupProvider)
     EntityAspects.gather(this, lookupProvider)
     MineralAspects.gather(this, lookupProvider)

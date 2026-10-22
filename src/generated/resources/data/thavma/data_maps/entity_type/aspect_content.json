@@ -30,8 +30,7 @@
     "minecraft:elder_guardian": {},
     "minecraft:ender_dragon": {},
     "minecraft:enderman": {
-      "thavma:civilis": 4,
-      "thavma:hostilis": 4,
+      "thavma:alienis": 8,
       "thavma:tenebrae": 8
     },
     "minecraft:endermite": {},
@@ -39,8 +38,8 @@
     "minecraft:fox": {},
     "minecraft:frog": {},
     "minecraft:ghast": {
-      "thavma:hostilis": 12,
-      "thavma:ignis": 8
+      "thavma:ignis": 8,
+      "thavma:impetus": 12
     },
     "minecraft:glow_squid": {},
     "minecraft:goat": {},
@@ -76,20 +75,20 @@
     "minecraft:shulker": {},
     "minecraft:silverfish": {},
     "minecraft:skeleton": {
-      "thavma:hostilis": 8,
+      "thavma:impetus": 8,
       "thavma:terra": 8
     },
     "minecraft:skeleton_horse": {},
     "minecraft:slime": {
-      "thavma:alkimia": 5,
       "thavma:aqua": 10,
+      "thavma:permutatio": 5,
       "thavma:victus": 10
     },
     "minecraft:sniffer": {},
     "minecraft:snow_golem": {},
     "minecraft:spectral_arrow": {},
     "minecraft:spider": {
-      "thavma:hostilis": 8,
+      "thavma:impetus": 8,
       "thavma:terra": 8
     },
     "minecraft:squid": {},
@@ -101,7 +100,7 @@
     "minecraft:turtle": {},
     "minecraft:vex": {},
     "minecraft:villager": {
-      "thavma:civilis": 12
+      "thavma:humanus": 12
     },
     "minecraft:vindicator": {},
     "minecraft:wandering_trader": {},
@@ -112,7 +111,7 @@
     "minecraft:wolf": {},
     "minecraft:zoglin": {},
     "minecraft:zombie": {
-      "thavma:hostilis": 8,
+      "thavma:impetus": 8,
       "thavma:terra": 8
     },
     "minecraft:zombie_horse": {},

@@ -46,7 +46,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     wandPlatingCrafting(pRecipeOutput, T7Items.IRON_PLATING.get(), Items.IRON_INGOT, Items.IRON_NUGGET)
     wandPlatingWorkbench(pRecipeOutput, T7Items.GOLD_PLATING.get(), Items.GOLD_INGOT, Items.GOLD_NUGGET, AspectMap.ofPrimals(8))
     wandPlatingWorkbench(pRecipeOutput, T7Items.ORICHALCUM_PLATING.get(), T7Items.ORICHALCUM_INGOT, T7Items.ORICHALCUM_NUGGET, AspectMap.ofPrimals(4))
-    wandPlatingInfusion(pRecipeOutput, T7Items.THAVMITE_PLATING.get(), T7Items.THAVMITE_INGOT, T7Items.THAVMITE_NUGGET, AspectMap.builder().add(Aspects.AETHER, 16).build())
+    wandPlatingInfusion(pRecipeOutput, T7Items.THAVMITE_PLATING.get(), T7Items.THAVMITE_INGOT, T7Items.THAVMITE_NUGGET, AspectMap.builder().add(Aspects.PRAECANTATIO, 16).build())
 
     ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, T7Items.THAVMITE_SWORD.get())
       .define('a', T7Items.THAVMITE_INGOT.get())
@@ -199,7 +199,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.SEALING_JAR, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.AQUA.get(), 4).add(Aspects.AETHER.get(), 4).build())
+      .requireAspects(AspectMap.builder().add(Aspects.AQUA.get(), 4).add(Aspects.AER.get(), 4).build())
       .define('s', T7Blocks.GREATWOOD_SLAB)
       .define('p', Tags.Items.GLASS_PANES)
       .pattern("psp")
@@ -211,7 +211,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     WorkbenchRecipeBuilder.shaped(T7Items.GREATWOOD_CORE, 1)
       .requireAspects(AspectMap.ofPrimals(8))
       .define('g', T7Blocks.GREATWOOD_LOG)
-      .define('o', T7Items.SHARDS[Aspects.AETHER]!!)
+      .define('o', T7Items.SHARDS[Aspects.AER]!!)
       .pattern(" og")
       .pattern("ogo")
       .pattern("go ")
@@ -221,9 +221,9 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     InfusionRecipeBuilder(
       T7Items.SILVERWOOD_CORE,
       Ingredient.of(T7Blocks.SILVERWOOD_LOG),
-      listOf(Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!)),
+      listOf(Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
+        .add(Aspects.PRAECANTATIO, 16)
         .build(),
     ).save(pRecipeOutput)
 
@@ -243,7 +243,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     CrucibleRecipeBuilder(
       T7Items.THAVMITE_INGOT.get().defaultInstance,
       AspectMap.builder()
-        .add(Aspects.AETHER.get(), 4)
+        .add(Aspects.PRAECANTATIO.get(), 4)
         .build(),
       Ingredient.of(Items.IRON_INGOT)
     ).save(pRecipeOutput)
@@ -270,8 +270,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(T7Items.THAVMITE_HELMET),
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.PRAECANTATIO, 16)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -279,8 +279,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(T7Items.THAVMITE_CHESTPLATE),
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.PRAECANTATIO, 16)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -288,8 +288,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(T7Items.THAVMITE_LEGGINGS),
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.PRAECANTATIO, 16)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -297,8 +297,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(T7Items.THAVMITE_BOOTS),
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.PRAECANTATIO, 16)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
 
@@ -325,7 +325,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(T7Items.THAVMITE_SWORD),
       listOf(Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.GREATWOOD_CORE), Ingredient.of(Items.NETHERITE_INGOT)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 16)
+        .add(Aspects.PRAECANTATIO, 16)
         .add(Aspects.INSTRUMENTUM, 16)
         .build(),
     ).save(pRecipeOutput)
@@ -335,7 +335,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(Items.ENDER_PEARL),
       listOf(Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(Blocks.DISPENSER)),
       AspectMap.builder()
-        .add(Aspects.AETHER, 20)
+        .add(Aspects.PRAECANTATIO, 20)
         .add(Aspects.TENEBRAE, 16)
         .add(Aspects.INSTRUMENTUM, 16)
         .build(),
@@ -345,12 +345,12 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(Items.QUARTZ_BLOCK),
       listOf(Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.LAPIS_LAZULI)),
       AspectMap.builder()
-        .add(Aspects.ORNATUS, 40)
+        .add(Aspects.ROSAURA, 40)
         .add(Aspects.INSTRUMENTUM, 16)
         .build(),
     ).save(pRecipeOutput)
     WorkbenchRecipeBuilder.shaped(T7Items.FOCUS_LIGHT, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.IGNIS, 12).add(Aspects.AETHER, 12).build())
+      .requireAspects(AspectMap.builder().add(Aspects.IGNIS, 12).add(Aspects.AER, 12).build())
       .define('e', T7Blocks.ETERNAL_FLAME)
       .define('o', T7Items.ORICHALCUM_PLATING)
       .define('b', Tags.Items.STORAGE_BLOCKS_COAL)
@@ -362,7 +362,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(Tags.Items.STORAGE_BLOCKS_COAL)
       .save(pRecipeOutput)
     WorkbenchRecipeBuilder.shaped(T7Items.FOCUS_ENDERCHEST, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.TERRA, 12).add(Aspects.AETHER, 12).build())
+      .requireAspects(AspectMap.builder().add(Aspects.TERRA, 12).add(Aspects.AER, 12).build())
       .define('e', Blocks.ENDER_CHEST)
       .define('o', Tags.Items.OBSIDIANS)
       .define('b', Items.BUNDLE)
@@ -375,7 +375,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.HUNGRY_CHEST, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.TERRA, 8).add(Aspects.AETHER, 4).build())
+      .requireAspects(AspectMap.builder().add(Aspects.TERRA, 8).add(Aspects.AER, 4).build())
       .define('t', ItemTags.TRAPDOORS)
       .define('w', T7Blocks.GREATWOOD_PLANKS)
       .pattern("wtw")
@@ -444,7 +444,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .requireAspects(
         AspectMap.builder()
           .add(Aspects.TERRA, 8)
-          .add(Aspects.AETHER, 8)
+          .add(Aspects.AER, 8)
           .build()
       )
       .define('s', T7Blocks.ELEMENTAL_STONE)

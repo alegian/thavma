@@ -1,7 +1,7 @@
 {
   "type": "thavma:crucible",
   "aspects": {
-    "thavma:aether": 4
+    "thavma:praecantatio": 4
   },
   "catalyst": {
     "item": "minecraft:iron_ingot"

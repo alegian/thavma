@@ -66,28 +66,28 @@ object Mutations {
   val SLAB = { it: AspectMap -> it.scale(0.5) }
   val TRAPDOOR = { it: AspectMap -> it.scale(3) }
 
-  fun helmet(praemunio: Int) = { it: AspectMap ->
-    it.scale(5).add(Aspects.PRAEMUNIO, praemunio)
+  fun helmet(tutamen: Int) = { it: AspectMap ->
+    it.scale(5).add(Aspects.TUTAMEN, tutamen)
   }
 
-  fun chestplate(praemunio: Int) = { it: AspectMap ->
-    it.scale(8).add(Aspects.PRAEMUNIO, praemunio)
+  fun chestplate(tutamen: Int) = { it: AspectMap ->
+    it.scale(8).add(Aspects.TUTAMEN, tutamen)
   }
 
-  fun leggings(praemunio: Int) = { it: AspectMap ->
-    it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
+  fun leggings(tutamen: Int) = { it: AspectMap ->
+    it.scale(7).add(Aspects.TUTAMEN, tutamen)
   }
 
-  fun boots(praemunio: Int) = { it: AspectMap ->
-    it.scale(4).add(Aspects.PRAEMUNIO, praemunio)
+  fun boots(tutamen: Int) = { it: AspectMap ->
+    it.scale(4).add(Aspects.TUTAMEN, tutamen)
   }
 
-  fun horseArmor(praemunio: Int) = { it: AspectMap ->
-    it.scale(7).add(Aspects.PRAEMUNIO, praemunio)
+  fun horseArmor(tutamen: Int) = { it: AspectMap ->
+    it.scale(7).add(Aspects.TUTAMEN, tutamen)
   }
 
-  fun wolfArmor(praemunio: Int) = { it: AspectMap ->
-    it.scale(6).add(Aspects.PRAEMUNIO, praemunio)
+  fun wolfArmor(tutamen: Int) = { it: AspectMap ->
+    it.scale(6).add(Aspects.TUTAMEN, tutamen)
   }
 
   fun sword(stick: AspectGen, instrumentum: Int) = { it: AspectMap ->

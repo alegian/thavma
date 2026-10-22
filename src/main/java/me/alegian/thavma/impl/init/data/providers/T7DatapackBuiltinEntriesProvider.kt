@@ -130,10 +130,10 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           false,
           T7Items.BOOK.get().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
-          .defaultKnown()
+          .research(lockedAspect(2, 0, Aspects.AER), lockedAspect(2, 4, Aspects.AER))
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
+          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -152,7 +152,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           false,
           T7Items.SHARDS[Aspects.AQUA]!!.get().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
+          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AER))
           .addChild(ResearchEntries.Thavma.ARCANE_LENS)
           .build(ctx)
 
@@ -162,7 +162,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           false,
           T7Items.ARCANE_LENS.get().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AETHER), broken(2, 2))
+          .research(lockedAspect(2, 0, Aspects.LUX), lockedAspect(2, 4, Aspects.AER), broken(2, 2))
           .addChild(ResearchEntries.Thavma.RESEARCH_TABLE)
           .build(ctx)
 
@@ -172,7 +172,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           true,
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.AER), lockedAspect(2, 4, Aspects.HERBA))
           .addChild(ResearchEntries.Thavma.WANDS)
           .addChild(ResearchEntries.Thavma.TECHNOLOGY)
           .addChild(ResearchEntries.Thavma.ALCHEMY)
@@ -186,7 +186,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           false,
           T7Blocks.RESEARCH_TABLE.get().asItem().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.HERBA))
+          .research(lockedAspect(2, 0, Aspects.AER), lockedAspect(2, 4, Aspects.HERBA))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -195,7 +195,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           true,
           T7Blocks.CRUCIBLE.get().asItem().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.PERMUTATIO))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -207,7 +207,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
             WandCoreMaterials.SILVERWOOD.get()
           ).defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
+          .research(lockedAspect(2, 0, Aspects.AER), lockedAspect(2, 4, Aspects.INSTRUMENTUM))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -216,7 +216,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           true,
           T7Blocks.MATRIX.get().asItem().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AETHER))
+          .research(lockedAspect(2, 0, Aspects.TERRA), lockedAspect(2, 4, Aspects.AER))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -225,7 +225,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           true,
           T7Items.GOGGLES.get().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.CIVILIS))
+          .research(lockedAspect(2, 0, Aspects.INSTRUMENTUM), lockedAspect(2, 4, Aspects.HUMANUS))
           .build(ctx)
 
         ResearchEntryBuilder(
@@ -234,7 +234,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           false,
           T7Blocks.CRUCIBLE.get().asItem().defaultInstance
         )
-          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.ALKIMIA))
+          .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.PERMUTATIO))
           .defaultKnown()
           .build(ctx)
       }

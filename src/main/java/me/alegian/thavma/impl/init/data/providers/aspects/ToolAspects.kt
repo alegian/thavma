@@ -63,7 +63,7 @@ object ToolAspects {
   val trident = AspectGen().mutate { it.add(Aspects.METALLUM, 12).add(Aspects.AQUA, 8) }
   val bow = BlockAndItemAspects.rodsWooden.mutate { it.scale(3) }.add(BlockAndItemAspects.string.mutate { it.scale(3) }).mutate { it.add(Aspects.INSTRUMENTUM, 8).remove(Aspects.CORPUS) }
   val crossbow = BlockAndItemAspects.rodsWooden.mutate { it.scale(3) }.add(BlockAndItemAspects.string.mutate { it.scale(2) }).add(BlockAndItemAspects.tripwireHook).add(MineralAspects.iron).mutate { it.add(Aspects.INSTRUMENTUM, 8).remove(Aspects.CORPUS) }
-  val totemOfUndying = AspectGen().mutate { it.add(Aspects.VICTUS, 16).add(Aspects.AETHER, 8) }
+  val totemOfUndying = AspectGen().mutate { it.add(Aspects.VICTUS, 16).add(Aspects.PRAECANTATIO, 8) }
 
   fun gather(datamapProvider: T7DataMapProvider, lookupProvider: HolderLookup.Provider) {
     datamapProvider.builder(T7DataMaps.AspectContent.ITEM).run {

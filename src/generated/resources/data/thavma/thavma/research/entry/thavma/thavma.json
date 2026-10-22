@@ -7,7 +7,7 @@
   "defaultKnown": true,
   "defaultResearchState": [
     {
-      "aspect": "thavma:aether",
+      "aspect": "thavma:aer",
       "broken": false,
       "indices": {
         "col": 0,
@@ -16,7 +16,7 @@
       "locked": true
     },
     {
-      "aspect": "thavma:aether",
+      "aspect": "thavma:aer",
       "broken": false,
       "indices": {
         "col": 4,

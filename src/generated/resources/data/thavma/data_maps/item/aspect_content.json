@@ -62,8 +62,8 @@
       "thavma:terra": 2
     },
     "#c:gunpowders": {
-      "thavma:alkimia": 2,
       "thavma:ignis": 4,
+      "thavma:pulvis": 2,
       "thavma:terra": 1
     },
     "#c:ingots/copper": {
@@ -145,12 +145,12 @@
       "thavma:terra": 2
     },
     "#c:rods/blaze": {
-      "thavma:alkimia": 2,
       "thavma:corpus": 2,
-      "thavma:ignis": 4
+      "thavma:ignis": 4,
+      "thavma:pulvis": 2
     },
     "#c:rods/breeze": {
-      "thavma:aether": 6,
+      "thavma:aer": 6,
       "thavma:corpus": 2
     },
     "#c:rods/wooden": {
@@ -252,7 +252,7 @@
     },
     "#minecraft:terracotta": {
       "thavma:ignis": 4,
-      "thavma:ornatus": 1,
+      "thavma:sensus": 1,
       "thavma:terra": 4
     },
     "#minecraft:wool": {
@@ -260,9 +260,9 @@
       "thavma:fabrico": 4
     },
     "#thavma:goggles": {
-      "thavma:aether": 8,
       "thavma:instrumentum": 8,
       "thavma:metallum": 40,
+      "thavma:praecantatio": 8,
       "thavma:vitreus": 2
     },
     "minecraft:acacia_button": {
@@ -312,7 +312,7 @@
     },
     "minecraft:armadillo_scute": {
       "thavma:corpus": 2,
-      "thavma:praemunio": 1
+      "thavma:tutamen": 1
     },
     "minecraft:bamboo": {
       "thavma:herba": 1
@@ -407,8 +407,8 @@
       "thavma:terra": 2
     },
     "minecraft:blaze_powder": {
-      "thavma:alkimia": 1,
-      "thavma:ignis": 2
+      "thavma:ignis": 2,
+      "thavma:pulvis": 1
     },
     "minecraft:brick": {
       "thavma:ignis": 1,
@@ -431,24 +431,24 @@
       "thavma:terra": 4
     },
     "minecraft:cauldron": {
-      "thavma:alkimia": 8,
-      "thavma:metallum": 56
+      "thavma:metallum": 56,
+      "thavma:permutatio": 8
     },
     "minecraft:chainmail_boots": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 2
+      "thavma:tutamen": 2
     },
     "minecraft:chainmail_chestplate": {
       "thavma:metallum": 32,
-      "thavma:praemunio": 10
+      "thavma:tutamen": 10
     },
     "minecraft:chainmail_helmet": {
       "thavma:metallum": 20,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:chainmail_leggings": {
       "thavma:metallum": 28,
-      "thavma:praemunio": 8
+      "thavma:tutamen": 8
     },
     "minecraft:cherry_button": {
       "thavma:herba": 2
@@ -723,15 +723,15 @@
       "thavma:vitreus": 24
     },
     "minecraft:diamond_boots": {
-      "thavma:praemunio": 8,
+      "thavma:tutamen": 8,
       "thavma:vitreus": 32
     },
     "minecraft:diamond_chestplate": {
-      "thavma:praemunio": 18,
+      "thavma:tutamen": 18,
       "thavma:vitreus": 64
     },
     "minecraft:diamond_helmet": {
-      "thavma:praemunio": 8,
+      "thavma:tutamen": 8,
       "thavma:vitreus": 40
     },
     "minecraft:diamond_hoe": {
@@ -740,11 +740,11 @@
       "thavma:vitreus": 16
     },
     "minecraft:diamond_horse_armor": {
-      "thavma:praemunio": 12,
+      "thavma:tutamen": 12,
       "thavma:vitreus": 56
     },
     "minecraft:diamond_leggings": {
-      "thavma:praemunio": 14,
+      "thavma:tutamen": 14,
       "thavma:vitreus": 56
     },
     "minecraft:diamond_pickaxe": {
@@ -775,11 +775,11 @@
       "thavma:terra": 2
     },
     "minecraft:end_crystal": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 5,
-      "thavma:hostilis": 4,
+      "thavma:corpus": 4,
       "thavma:ignis": 2,
       "thavma:instrumentum": 4,
+      "thavma:praecantatio": 6,
+      "thavma:pulvis": 1,
       "thavma:tenebrae": 4,
       "thavma:vitreus": 14
     },
@@ -800,10 +800,10 @@
       "thavma:terra": 2
     },
     "minecraft:ender_eye": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 1,
       "thavma:ignis": 2,
       "thavma:instrumentum": 4,
+      "thavma:praecantatio": 2,
+      "thavma:pulvis": 1,
       "thavma:tenebrae": 4
     },
     "minecraft:exposed_chiseled_copper": {
@@ -822,25 +822,25 @@
       "thavma:metallum": 36
     },
     "minecraft:fire_charge": {
-      "thavma:alkimia": 4,
       "thavma:ignis": 4,
-      "thavma:instrumentum": 2
+      "thavma:instrumentum": 2,
+      "thavma:permutatio": 4
     },
     "minecraft:firework_rocket": {
       "thavma:ignis": 1,
-      "thavma:ornatus": 1
+      "thavma:sensus": 1
     },
     "minecraft:firework_star": {
       "thavma:ignis": 1,
-      "thavma:ornatus": 2
+      "thavma:sensus": 2
     },
     "minecraft:flint": {
       "thavma:instrumentum": 1,
       "thavma:terra": 1
     },
     "minecraft:ghast_tear": {
-      "thavma:alkimia": 4,
-      "thavma:hostilis": 4
+      "thavma:corpus": 4,
+      "thavma:praecantatio": 4
     },
     "minecraft:glow_ink_sac": {
       "thavma:aqua": 2,
@@ -858,15 +858,15 @@
     },
     "minecraft:golden_boots": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 2
+      "thavma:tutamen": 2
     },
     "minecraft:golden_chestplate": {
       "thavma:metallum": 32,
-      "thavma:praemunio": 10
+      "thavma:tutamen": 10
     },
     "minecraft:golden_helmet": {
       "thavma:metallum": 20,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:golden_hoe": {
       "thavma:herba": 2,
@@ -875,11 +875,11 @@
     },
     "minecraft:golden_horse_armor": {
       "thavma:metallum": 28,
-      "thavma:praemunio": 8
+      "thavma:tutamen": 8
     },
     "minecraft:golden_leggings": {
       "thavma:metallum": 28,
-      "thavma:praemunio": 6
+      "thavma:tutamen": 6
     },
     "minecraft:golden_pickaxe": {
       "thavma:herba": 2,
@@ -927,15 +927,15 @@
     },
     "minecraft:iron_boots": {
       "thavma:metallum": 32,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:iron_chestplate": {
       "thavma:metallum": 64,
-      "thavma:praemunio": 12
+      "thavma:tutamen": 12
     },
     "minecraft:iron_helmet": {
       "thavma:metallum": 40,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:iron_hoe": {
       "thavma:herba": 2,
@@ -944,11 +944,11 @@
     },
     "minecraft:iron_horse_armor": {
       "thavma:metallum": 56,
-      "thavma:praemunio": 6
+      "thavma:tutamen": 6
     },
     "minecraft:iron_leggings": {
       "thavma:metallum": 56,
-      "thavma:praemunio": 10
+      "thavma:tutamen": 10
     },
     "minecraft:iron_pickaxe": {
       "thavma:herba": 2,
@@ -997,26 +997,26 @@
     },
     "minecraft:leather_boots": {
       "thavma:corpus": 12,
-      "thavma:praemunio": 2
+      "thavma:tutamen": 2
     },
     "minecraft:leather_chestplate": {
       "thavma:corpus": 24,
-      "thavma:praemunio": 6
+      "thavma:tutamen": 6
     },
     "minecraft:leather_helmet": {
       "thavma:corpus": 15,
-      "thavma:praemunio": 2
+      "thavma:tutamen": 2
     },
     "minecraft:leather_horse_armor": {
       "thavma:corpus": 21,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:leather_leggings": {
       "thavma:corpus": 21,
-      "thavma:praemunio": 4
+      "thavma:tutamen": 4
     },
     "minecraft:mace": {
-      "thavma:aether": 6,
+      "thavma:aer": 6,
       "thavma:instrumentum": 6,
       "thavma:metallum": 16
     },
@@ -1135,20 +1135,20 @@
     },
     "minecraft:netherite_boots": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 9,
       "thavma:tenebrae": 4,
+      "thavma:tutamen": 9,
       "thavma:vitreus": 32
     },
     "minecraft:netherite_chestplate": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 19,
       "thavma:tenebrae": 4,
+      "thavma:tutamen": 19,
       "thavma:vitreus": 64
     },
     "minecraft:netherite_helmet": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 9,
       "thavma:tenebrae": 4,
+      "thavma:tutamen": 9,
       "thavma:vitreus": 40
     },
     "minecraft:netherite_hoe": {
@@ -1159,8 +1159,8 @@
     },
     "minecraft:netherite_leggings": {
       "thavma:metallum": 16,
-      "thavma:praemunio": 15,
       "thavma:tenebrae": 4,
+      "thavma:tutamen": 15,
       "thavma:vitreus": 56
     },
     "minecraft:netherite_pickaxe": {
@@ -1438,7 +1438,7 @@
     },
     "minecraft:rotten_flesh": {
       "thavma:corpus": 2,
-      "thavma:hostilis": 2
+      "thavma:mortuus": 2
     },
     "minecraft:sandstone": {
       "thavma:terra": 8
@@ -1594,15 +1594,15 @@
       "thavma:herba": 1
     },
     "minecraft:tnt": {
-      "thavma:alkimia": 10,
       "thavma:ignis": 20,
+      "thavma:pulvis": 10,
       "thavma:terra": 13
     },
     "minecraft:torch": {
       "thavma:lux": 4
     },
     "minecraft:totem_of_undying": {
-      "thavma:aether": 8,
+      "thavma:praecantatio": 8,
       "thavma:victus": 16
     },
     "minecraft:trident": {
@@ -1641,12 +1641,12 @@
     "minecraft:turtle_helmet": {
       "thavma:aqua": 5,
       "thavma:corpus": 10,
-      "thavma:praemunio": 5
+      "thavma:tutamen": 5
     },
     "minecraft:turtle_scute": {
       "thavma:aqua": 1,
       "thavma:corpus": 2,
-      "thavma:praemunio": 1
+      "thavma:tutamen": 1
     },
     "minecraft:warped_button": {
       "thavma:herba": 2,
@@ -1764,13 +1764,13 @@
       "thavma:metallum": 36
     },
     "minecraft:wind_charge": {
-      "thavma:aether": 4,
-      "thavma:alkimia": 4,
-      "thavma:instrumentum": 2
+      "thavma:aer": 4,
+      "thavma:instrumentum": 2,
+      "thavma:permutatio": 4
     },
     "minecraft:wolf_armor": {
       "thavma:corpus": 12,
-      "thavma:praemunio": 6
+      "thavma:tutamen": 6
     },
     "minecraft:wooden_axe": {
       "thavma:herba": 8,
@@ -1792,29 +1792,29 @@
       "thavma:herba": 5,
       "thavma:instrumentum": 1
     },
-    "thavma:aether_infused_deepslate": {
-      "thavma:aether": 4
+    "thavma:aer_infused_deepslate": {
+      "thavma:aer": 4
     },
-    "thavma:aether_infused_stone": {
-      "thavma:aether": 4
+    "thavma:aer_infused_stone": {
+      "thavma:aer": 4
     },
-    "thavma:aether_shard": {
-      "thavma:aether": 4
+    "thavma:aer_shard": {
+      "thavma:aer": 4
     },
     "thavma:apprentice_boots": {
-      "thavma:aether": 4,
       "thavma:fabrico": 16,
-      "thavma:praemunio": 2
+      "thavma:praecantatio": 4,
+      "thavma:tutamen": 2
     },
     "thavma:apprentice_chestplate": {
-      "thavma:aether": 8,
       "thavma:fabrico": 32,
-      "thavma:praemunio": 2
+      "thavma:praecantatio": 8,
+      "thavma:tutamen": 2
     },
     "thavma:apprentice_leggings": {
-      "thavma:aether": 7,
       "thavma:fabrico": 28,
-      "thavma:praemunio": 2
+      "thavma:praecantatio": 7,
+      "thavma:tutamen": 2
     },
     "thavma:aqua_infused_deepslate": {
       "thavma:aqua": 4
@@ -1826,41 +1826,41 @@
       "thavma:aqua": 4
     },
     "thavma:arcane_lens": {
-      "thavma:aether": 4,
       "thavma:metallum": 16,
+      "thavma:praecantatio": 4,
       "thavma:vitreus": 1
     },
     "thavma:arcane_workbench": {
-      "thavma:aether": 2,
       "thavma:fabrico": 8,
-      "thavma:herba": 8
+      "thavma:herba": 8,
+      "thavma:praecantatio": 2
     },
     "thavma:cracked_elemental_stone": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:crucible": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 8,
-      "thavma:metallum": 56
+      "thavma:metallum": 56,
+      "thavma:permutatio": 8,
+      "thavma:praecantatio": 2
     },
     "thavma:elemental_core": {
-      "thavma:aether": 2,
+      "thavma:praecantatio": 2,
       "thavma:terra": 6
     },
     "thavma:elemental_stone": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:elemental_stone_bricks": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:elemental_stone_slab": {
       "thavma:terra": 2
     },
     "thavma:elemental_stone_stairs": {
-      "thavma:aether": 1,
+      "thavma:praecantatio": 1,
       "thavma:terra": 4
     },
     "thavma:eternal_flame": {
@@ -1868,8 +1868,8 @@
       "thavma:lux": 12
     },
     "thavma:fabric": {
-      "thavma:aether": 1,
-      "thavma:fabrico": 4
+      "thavma:fabrico": 4,
+      "thavma:praecantatio": 1
     },
     "thavma:gold_plating": {
       "thavma:metallum": 8
@@ -1895,6 +1895,15 @@
     "thavma:iron_plating": {
       "thavma:metallum": 16
     },
+    "thavma:ordo_infused_deepslate": {
+      "thavma:ordo": 4
+    },
+    "thavma:ordo_infused_stone": {
+      "thavma:ordo": 4
+    },
+    "thavma:ordo_shard": {
+      "thavma:ordo": 4
+    },
     "thavma:orichalcum_block": {
       "thavma:instrumentum": 36,
       "thavma:metallum": 36
@@ -1907,19 +1916,27 @@
       "thavma:instrumentum": 8,
       "thavma:metallum": 8
     },
+    "thavma:perditio_infused_deepslate": {
+      "thavma:perditio": 4
+    },
+    "thavma:perditio_infused_stone": {
+      "thavma:perditio": 4
+    },
+    "thavma:perditio_shard": {
+      "thavma:perditio": 4
+    },
     "thavma:research_table": {
-      "thavma:aether": 2,
-      "thavma:herba": 12
+      "thavma:herba": 12,
+      "thavma:praecantatio": 2
     },
     "thavma:rotten_brain": {
       "thavma:cognitio": 12,
       "thavma:corpus": 2,
-      "thavma:hostilis": 2
+      "thavma:mortuus": 2
     },
     "thavma:sealing_jar": {
-      "thavma:aether": 2,
-      "thavma:alkimia": 2,
-      "thavma:vitreus": 4
+      "thavma:orbis": 4,
+      "thavma:praecantatio": 2
     },
     "thavma:table": {
       "thavma:fabrico": 2,
@@ -1935,72 +1952,72 @@
       "thavma:terra": 4
     },
     "thavma:thavmite_axe": {
-      "thavma:aether": 12,
       "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 24
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
     },
     "thavma:thavmite_block": {
-      "thavma:aether": 36,
-      "thavma:metallum": 72
+      "thavma:metallum": 72,
+      "thavma:praecantatio": 36
     },
     "thavma:thavmite_boots": {
-      "thavma:aether": 16,
       "thavma:metallum": 32,
-      "thavma:praemunio": 5
+      "thavma:praecantatio": 16,
+      "thavma:tutamen": 5
     },
     "thavma:thavmite_chestplate": {
-      "thavma:aether": 32,
       "thavma:metallum": 64,
-      "thavma:praemunio": 13
+      "thavma:praecantatio": 32,
+      "thavma:tutamen": 13
     },
     "thavma:thavmite_hammer": {
-      "thavma:aether": 24,
       "thavma:herba": 1,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 48
+      "thavma:metallum": 48,
+      "thavma:praecantatio": 24
     },
     "thavma:thavmite_helmet": {
-      "thavma:aether": 20,
       "thavma:metallum": 40,
-      "thavma:praemunio": 7
+      "thavma:praecantatio": 20,
+      "thavma:tutamen": 7
     },
     "thavma:thavmite_hoe": {
-      "thavma:aether": 8,
       "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 16
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     },
     "thavma:thavmite_ingot": {
-      "thavma:aether": 4,
-      "thavma:metallum": 8
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
     },
     "thavma:thavmite_leggings": {
-      "thavma:aether": 28,
       "thavma:metallum": 56,
-      "thavma:praemunio": 11
+      "thavma:praecantatio": 28,
+      "thavma:tutamen": 11
     },
     "thavma:thavmite_pickaxe": {
-      "thavma:aether": 12,
       "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 24
+      "thavma:metallum": 24,
+      "thavma:praecantatio": 12
     },
     "thavma:thavmite_plating": {
-      "thavma:aether": 8,
-      "thavma:metallum": 16
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     },
     "thavma:thavmite_shovel": {
-      "thavma:aether": 4,
       "thavma:herba": 2,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 8
+      "thavma:metallum": 8,
+      "thavma:praecantatio": 4
     },
     "thavma:thavmite_sword": {
-      "thavma:aether": 8,
       "thavma:herba": 1,
       "thavma:instrumentum": 4,
-      "thavma:metallum": 16
+      "thavma:metallum": 16,
+      "thavma:praecantatio": 8
     }
   }
 }

@@ -1,9 +1,11 @@
 {
   "type": "thavma:arcane_workbench",
   "aspects": {
-    "thavma:aether": 4,
+    "thavma:aer": 4,
     "thavma:aqua": 4,
     "thavma:ignis": 4,
+    "thavma:ordo": 4,
+    "thavma:perditio": 4,
     "thavma:terra": 4
   },
   "key": {

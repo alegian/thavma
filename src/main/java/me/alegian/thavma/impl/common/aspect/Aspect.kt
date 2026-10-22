@@ -1,13 +1,12 @@
 package me.alegian.thavma.impl.common.aspect
 
-import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7Registries
 import net.minecraft.Util
 import net.minecraft.core.Holder
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.resources.ResourceLocation
 
-class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
+class Aspect(var id: String, var color: Int, val latent: Boolean, val components: Set<Aspect>? = null) {
   val translationId by lazy {
     Util.makeDescriptionId(T7Registries.ASPECT.key().location().path, T7Registries.ASPECT.getKey(this))
   }
@@ -25,12 +24,11 @@ class Aspect(var id: String, var color: Int, val isPrimal: Boolean) {
   fun defaultStack() = AspectStack.of(this, 1)
 
   fun wrapAsHolder() = T7Registries.ASPECT.wrapAsHolder(this)
+
+  val isPrimal
+    get() = components == null
 }
 
-fun Holder<Aspect>.relatedAspects() =
-  getData(T7DataMaps.ASPECT_RELATIONS) ?: listOf()
-
 fun Holder<Aspect>.relatedTo(other: Holder<Aspect>) =
-  this.relatedAspects().contains(other.value()) ||
-      other.relatedAspects().contains(this.value())
-
+  this.value().components.orEmpty().contains(other.value()) ||
+    other.value().components.orEmpty().contains(this.value())

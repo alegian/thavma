@@ -31,9 +31,8 @@
   },
   "pageFeatures": [
     {
-      "type": "thavma:title",
+      "type": "thavma:paragraph",
       "text": {
-        "bold": true,
         "translate": "research/entry.thavma.thavma.thavma.feature0"
       }
     },
@@ -56,12 +55,30 @@
       }
     },
     {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature4"
+      }
+    },
+    {
       "type": "thavma:break"
     },
     {
       "type": "thavma:paragraph",
       "text": {
-        "translate": "research/entry.thavma.thavma.thavma.feature5"
+        "translate": "research/entry.thavma.thavma.thavma.feature6"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature7"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature8"
       }
     }
   ],

@@ -10,6 +10,7 @@ object ResearchEntries {
   val CATEGORIES = mutableMapOf<ResourceKey<ResearchEntry>, ResourceKey<ResearchCategory>>()
 
   object Thavma {
+    val WELCOME = register("welcome", ResearchCategories.THAVMA)
     val THAVMA = register("thavma", ResearchCategories.THAVMA)
     val TREES = register("trees", ResearchCategories.THAVMA)
     val ORES = register("ores", ResearchCategories.THAVMA)

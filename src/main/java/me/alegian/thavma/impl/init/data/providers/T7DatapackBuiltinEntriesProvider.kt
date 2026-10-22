@@ -115,15 +115,25 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(
+          ResearchEntries.Thavma.WELCOME,
+          Vector2i(0, -8),
+          false,
+          Items.NETHER_STAR.defaultInstance
+        )
+          .addChild(ResearchEntries.Thavma.THAVMA)
+          .defaultKnown()
+          .build(ctx)
+
+        ResearchEntryBuilder(
           ResearchEntries.Thavma.THAVMA,
           Vector2i(0, -6),
           false,
           T7Items.BOOK.get().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AETHER), lockedAspect(2, 4, Aspects.AETHER))
+          .defaultKnown()
           .addChild(ResearchEntries.Thavma.TREES)
           .addChild(ResearchEntries.Thavma.ORES)
-          .defaultKnown()
           .build(ctx)
 
         ResearchEntryBuilder(

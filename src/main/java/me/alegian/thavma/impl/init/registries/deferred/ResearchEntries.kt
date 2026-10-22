@@ -25,6 +25,10 @@ object ResearchEntries {
   object Alchemy {
     val ALCHEMY = register("alchemy", ResearchCategories.ALCHEMY)
   }
+
+  object Lore {
+    val SEA_MYTH = register("sea_myth", ResearchCategories.LORE)
+  }
 }
 
 // prepend category id to entry id to avoid duplicates

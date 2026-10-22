@@ -112,6 +112,7 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
       .add(T7DatapackRegistries.RESEARCH_CATEGORY) { ctx ->
         ctx.registerCategory(ResearchCategories.THAVMA, T7Items.BOOK.get().defaultInstance, 0f)
         ctx.registerCategory(ResearchCategories.ALCHEMY, T7Blocks.CRUCIBLE.get().asItem().defaultInstance, 1f)
+        ctx.registerCategory(ResearchCategories.LORE, Items.WRITABLE_BOOK.defaultInstance, 2f)
       }
       .add(T7DatapackRegistries.RESEARCH_ENTRY) { ctx ->
         ResearchEntryBuilder(
@@ -225,6 +226,15 @@ class T7DatapackBuiltinEntriesProvider(output: PackOutput, registries: Completab
           T7Blocks.CRUCIBLE.get().asItem().defaultInstance
         )
           .research(lockedAspect(2, 0, Aspects.AQUA), lockedAspect(2, 4, Aspects.PERMUTATIO))
+          .defaultKnown()
+          .build(ctx)
+
+        ResearchEntryBuilder(
+          ResearchEntries.Lore.SEA_MYTH,
+          Vector2i(0, 0),
+          false,
+          Items.TURTLE_HELMET.defaultInstance
+        )
           .defaultKnown()
           .build(ctx)
       }

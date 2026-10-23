@@ -11,38 +11,42 @@ import net.minecraft.client.renderer.LightTexture
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.Mth
 import net.minecraft.world.phys.Vec3
-import org.joml.Quaternionf
-import org.joml.Vector3f
 import kotlin.math.abs
+import kotlin.math.ceil
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
 private const val STRETCH_RATIO = 5.0f
 private const val MIN_HALF_LENGTH = 0.06f
+private const val INITIAL_SPEED = 0.04
+private const val MAX_SPEED = 0.09
+private const val APPROACH_RADIUS = 1.0
 
 class VisTrailParticle private constructor(
   level: ClientLevel,
   x: Double,
   y: Double,
   z: Double,
-  private val target: Vec3,
+  private val initialTarget: Vec3,
   color: Int,
   private val phase: Float,
   scale: Float,
-  private val spriteSet: SpriteSet
+  spriteSet: SpriteSet,
+  private val targetPosition: (() -> Vec3)? = null
 ) : TextureSheetParticle(level, x, y, z, .0, .0, .0) {
   private val initialSize: Float
+  private val target: Vec3
+    get() = targetPosition?.invoke() ?: initialTarget
 
   companion object {
     var spriteSet: SpriteSet? = null
 
-    fun spawn(start: Vec3, target: Vec3, color: Int, phase: Int, scale: Float, progress: Float = 0f) {
+    fun spawn(start: Vec3, target: Vec3, color: Int, phase: Int, scale: Float, progress: Float = 0f, targetPosition: (() -> Vec3)? = null) {
       val mc = Minecraft.getInstance()
-      val level = mc.level as? ClientLevel ?: return
+      val level = mc.level ?: return
       val spriteSet = spriteSet ?: return
 
       val spawnPos = start.lerp(target, progress.toDouble())
@@ -50,9 +54,7 @@ class VisTrailParticle private constructor(
       val x = spawnPos.x + (level.random.nextDouble() - 0.5) * jitter
       val y = spawnPos.y + (level.random.nextDouble() - 0.5) * jitter
       val z = spawnPos.z + (level.random.nextDouble() - 0.5) * jitter
-      runCatching {
-        mc.particleEngine.add(VisTrailParticle(level, x, y, z, target, color, phase.toFloat(), scale, spriteSet))
-      }
+      mc.particleEngine.add(VisTrailParticle(level, x, y, z, target, color, phase.toFloat(), scale, spriteSet, targetPosition))
     }
   }
 
@@ -77,16 +79,17 @@ class VisTrailParticle private constructor(
     alpha = 0.6f
     hasPhysics = false
     gravity = 0f
-    lifetime = (distance * 22.0).roundToInt().coerceIn(14, 50)
+    // Allow enough travel time even for distant infusion sources.
+    lifetime = ceil(distance / INITIAL_SPEED).toInt() + 20
     quadSize = scale * (0.92f + random.nextFloat() * 0.16f)
     initialSize = quadSize
     pickSprite(spriteSet)
 
     val swirl1 = sin(phase * 0.43f).toDouble() * 0.006
     val swirl2 = cos(phase * 0.31f).toDouble() * 0.004
-    xd = forward.x * 0.04 + side.x * swirl1 + up.x * swirl2 + random.nextGaussian() * 0.0004
-    yd = forward.y * 0.04 + side.y * swirl1 + up.y * swirl2 + random.nextGaussian() * 0.0004
-    zd = forward.z * 0.04 + side.z * swirl1 + up.z * swirl2 + random.nextGaussian() * 0.0004
+    xd = forward.x * INITIAL_SPEED + side.x * swirl1 + up.x * swirl2 + random.nextGaussian() * 0.0004
+    yd = forward.y * INITIAL_SPEED + side.y * swirl1 + up.y * swirl2 + random.nextGaussian() * 0.0004
+    zd = forward.z * INITIAL_SPEED + side.z * swirl1 + up.z * swirl2 + random.nextGaussian() * 0.0004
   }
 
   override fun render(buffer: VertexConsumer, camera: Camera, partialTick: Float) {
@@ -96,13 +99,24 @@ class VisTrailParticle private constructor(
 
     val vel = Vec3(xd, yd, zd)
     val speed = vel.length()
-    val stretchDir = if (speed > 1.0E-6) vel.normalize() else (target.subtract(x, y, z)).let { if (it.lengthSqr() > 1.0E-6) it.normalize() else Vec3(1.0, 0.0, 0.0) }
+    val toTarget = target.subtract(x, y, z)
+    val stretchDir = when {
+      speed > 1.0E-6 -> vel.normalize()
+      toTarget.lengthSqr() > 1.0E-6 -> toTarget.normalize()
+      else -> Vec3(1.0, 0.0, 0.0)
+    }
     val camToParticle = Vec3(px, py, pz)
-    if (camToParticle.lengthSqr() < 1.0E-6) { super.render(buffer, camera, partialTick); return }
+    if (camToParticle.lengthSqr() < 1.0E-6) {
+      super.render(buffer, camera, partialTick)
+      return
+    }
     val camDir = camToParticle.normalize()
 
     var sideVec = stretchDir.cross(camDir)
-    if (sideVec.lengthSqr() < 1.0E-6) { super.render(buffer, camera, partialTick); return }
+    if (sideVec.lengthSqr() < 1.0E-6) {
+      super.render(buffer, camera, partialTick)
+      return
+    }
     sideVec = sideVec.normalize()
 
     val halfWidth = quadSize * 0.28f
@@ -145,20 +159,28 @@ class VisTrailParticle private constructor(
       return
     }
 
-    val dx = target.x - x
-    val dy = target.y - y
-    val dz = target.z - z
+    val destination = target
+    val dx = destination.x - x
+    val dy = destination.y - y
+    val dz = destination.z - z
     val distance = sqrt(dx * dx + dy * dy + dz * dz)
-    if (distance < 0.1) {
+    if (distance <= MAX_SPEED) {
       remove()
       return
     }
 
     val invDistance = 1.0 / distance
-    val attraction = 0.02 + 0.035 / max(1.0, distance)
-    xd = Mth.clamp(xd * 0.96 + dx * invDistance * attraction, -0.09, 0.09)
-    yd = Mth.clamp(yd * 0.96 + dy * invDistance * attraction, -0.09, 0.09)
-    zd = Mth.clamp(zd * 0.96 + dz * invDistance * attraction, -0.09, 0.09)
+    if (distance < APPROACH_RADIUS) {
+      // Shed sideways momentum on approach instead of orbiting the endpoint.
+      xd = dx * invDistance * MAX_SPEED
+      yd = dy * invDistance * MAX_SPEED
+      zd = dz * invDistance * MAX_SPEED
+    } else {
+      val attraction = 0.02 + 0.035 / distance
+      xd = Mth.clamp(xd * 0.96 + dx * invDistance * attraction, -MAX_SPEED, MAX_SPEED)
+      yd = Mth.clamp(yd * 0.96 + dy * invDistance * attraction, -MAX_SPEED, MAX_SPEED)
+      zd = Mth.clamp(zd * 0.96 + dz * invDistance * attraction, -MAX_SPEED, MAX_SPEED)
+    }
     move(xd, yd, zd)
 
     val pulse = 0.94f + 0.08f * sin((age + phase) / 4.5f)
@@ -182,13 +204,13 @@ class VisTrailParticle private constructor(
 }
 
 object VisTrailParticles {
-  fun spawnBurst(start: Vec3, target: Vec3, colors: List<Int>, seed: Int, count: Int, scale: Float) {
+  fun spawnBurst(start: Vec3, target: Vec3, colors: List<Int>, seed: Int, count: Int, scale: Float, targetPosition: (() -> Vec3)? = null) {
     if (colors.isEmpty()) return
     val safeCount = count.coerceAtLeast(1)
     repeat(safeCount) { index ->
       val color = colors[(seed + index).mod(colors.size)]
       val progress = if (safeCount == 1) 0f else index.toFloat() / safeCount * 0.28f
-      VisTrailParticle.spawn(start, target, color, seed * 7 + index * 13, scale, progress)
+      VisTrailParticle.spawn(start, target, color, seed * 7 + index * 13, scale, progress, targetPosition)
     }
   }
 }

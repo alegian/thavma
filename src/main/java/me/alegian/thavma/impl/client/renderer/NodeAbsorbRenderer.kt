@@ -20,7 +20,8 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent
 import java.util.WeakHashMap
 
 object NodeAbsorbRenderer {
-  private val particleTicks = WeakHashMap<Player, Int>()
+  private class TrailState(var position: Vec3, var lastSpawnTick: Int? = null)
+  private val trailStates = WeakHashMap<Player, TrailState>()
 
   fun renderLevelAfterEntities(event: RenderLevelStageEvent) {
     if (event.stage != RenderLevelStageEvent.Stage.AFTER_ENTITIES) return
@@ -31,7 +32,6 @@ object NodeAbsorbRenderer {
     for (player in players) {
       if (player.useItem.wandMode != WandMode.ABSORB_NODE) continue
       if (player.useItem.item !is WandItem) continue
-      if (particleTicks[player] == player.tickCount) continue
       val playerRenderer = ClientHelper.entityRenderDispatcher().getRenderer(player)
       if (playerRenderer !is PlayerRenderer) continue
 
@@ -44,21 +44,24 @@ object NodeAbsorbRenderer {
       }
       // The wand pose is camera-relative; particles need world-space positions.
       wandTipPos = wandTipPos.add(ClientHelper.camera().position)
+      val trailState = trailStates.getOrPut(player) { TrailState(wandTipPos) }
+      trailState.position = wandTipPos
+      if (trailState.lastSpawnTick == player.tickCount) continue
       val colors = AspectContainer.at(level, blockPos)?.aspects?.toSortedList()?.map { it.aspect.color and 0x00FFFFFF }
         ?.takeIf { it.isNotEmpty() }
         ?: Aspects.REGISTRAR.entries.map { it.get() }.filter { it.isPrimal }.map { it.color and 0x00FFFFFF }
-      particleTicks[player] = player.tickCount
-      spawnTrailParticles(targetPos, wandTipPos, colors, player.tickCount + player.id)
+      trailState.lastSpawnTick = player.tickCount
+      spawnTrailParticles(targetPos, trailState, colors, player.tickCount + player.id)
     }
   }
 
-  private fun spawnTrailParticles(start: Vec3, target: Vec3, colors: List<Int>, seed: Int) {
-    val distance = start.distanceTo(target)
+  private fun spawnTrailParticles(start: Vec3, target: TrailState, colors: List<Int>, seed: Int) {
+    val distance = start.distanceTo(target.position)
     val count = when {
       distance < 1.5 -> 2
       distance < 3.0 -> 3
       else -> 4
     }
-    VisTrailParticles.spawnBurst(start, target, colors, seed, count, 0.095f)
+    VisTrailParticles.spawnBurst(start, target.position, colors, seed, count, 0.095f) { target.position }
   }
 }

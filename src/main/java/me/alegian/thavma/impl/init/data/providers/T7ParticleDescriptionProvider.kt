@@ -14,7 +14,7 @@ class T7ParticleDescriptionProvider(output: PackOutput, fileHelper: ExistingFile
   override fun addDescriptions() {
     spriteSet(CRUCIBLE_BUBBLE.get(), ResourceLocation.withDefaultNamespace("bubble"))
     spriteSet(ETERNAL_FLAME.get(), rl("eternal_flame/red"), rl("eternal_flame/orange"), rl("eternal_flame/yellow"))
-    spriteSet(VIS_TRAIL.get(), rl("eternal_flame/yellow"))
+    spriteSet(VIS_TRAIL.get(), rl("trail"))
     spriteSet(INFUSION_RUNE.get(), (0..23).map { rl("infusion/$it") })
   }
 }

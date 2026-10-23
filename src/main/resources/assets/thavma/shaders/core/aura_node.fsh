@@ -61,11 +61,13 @@ void main() {
 
     vec4 cameraDiff = ModelViewMat * vec4(diff, 1.0);
     float angle = atan(cameraDiff.y, cameraDiff.x);
+    // Circular coordinates stay continuous where atan wraps from pi to -pi.
+    vec2 circularCoord = vec2(cos(angle), sin(angle));
 
     // --- organic edge distortion ---
-    float n1 = noise(vec2(angle * 1.5 + time * 0.25, phase + time * 0.1)) * 0.15;
-    float n2 = noise(vec2(angle * 3.0 - time * 0.4, phase + 7.0)) * 0.08;
-    float n3 = noise(vec2(angle * 6.0 + time * 0.6, phase + 15.0)) * 0.04;
+    float n1 = noise(circularCoord * 1.5 + vec2(time * 0.25, phase + time * 0.1)) * 0.15;
+    float n2 = noise(circularCoord * 3.0 + vec2(-time * 0.4, phase + 7.0)) * 0.08;
+    float n3 = noise(circularCoord * 6.0 + vec2(time * 0.6, phase + 15.0)) * 0.04;
     float edgeDistortion = n1 + n2 + n3;
 
     float pulse = sin(time * 0.7 + phase) * 0.04 + sin(time * 1.3 + phase * 2.0) * 0.02;
@@ -77,7 +79,8 @@ void main() {
 
     // --- swirling internal texture ---
     float swirlAngle = angle + scaledDist * 2.0 - time * 0.15;
-    vec2 swirlCoord = vec2(swirlAngle * 2.0 / 6.28318, scaledDist * 3.0 + time * 0.08);
+    vec2 swirlCoord = vec2(cos(swirlAngle), sin(swirlAngle)) * scaledDist * 3.0;
+    swirlCoord += vec2(0.0, time * 0.08);
     float swirl = fbm(swirlCoord + vec2(phase, phase * 0.7)) * 0.35 + 0.65;
 
     // --- radial gradient ---

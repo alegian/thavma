@@ -84,7 +84,7 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
         val sorted = aspectMap.toSortedList()
         if (sorted.isNotEmpty()) {
           for (stack in sorted.reversed())
-            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS + 0.08f)
+            renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
 
           renderAuraNodeLayer(poseStack, bufferSource, 0xFFFFFF, alpha * 0.7f, 0.06f)
         } else {

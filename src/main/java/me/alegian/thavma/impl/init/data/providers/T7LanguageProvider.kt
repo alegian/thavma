@@ -180,7 +180,8 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
     add(T7Items.ANGRY_ZOMBIE_SPAWN_EGG.get(), "Angry Zombie Spawn Egg")
 
     addCategory(ResearchCategories.THAVMA, "Thavma")
-    addEntry(ResearchEntries.Thavma.THAVMA, "Thavma")
+    addEntry(ResearchEntries.Thavma.WELCOME, "Elements Vol. 944 N° 10398")
+    addEntry(ResearchEntries.Thavma.THAVMA, "Incipiamus!")
     addEntry(ResearchEntries.Thavma.ORES, "Ores")
     addEntry(ResearchEntries.Thavma.TREES, "Trees")
     addEntry(ResearchEntries.Thavma.ARCANE_LENS, "The Arcane Lens")

@@ -6,16 +6,12 @@ import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.resetRenderSystemColor
-import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
 import me.alegian.thavma.impl.common.util.minus
 import net.minecraft.ChatFormatting
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
@@ -79,6 +75,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       && mouseX < x + getWidth()
       && mouseY < y + getHeight()
 
+    val corner = FrameRenderable.CORNER_TEXTURE
+    val edge = FrameRenderable.EDGE_TEXTURE
+    guiGraphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)
+
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
       scaleXY(1 / tab.zoomFactor())
@@ -99,6 +99,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       }
       RenderSystem.enableCull()
     }
+    guiGraphics.disableCrop()
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {

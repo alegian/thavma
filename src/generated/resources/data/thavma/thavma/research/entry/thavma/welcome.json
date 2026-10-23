@@ -1,0 +1,163 @@
+{
+  "category": "thavma:thavma",
+  "children": [
+    "thavma:thavma/thavma"
+  ],
+  "defaultKnown": true,
+  "defaultResearchState": [],
+  "icon": {
+    "count": 1,
+    "id": "minecraft:nether_star"
+  },
+  "pageFeatures": [
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature0"
+      }
+    },
+    {
+      "type": "thavma:break"
+    },
+    {
+      "type": "thavma:figure",
+      "height": 202,
+      "image": {
+        "canvas_height": 511,
+        "canvas_width": 376,
+        "height": 511,
+        "location": "thavma:textures/gui/images/elements_cover.png",
+        "width": 376
+      },
+      "width": 148
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.thavma.welcome.feature3"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature4"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature5"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature6"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature7"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature8"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature9"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature10"
+      }
+    },
+    {
+      "type": "thavma:break"
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature12"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.thavma.welcome.feature13"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature14"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature15"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature16"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature17"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature18"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature19"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature20"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature21"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.welcome.feature22"
+      }
+    }
+  ],
+  "position": [
+    0,
+    -8
+  ],
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.thavma.welcome"
+  }
+}

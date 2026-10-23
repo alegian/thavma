@@ -57,7 +57,7 @@ object Aspects {
   val ORBIS = register("orbis", 0xff43c5f1.toInt(), true, AER, AQUA)
   val TUTAMEN = register("tutamen", 0xff00c0c0.toInt(), false, HUMANUS, ORBIS)
   val VITREUS = register("vitreus", 0xff80ffff.toInt(), false, ORDO, AQUA)
-  val VOMICA = register("vomica", 0xff800080.toInt(), false, HUMANUS, PRAECANTATIO)
+  val VITIUM = register("vitium", 0xff800080.toInt(), false, HUMANUS, PRAECANTATIO)
   val DENSITAS = register("densitas", 0xffcacaca.toInt(), false, VITREUS, METALLUM)
   val ACULEUS = register("aculeus", 0xffc7bb1e.toInt(), false, IMPETUS, ORBIS)
   val MEMORIA = register("memoria", 0xffff4747.toInt(), false, SPIRITUS, TUTAMEN)

@@ -32,6 +32,12 @@ class Aspect(var id: String, var color: Int, val latent: Boolean, val components
       ?: opposites.entries.firstOrNull { it.value == this }?.let { T7Registries.ASPECT[it.key] }
   }
 
+  val inversion: Aspect? by lazy {
+    val components = components ?: return@lazy opposite
+    val invertedComponents = components.map { it.inversion ?: return@lazy null }.toSet()
+    T7Registries.ASPECT.firstOrNull { it.components == invertedComponents }
+  }
+
   val isPrimal
     get() = components == null
 }

@@ -23,6 +23,7 @@ class T7DataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFutur
     ToolAspects.gather(this, lookupProvider)
     ArmorAspects.gather(this, lookupProvider)
     BlockFamilyAspects.gather(this, lookupProvider)
+    AspectOpposites.gather(this, lookupProvider)
   }
 }
 

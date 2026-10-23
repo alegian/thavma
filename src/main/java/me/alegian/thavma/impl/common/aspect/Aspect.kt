@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.common.aspect
 
+import me.alegian.thavma.impl.init.registries.T7DataMaps
 import me.alegian.thavma.impl.init.registries.T7Registries
 import net.minecraft.Util
 import net.minecraft.core.Holder
@@ -24,6 +25,12 @@ class Aspect(var id: String, var color: Int, val latent: Boolean, val components
   fun defaultStack() = AspectStack.of(this, 1)
 
   fun wrapAsHolder() = T7Registries.ASPECT.wrapAsHolder(this)
+
+  val opposite: Aspect? by lazy {
+    val opposites = T7Registries.ASPECT.getDataMap(T7DataMaps.ASPECT_OPPOSITES)
+    opposites[resourceKey]
+      ?: opposites.entries.firstOrNull { it.value == this }?.let { T7Registries.ASPECT[it.key] }
+  }
 
   val isPrimal
     get() = components == null

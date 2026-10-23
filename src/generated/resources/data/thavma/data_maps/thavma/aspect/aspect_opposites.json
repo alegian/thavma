@@ -1,0 +1,28 @@
+{
+  "values": {
+    "thavma:aculeus": "thavma:textura",
+    "thavma:aer": "thavma:terra",
+    "thavma:alienis": "thavma:cognitio",
+    "thavma:aqua": "thavma:ignis",
+    "thavma:arbor": "thavma:corpus",
+    "thavma:crescentia": "thavma:orbis",
+    "thavma:densitas": "thavma:pulvis",
+    "thavma:exanimis": "thavma:vitium",
+    "thavma:fabrico": "thavma:metallum",
+    "thavma:fames": "thavma:messis",
+    "thavma:herba": "thavma:lucrum",
+    "thavma:humanus": "thavma:machina",
+    "thavma:idea": "thavma:vacuos",
+    "thavma:impetus": "thavma:tutamen",
+    "thavma:instrumentum": "thavma:somnium",
+    "thavma:lux": "thavma:tenebrae",
+    "thavma:memoria": "thavma:praecantatio",
+    "thavma:mortuus": "thavma:victus",
+    "thavma:motus": "thavma:permutatio",
+    "thavma:ordo": "thavma:perditio",
+    "thavma:potentia": "thavma:tempus",
+    "thavma:rosaura": "thavma:venenum",
+    "thavma:sensus": "thavma:spiritus",
+    "thavma:sonorus": "thavma:vitreus"
+  }
+}

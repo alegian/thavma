@@ -1,5 +1,6 @@
 package me.alegian.thavma.impl.init.registries
 
+import me.alegian.thavma.impl.common.aspect.Aspect
 import me.alegian.thavma.impl.common.aspect.AspectMap
 import me.alegian.thavma.impl.rl
 import net.minecraft.core.registries.Registries
@@ -8,6 +9,11 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapValueMerger
 
 object T7DataMaps {
+  val ASPECT_OPPOSITES = DataMapType
+    .builder(rl("aspect_opposites"), T7Registries.ASPECT_KEY, Aspect.CODEC)
+    .synced(Aspect.CODEC, true)
+    .build()
+
   object AspectContent {
     val ITEM = AdvancedDataMapType
       .builder(

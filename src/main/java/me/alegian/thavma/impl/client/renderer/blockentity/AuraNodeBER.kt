@@ -16,7 +16,7 @@ import net.minecraft.util.Mth
 import net.neoforged.neoforge.client.model.data.ModelData
 import kotlin.math.max
 
-private const val MAX_ALPHA = 0.4f
+private const val MAX_ALPHA = 0.7f
 
 class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
   private var scale = 1f
@@ -85,8 +85,6 @@ class AuraNodeBER : BlockEntityRenderer<AuraNodeBE> {
         if (sorted.isNotEmpty()) {
           for (stack in sorted.reversed())
             renderAuraNodeLayer(poseStack, bufferSource, stack.aspect.color, alpha, stack.amount / 2f / AuraNodeBE.MAX_ASPECTS)
-
-          renderAuraNodeLayer(poseStack, bufferSource, 0xFFFFFF, alpha * 0.7f, 0.06f)
         } else {
           renderAuraNodeLayer(poseStack, bufferSource, 0, alpha / MAX_ALPHA, 1f / AuraNodeBE.MAX_ASPECTS)
         }

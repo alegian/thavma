@@ -25,7 +25,8 @@ object T7RenderTypes {
       .setShaderState(T7RenderStateShards.AURA_NODE_SHADER)
       .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
       .setTextureState(RenderStateShard.NO_TEXTURE)
-      .setDepthTestState(T7RenderStateShards.NOT_EQUAL_DEPTH_TEST) // alpha colors do not stack in aura node layers, and aura nodes can be seen through blocks
+      .setDepthTestState(T7RenderStateShards.NOT_EQUAL_DEPTH_TEST)
+      .setWriteMaskState(RenderStateShard.COLOR_WRITE)
       .createCompositeState(false)
   )
 

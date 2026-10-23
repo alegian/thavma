@@ -40,7 +40,7 @@ object T7RenderTypes {
     true,
     CompositeState.builder()
       .setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
-      .setTransparencyState(RenderStateShard.LIGHTNING_TRANSPARENCY)
+      .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
       .setCullState(RenderStateShard.NO_CULL)
       .setWriteMaskState(RenderStateShard.COLOR_WRITE)
       .createCompositeState(false)

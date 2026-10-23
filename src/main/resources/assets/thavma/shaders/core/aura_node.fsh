@@ -54,7 +54,7 @@ void main() {
     float safeScale = max(scale, 0.001);
     float scaledDist = dist / (maxLen * safeScale);
 
-    if (scaledDist > 1.15) discard;
+    if (scaledDist > 1.0) discard;
 
     float time = GameTime * 1200.0;
     float phase = random(scale + 0.1) * 6.28318;
@@ -75,7 +75,6 @@ void main() {
     float edgeThreshold = 1.0 - edgeDistortion - pulse;
 
     if (scaledDist > edgeThreshold && safeScale > 0.12) discard;
-    if (scaledDist > 1.0) discard;
 
     // --- swirling internal texture ---
     float swirlAngle = angle + scaledDist * 2.0 - time * 0.15;

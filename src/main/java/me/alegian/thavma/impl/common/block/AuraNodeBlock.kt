@@ -26,9 +26,7 @@ class AuraNodeBlock : TransparentBlock(
     return RenderShape.ENTITYBLOCK_ANIMATED
   }
 
-  override fun newBlockEntity(pos: BlockPos, blockState: BlockState): BlockEntity {
-    return AuraNodeBE(pos, blockState)
-  }
+  override fun newBlockEntity(pos: BlockPos, blockState: BlockState) = AuraNodeBE(pos, blockState)
 
   override fun <T : BlockEntity?> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
     return BaseEntityBlock.createTickerHelper(type, AURA_NODE.get(), AuraNodeBE::tick)

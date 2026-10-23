@@ -1,7 +1,7 @@
 {
   "type": "thavma:arcane_workbench",
   "aspects": {
-    "thavma:aether": 4,
+    "thavma:aer": 4,
     "thavma:aqua": 4
   },
   "key": {

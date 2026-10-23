@@ -79,4 +79,8 @@ object T7BlockEntities {
   val HUNGRY_CHEST = REGISTRAR.register("hungry_chest") { ->
     BlockEntityType.Builder.of(::HungryChestBE, T7Blocks.HUNGRY_CHEST.get()).build(null)
   }
+
+  val HOLE = REGISTRAR.register("hole") { ->
+    BlockEntityType.Builder.of(::HoleBE, T7Blocks.HOLE.get()).build(null)
+  }
 }

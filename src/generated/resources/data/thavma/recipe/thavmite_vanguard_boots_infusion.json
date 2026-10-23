@@ -2,7 +2,7 @@
   "type": "thavma:infusion",
   "aspects": {
     "thavma:praecantatio": 16,
-    "thavma:praemunio": 32
+    "thavma:tutamen": 32
   },
   "base": {
     "item": "thavma:thavmite_boots"

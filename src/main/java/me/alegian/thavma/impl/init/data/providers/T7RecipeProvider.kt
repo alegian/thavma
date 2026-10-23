@@ -11,8 +11,6 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.wandOrThrow
 import me.alegian.thavma.impl.init.registries.deferred.WandCoreMaterials
 import me.alegian.thavma.impl.init.registries.deferred.WandPlatingMaterials
-import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
@@ -120,7 +118,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       T7Items.APPRENTICE_BOOTS,
     )
 
-    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_BRICKS)
+    ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, T7Blocks.ELEMENTAL_STONE_BRICKS, 4)
       .define('s', T7Blocks.ELEMENTAL_STONE)
       .pattern("ss")
       .pattern("ss")
@@ -201,7 +199,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.SEALING_JAR, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.AQUA.get(), 4).add(Aspects.AETHER.get(), 4).build())
+      .requireAspects(AspectMap.builder().add(Aspects.AQUA.get(), 4).add(Aspects.AER.get(), 4).build())
       .define('s', T7Blocks.GREATWOOD_SLAB)
       .define('p', Tags.Items.GLASS_PANES)
       .pattern("psp")
@@ -213,7 +211,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     WorkbenchRecipeBuilder.shaped(T7Items.GREATWOOD_CORE, 1)
       .requireAspects(AspectMap.ofPrimals(8))
       .define('g', T7Blocks.GREATWOOD_LOG)
-      .define('o', T7Items.SHARDS[Aspects.AETHER]!!)
+      .define('o', T7Items.SHARDS[Aspects.AER]!!)
       .pattern(" og")
       .pattern("ogo")
       .pattern("go ")
@@ -223,7 +221,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     InfusionRecipeBuilder(
       T7Items.SILVERWOOD_CORE,
       Ingredient.of(T7Blocks.SILVERWOOD_LOG),
-      listOf(Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AETHER]!!)),
+      listOf(Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!), Ingredient.of(T7Items.SHARDS[Aspects.AER]!!)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
         .build(),
@@ -233,7 +231,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .unlockedBy(T7Blocks.ELEMENTAL_STONE)
       .save(pRecipeOutput)
 
-    for (a in Aspects.PRIMAL_ASPECTS) {
+    for (a in Aspects.DATAGEN_PRIMALS) {
       SimpleCookingRecipeBuilder.blasting(Ingredient.of(T7Blocks.INFUSED_STONES[a], T7Blocks.INFUSED_DEEPSLATES[a]), RecipeCategory.MISC, T7Items.SHARDS[a]!!, 1f, 100)
         .unlockedBy(T7Tags.Items.INFUSED_STONES)
         .save(pRecipeOutput, T7Items.SHARDS[a]!!.id.withSuffix("_blasting"))
@@ -263,7 +261,6 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       AspectMap.builder()
         .add(Aspects.IGNIS.get(), 8)
         .add(Aspects.LUX.get(), 8)
-        .add(Aspects.POTENTIA.get(), 8)
         .build(),
       Ingredient.of(Items.GLOWSTONE_DUST)
     ).save(pRecipeOutput)
@@ -274,7 +271,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -283,7 +280,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -292,7 +289,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
     InfusionRecipeBuilder(
@@ -301,7 +298,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       listOf(Ingredient.of(Items.NETHERITE_INGOT), Ingredient.of(Items.DIAMOND), Ingredient.of(Items.LEATHER)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
-        .add(Aspects.PRAEMUNIO, 32)
+        .add(Aspects.TUTAMEN, 32)
         .build(),
     ).save(pRecipeOutput)
 
@@ -329,7 +326,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       listOf(Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.GREATWOOD_CORE), Ingredient.of(Items.NETHERITE_INGOT)),
       AspectMap.builder()
         .add(Aspects.PRAECANTATIO, 16)
-        .add(Aspects.AVERSIO, 16)
+        .add(Aspects.INSTRUMENTUM, 16)
         .build(),
     ).save(pRecipeOutput)
 
@@ -338,8 +335,8 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(Items.ENDER_PEARL),
       listOf(Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(T7Items.THAVMITE_PLATING), Ingredient.of(Blocks.DISPENSER)),
       AspectMap.builder()
-        .add(Aspects.MOTUS, 32)
-        .add(Aspects.ALIENIS, 16)
+        .add(Aspects.PRAECANTATIO, 20)
+        .add(Aspects.TENEBRAE, 16)
         .add(Aspects.INSTRUMENTUM, 16)
         .build(),
     ).save(pRecipeOutput)
@@ -348,12 +345,12 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       Ingredient.of(Items.QUARTZ_BLOCK),
       listOf(Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Items.LAPIS_LAZULI)),
       AspectMap.builder()
-        .add(Aspects.PERMUTATIO, 40)
+        .add(Aspects.ROSAURA, 40)
         .add(Aspects.INSTRUMENTUM, 16)
         .build(),
     ).save(pRecipeOutput)
     WorkbenchRecipeBuilder.shaped(T7Items.FOCUS_LIGHT, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.IGNIS, 12).add(Aspects.AETHER, 12).build())
+      .requireAspects(AspectMap.builder().add(Aspects.IGNIS, 12).add(Aspects.AER, 12).build())
       .define('e', T7Blocks.ETERNAL_FLAME)
       .define('o', T7Items.ORICHALCUM_PLATING)
       .define('b', Tags.Items.STORAGE_BLOCKS_COAL)
@@ -378,7 +375,7 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
       .save(pRecipeOutput)
 
     WorkbenchRecipeBuilder.shaped(T7Blocks.HUNGRY_CHEST, 1)
-      .requireAspects(AspectMap.builder().add(Aspects.AER, 8).add(Aspects.AETHER, 4).build())
+      .requireAspects(AspectMap.builder().add(Aspects.TERRA, 8).add(Aspects.AER, 4).build())
       .define('t', ItemTags.TRAPDOORS)
       .define('w', T7Blocks.GREATWOOD_PLANKS)
       .pattern("wtw")
@@ -446,14 +443,13 @@ open class T7RecipeProvider(pOutput: PackOutput, pRegistries: CompletableFuture<
     WorkbenchRecipeBuilder.shaped(T7Blocks.ARCANE_LEVITATOR, 1)
       .requireAspects(
         AspectMap.builder()
-          .add(Aspects.AER, 12)
-          .add(Aspects.TERRA, 4)
-          .add(Aspects.AETHER, 4)
+          .add(Aspects.TERRA, 8)
+          .add(Aspects.AER, 8)
           .build()
       )
       .define('s', T7Blocks.ELEMENTAL_STONE)
       .define('c', T7Blocks.ELEMENTAL_CORE)
-      .define('a', T7Items.SHARDS[Aspects.AER]!!)
+      .define('a', T7Items.SHARDS[Aspects.TERRA]!!)
       .pattern("sas")
       .pattern("scs")
       .pattern("sas")

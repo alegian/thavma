@@ -5,8 +5,7 @@ import me.alegian.thavma.impl.client.extension.ArcaneLensItemExtensions
 import me.alegian.thavma.impl.client.extension.BEWLRItemExtensionFactory
 import me.alegian.thavma.impl.client.extension.WandItemExtensions
 import me.alegian.thavma.impl.client.gui.WorkbenchScreen
-import me.alegian.thavma.impl.client.gui.book.CraftingPageRenderer
-import me.alegian.thavma.impl.client.gui.book.TextPageRenderer
+import me.alegian.thavma.impl.client.gui.book.*
 import me.alegian.thavma.impl.client.gui.layer.ArcaneLensLayer
 import me.alegian.thavma.impl.client.gui.layer.WandLayer
 import me.alegian.thavma.impl.client.gui.research_table.ResearchScreen
@@ -24,7 +23,6 @@ import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.NodeJarBE
 import me.alegian.thavma.impl.client.renderer.blockentity.withoutlevel.SealingJarBEWLR
 import me.alegian.thavma.impl.client.renderer.entity.AngryZombieER
 import me.alegian.thavma.impl.client.renderer.entity.FancyItemER
-import me.alegian.thavma.impl.client.renderer.entity.VisER
 import me.alegian.thavma.impl.client.texture.atlas.AspectAtlas
 import me.alegian.thavma.impl.common.block.entity.*
 import me.alegian.thavma.impl.init.registries.T7ItemProperties
@@ -43,7 +41,7 @@ import thedarkcolour.kotlinforforge.neoforge.forge.DIST
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS as KFF_MOD_BUS
 
 private fun clientSetup(event: FMLClientSetupEvent) {
-  ModLoader.postEvent(RegisterPageRenderersEvent())
+  ModLoader.postEvent(RegisterPageFeatureRenderersEvent())
   ItemProperties.register(T7Items.RESEARCH_SCROLL.get(), T7ItemProperties.COMPLETED) { stack, level, entity, seed ->
     val completed = stack.get(T7DataComponents.RESEARCH_STATE)?.completed ?: false
     if (completed) 1f else 0f
@@ -64,9 +62,9 @@ private fun registerEntityRenderers(event: RegisterRenderers) {
   event.registerBlockEntityRenderer(T7BlockEntities.MATRIX.get()) { _ -> MatrixBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PILLAR.get()) { _ -> PillarBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.PEDESTAL.get()) { _ -> PedestalBER() }
+  event.registerBlockEntityRenderer(T7BlockEntities.HOLE.get()) { _ -> HoleBER() }
   event.registerBlockEntityRenderer(T7BlockEntities.HUNGRY_CHEST.get()) { ctx -> HungryChestBER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.FANCY_ITEM.get()) { ctx -> FancyItemER(ctx) }
-  event.registerEntityRenderer(T7EntityTypes.VIS.get()) { ctx -> VisER(ctx) }
   event.registerEntityRenderer(T7EntityTypes.ANGRY_ZOMBIE.get()) { ctx -> AngryZombieER(ctx) }
 }
 
@@ -98,11 +96,17 @@ private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
     event.registerItem(WandItemExtensions(), wand)
 
   event.registerItem(ArcaneLensItemExtensions(), T7Items.ARCANE_LENS.get())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())), T7Blocks.ARCANE_WORKBENCH.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(WorkbenchBE().withDefaultAnimations())),
+    T7Blocks.ARCANE_WORKBENCH.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(MatrixBE())), T7Blocks.MATRIX.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PillarBE())), T7Blocks.PILLAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(PedestalBE())), T7Blocks.PEDESTAL.get().asItem())
-  event.registerItem(BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())), T7Blocks.HUNGRY_CHEST.get().asItem())
+  event.registerItem(
+    BEWLRItemExtensionFactory.create(BlockItemBEWLR(HungryChestBE())),
+    T7Blocks.HUNGRY_CHEST.get().asItem()
+  )
   event.registerItem(BEWLRItemExtensionFactory.create(SealingJarBEWLR), T7Blocks.SEALING_JAR.get().asItem())
   event.registerItem(BEWLRItemExtensionFactory.create(NodeJarBEWLR), T7Items.NODE_JAR.get())
 }
@@ -116,7 +120,7 @@ private fun registerGeometryLoaders(event: RegisterGeometryLoaders) {
 }
 
 private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
-  for (aspect in Aspects.PRIMAL_ASPECTS) {
+  for (aspect in Aspects.DATAGEN_PRIMALS) {
     event.register(
       { _, tintIndex ->
         when (tintIndex) {
@@ -161,7 +165,7 @@ private fun registerItemColorHandlers(event: RegisterColorHandlersEvent.Item) {
 }
 
 private fun registerBlockColorHandlers(event: RegisterColorHandlersEvent.Block) {
-  for (aspect in Aspects.PRIMAL_ASPECTS) {
+  for (aspect in Aspects.DATAGEN_PRIMALS) {
     event.register(
       { _, _, _, tintIndex ->
         when (tintIndex) {
@@ -221,9 +225,12 @@ private fun registerScreens(event: RegisterMenuScreensEvent) {
   event.register(T7MenuTypes.RESEARCH.get(), ::ResearchScreen)
 }
 
-private fun registerPageRenderers(event: RegisterPageRenderersEvent) {
-  event.register(PageTypes.TEXT.get(), TextPageRenderer)
-  event.register(PageTypes.CRAFTING.get(), CraftingPageRenderer)
+private fun registerPageFeatureRenderers(event: RegisterPageFeatureRenderersEvent) {
+  event.register(PageFeatureTypes.PARAGRAPH.get(), ParagraphFeatureRenderer)
+  event.register(PageFeatureTypes.TITLE.get(), TitleFeatureRenderer)
+  event.register(PageFeatureTypes.FIGURE.get(), FigureFeatureRenderer)
+  event.register(PageFeatureTypes.RECIPE.get(), RecipeFeatureRenderer)
+  event.register(PageFeatureTypes.BREAK.get(), PageBreakFeatureRenderer)
 }
 
 private fun registerKeyMappings(event: RegisterKeyMappingsEvent) {
@@ -250,7 +257,7 @@ fun registerClientModEvents() {
   KFF_MOD_BUS.addListener(::registerShaders)
   KFF_MOD_BUS.addListener(::registerClientTooltipComponentFactories)
   KFF_MOD_BUS.addListener(::registerScreens)
-  KFF_MOD_BUS.addListener(::registerPageRenderers)
+  KFF_MOD_BUS.addListener(::registerPageFeatureRenderers)
   KFF_MOD_BUS.addListener(::registerKeyMappings)
   KFF_MOD_BUS.addListener(::registerRenderBuffers)
 }

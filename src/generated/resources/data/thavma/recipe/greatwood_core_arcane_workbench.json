@@ -2,9 +2,10 @@
   "type": "thavma:arcane_workbench",
   "aspects": {
     "thavma:aer": 8,
-    "thavma:aether": 8,
     "thavma:aqua": 8,
     "thavma:ignis": 8,
+    "thavma:ordo": 8,
+    "thavma:perditio": 8,
     "thavma:terra": 8
   },
   "key": {
@@ -12,7 +13,7 @@
       "item": "thavma:greatwood_log"
     },
     "o": {
-      "item": "thavma:aether_shard"
+      "item": "thavma:aer_shard"
     }
   },
   "pattern": [

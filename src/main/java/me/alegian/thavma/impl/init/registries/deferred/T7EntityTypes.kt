@@ -2,7 +2,6 @@ package me.alegian.thavma.impl.init.registries.deferred
 
 import me.alegian.thavma.impl.Thavma
 import me.alegian.thavma.impl.common.entity.AngryZombieEntity
-import me.alegian.thavma.impl.common.entity.VisEntity
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
@@ -19,15 +18,6 @@ object T7EntityTypes {
             .clientTrackingRange(6)
             .updateInterval(20)
             .build("fancy_item")
-    }
-
-    val VIS = REGISTRAR.register("vis") { ->
-        EntityType.Builder.of({ _, level -> VisEntity(level, null) }, MobCategory.MISC)
-            .sized(0.25f, 0.25f)
-            .eyeHeight(0.2125f)
-            .clientTrackingRange(6)
-            .updateInterval(20)
-            .build("vis")
     }
 
     val ANGRY_ZOMBIE = REGISTRAR.register("angry_zombie") { ->

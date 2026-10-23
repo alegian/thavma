@@ -35,7 +35,7 @@ object WandLayer : LayeredDraw.Layer {
 
       rotateZ(-16f)
       // draw the bars with stacking rotations
-      for (deferredAspect in Aspects.PRIMAL_ASPECTS) {
+      for (deferredAspect in Aspects.DATAGEN_PRIMALS) {
         val a = deferredAspect.get()
         graphics.usePose {
           translateXY(0.0, CIRCLE.height)

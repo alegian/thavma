@@ -5,47 +5,46 @@ import me.alegian.thavma.impl.common.block.AuraNodeBlock
 import me.alegian.thavma.impl.common.block.TableBlock
 import me.alegian.thavma.impl.common.data.capability.AspectContainer
 import me.alegian.thavma.impl.common.entity.FancyBookEntity
-import me.alegian.thavma.impl.common.entity.VisEntity
 import me.alegian.thavma.impl.common.util.getBE
+import me.alegian.thavma.impl.common.util.updateBlockEntityS2C
 import me.alegian.thavma.impl.common.wand.WandCoreMaterial
 import me.alegian.thavma.impl.common.wand.WandPlatingMaterial
 import me.alegian.thavma.impl.init.registries.deferred.T7BlockEntities
 import me.alegian.thavma.impl.init.registries.deferred.T7Blocks
 import me.alegian.thavma.impl.init.registries.deferred.T7DataComponents
-import me.alegian.thavma.impl.rl
+import me.alegian.thavma.impl.init.registries.deferred.T7Items
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.NonNullList
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.UseAnim
+import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
-import software.bernie.geckolib.GeckoLibServices
 import software.bernie.geckolib.animatable.GeoItem
 import software.bernie.geckolib.animatable.client.GeoRenderProvider
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.animation.AnimatableManager
-import software.bernie.geckolib.animation.AnimationController
-import software.bernie.geckolib.animation.PlayState
-import software.bernie.geckolib.animation.RawAnimation
-import software.bernie.geckolib.network.packet.SingletonAnimTriggerPacket
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.function.Consumer
 
 open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial, val coreMaterial: WandCoreMaterial) :
   Item(props.stacksTo(1).rarity(Rarity.UNCOMMON)), GeoItem {
+
+  init {
+    T7Items.WANDS.put(platingMaterial, coreMaterial, this)
+  }
 
   private val cache = GeckoLibUtil.createInstanceCache(this)
 
@@ -58,8 +57,8 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
    * 4. Creating "Elements of Thavma" books from Bookcases
    */
   override fun useOn(context: UseOnContext): InteractionResult {
-    val focusResult = context.itemInHand.equippedFocus?.item?.useOn(context) ?: InteractionResult.PASS
-    if (focusResult != InteractionResult.PASS) return focusResult
+    val focus = context.itemInHand.equippedFocus
+    if (focus != null) return focus.item.useOn(context)
 
     val level = context.level
     val blockPos = context.clickedPos
@@ -72,10 +71,9 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
       val transferPair = AspectContainer.blockSourceItemSink(level, blockPos, context.itemInHand)
       val canTransfer = transferPair?.canTransferPrimals() ?: false
       if (player != null && canTransfer) {
+        context.itemInHand.wandMode = WandMode.ABSORB_NODE
+        context.itemInHand.interactingBlockPos = blockPos
         player.startUsingItem(context.hand)
-        if (!level.isClientSide() && level is ServerLevel) {
-          level.addFreshEntity(VisEntity(level, player, blockPos))
-        }
         return InteractionResult.CONSUME
       }
     }
@@ -117,17 +115,40 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return InteractionResult.PASS
   }
 
-  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
-    val itemInHand = player.getItemInHand(usedHand)
-    val focusResult = itemInHand.equippedFocus?.item?.use(level, player, usedHand) ?: InteractionResultHolder.pass(itemInHand)
-    if (focusResult.result != InteractionResult.PASS) return focusResult
+  override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+    val focus = player.getItemInHand(usedHand).equippedFocus
+    if (focus != null) return focus.item.use(level, player, usedHand)
 
     return super.use(level, player, usedHand)
   }
 
+  override fun onUseTick(level: Level, livingEntity: LivingEntity, stack: ItemStack, remainingUseDuration: Int) {
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.onUseTick(level, livingEntity, stack, remainingUseDuration)
+
+    if (livingEntity.tickCount % ABSORB_TICKS != 0) return
+    if (stack.wandMode != WandMode.ABSORB_NODE) return
+    val blockPos = stack.interactingBlockPos ?: return
+    val transferPair = AspectContainer.blockSourceItemSink(level, blockPos, stack)
+    if (transferPair == null || !transferPair.canTransferPrimals()) {
+      livingEntity.stopUsingItem()
+      return
+    }
+
+    if (level.isClientSide || level !is ServerLevel) return
+    val transferred = transferPair.transferPrimal(livingEntity.tickCount / ABSORB_TICKS, 1)
+    if (transferred != null && transferred.amount > 0) level.updateBlockEntityS2C(blockPos)
+  }
+
+  override fun releaseUsing(stack: ItemStack, level: Level, livingEntity: LivingEntity, timeCharged: Int) {
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.releaseUsing(stack, level, livingEntity, timeCharged)
+    super.releaseUsing(stack, level, livingEntity, timeCharged)
+  }
+
   override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
-    val focusResult = stack.equippedFocus?.item?.interactLivingEntity(stack, player, interactionTarget, usedHand) ?: InteractionResult.PASS
-    if (focusResult != InteractionResult.PASS) return focusResult
+    val focus = stack.equippedFocus
+    if (focus != null) return focus.item.interactLivingEntity(stack, player, interactionTarget, usedHand)
 
     return super.interactLivingEntity(stack, player, interactionTarget, usedHand)
   }
@@ -136,8 +157,9 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return UseAnim.CUSTOM
   }
 
-  override fun getUseDuration(pStack: ItemStack, pEntity: LivingEntity): Int {
-    return 72000
+  override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int {
+    val focusDuration = stack.equippedFocus?.item?.getUseDuration(stack, entity)
+    return focusDuration ?: 72000
   }
 
   /**
@@ -171,15 +193,24 @@ open class WandItem(props: Properties, val platingMaterial: WandPlatingMaterial,
     return coreMaterial.capacity
   }
 
-  open val name: String
-    get() = name(this.platingMaterial, this.coreMaterial)
-
   companion object {
-    fun name(platingMaterial: WandPlatingMaterial, coreMaterial: WandCoreMaterial): String {
-      return platingMaterial.registeredName + "_" + coreMaterial.registeredName + "_wand"
-    }
+    private const val ABSORB_TICKS = 4
 
-    val ItemStack.equippedFocus
+    var ItemStack.equippedFocus
       get() = get(T7DataComponents.FOCUS)?.nonEmptyItems()?.firstOrNull()
+      set(value) {
+        set(
+          T7DataComponents.FOCUS,
+          if (value == null) ItemContainerContents.EMPTY
+          else ItemContainerContents.fromItems(
+            NonNullList.copyOf(listOf(value))
+          )
+        )
+      }
+    var ItemStack.wandMode
+      get() = get(T7DataComponents.WAND_MODE)
+      set(value) {
+        set(T7DataComponents.WAND_MODE, value)
+      }
   }
 }

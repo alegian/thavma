@@ -6,10 +6,7 @@ import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.resetRenderSystemColor
-import me.alegian.thavma.impl.client.util.scaleXY
-import me.alegian.thavma.impl.client.util.translateXY
-import me.alegian.thavma.impl.client.util.usePose
+import me.alegian.thavma.impl.client.util.*
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -25,6 +22,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.neoforged.neoforge.network.PacketDistributor
+import kotlin.math.PI
+import kotlin.math.sin
 
 /**
  * By default, connections prefer to connect to children along the Y axis.
@@ -45,7 +44,9 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   init {
     val components = mutableListOf(entry.value().title)
-    if (!knowsParents) components.add(Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+    if (!knowsParents) components.add(
+      Component.translatable(ResearchEntry.PARENTS_UNKNOWN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+    )
     tooltip = T7Tooltip(components)
   }
 
@@ -69,10 +70,14 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     this.isHovered = guiGraphics.containsPointInScissor(mouseX, mouseY)
-        && mouseX >= x
-        && mouseY >= y
-        && mouseX < x + getWidth()
-        && mouseY < y + getHeight()
+      && mouseX >= x
+      && mouseY >= y
+      && mouseX < x + getWidth()
+      && mouseY < y + getHeight()
+
+    val corner = FrameRenderable.CORNER_TEXTURE
+    val edge = FrameRenderable.EDGE_TEXTURE
+    guiGraphics.enableCrop(corner.width / 2 + edge.height / 2, corner.height / 2 + edge.height / 2)
 
     guiGraphics.usePose {
       translateXY(screen.width / 2, screen.height / 2)
@@ -81,7 +86,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       scaleXY(CELL_SIZE)
       translateXY(pos.x, pos.y)
 
-      renderEntry(guiGraphics)
+      renderEntry(guiGraphics, partialTick)
 
       if (!knowsResearch) return@usePose
       // allows negative size drawing, which greatly simplifies math
@@ -94,6 +99,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       }
       RenderSystem.enableCull()
     }
+    guiGraphics.disableCrop()
   }
 
   override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
@@ -101,7 +107,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
       PacketDistributor.sendToServer(ResearchScrollPayload(entry))
       clientSound(SoundEvents.BOOK_PAGE_TURN, SoundSource.AMBIENT, 1f, 1f)
       gaveScroll = true
-      tooltip = T7Tooltip(entry.value().title, Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY))
+      tooltip = T7Tooltip(
+        entry.value().title,
+        Component.translatable(ResearchEntry.SCROLL_GIVEN_TRANSLATION).withStyle(ChatFormatting.GRAY)
+      )
       return
     }
     if (knowsResearch)
@@ -111,9 +120,10 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
   }
 
-  private fun renderEntry(guiGraphics: GuiGraphics) {
-    var brightness = 1f
-    if (!knowsResearch) brightness = 0.4f
+  private fun renderEntry(guiGraphics: GuiGraphics, partialTick: Float) {
+    val brightness =
+      if (knowsResearch) 1f
+      else (0.6 + 0.2 * sin(2 * PI * (ClientHelper.ticks() + partialTick) / PERIOD_TICKS)).toFloat()
     RenderSystem.setShaderColor(brightness, brightness, brightness, 1f)
 
     renderGridElement(
@@ -138,6 +148,7 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
   }
 
   companion object {
+    private const val PERIOD_TICKS = 40
     val TEXTURE = Texture("gui/book/node", 32, 32)
   }
 }

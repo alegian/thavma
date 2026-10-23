@@ -65,7 +65,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
   // TODO: cleanup
   protected open val renderAspects = Renderable { guiGraphics: GuiGraphics, _: Int, _: Int, _: Float ->
     val BASE_RADIUS = 50
-    val ANGLE = 360f / Aspects.PRIMAL_ASPECTS.size
+    val ANGLE = 360f / Aspects.DATAGEN_PRIMALS.size
     val middleSlot = menu.craftingContainer.range.slots[4]
     if (middleSlot !is DynamicSlot<*>) return@Renderable
 
@@ -74,7 +74,7 @@ open class WorkbenchScreen(val menu: WorkbenchMenu, pPlayerInventory: Inventory,
       translateXY((middleSlot.size - ASPECT_SOCKET.width) / 2.0, (middleSlot.size - ASPECT_SOCKET.height) / 2.0)
 
       // draw aspects at pentagon points (or N-gon if more primals are added by addons)
-      for ((i, a) in Aspects.PRIMAL_ASPECTS.withIndex()) {
+      for ((i, a) in Aspects.DATAGEN_PRIMALS.withIndex()) {
         val requiredAmount = menu.requiredAspects[a.get()]
         val requiredStack = AspectStack(a.get(), requiredAmount)
         guiGraphics.usePose {

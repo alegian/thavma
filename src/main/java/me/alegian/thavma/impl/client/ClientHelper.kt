@@ -37,6 +37,12 @@ fun clientSound(sound: SoundEvent, source: SoundSource, volume: Float, pitch: Fl
 }
 
 object ClientHelper {
+  val LINE_GAP_FACTOR = 1.125
   fun hitResult() = Minecraft.getInstance().hitResult
   fun player() = Minecraft.getInstance().player
+  fun bufferSource() = Minecraft.getInstance().renderBuffers().bufferSource()
+  fun entityRenderDispatcher() = Minecraft.getInstance().entityRenderDispatcher
+  fun camera() = Minecraft.getInstance().gameRenderer.mainCamera
+  fun firstPerson() = Minecraft.getInstance().options.cameraType.isFirstPerson
+  fun ticks() = Minecraft.getInstance().level?.gameTime ?: 0
 }

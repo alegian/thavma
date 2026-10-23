@@ -1,7 +1,7 @@
 {
   "type": "thavma:infusion",
   "aspects": {
-    "thavma:aversio": 16,
+    "thavma:instrumentum": 16,
     "thavma:praecantatio": 16
   },
   "base": {

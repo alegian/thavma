@@ -29,8 +29,7 @@ class HammerItem(tier: Tier, props: Properties) : DiggerItem(tier, BlockTags.MIN
 
     // find the 2 axes perpendicular to the block hit direction
     val hitAxis = direction.axis
-    val allAxes = listOf(Direction.Axis.X, Direction.Axis.Y, Direction.Axis.Z)
-    val perpendicularAxes = allAxes.filter { it !== hitAxis }.toList()
+    val perpendicularAxes = Direction.Axis.entries.filter { it !== hitAxis }.toList()
 
     // 3x3 area, except original block, only for correct mining tool
     for (i in -1..1)

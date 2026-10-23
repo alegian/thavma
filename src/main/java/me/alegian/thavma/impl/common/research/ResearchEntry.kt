@@ -3,7 +3,7 @@ package me.alegian.thavma.impl.common.research
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import me.alegian.thavma.impl.Thavma
-import me.alegian.thavma.impl.common.book.Page
+import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.util.T7ExtraCodecs
 import me.alegian.thavma.impl.common.util.registry
 import me.alegian.thavma.impl.init.registries.T7DatapackRegistries
@@ -24,7 +24,7 @@ class ResearchEntry(
   val position: Vector2i,
   val preferX: Boolean,
   val children: List<Holder<ResearchEntry>>,
-  val pages: List<Page>,
+  val pageFeatures: List<PageFeature>,
   val icon: ItemStack,
   val title: Component,
   val defaultResearchState: List<SocketState>,
@@ -33,17 +33,19 @@ class ResearchEntry(
   fun parents(level: Level) =
     parentsMap.computeIfAbsent(this) { _ ->
       val registry = level.registry(T7DatapackRegistries.RESEARCH_ENTRY)
-      registry.holders().filter { e -> e.value().children.map{it.value()}.contains(this) }.toList()
+      registry.holders().filter { e -> e.value().children.map { it.value() }.contains(this) }.toList()
     }
 
   companion object {
     val CODEC: Codec<ResearchEntry> = RecordCodecBuilder.create {
       it.group(
-        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_CATEGORY, ResearchCategory.CODEC).fieldOf("category").forGetter(ResearchEntry::category),
+        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_CATEGORY, ResearchCategory.CODEC).fieldOf("category")
+          .forGetter(ResearchEntry::category),
         T7ExtraCodecs.VECTOR2I.fieldOf("position").forGetter(ResearchEntry::position),
         Codec.BOOL.fieldOf("preferX").forGetter(ResearchEntry::preferX),
-        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_ENTRY, CODEC).listOf().fieldOf("children").forGetter(ResearchEntry::children),
-        Page.CODEC.listOf().fieldOf("pages").forGetter(ResearchEntry::pages),
+        RegistryFileCodec.create(T7DatapackRegistries.RESEARCH_ENTRY, CODEC).listOf().fieldOf("children")
+          .forGetter(ResearchEntry::children),
+        PageFeature.CODEC.listOf().fieldOf("pageFeatures").forGetter(ResearchEntry::pageFeatures),
         ItemStack.STRICT_CODEC.fieldOf("icon").forGetter(ResearchEntry::icon),
         ComponentSerialization.CODEC.fieldOf("title").forGetter(ResearchEntry::title),
         SocketState.CODEC.listOf().fieldOf("defaultResearchState").forGetter(ResearchEntry::defaultResearchState),
@@ -51,7 +53,8 @@ class ResearchEntry(
       ).apply(it, ::ResearchEntry)
     }
 
-    fun translationId(entryKey: ResourceKey<ResearchEntry>) = Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
+    fun translationId(entryKey: ResourceKey<ResearchEntry>) =
+      Util.makeDescriptionId(T7DatapackRegistries.RESEARCH_ENTRY.location().path, entryKey.location())
 
     val TOAST_TRANSLATION = "research." + Thavma.MODID + ".toast"
     val SCROLL_GIVEN_TRANSLATION = "research." + Thavma.MODID + ".scroll_given"

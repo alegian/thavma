@@ -7,7 +7,7 @@
   "defaultKnown": true,
   "defaultResearchState": [
     {
-      "aspect": "thavma:aether",
+      "aspect": "thavma:aer",
       "broken": false,
       "indices": {
         "col": 0,
@@ -16,7 +16,7 @@
       "locked": true
     },
     {
-      "aspect": "thavma:praecantatio",
+      "aspect": "thavma:aer",
       "broken": false,
       "indices": {
         "col": 4,
@@ -29,32 +29,57 @@
     "count": 1,
     "id": "thavma:book"
   },
-  "pages": [
+  "pageFeatures": [
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph0"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph1"
-        },
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page0.paragraph2"
-        }
-      ],
-      "title": {
-        "bold": true,
-        "translate": "research/entry.thavma.thavma.thavma.page0.title"
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature0"
       }
     },
     {
-      "type": "thavma:text",
-      "paragraphs": [
-        {
-          "translate": "research/entry.thavma.thavma.thavma.page1.paragraph0"
-        }
-      ]
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature1"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature2"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature3"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature4"
+      }
+    },
+    {
+      "type": "thavma:break"
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature6"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature7"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.thavma.thavma.feature8"
+      }
     }
   ],
   "position": [

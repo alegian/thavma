@@ -31,6 +31,8 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
   private var page = 0
   private var maxPages = 1
   private var aspectsPerPage = 0
+  private var previousPageButton: ButtonWidget? = null
+  private var nextPageButton: ButtonWidget? = null
   private val aspectWidgets = mutableListOf<AspectWidget>()
   var selectedAspect: Aspect? = null
   val socketWidgets = mutableMapOf<Indices, SocketWidget>()
@@ -39,6 +41,7 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     aspectWidgets.clear()
     socketWidgets.clear()
     super.init()
+    updatePageButtons()
   }
 
   override fun layout() {
@@ -91,10 +94,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
           height = fixed(ButtonWidget.LEFT_TEXTURE.height)
         }) {
           afterLayout {
-            addRenderableWidget(ButtonWidget(position, false) {
-              // add an extra maxPages to avoid negative modulos
-              page = (page - 1 + maxPages) % maxPages
+            previousPageButton = addRenderableWidget(ButtonWidget(position, false) {
+              page = (page - 1).coerceAtLeast(0)
               updateAspectWidgets()
+              updatePageButtons()
             })
           }
         }
@@ -104,9 +107,10 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
           height = fixed(ButtonWidget.RIGHT_TEXTURE.height)
         }) {
           afterLayout {
-            addRenderableWidget(ButtonWidget(position, true) {
-              page = (page + 1) % maxPages
+            nextPageButton = addRenderableWidget(ButtonWidget(position, true) {
+              page = (page + 1).coerceAtMost(maxPages - 1)
               updateAspectWidgets()
+              updatePageButtons()
             })
           }
         }
@@ -147,6 +151,17 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
       val enabled = i >= page * aspectsPerPage && i < (page + 1) * aspectsPerPage
       aspectWidgets[i].active = enabled
       aspectWidgets[i].visible = enabled
+    }
+  }
+
+  private fun updatePageButtons() {
+    previousPageButton?.let {
+      it.active = page > 0
+      it.visible = it.active
+    }
+    nextPageButton?.let {
+      it.active = page < maxPages - 1
+      it.visible = it.active
     }
   }
 
@@ -215,4 +230,3 @@ open class ResearchScreen(val menu: ResearchMenu, pPlayerInventory: Inventory, p
     return result
   }
 }
-

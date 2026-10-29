@@ -11,7 +11,8 @@ import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.client.gui.narration.NarrationElementOutput
 
-class TabSelectorWidget(x: Int, y: Int, private val category: ResearchCategory, private val handleClick: () -> Unit) : AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, category.title) {
+class TabSelectorWidget(x: Int, y: Int, private val category: ResearchCategory, private val handleClick: () -> Unit) :
+  AbstractWidget(x, y, TEXTURE.width, TEXTURE.height, category.title) {
   init {
     tooltip = Tooltip.create(message)
   }

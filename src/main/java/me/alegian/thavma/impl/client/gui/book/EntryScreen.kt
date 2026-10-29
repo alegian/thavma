@@ -1,6 +1,16 @@
 package me.alegian.thavma.impl.client.gui.book
 
-import me.alegian.thavma.impl.client.gui.layout.*
+import me.alegian.thavma.impl.client.gui.layout.Alignment
+import me.alegian.thavma.impl.client.gui.layout.Box
+import me.alegian.thavma.impl.client.gui.layout.Column
+import me.alegian.thavma.impl.client.gui.layout.LayoutExtensions
+import me.alegian.thavma.impl.client.gui.layout.PaginatedColumn
+import me.alegian.thavma.impl.client.gui.layout.Pagination
+import me.alegian.thavma.impl.client.gui.layout.Row
+import me.alegian.thavma.impl.client.gui.layout.TextureBox
+import me.alegian.thavma.impl.client.gui.layout.afterLayout
+import me.alegian.thavma.impl.client.gui.layout.fixed
+import me.alegian.thavma.impl.client.gui.layout.grow
 import me.alegian.thavma.impl.client.texture.Texture
 import me.alegian.thavma.impl.common.book.PageFeature
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -63,13 +73,13 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
               }
             }
           }
-          PageTurnerRow()
+          pageTurnerRow()
         }
       }
     }
   }
 
-  private fun PageTurnerRow() {
+  private fun pageTurnerRow() {
     Row({
       width = grow()
     }) {
@@ -112,7 +122,7 @@ class EntryScreen(entry: Holder<ResearchEntry>) : Screen(Component.literal("Book
   }
 
   // wrapper around unchecked cast
-  private fun <T : PageFeature?> initPageFeature(feature: T) {
+  private fun <T : PageFeature> initPageFeature(feature: T?) {
     if (feature != null) {
       val renderer = PAGE_FEATURE_RENDERERS[feature.type] as PageFeatureRenderer<T>
       renderer.initPageFeature(this, feature)

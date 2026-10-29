@@ -21,19 +21,11 @@ import net.minecraft.util.FormattedCharSequence
 import kotlin.math.floor
 
 object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
-  override fun initPageFeature(
-    screen: EntryScreen,
-    feature: ParagraphFeature,
-  ) {
+  override fun initPageFeature(screen: EntryScreen, feature: ParagraphFeature) {
     renderParagraph(screen.getFont(), feature.text, splittable = true)
   }
 
-  fun renderParagraph(
-    font: Font,
-    text: Component,
-    centered: Boolean = false,
-    splittable: Boolean = false,
-  ) {
+  fun renderParagraph(font: Font, text: Component, centered: Boolean = false, splittable: Boolean = false) {
     var lines: List<FormattedCharSequence> = listOf()
     val lineHeight = (font.lineHeight * ClientHelper.LINE_GAP_FACTOR).toFloat()
     if (splittable) {
@@ -64,7 +56,7 @@ object ParagraphFeatureRenderer : PageFeatureRenderer<ParagraphFeature> {
     if (fittingLines <= 0 || fittingLines >= lines.size) return null
 
     return paragraphFragment(font, lines.subList(0, fittingLines), width, lineHeight, centered) to
-        paragraphFragment(font, lines.subList(fittingLines, lines.size), width, lineHeight, centered)
+      paragraphFragment(font, lines.subList(fittingLines, lines.size), width, lineHeight, centered)
   }
 
   private fun paragraphFragment(

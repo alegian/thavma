@@ -8,12 +8,12 @@ import kotlin.math.pow
 
 // represents the renderable content of a tab in the book
 class TabRenderable(val screen: BookScreen) : Renderable {
-  companion object{
+  companion object {
     private const val ZOOM_MULTIPLIER = 1.25
-    private const val maxScrollX = 300.0
-    private const val maxScrollY = 300.0
-    private const val minZoom = 0.0
-    private const val maxZoom = 5.0
+    private const val MAX_SCROLL_X = 300.0
+    private const val MAX_SCROLL_Y = 300.0
+    private const val MIN_ZOOM = 0.0
+    private const val MAX_ZOOM = 5.0
     val TEXTURE: Texture = Texture("gui/book/tab_bg", 512, 512)
   }
 
@@ -27,17 +27,15 @@ class TabRenderable(val screen: BookScreen) : Renderable {
     val rawScrollX = scrollX - zoomFactor() * x
     val rawScrollY = scrollY - zoomFactor() * y
 
-    scrollX = rawScrollX.coerceIn(-maxScrollX, maxScrollX)
-    scrollY = rawScrollY.coerceIn(-maxScrollY, maxScrollY)
+    scrollX = rawScrollX.coerceIn(-MAX_SCROLL_X, MAX_SCROLL_X)
+    scrollY = rawScrollY.coerceIn(-MAX_SCROLL_Y, MAX_SCROLL_Y)
   }
 
   fun zoom(change: Double) {
-    zoom = (zoom - change).coerceIn(minZoom, maxZoom)
+    zoom = (zoom - change).coerceIn(MIN_ZOOM, MAX_ZOOM)
   }
 
-  fun zoomFactor(): Double {
-    return ZOOM_MULTIPLIER.pow(zoom)
-  }
+  fun zoomFactor(): Double = ZOOM_MULTIPLIER.pow(zoom)
 
   override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, tickDelta: Float) {
     if (screen.currentTab != this) return

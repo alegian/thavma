@@ -20,17 +20,11 @@ class PageTurningWidget(position: Vec2, private val pointsRight: Boolean, privat
     LEFT_TEXTURE.height,
     Component.translatable(if (pointsRight) rightTranslationId else leftTranslationId)
   ) {
-
   init {
     tooltip = Tooltip.create(message)
   }
 
-  override fun renderWidget(
-    guiGraphics: GuiGraphics,
-    mouseX: Int,
-    mouseY: Int,
-    partialTick: Float
-  ) {
+  override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
     guiGraphics.usePose {
       translateXY(x, y)
       val texture = if (pointsRight) RIGHT_TEXTURE else LEFT_TEXTURE

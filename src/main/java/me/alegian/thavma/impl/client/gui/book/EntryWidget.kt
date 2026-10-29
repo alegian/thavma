@@ -6,7 +6,12 @@ import me.alegian.thavma.impl.client.clientSound
 import me.alegian.thavma.impl.client.gui.tooltip.T7Tooltip
 import me.alegian.thavma.impl.client.pushScreen
 import me.alegian.thavma.impl.client.texture.Texture
-import me.alegian.thavma.impl.client.util.*
+import me.alegian.thavma.impl.client.util.disableCrop
+import me.alegian.thavma.impl.client.util.enableCrop
+import me.alegian.thavma.impl.client.util.resetRenderSystemColor
+import me.alegian.thavma.impl.client.util.scaleXY
+import me.alegian.thavma.impl.client.util.translateXY
+import me.alegian.thavma.impl.client.util.usePose
 import me.alegian.thavma.impl.common.entity.knowsResearch
 import me.alegian.thavma.impl.common.payload.ResearchScrollPayload
 import me.alegian.thavma.impl.common.research.ResearchEntry
@@ -52,28 +57,22 @@ class EntryWidget(private val screen: BookScreen, val tab: TabRenderable, val en
 
   private val pos = entry.value().position
 
-  override fun getX(): Int {
-    return ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
-  }
+  override fun getX(): Int =
+    ((pos.x * CELL_SIZE - CELL_SIZE / 2 - tab.scrollX) / tab.zoomFactor() + screen.width / 2).toInt()
 
-  override fun getY(): Int {
-    return ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY) / tab.zoomFactor() + screen.height / 2).toInt()
-  }
+  override fun getY(): Int =
+    ((pos.y * CELL_SIZE - CELL_SIZE / 2 - tab.scrollY) / tab.zoomFactor() + screen.height / 2).toInt()
 
-  override fun getWidth(): Int {
-    return (CELL_SIZE / tab.zoomFactor()).toInt()
-  }
+  override fun getWidth(): Int = (CELL_SIZE / tab.zoomFactor()).toInt()
 
-  override fun getHeight(): Int {
-    return (CELL_SIZE / tab.zoomFactor()).toInt()
-  }
+  override fun getHeight(): Int = (CELL_SIZE / tab.zoomFactor()).toInt()
 
   override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-    this.isHovered = guiGraphics.containsPointInScissor(mouseX, mouseY)
-      && mouseX >= x
-      && mouseY >= y
-      && mouseX < x + getWidth()
-      && mouseY < y + getHeight()
+    this.isHovered = guiGraphics.containsPointInScissor(mouseX, mouseY) &&
+      mouseX >= x &&
+      mouseY >= y &&
+      mouseX < x + getWidth() &&
+      mouseY < y + getHeight()
 
     val corner = FrameRenderable.CORNER_TEXTURE
     val edge = FrameRenderable.EDGE_TEXTURE

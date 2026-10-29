@@ -26,11 +26,11 @@ object FrameRenderable : Renderable {
     guiGraphics.usePose {
       translateXY(screenWidth / 2, screenHeight / 2)
 
-      renderIn4Directions(guiGraphics){xDirection, yDirection->
+      renderIn4Directions(guiGraphics) { xDirection, yDirection ->
         renderEdge(guiGraphics, xDirection * yDirection == -1f)
       }
 
-      renderIn4Directions(guiGraphics){_, _->
+      renderIn4Directions(guiGraphics) { _, _ ->
         renderCorner(guiGraphics)
       }
     }
@@ -42,7 +42,7 @@ object FrameRenderable : Renderable {
  * flips x axis, y axis, both, or neither
  * before drawing something
  */
-private fun renderIn4Directions(guiGraphics: GuiGraphics, drawCall: (xDirection:Float, yDirection:Float) -> Unit) {
+private fun renderIn4Directions(guiGraphics: GuiGraphics, drawCall: (xDirection: Float, yDirection: Float) -> Unit) {
   val screenHeight = guiGraphics.guiHeight()
   val screenWidth = guiGraphics.guiWidth()
 
@@ -58,9 +58,10 @@ private fun renderIn4Directions(guiGraphics: GuiGraphics, drawCall: (xDirection:
   }
 }
 
-private fun renderCorner(guiGraphics: GuiGraphics) = guiGraphics.blit(
-  FrameRenderable.CORNER_TEXTURE
-)
+private fun renderCorner(guiGraphics: GuiGraphics) =
+  guiGraphics.blit(
+    FrameRenderable.CORNER_TEXTURE
+  )
 
 /**
  * draws as much edge as needed to cover screen boundaries

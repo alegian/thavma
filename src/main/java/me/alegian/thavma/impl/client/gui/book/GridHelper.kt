@@ -35,7 +35,7 @@ fun PoseStack.renderConnectionRecursive(dx: Int, dy: Int, guiGraphics: GuiGraphi
 
   if (absDx + absDy <= 1f) return
   else if (absDx > 2 && absDy > 2) throw IllegalStateException()
-  else if (!invert && (preferX && absDx > absDy && absDy > 0 || !preferX && absDy > absDx && absDx > 0)) {
+  else if (!invert && ((preferX && absDx > absDy && absDy > 0) || (!preferX && absDy > absDx && absDx > 0))) {
     translateXY(dx, dy)
     renderConnectionRecursive(-dx, -dy, guiGraphics, preferX, true)
   } else if (absDx == absDy) {
@@ -92,7 +92,13 @@ private fun renderCorner(guiGraphics: GuiGraphics, dx: Float, dy: Float, reflect
  * The reflect param reflects the object across the y=x axis.
  * It supports negative size drawing, and adjusts the reflection axis accordingly
  */
-fun renderGridElement(graphics: GuiGraphics, width: Float, height: Float, textureLoc: ResourceLocation, reflect: Boolean) {
+fun renderGridElement(
+  graphics: GuiGraphics,
+  width: Float,
+  height: Float,
+  textureLoc: ResourceLocation,
+  reflect: Boolean
+) {
   graphics.usePose {
     if (reflect) mulPose(Axis.of(Vector3f(sign(width), sign(height), 0f)).rotationDegrees(180f))
     scale(width, height, 1f)

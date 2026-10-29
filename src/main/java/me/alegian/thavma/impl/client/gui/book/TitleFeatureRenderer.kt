@@ -6,18 +6,14 @@ import me.alegian.thavma.impl.common.book.TitleFeature
 import net.minecraft.client.gui.Font
 
 object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
-
   private val SEPARATOR = Texture("gui/book/separator", 128, 16, 128, 16)
 
-  override fun initPageFeature(
-    screen: EntryScreen,
-    feature: TitleFeature,
-  ) {
-    Title(feature, screen.getFont())
-    Separator()
+  override fun initPageFeature(screen: EntryScreen, feature: TitleFeature) {
+    title(feature, screen.getFont())
+    separator()
   }
 
-  private fun Separator() {
+  private fun separator() {
     Row({
       width = grow()
       alignMain = Alignment.CENTER
@@ -26,7 +22,7 @@ object TitleFeatureRenderer : PageFeatureRenderer<TitleFeature> {
     }
   }
 
-  private fun Title(title: TitleFeature, font: Font) {
+  private fun title(title: TitleFeature, font: Font) {
     ParagraphFeatureRenderer.renderParagraph(font, title.text, centered = true)
   }
 }

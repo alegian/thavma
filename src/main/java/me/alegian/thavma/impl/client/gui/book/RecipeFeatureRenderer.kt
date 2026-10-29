@@ -19,7 +19,13 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
   private const val GAP = 12
 
   override fun initPageFeature(screen: EntryScreen, feature: RecipeFeature) {
-    val recipe = Minecraft.getInstance().level?.recipeManager?.byKey(feature.recipeId)?.getOrNull()?.value
+    val recipe = Minecraft
+      .getInstance()
+      .level
+      ?.recipeManager
+      ?.byKey(feature.recipeId)
+      ?.getOrNull()
+      ?.value
     if (recipe !is CraftingRecipe) return // TODO: support other recipe types
 
     Column({
@@ -27,7 +33,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
       size = grow()
       gap = GAP
     }) {
-      Title()
+      title()
 
       TextureBox(RESULT) {}
 
@@ -35,7 +41,7 @@ object RecipeFeatureRenderer : PageFeatureRenderer<RecipeFeature> {
     }
   }
 
-  private fun Title() {
+  private fun title() {
     val font = Minecraft.getInstance().font
 
     Row({

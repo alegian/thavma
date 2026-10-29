@@ -5,3 +5,14 @@ indent_style = space
 indent_size = 2
 tab_width = 2
 max_line_length = 120
+
+ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = unset
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = unset
+ktlint_standard_if-else-wrapping = disabled
+ktlint_standard_if-else-bracing = disabled
+ktlint_standard_wrapping = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_multiline-if-else = disabled
+ktlint_standard_multiline-loop = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled

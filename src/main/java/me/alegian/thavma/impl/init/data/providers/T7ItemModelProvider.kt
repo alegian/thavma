@@ -117,7 +117,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     handheldItem(T7Items.AXE_OF_THE_FOREST)
 
-    for (shard in SHARDS.values) item(shard, rl("item/shard"))
+    for (shard in SHARDS.values) basicItem(shard)
 
     for (wand in WANDS.values())
       withExistingParent(BuiltInRegistries.ITEM.getKey(wand).path, rl("wand"))

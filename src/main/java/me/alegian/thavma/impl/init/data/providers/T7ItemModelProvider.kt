@@ -43,6 +43,7 @@ import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.THAVMITE_VANGUARD_LEGGINGS
 import me.alegian.thavma.impl.init.registries.deferred.T7Items.WANDS
 import me.alegian.thavma.impl.rl
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -117,7 +118,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     handheldItem(T7Items.AXE_OF_THE_FOREST)
 
-    for (shard in SHARDS.values) basicItem(shard)
+    for (shard in SHARDS.values) basicItem(shard).renderType(RenderType.translucent().name)
 
     for (wand in WANDS.values())
       withExistingParent(BuiltInRegistries.ITEM.getKey(wand).path, rl("wand"))

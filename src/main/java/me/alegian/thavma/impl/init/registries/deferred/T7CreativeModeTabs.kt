@@ -158,6 +158,7 @@ object T7CreativeModeTabs {
           output.accept(T7Items.THAVMITE_VANGUARD_BOOTS)
 
           for (shard in T7Items.SHARDS.values) output.accept(shard)
+          output.accept(T7Items.BALANCED_SHARD)
 
           output.accept(T7Items.THAVMITE_AXE)
           output.accept(T7Items.THAVMITE_PICKAXE)

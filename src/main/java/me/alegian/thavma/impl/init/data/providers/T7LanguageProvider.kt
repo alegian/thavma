@@ -83,6 +83,7 @@ class T7LanguageProvider(output: PackOutput, locale: String) : LanguageProvider(
 
     for ((aspect, shard) in T7Items.SHARDS)
       add(shard.get(), aspectTranslations[aspect]!! + " Shard")
+    add(T7Items.BALANCED_SHARD.get(), "Balanced Shard")
 
     add(T7Items.THAVMITE_SWORD.get(), "Thavmite Sword")
     add(T7Items.THAVMITE_AXE.get(), "Thavmite Axe")

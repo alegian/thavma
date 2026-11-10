@@ -191,6 +191,7 @@ object T7Items {
   val SHARDS = linkedMapWithPrimalKeys { aspect ->
     REGISTRAR.registerItem(aspect.id.path + "_shard") { _ -> ShardItem(aspect) }
   }
+  val BALANCED_SHARD = REGISTRAR.registerItem("balanced_shard", ::Item)
 
   val ANGRY_ZOMBIE_SPAWN_EGG = REGISTRAR.registerItem("angry_zombie_spawn_egg") { p -> DeferredSpawnEggItem(T7EntityTypes.ANGRY_ZOMBIE, 0x00AFAF, 0x9e2323, p) }
 

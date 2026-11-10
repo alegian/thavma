@@ -119,6 +119,7 @@ class T7ItemModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     handheldItem(T7Items.AXE_OF_THE_FOREST)
 
     for (shard in SHARDS.values) basicItem(shard).renderType(RenderType.translucent().name)
+    basicItem(T7Items.BALANCED_SHARD).renderType(RenderType.translucent().name)
 
     for (wand in WANDS.values())
       withExistingParent(BuiltInRegistries.ITEM.getKey(wand).path, rl("wand"))

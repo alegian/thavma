@@ -1,0 +1,1317 @@
+{
+  "category": "thavma:lore",
+  "children": [],
+  "defaultKnown": true,
+  "defaultResearchState": [],
+  "icon": {
+    "count": 1,
+    "id": "minecraft:turtle_helmet"
+  },
+  "pageFeatures": [
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature0"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature1",
+        "with": [
+          {
+            "bold": false,
+            "color": "#000000",
+            "italic": false,
+            "obfuscated": false,
+            "strikethrough": false,
+            "translate": "research/entry.thavma.lore.sea_myth.feature1-%1$s",
+            "underlined": false
+          }
+        ]
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature2"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature3"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature4"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature5"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature6"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature7"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature8"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature9"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature10"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature11"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature12"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature13"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature14"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature15"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature16"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature17"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature18"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature19"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature20"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature21"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature22"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature23"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature24"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature25"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature26"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature27"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature28"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature29"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature30"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature31"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature32"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature33"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature34"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature35"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature36"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature37"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature38"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature39"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature40"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature41"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature42"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature43"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature44"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature45"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature46"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature47"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature48"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature49"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature50",
+        "with": [
+          {
+            "bold": false,
+            "color": "#000000",
+            "italic": false,
+            "obfuscated": false,
+            "strikethrough": false,
+            "translate": "research/entry.thavma.lore.sea_myth.feature50-%1$s",
+            "underlined": false
+          }
+        ]
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature51"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature52"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature53"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature54"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature55"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature56"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature57"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature58"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature59"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature60"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature61"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature62"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature63"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature64"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature65"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature66"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature67"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature68"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature69"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature70"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature71"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature72"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature73"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature74"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature75"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature76"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature77"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature78"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature79"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature80"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature81"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature82"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature83"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature84"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature85"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature86"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature87"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature88"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature89"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature90"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature91"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature92"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature93"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature94"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature95"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature96"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature97"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature98"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature99"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature100"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature101"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature102"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature103"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature104"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature105"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature106"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature107"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature108"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature109"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature110"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature111"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature112"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature113"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature114"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature115"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature116",
+        "with": [
+          {
+            "bold": false,
+            "color": "#000000",
+            "italic": false,
+            "obfuscated": false,
+            "strikethrough": false,
+            "translate": "research/entry.thavma.lore.sea_myth.feature116-%1$s",
+            "underlined": false
+          }
+        ]
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature117"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature118"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature119"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature120"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature121"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature122"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature123"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature124"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature125"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature126"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature127"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature128"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature129"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature130"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature131"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature132"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature133"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature134"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature135"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature136"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature137"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature138"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature139"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature140"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature141"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature142"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature143"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature144"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature145"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature146"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature147"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature148"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature149"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature150"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature151"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature152"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature153"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature154"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature155"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature156"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature157"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature158"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature159"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature160",
+        "with": [
+          {
+            "bold": false,
+            "color": "#000000",
+            "italic": true,
+            "obfuscated": false,
+            "strikethrough": false,
+            "translate": "research/entry.thavma.lore.sea_myth.feature160-%1$s",
+            "underlined": false
+          }
+        ]
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature161"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature162"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature163"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature164"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature165"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature166"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature167"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature168"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature169"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature170"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature171"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature172"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature173"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature174"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature175"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature176"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature177"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature178"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature179"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature180"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature181"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature182"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature183"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature184"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature185"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "translate": "research/entry.thavma.lore.sea_myth.feature186"
+      }
+    },
+    {
+      "type": "thavma:title",
+      "text": {
+        "bold": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature187"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature188"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature189"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature190"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature191"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature192"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature193"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature194"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature195"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature196"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature197"
+      }
+    },
+    {
+      "type": "thavma:paragraph",
+      "text": {
+        "italic": true,
+        "translate": "research/entry.thavma.lore.sea_myth.feature198"
+      }
+    }
+  ],
+  "position": [
+    0,
+    0
+  ],
+  "preferX": false,
+  "title": {
+    "color": "yellow",
+    "translate": "research/entry.thavma.lore.sea_myth"
+  }
+}
